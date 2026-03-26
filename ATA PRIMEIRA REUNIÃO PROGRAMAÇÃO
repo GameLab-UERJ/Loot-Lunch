@@ -1,0 +1,151 @@
+ATA DA 1ª REUNIÃO DE LIDERANÇA DE PROGRAMAÇÃO
+
+**Data:** 26 / 03 / 2026  
+**Horário:** 09:30 – ____:____    
+**Participantes:** ____________________________________________  
+**Responsável pela ata:** ______________________________________  
+
+---
+
+## 1. Abertura e Contextualização
+O Coordenador geral abriu a reunião apresentando o objetivo principal: alinhar visão, responsabilidades, processos e expectativas técnicas para o início do desenvolvimento dos projetos. Foi reforçada a importância de estabelecer padrões desde o início para garantir fluidez e consistência ao longo do projeto.
+
+---
+
+## 2. Visão Geral do Projeto
+Foram discutidos os seguintes pontos:
+
+- Descrição inicial dos jogos: gênero, proposta central e principais objetivos.
+- Plataformas previstas de lançamento e eventuais restrições técnicas.
+- Principais features que influenciam o desenvolvimento inicial (movimentação, combate, UI, sistema de progressão, etc.).
+- Metas dos primeiros marcos (Demo do Ciclo Infinito e protótipo funcional para Loot & Lunch).
+
+---
+
+## 3. Papéis e Responsabilidades da Equipe de Programação
+
+- Apresentação da equipe.
+- Definição de responsabilidades iniciais para cada membro da equipe.
+    - **Monitorar progresso** dos programadores.
+    - **Engenharia de software**: Levantamento de Requisitos, Produzir Histórias de usuários e definição de Sprint.
+- Definição de abordagem para com os estagiários.
+    - Atividades no Classroom. 
+    - Aprender Git.
+    - Atividades de estudo, correção, refatoração, implementação parcial e implementação completa.
+- Delimitação do nível de autonomia e das situações que exigem alinhamento prévio com a liderança.
+    - Alinhamento necessário em questões de **integração** (definição das interfaces). 
+    - **Reutilizar sistemas** construídos previamente.
+    - Pedir **review da especificação** de histórias (indicar sistemas existentes para reaproveitar).
+    - Dada a tarefa: Tente fazer -> Pesquise -> Tente com IA -> Peça ajuda ao **monitor**.
+- Estabelecimento dos rituais internos: dailies, checkpoints semanais, revisões de sprint, reuniões de integração com design e arte.
+    - **Reunião semanal** com programadores.
+    - **Reunião semanal** com estagiários.
+    - "Dailies" assíncronas pelo Discord.
+      - Por qual(is) tarefa(s) estava responsável? 
+      - Quanto tempo dediquei?
+      - O que fiz/aprendi hoje?
+      - Como fiz (recursos usados/bibliografia lida/vídeos assistidos/uso de IA)?
+      - O quão profundamente entendi a solução (entendi nada, só usei, entendi mais ou menos, entendi perfeitamente)?
+    - Reunião de início de Sprint (4 semanas).
+      - Definição de histórias a serem implementadas.
+      - Definição de histórias de Design.
+    - **Reunião eventual** de integração com Design e Arte 
+    - Revisão de Sprint ao final.
+    - Retrospectiva de Sprint.
+
+---
+
+## 4. Arquitetura, Padrões e Organização Técnica
+A liderança alinhou diretrizes para:
+
+- Estrutura inicial da arquitetura do projeto e módulos principais (modelo de Cenas **FOCAR NO DESENVOLVIMENTO DE SISTEMAS**).
+- Padrões de código, estilo, nomenclatura e organização de pastas.
+  - Definir principais boas práticas de nomes de pastas/arquivos e branches.
+  - Definir template de texto de **PRs**.
+  - Definir template de texto de **Issues**.
+  - Definir prioridades de boas práticas do Godot a serem seguidas.
+  - Definir padrão de documentação de **@exports**.
+- **ESTUDAR** Estratégias técnicas planejadas.
+    - Ver Plugins.
+    - Definir padrão de uso de **Resources**.
+    - Uso de **Máquina de Estados**.
+    - Uso de **Componentes**.
+- **FEITO NO FUTURO** Protocolos de integração com outras áreas (arte, design, áudio), incluindo como os assets serão importados e validados.
+
+Decidiu-se também que a documentação técnica inicial será registrada na wiki/repositório oficial.
+
+---
+
+## 5. Pipeline de Desenvolvimento e Ferramentas
+
+- Fluxo de versionamento (GitFlow / trunk-based / modelo híbrido).
+- Políticas de pull requests, revisão de código e critérios de aprovação.
+- Ferramentas padrão da equipe (IDEs, plugins, soluções de CI/CD, ferramentas de profiling).: 
+  - **Trello**
+  - Liberada a IDE a ser utilizada.
+  - Uso de GDScript (eventualmente C#).
+  - Definir Plugins (se for usar).
+- Organização do repositório inicial, incluindo templates de scripts, guidelines e automações.
+
+---
+
+## 6. Identificação de Riscos Técnicos
+
+- Necessidade de provas de conceito (POCs) para sistemas críticos.
+- Dependências externas e bibliotecas que precisam de validação técnica.
+- Riscos de performance, especialmente relacionados a IA, física, iluminação ou quantidade de entidades.
+
+Ficou acordado que cada risco terá acompanhamento quinzenal.
+
+---
+
+## 7. Planejamento das Primeiras Entregas
+
+- **COLOCAR OS PROGRAMADORES PARA ENCONTRAR ISSUES**.
+- Conjunto mínimo de sistemas para iniciar testes internos (ex.: movimentação, câmera, input, combat loop básico).
+- Prioridades para o primeiro marco e definição de “Done” técnico para cada bloco.
+- Estimativas preliminares de desenvolvimento (em alto nível).
+
+---
+
+## 8. Comunicação e Integração com Outras Áreas
+
+- Canais oficiais de comunicação (ex.: Discord, Slack, Notion, Jira ou Trello).
+- Formato e periodicidade de entrega de documentos de design, assets de arte/áudio e especificações técnicas.
+- Processo para lidar com bloqueios, dúvidas e mudanças de prioridade.
+
+---
+
+## 9. Normas Internas da Equipe
+
+- Regras para mensagens, respostas e comunicação assíncrona.
+- Boas práticas de commit (tamanho, clareza e frequência).
+- Critérios gerais de qualidade e estabilidade dos builds internos.
+- Procedimento para reportar, revisar e liberar correções de bugs.
+
+---
+
+## 10. Encaminhamentos e Próximos Passos
+
+Encaminhamentos definidos:
+
+- Planejamento das Primeiras Entregas **TODOS**.
+- Padrões de código, estilo, nomenclatura e organização de pastas  (**PEDRO**).
+- Definir principais boas práticas de nomes de pastas/arquivos e branches (**PEDRO**).
+- Definir template de texto de **PRs** (**IGOR**).
+- Definir template de texto de **Issues** (**IGOR**).
+- Definir prioridades de boas práticas do Godot a serem seguidas (**PEDRO**).
+- Definir padrão de documentação de **@exports** (**IGOR**).
+- Organização do repositório inicial, incluindo templates de scripts, guidelines e automações **FUTURO**.
+- Arquitetura, Padrões e Organização Técnica **FUTURO**.
+- **ESTUDAR** Estratégias técnicas planejadas.
+    - Ver Plugins interessantes (**TODOS**).
+    - Definir padrão de uso de **Resources**  (**FUTURO**).
+    - Uso de **Máquina de Estados** (**TODOS**).
+    - Uso de **Componentes** (**TODOS**).
+
+---
+
+## 11. Encerramento
+
+Nada mais havendo a tratar, a reunião foi encerrada às ____:____. 
