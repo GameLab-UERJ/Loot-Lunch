@@ -1,9 +1,9 @@
 ATA DA 1ª REUNIÃO DE LIDERANÇA DE PROGRAMAÇÃO
 
 **Data:** 26 / 03 / 2026  
-**Horário:** 09:30 – ____:____    
-**Participantes:** ____________________________________________  
-**Responsável pela ata:** ______________________________________  
+**Horário:** 09:30 – 11:00    
+**Participantes:** Gabriel de Carvalho, Igor Morais, Pedro Boccaletti  
+**Responsável pela ata:** Gabriel de Carvalho  
 
 ---
 
@@ -110,42 +110,42 @@ Ficou acordado que cada risco terá acompanhamento quinzenal.
 
 ## 8. Comunicação e Integração com Outras Áreas
 
-- Canais oficiais de comunicação (ex.: Discord, Slack, Notion, Jira ou Trello).
+- Canal oficial de comunicação (Discord).
 - Formato e periodicidade de entrega de documentos de design, assets de arte/áudio e especificações técnicas.
 - Processo para lidar com bloqueios, dúvidas e mudanças de prioridade.
 
----
-
-## 9. Normas Internas da Equipe
-
-- Regras para mensagens, respostas e comunicação assíncrona.
-- Boas práticas de commit (tamanho, clareza e frequência).
-- Critérios gerais de qualidade e estabilidade dos builds internos.
-- Procedimento para reportar, revisar e liberar correções de bugs.
 
 ---
 
 ## 10. Encaminhamentos e Próximos Passos
 
 Encaminhamentos definidos:
-
-- Planejamento das Primeiras Entregas **TODOS**.
-- Padrões de código, estilo, nomenclatura e organização de pastas  (**PEDRO**).
-- Definir principais boas práticas de nomes de pastas/arquivos e branches (**PEDRO**).
-- Definir template de texto de **PRs** (**IGOR**).
-- Definir template de texto de **Issues** (**IGOR**).
-- Definir prioridades de boas práticas do Godot a serem seguidas (**PEDRO**).
-- Definir padrão de documentação de **@exports** (**IGOR**).
-- Organização do repositório inicial, incluindo templates de scripts, guidelines e automações **FUTURO**.
-- Arquitetura, Padrões e Organização Técnica **FUTURO**.
-- **ESTUDAR** Estratégias técnicas planejadas.
-    - Ver Plugins interessantes (**TODOS**).
-    - Definir padrão de uso de **Resources**  (**FUTURO**).
-    - Uso de **Máquina de Estados** (**TODOS**).
-    - Uso de **Componentes** (**TODOS**).
-
----
-
-## 11. Encerramento
-
-Nada mais havendo a tratar, a reunião foi encerrada às ____:____. 
+- Criar Classroom e atividades para ($\color{yellow}{\text{\textbf{GABRIEL}}}$):
+    - aprender Git
+    - estudo, correção, refatoração, implementação parcial e implementação completa.
+    - definir aulas/coding semanais ao vivo.
+- Padrões de código, estilo, nomenclatura e organização de pastas  ($\color{blue}{\text{\textbf{PEDRO}}}$).
+- Definir principais boas práticas de nomes de pastas/arquivos e branches ($\color{blue}{\text{\textbf{PEDRO}}}$).
+- Definir prioridades de boas práticas do Godot a serem seguidas ($\color{blue}{\text{\textbf{PEDRO}}}$).
+- Definir template de texto de **PRs** ($\color{purple}{\text{\textbf{IGOR}}}$).
+- Definir template de texto de **Issues** ($\color{purple}{\text{\textbf{IGOR}}}$).
+- Definir padrão de documentação de **@exports** ($\color{purple}{\text{\textbf{IGOR}}}$).
+- Estratégias técnicas planejadas ($\color{red}{\text{\textbf{TODOS}}}$).
+    - Ver Plugins interessantes.
+    - Uso de **Máquina de Estados**.
+    - Uso de **Componentes**.
+```diff
+- FUTURO
+```
+- Definir padrão de uso de **Resources**.
+- Organização do repositório inicial, incluindo templates de scripts, guidelines e automações.
+- Arquitetura, Padrões e Organização Técnica.
+```diff
++ PRÓXIMA REUNIÃO
+```
+- Planejamento das Primeiras Entregas.
+- Definir Normas Internas da Equipe
+    - Regras para mensagens, respostas e comunicação assíncrona.
+    - Boas práticas de commit (tamanho, clareza e frequência).
+    - Critérios gerais de qualidade e estabilidade dos builds internos.
+    - Procedimento para reportar, revisar e liberar correções de bugs.   
