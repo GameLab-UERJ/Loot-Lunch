@@ -1,5 +1,4 @@
 # ATA DA 1ª REUNIÃO DE LIDERANÇA CRIATIVA  
-### (Game Design + Arte)  
 ---
 
 ## 2. Visão Criativa Geral do Projeto
@@ -92,10 +91,3 @@ Acordos:
 - Definir Normas Internas da Equipe Criativa
 - Definir Entregas Prioritárias para o Início do Projeto   
 - Consolidar Style Guide v0.1. **Marcos**
-
-
-### **Assinaturas**
-
-__________________________________________  
-__________________________________________  
-__________________________________________
