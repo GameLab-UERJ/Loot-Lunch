@@ -1,0 +1,124 @@
+[gd_scene load_steps=13 format=3 uid="uid://ba74yflgg7877"]
+
+[ext_resource type="PackedScene" uid="uid://cn74x22wplq1y" path="res://Characters/Enemies/enemy.tscn" id="1_scurg"]
+[ext_resource type="Script" uid="uid://o5jiqd246gto" path="res://Characters/Enemies/FlyingEyes/flyingEyeFSM.gd" id="2_rkmmt"]
+[ext_resource type="Texture2D" uid="uid://bvljt7lkqa23p" path="res://Assets/CharactersAssets/EnemiesAssets/FlyingEye/fly_anim_spritesheet.png" id="3_bvlnh"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kjfcp"]
+atlas = ExtResource("3_bvlnh")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5f2sv"]
+atlas = ExtResource("3_bvlnh")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fkft5"]
+atlas = ExtResource("3_bvlnh")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ajjfu"]
+atlas = ExtResource("3_bvlnh")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_scurg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kjfcp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5f2sv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fkft5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ajjfu")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5g253"]
+radius = 3.0
+
+[sub_resource type="Animation" id="Animation_brmyy"]
+resource_name = "flying"
+length = 0.4
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"fly"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.099999994, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_e8op0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"fly"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qfnv1"]
+_data = {
+&"RESET": SubResource("Animation_e8op0"),
+&"flying": SubResource("Animation_brmyy")
+}
+
+[node name="FlyingEye" instance=ExtResource("1_scurg")]
+
+[node name="FiniteStateMachine" parent="." index="0"]
+script = ExtResource("2_rkmmt")
+
+[node name="AnimatedSprite2D" parent="." index="1"]
+sprite_frames = SubResource("SpriteFrames_scurg")
+animation = &"fly"
+
+[node name="CollisionShape2D" parent="." index="2"]
+shape = SubResource("CircleShape2D_5g253")
+
+[node name="AnimationPlayer" parent="." index="3"]
+libraries = {
+&"": SubResource("AnimationLibrary_qfnv1")
+}

@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://3cgeew2m05mn"]
+[gd_scene load_steps=31 format=3 uid="uid://3cgeew2m05mn"]
 
 [ext_resource type="PackedScene" uid="uid://cjbcmlsay3d5k" path="res://Characters/character.tscn" id="1_6xdwp"]
 [ext_resource type="Script" uid="uid://bgk4agkilc8tt" path="res://Characters/Player/player.gd" id="2_bqsbk"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://caiej7y8h4g5f" path="res://Assets/CharactersAssets/PlayerAssets/SkeletonAssetMicaelleBritto/Run/Run_34F.png" id="3_cue0d"]
 [ext_resource type="Script" uid="uid://cu0w8akw8o7nv" path="res://Characters/Player/playerFSM.gd" id="3_xf5fp"]
 [ext_resource type="Texture2D" uid="uid://crlwael0b25ge" path="res://Assets/WeaponsAssets/Swords/Bone.png" id="6_osktb"]
+[ext_resource type="Texture2D" uid="uid://bmempwdj2nnk5" path="res://Assets/WeaponsAssets/Effects/Sword/slash_effect_anim_spritesheet.png" id="7_7vev3"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cue0d"]
 atlas = ExtResource("2_j341n")
@@ -121,6 +122,143 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_7vev3"]
 radius = 5.0
 
+[sub_resource type="Animation" id="Animation_klx3t"]
+resource_name = "attack"
+length = 1.25
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.8, 1.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [-1.5707964, 2.0943952, 2.0943952, -1.5707964]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.15, 0.8, 1.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [-0.7853982, 0.6981317, 0.87266463, 0.87266463, -0.7853982]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../SlashSprite:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../SlashSprite:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="Animation" id="Animation_r5ew0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-1.5707964]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.7853982]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../SlashSprite:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../SlashSprite:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yhol4"]
+_data = {
+&"RESET": SubResource("Animation_r5ew0"),
+&"attack": SubResource("Animation_klx3t")
+}
+
+[sub_resource type="Animation" id="Animation_osktb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"idle"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
 [sub_resource type="Animation" id="Animation_xf5fp"]
 resource_name = "idle"
 length = 0.8
@@ -149,33 +287,6 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5, 6, 7]
-}
-
-[sub_resource type="Animation" id="Animation_osktb"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:animation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"idle"]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
 }
 
 [sub_resource type="Animation" id="Animation_7vev3"]
@@ -241,6 +352,18 @@ position = Vector2(7, 3)
 rotation = -0.7853982
 texture = ExtResource("6_osktb")
 offset = Vector2(5, -4)
+
+[node name="SlashSprite" type="Sprite2D" parent="Sword" index="1"]
+visible = false
+position = Vector2(18, 0)
+texture = ExtResource("7_7vev3")
+hframes = 3
+
+[node name="SwordAnimationPlayer" type="AnimationPlayer" parent="Sword" index="2"]
+root_node = NodePath("../Node2D")
+libraries = {
+&"": SubResource("AnimationLibrary_yhol4")
+}
 
 [node name="AnimationPlayer" parent="." index="4"]
 libraries = {
