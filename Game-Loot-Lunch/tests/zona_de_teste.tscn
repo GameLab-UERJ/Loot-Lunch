@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://d0pechf47plm7"]
+
+[ext_resource type="PackedScene" uid="uid://c58rbxt3e1aij" path="res://levels/test_floor.tscn" id="1_3vk44"]
+[ext_resource type="PackedScene" uid="uid://3cgeew2m05mn" path="res://entities/player/player.tscn" id="2_nbhqf"]
+[ext_resource type="PackedScene" uid="uid://ba74yflgg7877" path="res://entities/enemies/flying_eyes/flying_eye.tscn" id="3_skqhn"]
+
+[node name="ZonaDeTeste" type="Node2D" unique_id=183929309]
+
+[node name="Floor" parent="." unique_id=414081612 instance=ExtResource("1_3vk44")]
+
+[node name="Player" parent="." unique_id=1667272544 instance=ExtResource("2_nbhqf")]
+position = Vector2(162, 108)
+
+[node name="FlyingEye" parent="." unique_id=1963188920 instance=ExtResource("3_skqhn")]
+position = Vector2(336, 158)
