@@ -1,5 +1,5 @@
 extends Area2D
-class_name Hitbox
+class_name HitboxComponent
 
 var body_inside: bool = false
 var knockback_direction: Vector2 = Vector2.ZERO
