@@ -1,11 +1,11 @@
-[gd_scene load_steps=23 format=3 uid="uid://ba74yflgg7877"]
+[gd_scene format=3 uid="uid://ba74yflgg7877"]
 
 [ext_resource type="PackedScene" uid="uid://cn74x22wplq1y" path="res://entities/enemies/base_enemy/enemy.tscn" id="1_scurg"]
-[ext_resource type="Script" uid="uid://fob4qxrualfo" path="res://entities/enemies/flying_eyes/flying_eye.gd" id="2_0oiyv"]
+[ext_resource type="Script" path="res://entities/enemies/flying_eyes/flying_eye.gd" id="2_0oiyv"]
 [ext_resource type="Script" uid="uid://o5jiqd246gto" path="res://entities/enemies/flying_eyes/fsm/flying_eye_fsm.gd" id="2_rkmmt"]
 [ext_resource type="Texture2D" uid="uid://cic1n8jgv11hx" path="res://assets/art/entities/enemies/flying_eye/enemy_afterdead_explosion_anim_spritesheet.png" id="3_0u44y"]
 [ext_resource type="Texture2D" uid="uid://bvljt7lkqa23p" path="res://assets/art/entities/enemies/flying_eye/flying_eye_spritesheet.png" id="3_bvlnh"]
-[ext_resource type="Script" uid="uid://bi7fdvl4vpp7o" path="res://systems/hitbox/hitbox.gd" id="5_5ah01"]
+[ext_resource type="Script" uid="uid://bi7fdvl4vpp7o" path="res://systems/hitbox/hitbox_component.gd" id="5_5ah01"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5ah01"]
 atlas = ExtResource("3_0u44y")
@@ -123,7 +123,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Hitbox/CollisionShape2D:disabled")
+tracks/3/path = NodePath("HitboxComponent/CollisionShape2D:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -131,6 +131,60 @@ tracks/3/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_ed664"]
+resource_name = "dead"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [&"fly", &"dead"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.6, 0.7, 0.8, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [3, 0, 1, 2, 3]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [false, true, false, true]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_q3dj1"]
@@ -205,7 +259,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Hitbox/CollisionShape2D:disabled")
+tracks/3/path = NodePath("HitboxComponent/CollisionShape2D:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -213,60 +267,6 @@ tracks/3/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
-}
-
-[sub_resource type="Animation" id="Animation_ed664"]
-resource_name = "dead"
-step = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:animation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.6),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [&"fly", &"dead"]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.6, 0.7, 0.8, 0.9),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 1,
-"values": [3, 0, 1, 2, 3]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("AnimatedSprite2D:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [false, true, false, true]
-}
-tracks/3/type = "method"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath(".")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(1),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"queue_free"
-}]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_0u44y"]
@@ -277,29 +277,27 @@ _data = {
 &"hurt": SubResource("Animation_5ah01")
 }
 
-[node name="FlyingEye" instance=ExtResource("1_scurg")]
+[node name="FlyingEye" unique_id=1346698654 instance=ExtResource("1_scurg")]
 script = ExtResource("2_0oiyv")
 
-[node name="FiniteStateMachine" parent="." index="0"]
+[node name="FiniteStateMachine" parent="." index="0" unique_id=394854071]
 script = ExtResource("2_rkmmt")
 
-[node name="AnimatedSprite2D" parent="." index="1"]
+[node name="AnimatedSprite2D" parent="." index="1" unique_id=552654717]
 sprite_frames = SubResource("SpriteFrames_scurg")
 animation = &"fly"
 
-[node name="CollisionShape2D" parent="." index="2"]
+[node name="CollisionShape2D" parent="." index="2" unique_id=398117634]
 shape = SubResource("CircleShape2D_5g253")
 
-[node name="Hitbox" type="Area2D" parent="." index="3"]
+[node name="HitboxComponent" type="Area2D" parent="." index="3" unique_id=753196878]
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("5_5ah01")
 metadata/_custom_type_script = "uid://bi7fdvl4vpp7o"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" index="0"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" index="0" unique_id=1306141943]
 shape = SubResource("CircleShape2D_5ah01")
 
-[node name="AnimationPlayer" parent="." index="4"]
-libraries = {
-&"": SubResource("AnimationLibrary_0u44y")
-}
+[node name="AnimationPlayer" parent="." index="4" unique_id=2113090391]
+libraries/ = SubResource("AnimationLibrary_0u44y")

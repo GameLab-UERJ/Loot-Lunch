@@ -1,8 +1,10 @@
 extends Character
 
-@onready var sword: Node2D = get_node("Sword")
-@onready var sword_hitbox: Area2D = get_node("Sword/Node2D/Sprite2D/Hitbox")
-@onready var sword_animation_player: AnimationPlayer = sword.get_node("SwordAnimationPlayer")
+
+@onready var sword: Node2D = $Sword
+@onready var sword_hitbox: HitboxComponent = $Sword/Node2D/Sprite2D/HitboxComponent
+@onready var sword_animation_player: AnimationPlayer = $Sword/SwordAnimationPlayer
+
 
 func _process(_delta: float) -> void:
 	var mouse_direction: Vector2 = (get_global_mouse_position() - global_position).normalized()
