@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cic1n8jgv11hx"
-path="res://.godot/imported/enemy_afterdead_explosion_anim_spritesheet.png-480161b54f00185dc5c027adfbd1347a.ctex"
+uid="uid://jj86r3ewr8f2"
+path="res://.godot/imported/ground_grass_details.png-3fa52c03b8404cc4e02f3dcf2361db30.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/entities/enemies/flying_eye/enemy_afterdead_explosion_anim_spritesheet.png"
-dest_files=["res://.godot/imported/enemy_afterdead_explosion_anim_spritesheet.png-480161b54f00185dc5c027adfbd1347a.ctex"]
+source_file="res://assets/art/tilesets/ground_grass_details.png"
+dest_files=["res://.godot/imported/ground_grass_details.png-3fa52c03b8404cc4e02f3dcf2361db30.ctex"]
 
 [params]
 

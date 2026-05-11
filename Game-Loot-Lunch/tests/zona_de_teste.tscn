@@ -1,17 +1,24 @@
-[gd_scene load_steps=4 format=3 uid="uid://d0pechf47plm7"]
+[gd_scene format=3 uid="uid://d0pechf47plm7"]
 
 [ext_resource type="PackedScene" uid="uid://c58rbxt3e1aij" path="res://levels/test_floor.tscn" id="1_3vk44"]
 [ext_resource type="PackedScene" uid="uid://3cgeew2m05mn" path="res://entities/player/player.tscn" id="2_nbhqf"]
 [ext_resource type="PackedScene" uid="uid://ba74yflgg7877" path="res://entities/enemies/flying_eyes/flying_eye.tscn" id="3_skqhn"]
+[ext_resource type="PackedScene" uid="uid://dwlepdjd5lv8x" path="res://entities/items/tomate.tscn" id="4_nbhqf"]
 
-[node name="ZonaDeTeste" type="Node2D"]
+[node name="ZonaDeTeste" type="Node2D" unique_id=387460330]
 
-[node name="Floor" parent="." instance=ExtResource("1_3vk44")]
+[node name="Floor" parent="." unique_id=1383934597 instance=ExtResource("1_3vk44")]
 
-[node name="Player" parent="." instance=ExtResource("2_nbhqf")]
+[node name="Player" parent="." unique_id=1426255313 instance=ExtResource("2_nbhqf")]
 position = Vector2(162, 108)
 
-[node name="FlyingEye" parent="." instance=ExtResource("3_skqhn")]
+[node name="FlyingEye" parent="." unique_id=1247697002 instance=ExtResource("3_skqhn")]
 position = Vector2(336, 158)
 accerelation = 20
 max_speed = 50
+
+[node name="Tomate" parent="." unique_id=847587310 instance=ExtResource("4_nbhqf")]
+offset_left = 239.0
+offset_top = 85.0
+offset_right = 239.0
+offset_bottom = 85.0

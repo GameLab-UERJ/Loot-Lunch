@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://dwlepdjd5lv8x"]
+
+[ext_resource type="Script" uid="uid://cle3p5oy53g7r" path="res://entities/base_classes/item/item.gd" id="1_h045o"]
+[ext_resource type="Texture2D" uid="uid://xnfegqg2xfdc" path="res://assets/art/tilesets/farming_fishing.png" id="2_54t5i"]
+
+[node name="Tomate" type="Control" unique_id=847587310]
+physics_interpolation_mode = 0
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_h045o")
+item_name = "Tomate"
+description = "Melhor \"Vegetal\""
+is_ingredient = true
+metadata/_custom_type_script = "uid://cle3p5oy53g7r"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1917933839]
+texture_filter = 1
+texture = ExtResource("2_54t5i")
+region_enabled = true
+region_rect = Rect2(422, 231, 24, 24)

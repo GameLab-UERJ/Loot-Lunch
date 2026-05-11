@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cic1n8jgv11hx"
-path="res://.godot/imported/enemy_afterdead_explosion_anim_spritesheet.png-480161b54f00185dc5c027adfbd1347a.ctex"
+uid="uid://44mc4e83p346"
+path="res://.godot/imported/sand.png-f98723e42c5bd6cfe586e2a3b8429b03.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/entities/enemies/flying_eye/enemy_afterdead_explosion_anim_spritesheet.png"
-dest_files=["res://.godot/imported/enemy_afterdead_explosion_anim_spritesheet.png-480161b54f00185dc5c027adfbd1347a.ctex"]
+source_file="res://assets/art/tilesets/sand.png"
+dest_files=["res://.godot/imported/sand.png-f98723e42c5bd6cfe586e2a3b8429b03.ctex"]
 
 [params]
 

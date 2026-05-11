@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cic1n8jgv11hx"
-path="res://.godot/imported/enemy_afterdead_explosion_anim_spritesheet.png-480161b54f00185dc5c027adfbd1347a.ctex"
+uid="uid://jykiluu3jgso"
+path="res://.godot/imported/youngwheat.png-e78560a84e206c0b5d29182f721b3c23.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/entities/enemies/flying_eye/enemy_afterdead_explosion_anim_spritesheet.png"
-dest_files=["res://.godot/imported/enemy_afterdead_explosion_anim_spritesheet.png-480161b54f00185dc5c027adfbd1347a.ctex"]
+source_file="res://assets/art/tilesets/youngwheat.png"
+dest_files=["res://.godot/imported/youngwheat.png-e78560a84e206c0b5d29182f721b3c23.ctex"]
 
 [params]
 
