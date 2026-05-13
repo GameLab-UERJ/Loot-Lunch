@@ -3,7 +3,6 @@
 [ext_resource type="PackedScene" uid="uid://c58rbxt3e1aij" path="res://levels/test_floor.tscn" id="1_3vk44"]
 [ext_resource type="PackedScene" uid="uid://3cgeew2m05mn" path="res://entities/player/player.tscn" id="2_nbhqf"]
 [ext_resource type="PackedScene" uid="uid://ba74yflgg7877" path="res://entities/enemies/flying_eyes/flying_eye.tscn" id="3_skqhn"]
-[ext_resource type="PackedScene" uid="uid://dwlepdjd5lv8x" path="res://entities/items/tomate.tscn" id="4_nbhqf"]
 
 [node name="ZonaDeTeste" type="Node2D" unique_id=387460330]
 
@@ -16,9 +15,3 @@ position = Vector2(162, 108)
 position = Vector2(336, 158)
 accerelation = 20
 max_speed = 50
-
-[node name="Tomate" parent="." unique_id=847587310 instance=ExtResource("4_nbhqf")]
-offset_left = 239.0
-offset_top = 85.0
-offset_right = 239.0
-offset_bottom = 85.0

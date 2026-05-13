@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://xnfegqg2xfdc"
-path="res://.godot/imported/farming_fishing.png-59333de1bb83c59d80451462aacb89ae.ctex"
+uid="uid://bqnssonx4exce"
+path="res://.godot/imported/Vegies.png-f6892d355734943091ef54027dd353ff.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/tilesets/items/farming_fishing.png"
-dest_files=["res://.godot/imported/farming_fishing.png-59333de1bb83c59d80451462aacb89ae.ctex"]
+source_file="res://assets/art/entities/items/Vegies.png"
+dest_files=["res://.godot/imported/Vegies.png-f6892d355734943091ef54027dd353ff.ctex"]
 
 [params]
 
