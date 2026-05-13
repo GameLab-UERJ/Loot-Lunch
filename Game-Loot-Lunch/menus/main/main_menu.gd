@@ -12,6 +12,8 @@ extends Control
 ## [b]Se vazio:[/b] O jogo fecha imediatamente após o clique.
 @export var press_sound: AudioStream
 
+var is_quitting: bool = false
+
 @onready var new_game_button: Button = $Content/Buttons/NewGameButton
 @onready var continue_button: Button = $Content/Buttons/ContinueButton
 @onready var settings_button: Button = $Content/Buttons/SettingsButton
@@ -52,7 +54,20 @@ func _on_quit_button_pressed() -> void:
 	_play_press_sound_and_quit()
 
 
+func _disable_buttons() -> void:
+	new_game_button.disabled = true
+	continue_button.disabled = true
+	settings_button.disabled = true
+	quit_button.disabled = true
+
+
 func _play_press_sound_and_quit() -> void:
+	if is_quitting:
+		return
+
+	is_quitting = true
+	_disable_buttons()
+
 	# O jogo espera o som terminar para o clique não ser cortado pelo quit().
 	if press_audio.stream != null:
 		press_audio.play()
