@@ -28,7 +28,7 @@ func _ready() -> void:
 
 
 func _on_button_mouse_entered() -> void:
-	if hover_audio.stream == null:
+	if hover_audio.stream == null or is_quitting == true:
 		return
 
 	hover_audio.play()
