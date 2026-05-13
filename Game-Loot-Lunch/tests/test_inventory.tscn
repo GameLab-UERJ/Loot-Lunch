@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://b7rvih4e4hkcu"]
+
+[ext_resource type="Script" uid="uid://bk8rxeu74ypfd" path="res://tests/test_inventory.gd" id="1_372ms"]
+[ext_resource type="PackedScene" uid="uid://b85fxrmr3ribs" path="res://entities/inventory/inventory_cell.tscn" id="1_wp8uh"]
+[ext_resource type="PackedScene" uid="uid://cexct4fg71pc5" path="res://entities/items/carne.tscn" id="2_372ms"]
+[ext_resource type="PackedScene" uid="uid://dwlepdjd5lv8x" path="res://entities/items/tomate.tscn" id="3_2ff5v"]
+
+[node name="TestInventory" type="Node2D" unique_id=1710223526]
+script = ExtResource("1_372ms")
+
+[node name="InventoryCell" parent="." unique_id=1459648655 instance=ExtResource("1_wp8uh")]
+offset_left = 221.0
+offset_top = 103.0
+offset_right = 221.0
+offset_bottom = 103.0
+
+[node name="Carne" parent="." unique_id=327291448 instance=ExtResource("2_372ms")]
+position = Vector2(299, 209)
+
+[node name="Tomate" parent="." unique_id=847587310 instance=ExtResource("3_2ff5v")]
+position = Vector2(186, 219)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=887549527]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Button" type="Button" parent="VBoxContainer" unique_id=51887687]
+layout_mode = 2
+text = "Add Tomate"
+
+[node name="Button2" type="Button" parent="VBoxContainer" unique_id=328615636]
+layout_mode = 2
+text = "Add Carne
+"
+
+[node name="Button3" type="Button" parent="VBoxContainer" unique_id=454289375]
+layout_mode = 2
+text = "Remove Item"
+
+[connection signal="button_down" from="VBoxContainer/Button" to="." method="_on_add_tomate_down"]
+[connection signal="button_down" from="VBoxContainer/Button2" to="." method="_on_add_carne_down"]
+[connection signal="button_down" from="VBoxContainer/Button3" to="." method="_on_remove_down"]
