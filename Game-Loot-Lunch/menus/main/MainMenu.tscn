@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://b2evbancyosmu"]
 
 [ext_resource type="AudioStream" uid="uid://bkiovum7ll7au" path="res://assets/sfx/menus/abs-pointer-2.mp3" id="1_08yj1"]
+[ext_resource type="Script" uid="uid://ddqhliryrh5qr" path="res://menus/main/main_menu.gd" id="1_jq7ry"]
 [ext_resource type="AudioStream" uid="uid://doyfcod6s5ptl" path="res://assets/sfx/menus/abs-confirm-2.mp3" id="2_jq7ry"]
 
 [node name="MainMenu" type="Control" unique_id=31903151]
@@ -10,6 +11,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_jq7ry")
+hover_sound = ExtResource("1_08yj1")
+press_sound = ExtResource("2_jq7ry")
 
 [node name="Background" type="ColorRect" parent="." unique_id=979125322]
 layout_mode = 0
@@ -64,7 +68,14 @@ layout_mode = 2
 text = "Sair"
 
 [node name="HoverAudio" type="AudioStreamPlayer" parent="." unique_id=26537481]
-stream = ExtResource("1_08yj1")
 
 [node name="PressAudio" type="AudioStreamPlayer" parent="." unique_id=1512561003]
-stream = ExtResource("2_jq7ry")
+
+[connection signal="mouse_entered" from="Content/Buttons/NewGameButton" to="." method="_on_button_mouse_entered"]
+[connection signal="pressed" from="Content/Buttons/NewGameButton" to="." method="_on_new_game_button_pressed"]
+[connection signal="mouse_entered" from="Content/Buttons/ContinueButton" to="." method="_on_button_mouse_entered"]
+[connection signal="pressed" from="Content/Buttons/ContinueButton" to="." method="_on_continue_button_pressed"]
+[connection signal="mouse_entered" from="Content/Buttons/SettingsButton" to="." method="_on_button_mouse_entered"]
+[connection signal="pressed" from="Content/Buttons/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="mouse_entered" from="Content/Buttons/QuitButton" to="." method="_on_button_mouse_entered"]
+[connection signal="pressed" from="Content/Buttons/QuitButton" to="." method="_on_quit_button_pressed"]
