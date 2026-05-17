@@ -5,6 +5,9 @@ extends Character
 @onready var sword_hitbox: HitboxComponent = $Sword/Node2D/Sprite2D/HitboxComponent
 @onready var sword_animation_player: AnimationPlayer = $Sword/SwordAnimationPlayer
 
+@export var invencibility_time: float = 0.5
+
+var is_invincible: bool = false
 
 func _process(_delta: float) -> void:
 	var mouse_direction: Vector2 = (get_global_mouse_position() - global_position).normalized()
@@ -36,3 +39,16 @@ func get_input() -> void:
 		mov_direction += Vector2.RIGHT
 	if Input.is_action_pressed("ui_up"):
 		mov_direction += Vector2.UP
+	
+
+func take_damage(amount: int, knockback_direction: Vector2, knockback_force: int) -> void:
+	if is_invincible:
+		return
+  
+	is_invincible = true
+	start_invincibility()
+
+func start_invincibility() -> void:
+	await get_tree().create_timer(invencibility_time).timeout
+	is_invincible = false
+	
