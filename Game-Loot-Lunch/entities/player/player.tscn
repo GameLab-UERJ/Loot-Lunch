@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://caiej7y8h4g5f" path="res://assets/art/entities/player/skeleton/run/skeleton_run_spritesheet.png" id="3_cue0d"]
 [ext_resource type="Script" uid="uid://cu0w8akw8o7nv" path="res://entities/player/fsm/player_fsm.gd" id="3_xf5fp"]
 [ext_resource type="Texture2D" uid="uid://cic1n8jgv11hx" path="res://assets/art/entities/enemies/flying_eye/enemy_afterdead_explosion_anim_spritesheet.png" id="4_bectd"]
+[ext_resource type="Script" uid="uid://bt5jjpnkd7ps" path="res://entities/base_classes/movement_component.gd" id="4_wvtmh"]
 [ext_resource type="Texture2D" uid="uid://crlwael0b25ge" path="res://assets/art/weapons/bone/bone.png" id="6_osktb"]
 [ext_resource type="Texture2D" uid="uid://bmempwdj2nnk5" path="res://assets/art/weapons/bone/slash_effect_anim_spritesheet.png" id="7_7vev3"]
 [ext_resource type="Script" uid="uid://bi7fdvl4vpp7o" path="res://systems/hitbox/hitbox_component.gd" id="7_26q78"]
@@ -505,15 +506,18 @@ script = ExtResource("2_bqsbk")
 [node name="FiniteStateMachine" parent="." index="0" unique_id=394854071]
 script = ExtResource("3_xf5fp")
 
-[node name="AnimatedSprite2D" parent="." index="1" unique_id=552654717]
+[node name="MovementComponent" type="Node" parent="." index="1" unique_id=1947189978]
+script = ExtResource("4_wvtmh")
+
+[node name="AnimatedSprite2D" parent="." index="2" unique_id=552654717]
 sprite_frames = SubResource("SpriteFrames_va6lm")
 animation = &"move"
 
-[node name="CollisionShape2D" parent="." index="2" unique_id=398117634]
+[node name="CollisionShape2D" parent="." index="3" unique_id=398117634]
 position = Vector2(-1, 1)
 shape = SubResource("CircleShape2D_7vev3")
 
-[node name="Sword" type="Node2D" parent="." index="3" unique_id=553499218]
+[node name="Sword" type="Node2D" parent="." index="4" unique_id=553499218]
 
 [node name="Node2D" type="Node2D" parent="Sword" index="0" unique_id=1380584934]
 rotation = -1.5708
@@ -546,5 +550,5 @@ hframes = 3
 root_node = NodePath("../Node2D")
 libraries/ = SubResource("AnimationLibrary_j3ovn")
 
-[node name="AnimationPlayer" parent="." index="4" unique_id=2113090391]
+[node name="AnimationPlayer" parent="." index="5" unique_id=2113090391]
 libraries/ = SubResource("AnimationLibrary_7thud")
