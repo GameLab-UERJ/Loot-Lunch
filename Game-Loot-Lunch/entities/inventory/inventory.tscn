@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://cqnchp7q3uixs"]
+
+[ext_resource type="Script" uid="uid://c3wvorc8cumre" path="res://entities/inventory/inventory.gd" id="1_0tuds"]
+
+[node name="Inventory" type="PanelContainer" unique_id=915288313]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0tuds")
+dimension = null
+
+[node name="Grid" type="GridContainer" parent="." unique_id=370707674]
+layout_mode = 2
