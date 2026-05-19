@@ -1,0 +1,5 @@
+Wav:
+All sounds synthesized or recorded in Ableton Live 9, originally 24/96, dithered down to 16/44.1 (Mostly Ableton's built-in dither, but a few were dithered down with Izotope Ozone in Reaper).
+
+MP3 and OGG:
+Converted from 16/44.1 WAV files in foobar2000.  VBR 4(MP3) and 4.1(OGG).  They should sound ok, but if you want a better bit rate, you can do so with the WAV's, of course.
