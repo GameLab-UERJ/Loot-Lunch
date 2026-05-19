@@ -26,3 +26,15 @@ func _process(_delta: float) -> void:
 		sword.scale.y = 1
 	if Input.is_action_just_pressed("ui_attack") and not sword_animation_player.is_playing():
 		sword_animation_player.play("attack")
+
+
+func take_damage(amount: int, knockback_direction: Vector2, knockback_force: int) -> void:
+	if is_invincible:
+		return
+  
+	is_invincible = true
+	start_invincibility()
+
+func start_invincibility() -> void:
+	await get_tree().create_timer(invencibility_time).timeout
+	is_invincible = false
