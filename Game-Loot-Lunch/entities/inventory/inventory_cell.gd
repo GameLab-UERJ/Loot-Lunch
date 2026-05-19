@@ -1,4 +1,4 @@
-extends Control
+extends PanelContainer
 class_name InventoryCell
 
 
@@ -6,7 +6,7 @@ class_name InventoryCell
 	set = set_item
 
 
-@onready var item_place: TextureRect = $PanelContainer/Panel/ItemPlace
+@onready var item_place: TextureRect = $Panel/ItemPlace
 
 
 func set_item(value : Item) -> Item:
