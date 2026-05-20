@@ -23,3 +23,7 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if clickable_area.is_following_mouse:
 		global_position = get_global_mouse_position()
+
+
+func force_follow_mouse() -> void:
+	clickable_area.is_following_mouse = true

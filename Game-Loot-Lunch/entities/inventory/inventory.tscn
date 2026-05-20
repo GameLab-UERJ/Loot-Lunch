@@ -15,6 +15,7 @@ offset_right = 240.0
 offset_bottom = 135.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 script = ExtResource("1_0tuds")
 dimensions = Vector2i(3, 4)
 
@@ -27,6 +28,7 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 
 [node name="Grid" type="GridContainer" parent="Container" unique_id=370707674]
 layout_mode = 2

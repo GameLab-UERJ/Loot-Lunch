@@ -2,9 +2,6 @@
 
 [ext_resource type="Script" uid="uid://jujvaa432t2v" path="res://entities/inventory/inventory_cell.gd" id="1_rwyhr"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rwyhr"]
-bg_color = Color(0.2911, 0.71, 0.68207335, 1)
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_atw7w"]
 bg_color = Color(0.25, 0.25, 0.25, 0.99215686)
 
@@ -14,7 +11,7 @@ bg_color = Color(0.25, 0.25, 0.25, 0.99215686)
 custom_minimum_size = Vector2(34, 34)
 offset_right = 32.0
 offset_bottom = 32.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_rwyhr")
+mouse_filter = 1
 script = ExtResource("1_rwyhr")
 
 [node name="Panel" type="Panel" parent="." unique_id=1546870120]
@@ -22,6 +19,7 @@ custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_atw7w")
 
 [node name="ItemPlace" type="TextureRect" parent="Panel" unique_id=1528153454]
@@ -38,7 +36,6 @@ offset_right = 16.0
 offset_bottom = 16.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 0
 texture = SubResource("AtlasTexture_rwyhr")
 expand_mode = 3
 stretch_mode = 1
