@@ -10,7 +10,7 @@ bg_color = Color(0.25, 0.25, 0.25, 0.99215686)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rwyhr"]
 
-[node name="PanelContainer" type="PanelContainer" unique_id=1560891636]
+[node name="InventoryCell" type="PanelContainer" unique_id=1560891636]
 custom_minimum_size = Vector2(34, 34)
 offset_right = 32.0
 offset_bottom = 32.0
@@ -42,6 +42,3 @@ mouse_filter = 0
 texture = SubResource("AtlasTexture_rwyhr")
 expand_mode = 3
 stretch_mode = 1
-
-[node name="InventoryCell" type="Control" parent="." unique_id=1459648655]
-layout_mode = 2

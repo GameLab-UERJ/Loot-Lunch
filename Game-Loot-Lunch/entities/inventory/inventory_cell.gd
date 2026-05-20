@@ -29,3 +29,7 @@ func remove_item() -> Item:
 	var removed_item : Item = item
 	item = null
 	return removed_item
+
+
+func is_empty() -> bool:
+	return not item
