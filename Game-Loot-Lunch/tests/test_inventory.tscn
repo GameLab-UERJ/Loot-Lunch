@@ -2,14 +2,34 @@
 
 [ext_resource type="Script" uid="uid://bk8rxeu74ypfd" path="res://tests/test_inventory.gd" id="1_372ms"]
 [ext_resource type="PackedScene" uid="uid://cqnchp7q3uixs" path="res://entities/inventory/inventory.tscn" id="2_i0jss"]
+[ext_resource type="PackedScene" uid="uid://cexct4fg71pc5" path="res://entities/items/carne.tscn" id="3_2ff5v"]
+[ext_resource type="PackedScene" uid="uid://dwlepdjd5lv8x" path="res://entities/items/tomate.tscn" id="4_67sjd"]
+[ext_resource type="PackedScene" uid="uid://dd8vbsbs33ii4" path="res://entities/items/farinha.tscn" id="5_7tixs"]
 
 [node name="TestInventory" type="Node2D" unique_id=1879085168]
-position = Vector2(242, 128)
 script = ExtResource("1_372ms")
 
-[node name="Inventory" parent="." unique_id=1443629152 instance=ExtResource("2_i0jss")]
-offset_left = 0.0
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=755010616]
+layer = -1
+
+[node name="Inventory" parent="CanvasLayer" unique_id=1443629152 instance=ExtResource("2_i0jss")]
+anchors_preset = 11
+anchor_left = 1.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -60.0
 offset_top = 0.0
-offset_right = 0.0
+offset_right = -60.0
 offset_bottom = 0.0
-dimensions = Vector2i(4, 4)
+grow_horizontal = 0
+dimensions = Vector2i(3, 3)
+
+[node name="Carne" parent="." unique_id=1998340507 instance=ExtResource("3_2ff5v")]
+position = Vector2(179, 97)
+
+[node name="Tomate" parent="." unique_id=1065823031 instance=ExtResource("4_67sjd")]
+position = Vector2(257, 98)
+
+[node name="Farinha" parent="." unique_id=546262662 instance=ExtResource("5_7tixs")]
+position = Vector2(225, 144)

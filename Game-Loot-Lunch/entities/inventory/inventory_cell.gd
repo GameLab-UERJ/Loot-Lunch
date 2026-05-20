@@ -21,7 +21,7 @@ func set_item(value : Item) -> Item:
 		atlas.atlas = item.texture
 		atlas.region = item.region_rect
 		item_place.texture = atlas
-	
+	value.hide()
 	return previous_item
 
 

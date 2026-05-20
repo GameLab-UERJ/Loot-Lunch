@@ -34,11 +34,15 @@ func set_dimensions(value : Vector2i) -> void:
 
 
 ## Returns an array with the references of all empty cells
-func find_empty_cells() -> Array[InventoryCell]:
+## [br]
+## if 'first' is true, returns as soon as it finds one
+func find_empty_cells(first : bool = false) -> Array[InventoryCell]:
 	var result : Array[InventoryCell] = []
 	for cell : InventoryCell in grid.get_children():
 		if cell.is_empty():
 			result.append(cell)
+			if first:
+				break
 	return result
 
 
@@ -47,7 +51,6 @@ func remove_empty_cells(max_number : int) -> int:
 	if not grid:
 		return 0
 	if max_number <= 0:
-		push_warning("max_number must be positive for remove_empty_cells to have effect ("+str(max_number)+")")
 		return 0
 	
 	var empty_cells : Array[InventoryCell] = find_empty_cells()
@@ -57,3 +60,9 @@ func remove_empty_cells(max_number : int) -> int:
 	for i in max_number:
 		empty_cells[i].queue_free()
 	return max_number
+
+
+func add_item(item : Item) -> void:
+	var cell : InventoryCell = find_empty_cells(true)[0]
+	cell.set_item(item)
+	
