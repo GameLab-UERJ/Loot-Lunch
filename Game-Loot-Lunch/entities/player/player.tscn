@@ -502,7 +502,6 @@ _data = {
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("2_bqsbk")
-invencibility_time = 5.0
 
 [node name="FiniteStateMachine" parent="." index="0" unique_id=394854071]
 script = ExtResource("3_xf5fp")
