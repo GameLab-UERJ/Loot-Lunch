@@ -15,7 +15,6 @@ offset_right = 240.0
 offset_bottom = 135.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 1
 script = ExtResource("1_0tuds")
 dimensions = Vector2i(3, 4)
 

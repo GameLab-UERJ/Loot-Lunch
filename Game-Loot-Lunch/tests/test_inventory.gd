@@ -12,10 +12,13 @@ extends Node2D
 
 
 func _ready() -> void:
-	inventory.add_item(carne)
+	carne.connect("picked_up",inventory.add_item)
+	tomate.connect("picked_up",inventory.add_item)
+	farinha.connect("picked_up",inventory.add_item)
+	'''inventory.add_item(carne)
 	inventory.add_item(tomate)
 	inventory.add_item(farinha)
-	'''print("root:\n",get_children(),"\n-----------")
+	print("root:\n",get_children(),"\n-----------")
 	print("grid:")
 	inventory.print_inventory_cells()
 	print("\n-----------")
@@ -33,6 +36,10 @@ func _physics_process(_delta: float) -> void:
 	selected_pos.text = "pos: "+str(inventory.selected_pos)
 	selected_positions.text = "positions set as selected:\n"+str(get_selected_position())
 
+
+func _input(event: InputEvent) -> void:
+	if Input.is_action_just_released("open_inventory"):
+		inventory.visible = not inventory.visible
 
 func get_selected_position() -> Array[Vector2i]:
 	var result : Array[Vector2i] = []

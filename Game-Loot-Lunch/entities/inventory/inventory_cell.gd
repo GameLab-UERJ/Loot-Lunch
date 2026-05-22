@@ -27,7 +27,7 @@ func _ready() -> void:
 	change_bg_color(background_color)
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if is_selected and get_bg_color() == background_color:
 		change_bg_color(selected_color)
 	if not is_selected and get_bg_color() == selected_color:
