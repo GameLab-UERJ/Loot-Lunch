@@ -27,3 +27,6 @@ func _process(_delta: float) -> void:
 
 func force_follow_mouse() -> void:
 	clickable_area.is_following_mouse = true
+
+func force_stop_follow_mouse() -> void:
+	clickable_area.is_following_mouse = false
