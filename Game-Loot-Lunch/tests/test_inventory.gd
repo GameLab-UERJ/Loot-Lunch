@@ -8,10 +8,15 @@ extends Node2D
 @onready var selected_cell: Label = $VBoxContainer/SelectedCell
 @onready var selected_item: Label = $VBoxContainer/SelectedItem
 @onready var selected_pos: Label = $VBoxContainer/SelectedPos
-@onready var selected_positions: Label = $VBoxContainer/SelectedPositions
+@onready var tutorial: Label = $VBoxContainer/Label
 
 
 func _ready() -> void:
+	tutorial.text = '''
+	  Press    I    to    show/hide    Inventory
+	  Left    click    to    select/move    items
+	  Right    click    to    cancel    selection/remove    items'''
+					
 	carne.connect("picked_up",inventory.add_item)
 	tomate.connect("picked_up",inventory.add_item)
 	farinha.connect("picked_up",inventory.add_item)
@@ -34,7 +39,6 @@ func _physics_process(_delta: float) -> void:
 	selected_cell.text = "cell: "+str(inventory.selected_cell)
 	selected_item.text = "item: "+str(inventory.selected_item)
 	selected_pos.text = "pos: "+str(inventory.selected_pos)
-	selected_positions.text = "positions set as selected:\n"+str(get_selected_position())
 
 
 func _input(_event: InputEvent) -> void:

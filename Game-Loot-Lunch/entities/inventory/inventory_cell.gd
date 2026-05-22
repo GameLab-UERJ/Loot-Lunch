@@ -3,7 +3,7 @@ class_name InventoryCell
 
 
 signal selected(cell : InventoryCell)
-signal unselected(cell : InventoryCell)
+signal wants_item_removed(cell : InventoryCell)
 
 
 @export var item : Item:
@@ -35,6 +35,8 @@ func _process(_delta: float) -> void:
 func _gui_input(event: InputEvent) -> void:
 	if event.is_action_released("left_click"):
 		is_selected = true
+	if event.is_action_released("right_click"):
+		wants_item_removed.emit(self)
 
 
 func remove_item(new_parent : Node = null, _show : bool = true) -> Item:
@@ -57,8 +59,6 @@ func set_is_selected(value : bool) -> void:
 	is_selected = value
 	if is_selected:
 		selected.emit(self)
-	else:
-		unselected.emit(self)
 
 
 func set_item(value : Item) -> Item:

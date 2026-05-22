@@ -8,6 +8,11 @@ const INVENTORY_CELL = preload("uid://b85fxrmr3ribs")
 ## quantidade de colunas e y a quantidade de linhas
 @export var dimensions : Vector2i = Vector2i.ONE:
 	set = set_dimensions
+	
+## Representá o nó a ser usado como base para dropar itens.
+## Em geral, uma [Marker2D] seria o melhor mas pode usar algo como o [Player],
+## por exemplo.
+@export var node_to_drop : Node2D
 
 
 var selected_cell : InventoryCell
@@ -31,8 +36,9 @@ func _gui_input(event: InputEvent) -> void:
 		return
 	
 	if event.is_action_released("right_click"):
-		handle_new_selected_cell(null)
-
+		print('wants to cancel')
+		if selected_cell:
+			handle_new_selected_cell(null)
 
 func set_dimensions(value : Vector2i) -> void:
 	if not value or not(value.x != 0 and value.y != 0):
@@ -46,6 +52,7 @@ func set_dimensions(value : Vector2i) -> void:
 		for i in range(grid.get_child_count(),dimensions.x * dimensions.y):
 			cell = INVENTORY_CELL.instantiate()
 			cell.selected.connect(handle_new_selected_cell)
+			cell.wants_item_removed.connect(handle_wants_item_removed)
 			grid.add_child(cell)
 		call_deferred("remove_empty_cells",grid.get_child_count()-dimensions.x * dimensions.y)
 
@@ -79,6 +86,18 @@ func remove_empty_cells(max_number : int) -> int:
 	return max_number
 
 
+func handle_wants_item_removed(cell : InventoryCell) -> void:
+	print(get_pos(cell)," wants to be removed")
+	if selected_cell:
+		print("can't remove, because cell at", get_pos(selected_cell)," is selected")
+		return
+	if not cell.item:
+		print("nothing to remove")
+		return
+	print("there is ",cell.item," to remove")
+	var item : Item = remove_item_at(get_pos(cell))
+	item.global_position = node_to_drop.global_position
+
 func handle_new_selected_cell(cell : InventoryCell) -> void:
 	if not cell:
 		set_selected_cell(null)
@@ -107,6 +126,12 @@ func handle_new_selected_cell(cell : InventoryCell) -> void:
 func add_item(item : Item) -> void:
 	var cell : InventoryCell = find_empty_cells(true)[0]
 	cell.set_item(item)
+
+
+func remove_item() -> Item:
+	if not selected_cell or not selected_cell.item:
+		return null
+	return null
 
 
 func set_selected_cell(value : InventoryCell) -> void:
@@ -138,7 +163,7 @@ func get_cell(pos : Vector2i) -> InventoryCell:
 	if pos.x >= dimensions.x or pos.y >= dimensions.y:
 		push_error("Position "+str(pos)+" outside of Inventory's dimensions") 
 		return null
-	return grid.get_child(pos.y*dimensions.x + pos.x)
+	return grid.get_child(pos.x*dimensions.y + pos.y)
 
 
 func get_pos(cell : InventoryCell) -> Vector2i:
