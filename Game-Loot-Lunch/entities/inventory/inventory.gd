@@ -36,7 +36,6 @@ func _gui_input(event: InputEvent) -> void:
 		return
 	
 	if event.is_action_released("right_click"):
-		print('wants to cancel')
 		if selected_cell:
 			handle_new_selected_cell(null)
 
@@ -87,16 +86,14 @@ func remove_empty_cells(max_number : int) -> int:
 
 
 func handle_wants_item_removed(cell : InventoryCell) -> void:
-	print(get_pos(cell)," wants to be removed")
-	if selected_cell:
-		print("can't remove, because cell at", get_pos(selected_cell)," is selected")
+	if selected_cell or not cell.item:
 		return
-	if not cell.item:
-		print("nothing to remove")
-		return
-	print("there is ",cell.item," to remove")
+	
 	var item : Item = remove_item_at(get_pos(cell))
-	item.global_position = node_to_drop.global_position
+	if node_to_drop:
+		item.global_position = node_to_drop.global_position
+	else:
+		push_error("Node where to drop items is not set. Dropped at position zero of ",item.get_parent())
 
 func handle_new_selected_cell(cell : InventoryCell) -> void:
 	if not cell:
