@@ -13,6 +13,7 @@ signal unselected(cell : InventoryCell)
 @export var selected_color : Color = Color.hex(0xd99a64)
 
 
+var can_select : bool = true
 var is_selected : bool = false:
 	set = set_is_selected
 
@@ -24,34 +25,42 @@ func _ready() -> void:
 	item = item
 	add_theme_stylebox_override("panel",StyleBoxFlat.new())
 	change_bg_color(background_color)
+
+
+func _process(delta: float) -> void:
+	if is_selected and get_bg_color() == background_color:
+		change_bg_color(selected_color)
+	if not is_selected and get_bg_color() == selected_color:
+		change_bg_color(background_color)
 	
 
 func _gui_input(event: InputEvent) -> void:
+	if not can_select:
+		return
 	if not event is InputEventMouseButton:
 		return
 	var mouse_event : InputEventMouseButton = event
 	
 	if mouse_event.is_action_released("left_click"):
-		is_selected = not is_selected
+		set_is_selected(true)
 
 
 func change_bg_color(color : Color) -> void:
 	(get_theme_stylebox("panel") as StyleBoxFlat).bg_color = color
 
 
+func get_bg_color() -> Color:
+	return (get_theme_stylebox("panel") as StyleBoxFlat).bg_color
+
+
 func set_is_selected(value : bool) -> void:
-	if is_selected == value:
-		return
-	
-	if value:
-		is_selected = true
+	is_selected = value
+	if is_selected:
 		selected.emit(self)
-		change_bg_color(selected_color)
 	else:
-		is_selected = false
 		unselected.emit(self)
-		change_bg_color(background_color)
-	
+
+
 func set_item(value : Item) -> Item:
 	var previous_item : Item = item
 	item = value
@@ -66,12 +75,13 @@ func set_item(value : Item) -> Item:
 		atlas.region = item.region_rect
 		item_place.texture = atlas
 	value.hide()
+	value.force_stop_follow_mouse()
 	value.position = Vector2.ZERO
 	value.reparent(self)
 	return previous_item
 
 
-func remove_item(new_parent : Node = null) -> Item:
+func remove_item(new_parent : Node = null, _show : bool = true) -> Item:
 	if not new_parent:
 		new_parent = get_tree().current_scene
 	if not item:
@@ -80,6 +90,10 @@ func remove_item(new_parent : Node = null) -> Item:
 	var removed_item : Item = item
 	item = null
 	removed_item.reparent(new_parent)
+	if _show: 
+		removed_item.show()
+	else:
+		removed_item.hide()
 	return removed_item
 
 

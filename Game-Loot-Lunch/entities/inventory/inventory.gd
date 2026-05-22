@@ -10,7 +10,10 @@ const INVENTORY_CELL = preload("uid://b85fxrmr3ribs")
 	set = set_dimensions
 
 
-var selected_cells : Array[InventoryCell] = []
+var selected_cell : InventoryCell
+var selected_item : Item
+var selected_pos : Vector2i:
+	get = get_selected_pos
 
 
 @onready var container: PanelContainer = $Container
@@ -24,11 +27,11 @@ func _ready() -> void:
 func _gui_input(event: InputEvent) -> void:
 	if not event is InputEventMouseButton:
 		return
-	var mouse_event : InputEventMouseButton = event
-	if mouse_event.is_action_released("right_click"):
-		for cell : InventoryCell in selected_cells:
-			cell.is_selected = false
-			remove_from_selected_cells(cell)
+	if not selected_cell:
+		return
+	
+	if event.is_action_released("right_click"):
+		handle_new_selected_cell(null)
 
 
 func set_dimensions(value : Vector2i) -> void:
@@ -42,18 +45,9 @@ func set_dimensions(value : Vector2i) -> void:
 		grid.columns = dimensions.x
 		for i in range(grid.get_child_count(),dimensions.x * dimensions.y):
 			cell = INVENTORY_CELL.instantiate()
-			cell.selected.connect(add_to_selected_cells)
-			cell.unselected.connect(remove_from_selected_cells)
+			cell.selected.connect(handle_new_selected_cell)
 			grid.add_child(cell)
 		call_deferred("remove_empty_cells",grid.get_child_count()-dimensions.x * dimensions.y)
-
-
-func add_to_selected_cells(cell : InventoryCell) -> void:
-	selected_cells.append(cell)
-
-
-func remove_from_selected_cells(cell : InventoryCell) -> void:
-	selected_cells.erase(cell)
 
 
 ## Returns an array with the references of all empty cells
@@ -85,6 +79,30 @@ func remove_empty_cells(max_number : int) -> int:
 	return max_number
 
 
+func handle_new_selected_cell(cell : InventoryCell) -> void:
+	if not cell:
+		set_selected_cell(null)
+		return
+	
+	if not selected_cell:
+		if not cell.item:
+			cell.is_selected = false
+			return
+		set_selected_cell(cell)
+		return
+	
+	if selected_cell == cell:
+		handle_new_selected_cell(null)
+		return
+		
+	selected_cell.item = cell.item
+	cell.item = selected_item
+	selected_cell.is_selected = false
+	cell.is_selected = false
+	selected_cell = null
+	selected_item = null
+
+
 func get_cell(pos : Vector2i) -> InventoryCell:
 	if pos.x >= dimensions.x or pos.y >= dimensions.y:
 		push_error("Position "+str(pos)+" outside of Inventory's dimensions") 
@@ -92,8 +110,14 @@ func get_cell(pos : Vector2i) -> InventoryCell:
 	return grid.get_child(pos.y*dimensions.x + pos.x)
 
 
+func get_pos(cell : InventoryCell) -> Vector2i:
+	var pos : int = grid.get_children().find(cell)
+	if pos == -1:
+		return Vector2i.MIN
+	return Vector2i(pos/dimensions.x, pos%dimensions.y)
+
+
 func add_item(item : Item) -> void:
-	print('item to be added: ',item)
 	var cell : InventoryCell = find_empty_cells(true)[0]
 	cell.set_item(item)
 
@@ -106,8 +130,30 @@ func remove_item_at(pos : Vector2i) -> Item:
 	if not item:
 		push_warning("At pos " + str(pos) + ": ")
 		return null
-	item.show()
 	return item
+
+
+func set_selected_cell(value : InventoryCell) -> void:
+	if selected_cell:
+		selected_cell.is_selected = false
+		selected_cell.set_item(selected_item)
+		selected_item = null
+	selected_cell = value
+	if not selected_cell:
+		selected_item = null
+		return
+	if selected_cell.item:
+		selected_item = selected_cell.remove_item()
+		selected_item.force_follow_mouse()
+		pass
+
+
+func get_selected_pos() -> Vector2i:
+	if selected_cell:
+		selected_pos = get_pos(selected_cell)
+	else:
+		selected_pos = Vector2i.MIN
+	return selected_pos
 
 
 func print_inventory_cells() -> void:
