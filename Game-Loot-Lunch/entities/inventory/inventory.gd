@@ -56,7 +56,7 @@ func set_dimensions(value : Vector2i) -> void:
 func find_empty_cells(first : bool = false) -> Array[InventoryCell]:
 	var result : Array[InventoryCell] = []
 	for cell : InventoryCell in grid.get_children():
-		if cell.is_empty():
+		if not cell.item:
 			result.append(cell)
 			if first:
 				break
@@ -97,40 +97,16 @@ func handle_new_selected_cell(cell : InventoryCell) -> void:
 		
 	selected_cell.item = cell.item
 	cell.item = selected_item
-	selected_cell.is_selected = false
+
 	cell.is_selected = false
+	selected_cell.is_selected = false
 	selected_cell = null
 	selected_item = null
-
-
-func get_cell(pos : Vector2i) -> InventoryCell:
-	if pos.x >= dimensions.x or pos.y >= dimensions.y:
-		push_error("Position "+str(pos)+" outside of Inventory's dimensions") 
-		return null
-	return grid.get_child(pos.y*dimensions.x + pos.x)
-
-
-func get_pos(cell : InventoryCell) -> Vector2i:
-	var pos : int = grid.get_children().find(cell)
-	if pos == -1:
-		return Vector2i.MIN
-	return Vector2i(pos/dimensions.x, pos%dimensions.y)
 
 
 func add_item(item : Item) -> void:
 	var cell : InventoryCell = find_empty_cells(true)[0]
 	cell.set_item(item)
-
-
-func remove_item_at(pos : Vector2i) -> Item:
-	var cell : InventoryCell = get_cell(pos)
-	if not cell:
-		return null
-	var item : Item = cell.remove_item()
-	if not item:
-		push_warning("At pos " + str(pos) + ": ")
-		return null
-	return item
 
 
 func set_selected_cell(value : InventoryCell) -> void:
@@ -154,6 +130,33 @@ func get_selected_pos() -> Vector2i:
 	else:
 		selected_pos = Vector2i.MIN
 	return selected_pos
+
+
+# TODO all those functions should be in a InventoryGrid class to modularize.
+
+func get_cell(pos : Vector2i) -> InventoryCell:
+	if pos.x >= dimensions.x or pos.y >= dimensions.y:
+		push_error("Position "+str(pos)+" outside of Inventory's dimensions") 
+		return null
+	return grid.get_child(pos.y*dimensions.x + pos.x)
+
+
+func get_pos(cell : InventoryCell) -> Vector2i:
+	var pos : int = grid.get_children().find(cell)
+	if pos == -1:
+		return Vector2i.MIN
+	return Vector2i(pos/dimensions.x, pos%dimensions.y)
+
+
+func remove_item_at(pos : Vector2i) -> Item:
+	var cell : InventoryCell = get_cell(pos)
+	if not cell:
+		return null
+	var item : Item = cell.remove_item()
+	if not item:
+		push_warning("At pos " + str(pos) + ": ")
+		return null
+	return item
 
 
 func print_inventory_cells() -> void:
