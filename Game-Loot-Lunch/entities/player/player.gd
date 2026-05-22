@@ -1,5 +1,5 @@
 extends Character
-
+class_name Player
 
 @onready var sword: Node2D = $Sword
 @onready var sword_hitbox: HitboxComponent = $Sword/Node2D/Sprite2D/HitboxComponent
@@ -21,5 +21,8 @@ func _process(_delta: float) -> void:
 		sword.scale.y = -1
 	elif sword.scale.y == -1 and mouse_direction.x > 0:
 		sword.scale.y = 1
-	if Input.is_action_just_pressed("ui_attack") and not sword_animation_player.is_playing():
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_released("ui_attack") and not sword_animation_player.is_playing():
 		sword_animation_player.play("attack")
