@@ -1,98 +1,22 @@
-[gd_scene format=4 uid="uid://bgfd8xe56pgv2"]
-
-[ext_resource type="Texture2D" uid="uid://coe373elfnttc" path="res://assets/art/tilesets/interior/Paredes_e_divisorias_cortadas.png" id="1_4r4wk"]
-[ext_resource type="Texture2D" uid="uid://ds0nc406kxqi3" path="res://assets/art/tilesets/interior/Piso.png" id="2_1loew"]
-[ext_resource type="Texture2D" uid="uid://bcjsdj346wct0" path="res://assets/art/tilesets/interior/Interior.png" id="3_weo8i"]
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hvgk8"]
-texture = ExtResource("1_4r4wk")
-texture_region_size = Vector2i(32, 32)
-10:58/size_in_atlas = Vector2i(4, 9)
-10:58/0 = 0
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qxn06"]
-texture = ExtResource("2_1loew")
-margins = Vector2i(6, 62)
-texture_region_size = Vector2i(64, 64)
-13:2/size_in_atlas = Vector2i(17, 17)
-13:2/0 = 0
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2qs24"]
-texture = ExtResource("3_weo8i")
-8:18/size_in_atlas = Vector2i(3, 5)
-8:18/0 = 0
-
-[sub_resource type="TileSet" id="TileSet_1loew"]
-sources/5 = SubResource("TileSetAtlasSource_hvgk8")
-sources/6 = SubResource("TileSetAtlasSource_qxn06")
-sources/8 = SubResource("TileSetAtlasSource_2qs24")
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jf3sp"]
-texture = ExtResource("1_4r4wk")
-texture_region_size = Vector2i(32, 32)
-10:5/size_in_atlas = Vector2i(11, 10)
-10:5/0 = 0
-21:5/size_in_atlas = Vector2i(11, 10)
-21:5/0 = 0
-21:16/size_in_atlas = Vector2i(11, 11)
-21:16/0 = 0
-10:16/size_in_atlas = Vector2i(11, 11)
-10:16/0 = 0
-11:58/size_in_atlas = Vector2i(3, 8)
-11:58/0 = 0
-10:67/size_in_atlas = Vector2i(10, 8)
-10:67/0 = 0
-0:78/size_in_atlas = Vector2i(10, 9)
-0:78/0 = 0
-15:27/size_in_atlas = Vector2i(8, 9)
-15:27/0 = 0
-0:16/size_in_atlas = Vector2i(10, 11)
-0:16/0 = 0
-0:5/size_in_atlas = Vector2i(10, 11)
-0:5/0 = 0
-14:58/size_in_atlas = Vector2i(6, 8)
-14:58/0 = 0
-2:47/size_in_atlas = Vector2i(6, 7)
-2:47/0 = 0
-
-[sub_resource type="TileSet" id="TileSet_4r4wk"]
-sources/2 = SubResource("TileSetAtlasSource_jf3sp")
+[gd_scene format=3 uid="uid://bgfd8xe56pgv2"]
 
 [node name="Node2D" type="Node2D" unique_id=1172528638]
 metadata/_edit_vertical_guides_ = [2269.0]
 
-[node name="Tapete" type="TileMapLayer" parent="." unique_id=1622366636]
-position = Vector2(18, 35)
-scale = Vector2(0.39294547, 0.5161598)
-tile_map_data = PackedByteArray("AAAgAFEACAAIABIAAAAbAI0ACAAIABIAAAA=")
-tile_set = SubResource("TileSet_1loew")
+[node name="Piso" type="TileMapLayer" parent="." unique_id=1152058483]
 
-[node name="Piso" type="TileMapLayer" parent="." unique_id=1451653057]
-scale = Vector2(0.5, 0.5)
-tile_map_data = PackedByteArray("AAAzAGEAAwACAAoAADAsAGQABgANAAIAAAAsAGIABAAaAAUAAABwAGIABAAaAAUAABBvAGQABgANAAIAABA=")
-tile_set = SubResource("TileSet_1loew")
+[node name="TileMapLayer2" type="TileMapLayer" parent="." unique_id=1365412304]
 
-[node name="Parede_1" type="TileMapLayer" parent="." unique_id=817274147]
-scale = Vector2(0.5, 0.5)
-tile_map_data = PackedByteArray("AAATAD4AAgAKAAUAAAAlAD4AAgAKAAUAAAA3AD4AAgAKAAUAAABKAD4AAgAKAAUAABBbAD4AAgAKAAUAAABtAD4AAgAKAAUAAAB/AD4AAgAKAAUAAAATAIMAAgAKAAUAAAAlAIMAAgAKAAUAAAA3AIMAAgAKAAUAAABJAIMAAgAKAAUAAABWAIUAAgAOADoAAABkAIMAAgAKAAUAAAB2AIMAAgAKAAUAAACDAIMAAgAVAAUAAAA=")
-tile_set = SubResource("TileSet_4r4wk")
+[node name="TileMapLayer3" type="TileMapLayer" parent="." unique_id=270383919]
 
-[node name="Aresta_parede" type="TileMapLayer" parent="." unique_id=1745626142]
-scale = Vector2(0.5, 0.5)
-tile_map_data = PackedByteArray("AAAIAD0ABQAKADoAAAAIAEsABQAKADoAAAAIAFkABQAKADoAAAAIAGcABQAKADoAAAAIAHUABQAKADoAAACJAD0ABQAKADoAAACJAEsABQAKADoAAACJAFkABQAKADoAAACJAGcABQAKADoAAACJAHUABQAKADoAAAAIAIMABQAKADoAAAA=")
-tile_set = SubResource("TileSet_1loew")
+[node name="TileMapLayer4" type="TileMapLayer" parent="." unique_id=1851864208]
 
-[node name="TileMapLayer5" type="TileMapLayer" parent="." unique_id=1721052013]
-tile_set = SubResource("TileSet_1loew")
+[node name="TileMapLayer5" type="TileMapLayer" parent="." unique_id=513428000]
 
-[node name="TileMapLayer6" type="TileMapLayer" parent="." unique_id=762438958]
-tile_set = SubResource("TileSet_1loew")
+[node name="TileMapLayer6" type="TileMapLayer" parent="." unique_id=1972815988]
 
-[node name="TileMapLayer7" type="TileMapLayer" parent="." unique_id=1302061663]
-tile_set = SubResource("TileSet_1loew")
+[node name="TileMapLayer7" type="TileMapLayer" parent="." unique_id=1534133532]
 
-[node name="TileMapLayer8" type="TileMapLayer" parent="." unique_id=2027046613]
-tile_set = SubResource("TileSet_1loew")
+[node name="TileMapLayer8" type="TileMapLayer" parent="." unique_id=1976133917]
 
-[node name="TileMapLayer9" type="TileMapLayer" parent="." unique_id=884501196]
-tile_set = SubResource("TileSet_1loew")
+[node name="TileMapLayer9" type="TileMapLayer" parent="." unique_id=1945983872]
