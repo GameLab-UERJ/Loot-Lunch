@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://dcj1act6hpphe"]
+
+[ext_resource type="PackedScene" uid="uid://3cgeew2m05mn" path="res://entities/player/player.tscn" id="1_6esff"]
+[ext_resource type="PackedScene" uid="uid://cjd7jorsb02sh" path="res://levels/shop_room.tscn" id="2_5bw42"]
+
+[node name="TesteShop" type="Node2D" unique_id=1768761111]
+
+[node name="ShopRoom" parent="." unique_id=141259000 instance=ExtResource("2_5bw42")]
+position = Vector2(52, 27)
+
+[node name="Player" parent="." unique_id=1328809556 instance=ExtResource("1_6esff")]
+position = Vector2(32, 36)
