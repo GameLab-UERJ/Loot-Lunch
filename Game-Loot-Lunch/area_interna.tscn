@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://bgfd8xe56pgv2"]
+
+[node name="Node2D" type="Node2D" unique_id=1172528638]
+metadata/_edit_vertical_guides_ = [2269.0]
+
+[node name="Piso" type="TileMapLayer" parent="." unique_id=1152058483]
+
+[node name="TileMapLayer2" type="TileMapLayer" parent="." unique_id=1365412304]
+
+[node name="TileMapLayer3" type="TileMapLayer" parent="." unique_id=270383919]
+
+[node name="TileMapLayer4" type="TileMapLayer" parent="." unique_id=1851864208]
+
+[node name="TileMapLayer5" type="TileMapLayer" parent="." unique_id=513428000]
+
+[node name="TileMapLayer6" type="TileMapLayer" parent="." unique_id=1972815988]
+
+[node name="TileMapLayer7" type="TileMapLayer" parent="." unique_id=1534133532]
+
+[node name="TileMapLayer8" type="TileMapLayer" parent="." unique_id=1976133917]
+
+[node name="TileMapLayer9" type="TileMapLayer" parent="." unique_id=1945983872]
