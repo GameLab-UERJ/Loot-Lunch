@@ -22,6 +22,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 TimeCycle="*uid://b02svtevwxj2u"
+SaveLoadManager="*uid://bi06j1t67d10f"
 
 [debug]
 
