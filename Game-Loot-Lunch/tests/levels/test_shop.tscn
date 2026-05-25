@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://dccphg7sgqmy7"]
+
+[ext_resource type="Script" uid="uid://ccwtxjj01gvtl" path="res://tests/levels/test_levels.gd" id="1_par7q"]
+[ext_resource type="PackedScene" uid="uid://cjd7jorsb02sh" path="res://levels/shop/shop_room.tscn" id="2_par7q"]
+
+[node name="TestShop" type="Node2D" unique_id=964897232]
+script = ExtResource("1_par7q")
+
+[node name="ShopRoom" parent="." unique_id=141259000 instance=ExtResource("2_par7q")]
+
+[connection signal="player_can_leave_shop" from="ShopRoom" to="." method="_on_player_can_leave_shop"]
