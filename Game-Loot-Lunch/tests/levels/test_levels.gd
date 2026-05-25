@@ -1,13 +1,19 @@
 extends Node2D
 
 
+var combat_zone : Node2D
+
+
 @onready var inside_house: Node2D = get_node("InsideHouse") if self.has_node("InsideHouse") else null
 @onready var external_house: Node2D = get_node("ExternalHouse") if self.has_node("ExternalHouse") else null
 @onready var shop_room: Node2D = get_node("ShopRoom") if self.has_node("ShopRoom") else null
 
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	if not combat_zone:
+		combat_zone = load("uid://d0pechf47plm7").instantiate()
 	if not inside_house:
 		inside_house = load("uid://beai1me2j13ef").instantiate()
 	if not external_house:
@@ -33,3 +39,7 @@ func _on_player_can_leave_shop() -> void:
 
 func _on_player_can_enter_shop() -> void:
 	EasyTransition.transition_to_node(shop_room,1.5,EasyTransition.TransitionAnim.FADE)
+
+
+func _on_player_can_enter_cambat_zone() -> void:
+	EasyTransition.transition_to_node(combat_zone,1.5,EasyTransition.TransitionAnim.FADE)

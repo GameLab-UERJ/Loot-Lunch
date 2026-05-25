@@ -39,8 +39,8 @@ func _on_button_mouse_entered() -> void:
 
 
 func _on_new_game_button_pressed() -> void:
-	print(new_game_button.text)
-	_play_press_sound_and_quit()
+	_play_press_sound()
+	EasyTransition.transition_to_path("uid://d3ypiu36avnv1",1.0,EasyTransition.TransitionAnim.CURTAIN)
 
 
 func _on_continue_button_pressed() -> void:
@@ -85,7 +85,7 @@ func _on_mouse_pressed() -> void:
 	await press_audio.finished
 
 
-func _play_press_sound_and_quit() -> void:
+func _play_press_sound() -> void:
 	if is_quitting:
 		return
 
@@ -97,6 +97,9 @@ func _play_press_sound_and_quit() -> void:
 		press_audio.play()
 		await press_audio.finished
 
+
+func _play_press_sound_and_quit() -> void:
+	await _play_press_sound()
 	get_tree().quit()
 
 
