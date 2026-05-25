@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://drguwsuardbi1"
-path="res://.godot/imported/Paredes_e_divisorias_cortadas.png-77be28df9a1a3cccdb4f1327f93dac28.ctex"
+uid="uid://ds0nc406kxqi3"
+path="res://.godot/imported/Piso.png-44c74f7450412c835f99fe3d01382291.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/tilesets/interior/Paredes_e_divisorias_cortadas.png"
-dest_files=["res://.godot/imported/Paredes_e_divisorias_cortadas.png-77be28df9a1a3cccdb4f1327f93dac28.ctex"]
+source_file="res://assets/art/tilesets/interior/Piso.png"
+dest_files=["res://.godot/imported/Piso.png-44c74f7450412c835f99fe3d01382291.ctex"]
 
 [params]
 

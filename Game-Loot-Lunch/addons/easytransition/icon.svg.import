@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://drguwsuardbi1"
-path="res://.godot/imported/Paredes_e_divisorias_cortadas.png-77be28df9a1a3cccdb4f1327f93dac28.ctex"
+uid="uid://frtcf7m0mu6a"
+path="res://.godot/imported/icon.svg-b997dfbfb7990ea9f4aa0cb0df1a9206.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/tilesets/interior/Paredes_e_divisorias_cortadas.png"
-dest_files=["res://.godot/imported/Paredes_e_divisorias_cortadas.png-77be28df9a1a3cccdb4f1327f93dac28.ctex"]
+source_file="res://addons/easytransition/icon.svg"
+dest_files=["res://.godot/imported/icon.svg-b997dfbfb7990ea9f4aa0cb0df1a9206.ctex"]
 
 [params]
 
@@ -38,3 +38,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
+svg/scale=1.0
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false
