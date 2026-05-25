@@ -14,12 +14,16 @@ extends Control
 
 var is_quitting: bool = false
 
+var save_load_menu: SaveLoadMenu
+var save_load_scene: PackedScene = preload("res://menus/saver_loader/save_load_menu.tscn")
+
 @onready var new_game_button: Button = $Content/Buttons/NewGameButton
 @onready var continue_button: Button = $Content/Buttons/ContinueButton
 @onready var settings_button: Button = $Content/Buttons/SettingsButton
 @onready var quit_button: Button = $Content/Buttons/QuitButton
 @onready var hover_audio: AudioStreamPlayer = $HoverAudio
 @onready var press_audio: AudioStreamPlayer = $PressAudio
+@onready var content: VBoxContainer = $Content
 
 
 func _ready() -> void:
@@ -40,8 +44,20 @@ func _on_new_game_button_pressed() -> void:
 
 
 func _on_continue_button_pressed() -> void:
-	print(continue_button.text)
-	_play_press_sound_and_quit()
+	content.visible = false
+	
+	save_load_menu = save_load_scene.instantiate() as SaveLoadMenu
+	get_tree().current_scene.call_deferred("add_child", save_load_menu)
+	
+	# Used for synchronization
+	await get_tree().create_timer(0.1).timeout
+	
+	# Used to exit the new scene
+	for child in get_children():
+		if child.name == save_load_menu.name:
+			child.save_load_menu_exit.connect(_return_from_menus)
+	
+	_on_mouse_pressed()
 
 
 func _on_settings_button_pressed() -> void:
@@ -61,6 +77,14 @@ func _disable_buttons() -> void:
 	quit_button.disabled = true
 
 
+func _on_mouse_pressed() -> void:
+	if press_audio == null:
+		return
+	
+	press_audio.play()
+	await press_audio.finished
+
+
 func _play_press_sound_and_quit() -> void:
 	if is_quitting:
 		return
@@ -74,3 +98,7 @@ func _play_press_sound_and_quit() -> void:
 		await press_audio.finished
 
 	get_tree().quit()
+
+
+func _return_from_menus() -> void:
+	content.visible = true

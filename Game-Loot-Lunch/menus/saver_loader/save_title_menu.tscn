@@ -1,0 +1,139 @@
+[gd_scene format=3 uid="uid://w1p53tsht0gd"]
+
+[ext_resource type="StyleBox" uid="uid://caoilc7p7lt3y" path="res://menus/saver_loader/button_config.tres" id="1_e6hsw"]
+[ext_resource type="Script" uid="uid://45pec7r087j0" path="res://menus/saver_loader/save_title_menu.gd" id="1_gjip0"]
+[ext_resource type="AudioStream" uid="uid://doyfcod6s5ptl" path="res://assets/sfx/menus/abs-confirm-2.mp3" id="3_j0gbi"]
+[ext_resource type="AudioStream" uid="uid://bkiovum7ll7au" path="res://assets/sfx/menus/abs-pointer-2.mp3" id="4_228qk"]
+[ext_resource type="AudioStream" uid="uid://h546201fexpw" path="res://assets/sfx/menus/abs-cancel-2.mp3" id="5_228qk"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gjip0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ch5en"]
+bg_color = Color(0.6, 0.6, 0.6, 0.6745098)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j0gbi"]
+bg_color = Color(0.6, 0.6, 0.6, 0.5294118)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_color = Color(0, 0, 0, 0.98039216)
+shadow_size = 1
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_228qk"]
+
+[node name="SaveTitleMenu" type="Control" unique_id=560525735]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_gjip0")
+
+[node name="Panel" type="Panel" parent="." unique_id=1103925482]
+modulate = Color(1, 1, 1, 0.64705884)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel" unique_id=571186296]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/HBoxContainer" unique_id=674360858]
+layout_mode = 2
+theme_override_constants/separation = 32
+alignment = 1
+
+[node name="Title" type="Label" parent="Panel/HBoxContainer/VBoxContainer" unique_id=528323105]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 32
+text = "Save Name"
+horizontal_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="Panel/HBoxContainer/VBoxContainer" unique_id=559830399]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="LineEdit" type="LineEdit" parent="Panel/HBoxContainer/VBoxContainer/GridContainer" unique_id=662691545]
+custom_minimum_size = Vector2(160, 20)
+layout_mode = 2
+theme_override_styles/normal = ExtResource("1_e6hsw")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_gjip0")
+placeholder_text = "new_name"
+alignment = 1
+max_length = 12
+caret_blink = true
+
+[node name="ActionsGridContainer" type="GridContainer" parent="Panel/HBoxContainer/VBoxContainer" unique_id=1737282439]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+columns = 3
+
+[node name="ConfirmButton" type="Button" parent="Panel/HBoxContainer/VBoxContainer/ActionsGridContainer" unique_id=1905023896]
+custom_minimum_size = Vector2(110, 20)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = ExtResource("1_e6hsw")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ch5en")
+theme_override_styles/hover = SubResource("StyleBoxFlat_j0gbi")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_228qk")
+text = "Confirm"
+
+[node name="CanceldButton" type="Button" parent="Panel/HBoxContainer/VBoxContainer/ActionsGridContainer" unique_id=640294690]
+custom_minimum_size = Vector2(110, 20)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = ExtResource("1_e6hsw")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ch5en")
+theme_override_styles/hover = SubResource("StyleBoxFlat_j0gbi")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_228qk")
+text = "Canceld"
+
+[node name="PressAudio" type="AudioStreamPlayer" parent="." unique_id=1195766966]
+stream = ExtResource("3_j0gbi")
+volume_db = -6.0
+
+[node name="HoverAudio" type="AudioStreamPlayer" parent="." unique_id=1043960011]
+stream = ExtResource("4_228qk")
+volume_db = -12.0
+
+[node name="FailAudio" type="AudioStreamPlayer" parent="." unique_id=2106198987]
+stream = ExtResource("5_228qk")
+
+[connection signal="text_changed" from="Panel/HBoxContainer/VBoxContainer/GridContainer/LineEdit" to="." method="_on_line_edit_text_changed"]
+[connection signal="mouse_entered" from="Panel/HBoxContainer/VBoxContainer/ActionsGridContainer/ConfirmButton" to="." method="_on_mouse_entered"]
+[connection signal="pressed" from="Panel/HBoxContainer/VBoxContainer/ActionsGridContainer/ConfirmButton" to="." method="_on_confirm_button_pressed"]
+[connection signal="mouse_entered" from="Panel/HBoxContainer/VBoxContainer/ActionsGridContainer/CanceldButton" to="." method="_on_mouse_entered"]
+[connection signal="pressed" from="Panel/HBoxContainer/VBoxContainer/ActionsGridContainer/CanceldButton" to="." method="_on_canceld_button_pressed"]
