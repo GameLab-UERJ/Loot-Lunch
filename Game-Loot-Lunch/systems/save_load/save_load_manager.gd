@@ -45,9 +45,9 @@ func erase_data(save_position: int) -> void:
 # -- Store basic saves info --
 func _get_save_info() -> void:
 	saves_info.resize(6)
-	
+
 	if !DirAccess.dir_exists_absolute(save_path):
-		return
+		DirAccess.make_dir_absolute(save_path)
 	
 	save_list = DirAccess.get_files_at(save_path)
 	
