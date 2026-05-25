@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b7rvih4e4hkcu"]
 
-[ext_resource type="Script" uid="uid://bk8rxeu74ypfd" path="res://tests/test_inventory.gd" id="1_372ms"]
+[ext_resource type="Script" uid="uid://bk8rxeu74ypfd" path="res://tests/inventory/test_inventory.gd" id="1_372ms"]
 [ext_resource type="PackedScene" uid="uid://cqnchp7q3uixs" path="res://entities/inventory/inventory.tscn" id="2_i0jss"]
 [ext_resource type="PackedScene" uid="uid://cexct4fg71pc5" path="res://entities/items/carne.tscn" id="3_2ff5v"]
 [ext_resource type="PackedScene" uid="uid://dwlepdjd5lv8x" path="res://entities/items/tomate.tscn" id="4_67sjd"]

@@ -156,7 +156,7 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7vev3"]
-radius = 5.0
+radius = 7.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bectd"]
 radius = 2.0
@@ -514,7 +514,7 @@ sprite_frames = SubResource("SpriteFrames_va6lm")
 animation = &"move"
 
 [node name="CollisionShape2D" parent="." index="3" unique_id=398117634]
-position = Vector2(-1, 1)
+position = Vector2(-1, 0)
 shape = SubResource("CircleShape2D_7vev3")
 
 [node name="Sword" type="Node2D" parent="." index="4" unique_id=553499218]

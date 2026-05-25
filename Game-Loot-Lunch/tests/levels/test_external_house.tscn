@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://d3ypiu36avnv1"]
+
+[ext_resource type="Script" uid="uid://ccwtxjj01gvtl" path="res://tests/levels/test_levels.gd" id="1_mxcgn"]
+[ext_resource type="PackedScene" uid="uid://ccr43aa8ohsx5" path="res://levels/external_house/external_house.tscn" id="2_7lvdj"]
+
+[node name="TestInsideHouse" type="Node2D" unique_id=964897232]
+script = ExtResource("1_mxcgn")
+
+[node name="ExternalHouse" parent="." unique_id=1239606387 node_paths=PackedStringArray("player_start_position") instance=ExtResource("2_7lvdj")]
+player_start_position = NodePath("../ShopEntrance")
+
+[node name="ShopEntrance" type="Marker2D" parent="." unique_id=1936293069]
+position = Vector2(44, 306)
+
+[node name="HouseEntrance" type="Marker2D" parent="." unique_id=7488185]
+position = Vector2(265.54062, 175.32198)
+
+[connection signal="player_can_enter_house" from="ExternalHouse" to="." method="_on_player_can_enter_house"]
+[connection signal="player_can_enter_shop" from="ExternalHouse" to="." method="_on_player_can_enter_shop"]
