@@ -18,7 +18,7 @@ position = Vector2(265.54062, 175.32198)
 
 [node name="MusicStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1389734099]
 stream = ExtResource("3_mxcgn")
-volume_db = -10.0
+volume_db = -20.0
 autoplay = true
 
 [connection signal="player_can_enter_cambat_zone" from="ExternalHouse" to="." method="_on_player_can_enter_cambat_zone"]

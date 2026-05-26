@@ -3,6 +3,10 @@ class_name Character
 
 const FRICTION: float = 0.15
 
+
+signal got_hurt
+
+
 @export var hp: int = 2
 @export var accerelation: int = 40
 @export var max_speed: int = 100
@@ -26,6 +30,7 @@ func take_damage(dam: int, dir: Vector2, force: int) -> void:
 	is_invincible = true
 	start_invincibility()
 	hp -= dam
+	got_hurt.emit()
 	if hp > 0:
 		state_machine.set_state(state_machine.states.hurt)
 		velocity += dir * force
