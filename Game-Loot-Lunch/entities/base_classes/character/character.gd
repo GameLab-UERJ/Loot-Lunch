@@ -19,12 +19,6 @@ func _physics_process(_delta: float) -> void:
 	velocity = lerp(velocity, Vector2.ZERO, FRICTION)
 
 
-func move() -> void:
-	mov_direction = mov_direction.normalized()
-	velocity += mov_direction * accerelation
-	velocity = velocity.limit_length(max_speed)
-	
-
 func take_damage(dam: int, dir: Vector2, force: int) -> void:
 	if is_invincible:
 		return
