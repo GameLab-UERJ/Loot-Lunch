@@ -13,6 +13,8 @@ signal stop_player_can_enter_cambat_zone
 
 
 @onready var player: Player = $Player
+@onready var rooster_sfx: AudioStreamPlayer2D = $RoosterSfx
+@onready var seagulls_sfx: AudioStreamPlayer2D = $SeagullsSfx
 
 
 func _ready() -> void:
@@ -43,3 +45,13 @@ func _on_combat_area_entered() -> void:
 
 func _on_combat_area_exited() -> void:
 	stop_player_can_enter_cambat_zone.emit()
+
+
+func _on_rooster_sfx_finished() -> void:
+	await get_tree().create_timer(randi_range(5,15)).timeout
+	rooster_sfx.play()
+
+
+func _on_seagulls_sfx_finished() -> void:
+	await get_tree().create_timer(randi_range(5,15)).timeout
+	seagulls_sfx.play()

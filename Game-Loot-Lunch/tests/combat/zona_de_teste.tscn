@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://c58rbxt3e1aij" path="res://levels/test_floor.tscn" id="1_3vk44"]
 [ext_resource type="PackedScene" uid="uid://3cgeew2m05mn" path="res://entities/player/player.tscn" id="2_nbhqf"]
 [ext_resource type="PackedScene" uid="uid://ba74yflgg7877" path="res://entities/enemies/flying_eyes/flying_eye.tscn" id="3_skqhn"]
+[ext_resource type="AudioStream" uid="uid://huj0511vq4kh" path="res://assets/music/montogoronto-ominousdark-medievalfantasy-song-309510.mp3" id="4_jebrs"]
 
 [node name="ZonaDeTeste" type="Node2D" unique_id=387460330]
 
@@ -15,3 +16,8 @@ position = Vector2(162, 108)
 position = Vector2(336, 158)
 accerelation = 20
 max_speed = 50
+
+[node name="MusicStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=17724071]
+stream = ExtResource("4_jebrs")
+volume_db = -15.0
+autoplay = true

@@ -13,7 +13,7 @@ var vector_to_next_point: Vector2
 
 @onready var parent: Character = get_parent()
 
-@onready var player: CharacterBody2D = get_tree().current_scene.get_node("Player")
+@onready var player: CharacterBody2D = get_tree().current_scene.get_node("Player") if get_tree().current_scene.has_node("Player") else null
 
 
 func _ready():
@@ -25,7 +25,7 @@ func _ready():
 		queue_free() 
 	
 	# Only for enenmies
-	if parent != player:
+	if player and parent != player:
 		path_timer = parent.get_node("PathTimer")
 		navigation_agent = parent.get_node("NavigationAgent2D")
 		
