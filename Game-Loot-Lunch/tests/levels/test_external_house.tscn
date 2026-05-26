@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ccwtxjj01gvtl" path="res://tests/levels/test_levels.gd" id="1_mxcgn"]
 [ext_resource type="PackedScene" uid="uid://ccr43aa8ohsx5" path="res://levels/external_house/external_house.tscn" id="2_7lvdj"]
+[ext_resource type="AudioStream" uid="uid://cchgvcsunjeml" path="res://assets/music/jumpingbunny-harp-medieval-391649.mp3" id="3_mxcgn"]
 
 [node name="TestExternalHouse" type="Node2D" unique_id=964897232]
 script = ExtResource("1_mxcgn")
@@ -14,6 +15,11 @@ position = Vector2(44, 306)
 
 [node name="HouseEntrance" type="Marker2D" parent="." unique_id=7488185]
 position = Vector2(265.54062, 175.32198)
+
+[node name="MusicStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1389734099]
+stream = ExtResource("3_mxcgn")
+volume_db = -10.0
+autoplay = true
 
 [connection signal="player_can_enter_cambat_zone" from="ExternalHouse" to="." method="_on_player_can_enter_cambat_zone"]
 [connection signal="player_can_enter_house" from="ExternalHouse" to="." method="_on_player_can_enter_house"]
