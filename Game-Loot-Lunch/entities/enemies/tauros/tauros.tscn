@@ -1,0 +1,11 @@
+[gd_scene load_steps=4 format=3 uid="uid://dhmnj1pssa2b2"]
+
+[ext_resource type="PackedScene" uid="uid://cn74x22wplq1y" path="res://entities/enemies/base_enemy/enemy.tscn" id="1_1ttju"]
+[ext_resource type="Script" uid="uid://cl4rv5dmv0a8w" path="res://entities/enemies/tauros/fsm/tauros_fsm.gd" id="2_i0g3q"]
+[ext_resource type="Script" uid="uid://doo1o156gab3u" path="res://entities/enemies/tauros/tauros.gd" id="2_owdja"]
+
+[node name="Tauros" instance=ExtResource("1_1ttju")]
+script = ExtResource("2_owdja")
+
+[node name="FiniteStateMachine" parent="." index="0"]
+script = ExtResource("2_i0g3q")
