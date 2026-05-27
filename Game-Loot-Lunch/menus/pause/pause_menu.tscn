@@ -1,0 +1,156 @@
+[gd_scene format=3 uid="uid://dng6eim1kbmhh"]
+
+[ext_resource type="Script" uid="uid://00t8wy8k5xuc" path="res://menus/pause/pause_menu.gd" id="1_3gf11"]
+[ext_resource type="StyleBox" uid="uid://caoilc7p7lt3y" path="res://menus/saver_loader/button_config.tres" id="1_8vgpe"]
+[ext_resource type="StyleBox" uid="uid://crbywrlcewv6c" path="res://menus/saver_loader/button_disabled_config.tres" id="2_n5dtg"]
+[ext_resource type="AudioStream" uid="uid://doyfcod6s5ptl" path="res://assets/sfx/menus/abs-confirm-2.mp3" id="4_ip3kt"]
+[ext_resource type="AudioStream" uid="uid://bkiovum7ll7au" path="res://assets/sfx/menus/abs-pointer-2.mp3" id="5_omid1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vh0r7"]
+bg_color = Color(0.6, 0.6, 0.6, 0.6745098)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3gf11"]
+bg_color = Color(0.6, 0.6, 0.6, 0.5294118)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_color = Color(0, 0, 0, 0.98039216)
+shadow_size = 1
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ip3kt"]
+
+[node name="PauseMenu" type="CanvasLayer" unique_id=463224813]
+process_mode = 3
+script = ExtResource("1_3gf11")
+
+[node name="Panel" type="Panel" parent="." unique_id=1503265194]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel" unique_id=1489723232]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/HBoxContainer" unique_id=1156793258]
+layout_mode = 2
+alignment = 1
+
+[node name="Title" type="Label" parent="Panel/HBoxContainer/VBoxContainer" unique_id=1109312391]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 3
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 48
+text = "Pause"
+horizontal_alignment = 1
+
+[node name="ActinonsGridContainer" type="GridContainer" parent="Panel/HBoxContainer/VBoxContainer" unique_id=663933086]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="ReturnButtom" type="Button" parent="Panel/HBoxContainer/VBoxContainer/ActinonsGridContainer" unique_id=2118067430]
+custom_minimum_size = Vector2(110, 20)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = ExtResource("1_8vgpe")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_vh0r7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_3gf11")
+theme_override_styles/disabled = ExtResource("2_n5dtg")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ip3kt")
+text = "Return"
+
+[node name="SaveLoadButton" type="Button" parent="Panel/HBoxContainer/VBoxContainer/ActinonsGridContainer" unique_id=1193217895]
+custom_minimum_size = Vector2(110, 20)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = ExtResource("1_8vgpe")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_vh0r7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_3gf11")
+theme_override_styles/disabled = ExtResource("2_n5dtg")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ip3kt")
+text = "Save & Load"
+
+[node name="SettingsButton" type="Button" parent="Panel/HBoxContainer/VBoxContainer/ActinonsGridContainer" unique_id=1096748490]
+custom_minimum_size = Vector2(110, 20)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = ExtResource("1_8vgpe")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_vh0r7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_3gf11")
+theme_override_styles/disabled = ExtResource("2_n5dtg")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ip3kt")
+text = "Settings
+"
+
+[node name="MainMenuButton" type="Button" parent="Panel/HBoxContainer/VBoxContainer/ActinonsGridContainer" unique_id=737473661]
+custom_minimum_size = Vector2(110, 20)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = ExtResource("1_8vgpe")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_vh0r7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_3gf11")
+theme_override_styles/disabled = ExtResource("2_n5dtg")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ip3kt")
+text = "Main Menu
+"
+
+[node name="QuitButton" type="Button" parent="Panel/HBoxContainer/VBoxContainer/ActinonsGridContainer" unique_id=528499609]
+custom_minimum_size = Vector2(110, 20)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = ExtResource("1_8vgpe")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_vh0r7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_3gf11")
+theme_override_styles/disabled = ExtResource("2_n5dtg")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ip3kt")
+text = "Quit"
+
+[node name="PressAudio" type="AudioStreamPlayer" parent="." unique_id=1560593064]
+stream = ExtResource("4_ip3kt")
+volume_db = -6.0
+
+[node name="HoverAudio" type="AudioStreamPlayer" parent="." unique_id=696969716]
+stream = ExtResource("5_omid1")
+volume_db = -12.0
+
+[connection signal="mouse_entered" from="Panel/HBoxContainer/VBoxContainer/ActinonsGridContainer/ReturnButtom" to="." method="_on_buttom_mouse_entered"]
+[connection signal="pressed" from="Panel/HBoxContainer/VBoxContainer/ActinonsGridContainer/ReturnButtom" to="." method="_on_return_buttom_pressed"]
+[connection signal="mouse_entered" from="Panel/HBoxContainer/VBoxContainer/ActinonsGridContainer/SaveLoadButton" to="." method="_on_buttom_mouse_entered"]
+[connection signal="pressed" from="Panel/HBoxContainer/VBoxContainer/ActinonsGridContainer/SaveLoadButton" to="." method="_on_save_load_button_pressed"]
+[connection signal="mouse_entered" from="Panel/HBoxContainer/VBoxContainer/ActinonsGridContainer/SettingsButton" to="." method="_on_buttom_mouse_entered"]
+[connection signal="pressed" from="Panel/HBoxContainer/VBoxContainer/ActinonsGridContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="mouse_entered" from="Panel/HBoxContainer/VBoxContainer/ActinonsGridContainer/MainMenuButton" to="." method="_on_buttom_mouse_entered"]
+[connection signal="pressed" from="Panel/HBoxContainer/VBoxContainer/ActinonsGridContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
+[connection signal="mouse_entered" from="Panel/HBoxContainer/VBoxContainer/ActinonsGridContainer/QuitButton" to="." method="_on_buttom_mouse_entered"]
+[connection signal="pressed" from="Panel/HBoxContainer/VBoxContainer/ActinonsGridContainer/QuitButton" to="." method="_on_quit_button_pressed"]

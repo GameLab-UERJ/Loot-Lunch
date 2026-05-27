@@ -3,11 +3,13 @@ extends Node2D
 
 var combat_zone : Node2D
 
+# Prelaod PauseMenu
+var pause_menu_scene: PackedScene = preload("uid://dng6eim1kbmhh")
+var pause_menu: PauseMenu
 
 @onready var inside_house: Node2D = get_node("InsideHouse") if self.has_node("InsideHouse") else null
 @onready var external_house: Node2D = get_node("ExternalHouse") if self.has_node("ExternalHouse") else null
 @onready var shop_room: Node2D = get_node("ShopRoom") if self.has_node("ShopRoom") else null
-
 
 
 # Called when the node enters the scene tree for the first time.
@@ -20,7 +22,8 @@ func _ready() -> void:
 		external_house = load("uid://d3ypiu36avnv1").instantiate()
 	if not shop_room:
 		shop_room = load("uid://dccphg7sgqmy7").instantiate()
-
+	
+	pause_game_menu()
 
 
 func _on_player_can_leave_house() -> void:
@@ -43,3 +46,9 @@ func _on_player_can_enter_shop() -> void:
 
 func _on_player_can_enter_cambat_zone() -> void:
 	EasyTransition.transition_to_node(combat_zone,1.5,EasyTransition.TransitionAnim.FADE)
+
+
+func pause_game_menu() -> void:
+	if !get_parent().has_node("PauseMenu"):
+		pause_menu = pause_menu_scene.instantiate() as PauseMenu
+		call_deferred("add_sibling", pause_menu)
