@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://bt5jjpnkd7ps" path="res://entities/base_classes/movement_component.gd" id="4_usvun"]
 [ext_resource type="Script" uid="uid://bi7fdvl4vpp7o" path="res://systems/hitbox/hitbox_component.gd" id="5_5ah01"]
 [ext_resource type="AudioStream" uid="uid://bur053evb1ael" path="res://assets/sfx/bat_wing_flap.wav" id="8_5845t"]
+[ext_resource type="Texture2D" uid="uid://b43fyhe45hakj" path="res://assets/art/entities/shadow_single.png" id="9_ed664"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5ah01"]
 atlas = ExtResource("3_0u44y")
@@ -310,6 +311,10 @@ libraries/ = SubResource("AnimationLibrary_0u44y")
 [node name="WingFlapSfx" type="AudioStreamPlayer2D" parent="." index="8" unique_id=345390706]
 stream = ExtResource("8_5845t")
 max_distance = 200.0
+
+[node name="Shadow" type="Sprite2D" parent="." index="9" unique_id=1621882509]
+position = Vector2(1, 0)
+texture = ExtResource("9_ed664")
 
 [connection signal="frame_changed" from="AnimatedSprite2D" to="." method="_on_wing_flap"]
 [connection signal="timeout" from="PathTimer" to="MovementComponent" method="_on_path_timer_timeout"]
