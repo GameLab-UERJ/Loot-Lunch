@@ -1,5 +1,6 @@
 extends FiniteStateMachine
 
+
 func _init() -> void:
 	_add_state("idle")
 	_add_state("move")

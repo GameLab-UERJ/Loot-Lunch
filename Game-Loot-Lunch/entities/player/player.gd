@@ -5,6 +5,10 @@ class_name Player
 @onready var sword_hitbox: HitboxComponent = $Sword/Node2D/Sprite2D/HitboxComponent
 @onready var sword_animation_player: AnimationPlayer = $Sword/SwordAnimationPlayer
 @onready var movement_component: MovementComponent = $MovementComponent
+@onready var footsteps_sfx: AudioStreamPlayer2D = $FootstepsSfx
+@onready var hit_stf: AudioStreamPlayer2D = $HitStf
+@onready var hurt_sfx: AudioStreamPlayer2D = $HurtSfx
+@onready var attack_sfx: AudioStreamPlayer2D = $AttackSfx
 
 
 func _process(_delta: float) -> void:
@@ -26,3 +30,21 @@ func _process(_delta: float) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_released("ui_attack") and not sword_animation_player.is_playing():
 		sword_animation_player.play("attack")
+		attack_sfx.play()
+
+
+func _on_frame_changed() -> void:
+	if not animated_sprite.animation == "move":
+		return
+	
+	match animated_sprite.frame:
+		1,4:
+			footsteps_sfx.play()
+
+
+func _on_hitbox_component_hit() -> void:
+	hit_stf.play(1.1)
+
+
+func _on_got_hurt() -> void:
+	hurt_sfx.play()

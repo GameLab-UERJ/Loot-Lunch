@@ -1,6 +1,10 @@
 extends Area2D
 class_name HitboxComponent
 
+
+signal hit
+
+
 var body_inside: bool = false
 var knockback_direction: Vector2 = Vector2.ZERO
 
@@ -37,4 +41,5 @@ func _collide(body: Node2D) -> void:
 	if body == null or not body.has_method("take_damage"):
 		queue_free()
 	else:
+		hit.emit()
 		body.take_damage(damage, knockback_direction, knockback_force)
