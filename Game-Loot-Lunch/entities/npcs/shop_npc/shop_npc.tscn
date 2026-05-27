@@ -56,14 +56,14 @@ animations = [{
 radius = 8.728056
 
 [node name="ShopNpc" type="CharacterBody2D" unique_id=1279799556]
-scale = Vector2(0.5, 0.5)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=799428324]
+position = Vector2(0, -14)
 sprite_frames = SubResource("SpriteFrames_8okrs")
 autoplay = "default"
 frame_progress = 0.9867687
 flip_h = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1299589128]
-position = Vector2(-0.9790878, 9.464569)
+position = Vector2(-0.9790878, 0)
 shape = SubResource("CircleShape2D_ysvt8")
