@@ -47,7 +47,7 @@ grow_vertical = 2
 script = ExtResource("1_kuyjo")
 
 [node name="Panel" type="Panel" parent="." unique_id=694241612]
-modulate = Color(1, 1, 1, 0.64705884)
+process_mode = 3
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -244,23 +244,23 @@ volume_db = -6.0
 stream = ExtResource("4_83imd")
 volume_db = -12.0
 
-[connection signal="mouse_entered" from="Panel/HBoxContainer/VBoxContainer/SavesGridContainer/SaveSlot0" to="." method="_on_mouse_entered"]
+[connection signal="mouse_entered" from="Panel/HBoxContainer/VBoxContainer/SavesGridContainer/SaveSlot0" to="." method="_on_mouse_entered" binds= [NodePath("Panel/HBoxContainer/VBoxContainer/SavesGridContainer/SaveSlot0")]]
 [connection signal="toggled" from="Panel/HBoxContainer/VBoxContainer/SavesGridContainer/SaveSlot0" to="." method="_on_save_slot_toggled" binds= [NodePath("Panel/HBoxContainer/VBoxContainer/SavesGridContainer/SaveSlot0"), 0]]
-[connection signal="mouse_entered" from="Panel/HBoxContainer/VBoxContainer/SavesGridContainer/SaveSlot1" to="." method="_on_mouse_entered"]
+[connection signal="mouse_entered" from="Panel/HBoxContainer/VBoxContainer/SavesGridContainer/SaveSlot1" to="." method="_on_mouse_entered" binds= [NodePath("Panel/HBoxContainer/VBoxContainer/SavesGridContainer/SaveSlot1")]]
 [connection signal="toggled" from="Panel/HBoxContainer/VBoxContainer/SavesGridContainer/SaveSlot1" to="." method="_on_save_slot_toggled" binds= [NodePath("Panel/HBoxContainer/VBoxContainer/SavesGridContainer/SaveSlot1"), 1]]
-[connection signal="mouse_entered" from="Panel/HBoxContainer/VBoxContainer/SavesGridContainer/SaveSlot2" to="." method="_on_mouse_entered"]
+[connection signal="mouse_entered" from="Panel/HBoxContainer/VBoxContainer/SavesGridContainer/SaveSlot2" to="." method="_on_mouse_entered" binds= [NodePath("Panel/HBoxContainer/VBoxContainer/SavesGridContainer/SaveSlot2")]]
 [connection signal="toggled" from="Panel/HBoxContainer/VBoxContainer/SavesGridContainer/SaveSlot2" to="." method="_on_save_slot_toggled" binds= [NodePath("Panel/HBoxContainer/VBoxContainer/SavesGridContainer/SaveSlot2"), 2]]
-[connection signal="mouse_entered" from="Panel/HBoxContainer/VBoxContainer/SavesGridContainer/SaveSlot3" to="." method="_on_mouse_entered"]
+[connection signal="mouse_entered" from="Panel/HBoxContainer/VBoxContainer/SavesGridContainer/SaveSlot3" to="." method="_on_mouse_entered" binds= [NodePath("Panel/HBoxContainer/VBoxContainer/SavesGridContainer/SaveSlot3")]]
 [connection signal="toggled" from="Panel/HBoxContainer/VBoxContainer/SavesGridContainer/SaveSlot3" to="." method="_on_save_slot_toggled" binds= [NodePath("Panel/HBoxContainer/VBoxContainer/SavesGridContainer/SaveSlot3"), 3]]
-[connection signal="mouse_entered" from="Panel/HBoxContainer/VBoxContainer/SavesGridContainer/SaveSlot4" to="." method="_on_mouse_entered"]
+[connection signal="mouse_entered" from="Panel/HBoxContainer/VBoxContainer/SavesGridContainer/SaveSlot4" to="." method="_on_mouse_entered" binds= [NodePath("Panel/HBoxContainer/VBoxContainer/SavesGridContainer/SaveSlot4")]]
 [connection signal="toggled" from="Panel/HBoxContainer/VBoxContainer/SavesGridContainer/SaveSlot4" to="." method="_on_save_slot_toggled" binds= [NodePath("Panel/HBoxContainer/VBoxContainer/SavesGridContainer/SaveSlot4"), 4]]
-[connection signal="mouse_entered" from="Panel/HBoxContainer/VBoxContainer/SavesGridContainer/SaveSlot5" to="." method="_on_mouse_entered"]
+[connection signal="mouse_entered" from="Panel/HBoxContainer/VBoxContainer/SavesGridContainer/SaveSlot5" to="." method="_on_mouse_entered" binds= [NodePath("Panel/HBoxContainer/VBoxContainer/SavesGridContainer/SaveSlot5")]]
 [connection signal="toggled" from="Panel/HBoxContainer/VBoxContainer/SavesGridContainer/SaveSlot5" to="." method="_on_save_slot_toggled" binds= [NodePath("Panel/HBoxContainer/VBoxContainer/SavesGridContainer/SaveSlot5"), 5]]
-[connection signal="mouse_entered" from="Panel/HBoxContainer/VBoxContainer/ActionsGridContainer/SaveButton" to="." method="_on_mouse_entered"]
+[connection signal="mouse_entered" from="Panel/HBoxContainer/VBoxContainer/ActionsGridContainer/SaveButton" to="." method="_on_mouse_entered" binds= [NodePath("Panel/HBoxContainer/VBoxContainer/ActionsGridContainer/SaveButton")]]
 [connection signal="pressed" from="Panel/HBoxContainer/VBoxContainer/ActionsGridContainer/SaveButton" to="." method="_on_save_button_pressed"]
-[connection signal="mouse_entered" from="Panel/HBoxContainer/VBoxContainer/ActionsGridContainer/LoadButton" to="." method="_on_mouse_entered"]
+[connection signal="mouse_entered" from="Panel/HBoxContainer/VBoxContainer/ActionsGridContainer/LoadButton" to="." method="_on_mouse_entered" binds= [NodePath("Panel/HBoxContainer/VBoxContainer/ActionsGridContainer/LoadButton")]]
 [connection signal="pressed" from="Panel/HBoxContainer/VBoxContainer/ActionsGridContainer/LoadButton" to="." method="_on_load_button_pressed"]
-[connection signal="mouse_entered" from="Panel/HBoxContainer/VBoxContainer/ActionsGridContainer/EraseButton" to="." method="_on_mouse_entered"]
+[connection signal="mouse_entered" from="Panel/HBoxContainer/VBoxContainer/ActionsGridContainer/EraseButton" to="." method="_on_mouse_entered" binds= [NodePath("Panel/HBoxContainer/VBoxContainer/ActionsGridContainer/EraseButton")]]
 [connection signal="pressed" from="Panel/HBoxContainer/VBoxContainer/ActionsGridContainer/EraseButton" to="." method="_on_erase_button_pressed"]
-[connection signal="mouse_entered" from="Panel/HBoxContainer/VBoxContainer/ReturnGridContainer/ReturnButton" to="." method="_on_mouse_entered"]
+[connection signal="mouse_entered" from="Panel/HBoxContainer/VBoxContainer/ReturnGridContainer/ReturnButton" to="." method="_on_mouse_entered" binds= [NodePath("Panel/HBoxContainer/VBoxContainer/ReturnGridContainer/ReturnButton")]]
 [connection signal="pressed" from="Panel/HBoxContainer/VBoxContainer/ReturnGridContainer/ReturnButton" to="." method="_on_return_button_pressed"]
