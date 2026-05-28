@@ -16,23 +16,21 @@ enum TimeState {
 
 var current_state: TimeState = TimeState.DAY
 
-var _timer: float = 0.0
+var _timer: Timer
 
 
-func _process(delta: float) -> void:
-	_timer += delta
+func _ready() -> void:
+	_timer = Timer.new()
 
-	if _timer < cycle_duration:
-		return
+	_timer.wait_time = cycle_duration
+	_timer.one_shot = false
+	_timer.autostart = false
 
-	_timer = 0.0
+	_timer.timeout.connect(_on_timeout)
 
-	match current_state:
-		TimeState.DAY:
-			change_state(TimeState.NIGHT)
+	add_child(_timer)
 
-		TimeState.NIGHT:
-			change_state(TimeState.DAY)
+	_timer.start()
 
 
 func change_state(new_state: TimeState) -> void:
@@ -47,3 +45,12 @@ func change_state(new_state: TimeState) -> void:
 
 		TimeState.NIGHT:
 			night_started.emit()
+
+
+func _on_timeout() -> void:
+	match current_state:
+		TimeState.DAY:
+			change_state(TimeState.NIGHT)
+
+		TimeState.NIGHT:
+			change_state(TimeState.DAY)

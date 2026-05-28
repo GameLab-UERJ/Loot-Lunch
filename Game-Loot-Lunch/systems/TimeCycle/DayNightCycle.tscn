@@ -1,5 +1,0 @@
-[gd_scene format=3 uid="uid://yr26mvbasy76"]
-
-[node name="DirectionalLight2D" type="DirectionalLight2D" unique_id=786726154]
-color = Color(0.22341341, 0.47309333, 0.63938916, 1)
-blend_mode = 2
