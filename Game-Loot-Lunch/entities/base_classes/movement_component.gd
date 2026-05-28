@@ -35,6 +35,9 @@ func _ready():
 
 # -- Used by enemies -- 
 func _on_path_timer_timeout() -> void:
+	if not path_timer:
+		return 
+	
 	if is_instance_valid(player):
 		if navigation_agent.target_position != player.position:
 			navigation_agent.target_position = player.position
@@ -46,6 +49,9 @@ func _on_path_timer_timeout() -> void:
 
 # -- Used by enemies -- 
 func chase() -> void:
+	if not navigation_agent:
+		return 
+	
 	if not navigation_agent.is_target_reached():
 		vector_to_next_point = navigation_agent.get_next_path_position() - parent.global_position
 		mov_direction = vector_to_next_point

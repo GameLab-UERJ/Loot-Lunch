@@ -93,10 +93,10 @@ func _on_save_slot_toggled(toggled_on: bool, slot_path: NodePath, save_position:
 
 
 # -- Effect when mouse enters any element --
-func _on_mouse_entered() -> void:
-	if hover_audio == null:
+func _on_mouse_entered(button: NodePath) -> void:
+	if hover_audio == null or get_node(button).disabled == true:
 		return
-		
+	
 	hover_audio.play()
 	await hover_audio.finished
 
@@ -153,10 +153,17 @@ func _return_from_save_title_menu() -> void:
 # -- Controls elements of scene when in transition --
 func action_buttons_state() -> void:
 	if SaveLoadManager.saves_info[save_slot][0] == "VAZIO":
-		actions_grid_container.get_child(0).disabled = false
+		if get_parent().name == "MainMenu":
+			actions_grid_container.get_child(0).disabled = true
+		else:
+			actions_grid_container.get_child(0).disabled = false
+			
 		actions_grid_container.get_child(1).disabled = true
 		actions_grid_container.get_child(2).disabled = true
 	else:
-		actions_grid_container.get_child(0).disabled = false
+		if get_parent().name == "MainMenu":
+			actions_grid_container.get_child(0).disabled = true
+		else:
+			actions_grid_container.get_child(0).disabled = false
 		actions_grid_container.get_child(1).disabled = false
 		actions_grid_container.get_child(2).disabled = false

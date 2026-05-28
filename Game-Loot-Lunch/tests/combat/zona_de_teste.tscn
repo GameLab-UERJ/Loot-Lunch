@@ -11,9 +11,18 @@
 
 [node name="Player" parent="." unique_id=1426255313 instance=ExtResource("2_nbhqf")]
 position = Vector2(162, 108)
+motion_mode = 1
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=384630202]
+zoom = Vector2(2, 2)
+limit_left = 0
+limit_top = 0
+limit_right = 480
+limit_bottom = 270
 
 [node name="FlyingEye" parent="." unique_id=1247697002 instance=ExtResource("3_skqhn")]
 position = Vector2(336, 158)
+motion_mode = 1
 accerelation = 20
 max_speed = 50
 
