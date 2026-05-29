@@ -490,7 +490,6 @@ tile_set = SubResource("TileSet_dt7fw")
 [node name="ShopNpc" parent="." unique_id=1279799556 instance=ExtResource("2_obpsm")]
 y_sort_enabled = true
 position = Vector2(205.32132, 32.124733)
-scale = Vector2(1, 1)
 
 [node name="mesa2" type="TileMapLayer" parent="." unique_id=866060475]
 position = Vector2(-17, -64)
