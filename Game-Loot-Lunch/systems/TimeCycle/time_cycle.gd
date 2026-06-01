@@ -47,6 +47,14 @@ func change_state(new_state: TimeState) -> void:
 			night_started.emit()
 
 
+func is_day() -> bool:
+	return current_state == TimeState.DAY
+
+
+func is_night() -> bool:
+	return current_state == TimeState.NIGHT
+
+
 func _on_timeout() -> void:
 	match current_state:
 		TimeState.DAY:
