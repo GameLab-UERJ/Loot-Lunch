@@ -49,9 +49,11 @@ func _on_combat_area_exited() -> void:
 
 func _on_rooster_sfx_finished() -> void:
 	await get_tree().create_timer(randi_range(5,15)).timeout
-	rooster_sfx.play()
+	if TimeCycle.is_day():
+		rooster_sfx.play()
 
 
 func _on_seagulls_sfx_finished() -> void:
 	await get_tree().create_timer(randi_range(5,15)).timeout
-	seagulls_sfx.play()
+	if TimeCycle.is_day():
+		seagulls_sfx.play()
