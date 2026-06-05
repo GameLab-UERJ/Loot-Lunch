@@ -88,7 +88,7 @@ func set_item(value : Item) -> Item:
 
 
 func set_price_text(value : String, color : Color = Color.WHITE) -> void:
-	price_label.text = value
+	price_label.text = "$ " + value
 	if price_label.label_settings:
 		price_label.label_settings = price_label.label_settings.duplicate()
 		price_label.label_settings.font_color = color

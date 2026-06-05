@@ -10,8 +10,9 @@ bg_color = Color(0.25, 0.25, 0.25, 0.99215686)
 [sub_resource type="LabelSettings" id="LabelSettings_rwyhr"]
 font_size = 8
 font_color = Color(0, 1, 0, 1)
-outline_size = 1
+outline_size = 2
 outline_color = Color(0, 0, 0, 1)
+shadow_size = 0
 
 [node name="InventoryCell" type="PanelContainer" unique_id=1560891636]
 custom_minimum_size = Vector2(34, 34)
@@ -48,7 +49,6 @@ expand_mode = 3
 stretch_mode = 1
 
 [node name="PriceLabel" type="Label" parent="Panel" unique_id=1095353102]
-visible = false
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
