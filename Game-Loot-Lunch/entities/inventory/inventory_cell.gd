@@ -87,8 +87,9 @@ func set_item(value : Item) -> Item:
 	return previous_item
 
 
-func set_price_text(value : String) -> void:
+func set_price_text(value : String, color : Color = Color.WHITE) -> void:
 	price_label.text = value
+	price_label.add_theme_color_override("font_color", color)
 	price_label.visible = not value.is_empty()
 
 

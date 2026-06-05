@@ -39,7 +39,7 @@ func _ready() -> void:
 
 
 func update_gold_label(new_gold: int) -> void:
-	gold_label.text = "Gold: " + str(new_gold)
+	gold_label.text = "Gold Atual: " + str(new_gold)
 
 
 func open_shop(shop: ShopComponent, real_player_inventory: Inventory) -> void:
@@ -81,7 +81,7 @@ func fill_shop_inventory() -> void:
 		var item: Item = current_shop.create_item(item_scene)
 		add_child(item)
 		shop_inventory.add_item(item)
-		set_item_price_text(shop_inventory, item, current_shop.get_price(item_scene))
+		set_item_price_text(shop_inventory, item, current_shop.get_price(item_scene), Color.GREEN)
 
 
 func fill_player_inventory() -> void:
@@ -98,7 +98,7 @@ func fill_player_inventory() -> void:
 				add_child(item_copy)
 				player_inventory.add_item(item_copy)
 				player_item_copies[item_copy] = cell.item
-				set_item_price_text(player_inventory, item_copy, get_sell_price(cell.item))
+				set_item_price_text(player_inventory, item_copy, get_sell_price(cell.item), Color.RED)
 
 
 func start_buy_mode() -> void:
@@ -220,7 +220,7 @@ func add_shop_item_to_transfer(item: Item) -> void:
 	add_child(new_item)
 	transfer_inventory.add_item(new_item)
 	transfer_item_prices[new_item] = price
-	set_item_price_text(transfer_inventory, new_item, price)
+	set_item_price_text(transfer_inventory, new_item, price, Color.GREEN)
 
 	total_price += price
 	update_total_message()
@@ -251,7 +251,7 @@ func add_player_item_to_transfer(cell: InventoryCell) -> void:
 
 	sell_items[item_to_sell] = real_item
 	transfer_item_prices[item_to_sell] = price
-	set_item_price_text(transfer_inventory, item_to_sell, price)
+	set_item_price_text(transfer_inventory, item_to_sell, price, Color.RED)
 	total_price += price
 	update_total_message()
 
@@ -301,7 +301,7 @@ func undo_sell_item(cell: InventoryCell) -> void:
 	player_inventory.add_item(item)
 	if real_item:
 		player_item_copies[item] = real_item
-		set_item_price_text(player_inventory, item, get_sell_price(real_item))
+		set_item_price_text(player_inventory, item, get_sell_price(real_item), Color.RED)
 
 	update_mode_after_undo()
 
@@ -334,13 +334,18 @@ func get_sell_price(item: Item) -> int:
 	return floori(price / 2.0)
 
 
-func set_item_price_text(inventory: Inventory, item: Item, price: int) -> void:
+func set_item_price_text(
+		inventory: Inventory,
+		item: Item,
+		price: int,
+		color: Color
+) -> void:
 	if price < 0:
 		return
 
 	for cell: InventoryCell in inventory.grid.get_children():
 		if cell.item == item:
-			cell.set_price_text(str(price))
+			cell.set_price_text(str(price), color)
 			return
 
 func count_items(inventory: Inventory) -> int:
