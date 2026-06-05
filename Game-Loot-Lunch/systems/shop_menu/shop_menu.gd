@@ -21,6 +21,7 @@ var current_shop: ShopComponent
 var real_player_inventory: Inventory
 var player_item_copies: Dictionary[Item, Item] = {}
 var sell_items: Dictionary[Item, Item] = {}
+var transfer_item_prices: Dictionary[Item, int] = {}
 
 enum ShopMode {
 	NONE,
@@ -218,6 +219,8 @@ func add_shop_item_to_transfer(item: Item) -> void:
 	var new_item: Item = current_shop.create_item(item_scene)
 	add_child(new_item)
 	transfer_inventory.add_item(new_item)
+	transfer_item_prices[new_item] = price
+	set_item_price_text(transfer_inventory, new_item, price)
 
 	total_price += price
 	update_total_message()
@@ -247,6 +250,8 @@ func add_player_item_to_transfer(cell: InventoryCell) -> void:
 	transfer_inventory.add_item(item_to_sell)
 
 	sell_items[item_to_sell] = real_item
+	transfer_item_prices[item_to_sell] = price
+	set_item_price_text(transfer_inventory, item_to_sell, price)
 	total_price += price
 	update_total_message()
 
@@ -254,6 +259,7 @@ func add_player_item_to_transfer(cell: InventoryCell) -> void:
 func clear_transfer() -> void:
 	clear_inventory(transfer_inventory)
 	sell_items.clear()
+	transfer_item_prices.clear()
 	mode = ShopMode.NONE
 	total_price = 0
 	update_total_message()
@@ -264,6 +270,48 @@ func remove_real_player_item(item_to_remove: Item) -> void:
 		if cell.item == item_to_remove:
 			cell.remove_item().queue_free()
 			return
+
+
+func _on_transfer_inventory_cell_left_clicked(cell: InventoryCell) -> void:
+	if not cell.item:
+		return
+
+	if mode == ShopMode.BUY:
+		undo_buy_item(cell)
+	elif mode == ShopMode.SELL:
+		undo_sell_item(cell)
+
+
+func undo_buy_item(cell: InventoryCell) -> void:
+	var item: Item = cell.remove_item()
+	total_price -= transfer_item_prices.get(item, 0)
+	transfer_item_prices.erase(item)
+	item.queue_free()
+	update_mode_after_undo()
+
+
+func undo_sell_item(cell: InventoryCell) -> void:
+	var item: Item = cell.remove_item()
+	var real_item: Item = sell_items.get(item)
+
+	total_price -= transfer_item_prices.get(item, 0)
+	transfer_item_prices.erase(item)
+	sell_items.erase(item)
+
+	player_inventory.add_item(item)
+	if real_item:
+		player_item_copies[item] = real_item
+		set_item_price_text(player_inventory, item, get_sell_price(real_item))
+
+	update_mode_after_undo()
+
+
+func update_mode_after_undo() -> void:
+	if count_items(transfer_inventory) == 0:
+		mode = ShopMode.NONE
+		total_price = 0
+
+	update_total_message()
 
 
 func create_item_copy(item: Item) -> Item:

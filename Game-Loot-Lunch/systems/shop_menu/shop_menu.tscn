@@ -155,4 +155,5 @@ offset_bottom = 138.0
 [connection signal="pressed" from="Panel/VBoxContainer/Buttons/SellButton" to="." method="_on_sell_button_pressed"]
 [connection signal="pressed" from="Panel/VBoxContainer/Buttons/ExitButton" to="." method="_on_exit_button_pressed"]
 [connection signal="cell_left_clicked" from="Panel/VBoxContainer/Inventories/PlayerBox/PlayerInventory" to="." method="_on_player_inventory_cell_left_clicked"]
+[connection signal="cell_left_clicked" from="Panel/VBoxContainer/Inventories/TransferBox/TransferInventory" to="." method="_on_transfer_inventory_cell_left_clicked"]
 [connection signal="cell_left_clicked" from="Panel/VBoxContainer/Inventories/ShopBox/ShopInventory" to="." method="_on_shop_inventory_cell_left_clicked"]
