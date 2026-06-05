@@ -239,7 +239,7 @@ func add_player_item_to_transfer(cell: InventoryCell) -> void:
 	if price < 0:
 		message_label.text = "A loja não compra esse item"
 		return
-	price = price / 2
+	price = floori(price / 2.0)
 
 	var item_to_sell: Item = cell.remove_item()
 	transfer_inventory.add_item(item_to_sell)
