@@ -18,12 +18,14 @@ var is_selected : bool = false:
 
 
 @onready var item_place: TextureRect = $Panel/ItemPlace
+@onready var price_label: Label = $Panel/PriceLabel
 
 
 func _ready() -> void:
 	item = item
 	add_theme_stylebox_override("panel",StyleBoxFlat.new())
 	_change_bg_color(background_color)
+	set_price_text("")
 
 
 func _process(_delta: float) -> void:
@@ -67,6 +69,7 @@ func set_item(value : Item) -> Item:
 	item = value
 	if not item:
 		item_place.texture = null
+		set_price_text("")
 		return null
 	elif not item.region_enabled:
 		item_place.texture = item.texture
@@ -82,6 +85,11 @@ func set_item(value : Item) -> Item:
 	value.position = Vector2.ZERO
 	value.call_deferred("reparent", self)
 	return previous_item
+
+
+func set_price_text(value : String) -> void:
+	price_label.text = value
+	price_label.visible = not value.is_empty()
 
 
 func _change_bg_color(color : Color) -> void:
