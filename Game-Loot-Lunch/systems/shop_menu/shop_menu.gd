@@ -187,6 +187,10 @@ func add_shop_item_to_transfer(item: Item) -> void:
 	if total_price + price > PlayerWallet.gold:
 		message_label.text = "Gold insuficiente"
 		return
+	
+	if not can_add_buy_item():
+		message_label.text = "Inventário cheio"
+		return
 
 	var new_item: Item = current_shop.create_item(item_scene)
 	add_child(new_item)
@@ -206,3 +210,27 @@ func create_item_copy(item: Item) -> Item:
 		return current_shop.create_item(shop_item_scene)
 
 	return null
+
+func count_items(inventory: Inventory) -> int:
+	var total: int = 0
+
+	for cell: InventoryCell in inventory.grid.get_children():
+		if cell.item:
+			total += 1
+
+	return total
+
+func count_empty_cells(inventory: Inventory) -> int:
+	var total: int = 0
+
+	for cell: InventoryCell in inventory.grid.get_children():
+		if not cell.item:
+			total += 1
+
+	return total
+	
+func can_add_buy_item() -> bool:
+	var empty_cells: int = count_empty_cells(real_player_inventory)
+	var transfer_items: int = count_items(transfer_inventory)
+
+	return transfer_items + 1 <= empty_cells
