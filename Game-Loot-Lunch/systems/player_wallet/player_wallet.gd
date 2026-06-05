@@ -5,7 +5,7 @@ extends Node
 ## Emitido sempre que a quantidade de gold muda
 signal gold_changed(new_amount: int)
 
-var initial_gold: int = 0
+var initial_gold: int = 999
 
 var gold: int = 0
 
