@@ -19,13 +19,16 @@ signal shop_closed
 
 var current_shop: ShopComponent
 var real_player_inventory: Inventory
+var player_item_copies: Dictionary[Item, Item] = {}
+var sell_items: Dictionary[Item, Item] = {}
 
 enum ShopMode {
+	NONE,
 	BUY,
 	SELL
 }
 
-var mode: ShopMode = ShopMode.BUY
+var mode: ShopMode = ShopMode.NONE
 var total_price: int = 0
 
 func _ready() -> void:
@@ -46,12 +49,11 @@ func open_shop(shop: ShopComponent, real_player_inventory: Inventory) -> void:
 	message_label.text = ""
 	fill_player_inventory()
 	fill_shop_inventory()
-	select_buy_mode()
+	clear_transfer()
 	shop_opened.emit()
 
 func close_shop() -> void:
-	clear_inventory(transfer_inventory)
-	total_price = 0
+	clear_transfer()
 
 	clear_inventory(player_inventory)
 
@@ -82,6 +84,7 @@ func fill_shop_inventory() -> void:
 
 func fill_player_inventory() -> void:
 	clear_inventory(player_inventory)
+	player_item_copies.clear()
 
 	if not real_player_inventory:
 		return
@@ -92,17 +95,16 @@ func fill_player_inventory() -> void:
 			if item_copy:
 				add_child(item_copy)
 				player_inventory.add_item(item_copy)
+				player_item_copies[item_copy] = cell.item
 
 
-func select_buy_mode() -> void:
+func start_buy_mode() -> void:
 	mode = ShopMode.BUY
-	total_price = 0
 	update_total_message()
 
 
-func select_sell_mode() -> void:
+func start_sell_mode() -> void:
 	mode = ShopMode.SELL
-	total_price = 0
 	update_total_message()
 
 
@@ -110,11 +112,14 @@ func _on_buy_button_pressed() -> void:
 	if mode == ShopMode.BUY:
 		confirm_buy()
 	else:
-		select_buy_mode()
+		message_label.text = "Adicione itens da loja para comprar"
 
 
 func _on_sell_button_pressed() -> void:
-	select_sell_mode()
+	if mode == ShopMode.SELL:
+		confirm_sell()
+	else:
+		message_label.text = "Adicione itens do inventário para vender"
 	
 
 func confirm_buy() -> void:
@@ -131,20 +136,32 @@ func confirm_buy() -> void:
 			var item: Item = cell.remove_item()
 			real_player_inventory.add_item(item)
 
-	total_price = 0
+	clear_transfer()
 	fill_player_inventory()
-	update_total_message()
+
+
+func confirm_sell() -> void:
+	if total_price <= 0:
+		message_label.text = "Nenhum item para vender"
+		return
+
+	for item_to_sell: Item in sell_items.values():
+		remove_real_player_item(item_to_sell)
+
+	PlayerWallet.add_gold(total_price)
+	clear_transfer()
+	fill_player_inventory()
 
 func update_total_message() -> void:
 	if mode == ShopMode.BUY:
 		message_label.text = "Total da compra: " + str(total_price)
-	else:
+	elif mode == ShopMode.SELL:
 		message_label.text = "Total da venda: " + str(total_price)
+	else:
+		message_label.text = "Escolha itens para comprar ou vender"
 
 
 func _on_shop_inventory_cell_left_clicked(cell: InventoryCell) -> void:
-	if mode != ShopMode.BUY:
-		return
 	if not cell.item:
 		return
 
@@ -152,12 +169,10 @@ func _on_shop_inventory_cell_left_clicked(cell: InventoryCell) -> void:
 
 
 func _on_player_inventory_cell_left_clicked(cell: InventoryCell) -> void:
-	if mode != ShopMode.SELL:
-		return
 	if not cell.item:
 		return
 
-	print("Clicou em item do player: " + cell.item.item_name)
+	add_player_item_to_transfer(cell)
 
 
 func find_item_scene_by_item(item: Item) -> PackedScene:
@@ -177,6 +192,12 @@ func find_item_scene_by_item(item: Item) -> PackedScene:
 	
 
 func add_shop_item_to_transfer(item: Item) -> void:
+	if mode == ShopMode.SELL:
+		message_label.text = "Finalize ou saia da venda atual"
+		return
+	if mode == ShopMode.NONE:
+		start_buy_mode()
+
 	var item_scene: PackedScene = find_item_scene_by_item(item)
 	if not item_scene:
 		message_label.text = "Item não encontrado na loja"
@@ -198,6 +219,49 @@ func add_shop_item_to_transfer(item: Item) -> void:
 
 	total_price += price
 	update_total_message()
+
+
+func add_player_item_to_transfer(cell: InventoryCell) -> void:
+	if mode == ShopMode.BUY:
+		message_label.text = "Finalize ou saia da compra atual"
+		return
+	if mode == ShopMode.NONE:
+		start_sell_mode()
+
+	var visual_item: Item = cell.item
+	var real_item: Item = player_item_copies.get(visual_item)
+
+	if not real_item:
+		message_label.text = "Item não encontrado no inventário"
+		return
+
+	var price: int = current_shop.get_price_from_item(real_item)
+	if price < 0:
+		message_label.text = "A loja não compra esse item"
+		return
+	price = price / 2
+
+	var item_to_sell: Item = cell.remove_item()
+	transfer_inventory.add_item(item_to_sell)
+
+	sell_items[item_to_sell] = real_item
+	total_price += price
+	update_total_message()
+
+
+func clear_transfer() -> void:
+	clear_inventory(transfer_inventory)
+	sell_items.clear()
+	mode = ShopMode.NONE
+	total_price = 0
+	update_total_message()
+
+
+func remove_real_player_item(item_to_remove: Item) -> void:
+	for cell: InventoryCell in real_player_inventory.grid.get_children():
+		if cell.item == item_to_remove:
+			cell.remove_item().queue_free()
+			return
 
 
 func create_item_copy(item: Item) -> Item:
