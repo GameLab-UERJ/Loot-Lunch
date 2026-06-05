@@ -14,6 +14,10 @@ func _ready() -> void:
 	
 func _state_logic(_delta: float) -> void:
 	if state == states.idle or state == states.move:
+		if not parent.can_control:
+			parent.movement_component.mov_direction = Vector2.ZERO
+			return
+
 		parent.movement_component.get_input()
 		parent.movement_component.move()
 	

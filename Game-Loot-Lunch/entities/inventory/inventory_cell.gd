@@ -4,6 +4,7 @@ class_name InventoryCell
 
 signal selected(cell : InventoryCell)
 signal wants_item_removed(cell : InventoryCell)
+signal left_clicked(cell : InventoryCell)
 
 
 @export var item : Item:
@@ -34,7 +35,7 @@ func _process(_delta: float) -> void:
 
 func _gui_input(event: InputEvent) -> void:
 	if event.is_action_released("left_click"):
-		is_selected = true
+		left_clicked.emit(self)
 	if event.is_action_released("right_click"):
 		wants_item_removed.emit(self)
 
@@ -76,6 +77,8 @@ func set_item(value : Item) -> Item:
 		item_place.texture = atlas
 	value.hide()
 	value.force_stop_follow_mouse()
+	value.top_level = false
+	value.z_index = 0
 	value.position = Vector2.ZERO
 	value.call_deferred("reparent", self)
 	return previous_item

@@ -10,6 +10,8 @@ class_name Player
 @onready var hurt_sfx: AudioStreamPlayer2D = $HurtSfx
 @onready var attack_sfx: AudioStreamPlayer2D = $AttackSfx
 
+var can_control: bool = true
+
 
 func _process(_delta: float) -> void:
 	var mouse_direction: Vector2 = global_position.direction_to(get_global_mouse_position())
@@ -28,6 +30,9 @@ func _process(_delta: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if not can_control:
+		return
+
 	if event.is_action_released("ui_attack") and not sword_animation_player.is_playing():
 		sword_animation_player.play("attack")
 		attack_sfx.play()
