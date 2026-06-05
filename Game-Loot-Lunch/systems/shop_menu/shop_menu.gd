@@ -80,6 +80,7 @@ func fill_shop_inventory() -> void:
 		var item: Item = current_shop.create_item(item_scene)
 		add_child(item)
 		shop_inventory.add_item(item)
+		set_item_price_text(shop_inventory, item, current_shop.get_price(item_scene))
 
 
 func fill_player_inventory() -> void:
@@ -96,6 +97,7 @@ func fill_player_inventory() -> void:
 				add_child(item_copy)
 				player_inventory.add_item(item_copy)
 				player_item_copies[item_copy] = cell.item
+				set_item_price_text(player_inventory, item_copy, get_sell_price(cell.item))
 
 
 func start_buy_mode() -> void:
@@ -239,7 +241,7 @@ func add_player_item_to_transfer(cell: InventoryCell) -> void:
 	if price < 0:
 		message_label.text = "A loja não compra esse item"
 		return
-	price = floori(price / 2.0)
+	price = get_sell_price(real_item)
 
 	var item_to_sell: Item = cell.remove_item()
 	transfer_inventory.add_item(item_to_sell)
@@ -274,6 +276,24 @@ func create_item_copy(item: Item) -> Item:
 		return current_shop.create_item(shop_item_scene)
 
 	return null
+
+
+func get_sell_price(item: Item) -> int:
+	var price: int = current_shop.get_price_from_item(item)
+	if price < 0:
+		return -1
+
+	return floori(price / 2.0)
+
+
+func set_item_price_text(inventory: Inventory, item: Item, price: int) -> void:
+	if price < 0:
+		return
+
+	for cell: InventoryCell in inventory.grid.get_children():
+		if cell.item == item:
+			cell.set_price_text(str(price))
+			return
 
 func count_items(inventory: Inventory) -> int:
 	var total: int = 0
