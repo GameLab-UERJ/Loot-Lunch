@@ -4,6 +4,7 @@ class_name InventoryCell
 
 signal selected(cell : InventoryCell)
 signal wants_item_removed(cell : InventoryCell)
+signal left_clicked(cell : InventoryCell)
 
 
 @export var item : Item:
@@ -17,12 +18,14 @@ var is_selected : bool = false:
 
 
 @onready var item_place: TextureRect = $Panel/ItemPlace
+@onready var price_label: Label = $Panel/PriceLabel
 
 
 func _ready() -> void:
 	item = item
 	add_theme_stylebox_override("panel",StyleBoxFlat.new())
 	_change_bg_color(background_color)
+	set_price_text("")
 
 
 func _process(_delta: float) -> void:
@@ -34,7 +37,7 @@ func _process(_delta: float) -> void:
 
 func _gui_input(event: InputEvent) -> void:
 	if event.is_action_released("left_click"):
-		is_selected = true
+		left_clicked.emit(self)
 	if event.is_action_released("right_click"):
 		wants_item_removed.emit(self)
 
@@ -66,6 +69,7 @@ func set_item(value : Item) -> Item:
 	item = value
 	if not item:
 		item_place.texture = null
+		set_price_text("")
 		return null
 	elif not item.region_enabled:
 		item_place.texture = item.texture
@@ -76,9 +80,20 @@ func set_item(value : Item) -> Item:
 		item_place.texture = atlas
 	value.hide()
 	value.force_stop_follow_mouse()
+	value.top_level = false
+	value.z_index = 0
 	value.position = Vector2.ZERO
 	value.call_deferred("reparent", self)
 	return previous_item
+
+
+func set_price_text(value : String, color : Color = Color.WHITE) -> void:
+	price_label.text = "$ " + value
+	if price_label.label_settings:
+		price_label.label_settings = price_label.label_settings.duplicate()
+		price_label.label_settings.font_color = color
+	price_label.add_theme_color_override("font_color", color)
+	price_label.visible = not value.is_empty()
 
 
 func _change_bg_color(color : Color) -> void:

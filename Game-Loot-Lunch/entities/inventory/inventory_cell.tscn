@@ -7,6 +7,13 @@ bg_color = Color(0.25, 0.25, 0.25, 0.99215686)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rwyhr"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_rwyhr"]
+font_size = 8
+font_color = Color(0, 1, 0, 1)
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 0
+
 [node name="InventoryCell" type="PanelContainer" unique_id=1560891636]
 custom_minimum_size = Vector2(34, 34)
 offset_right = 32.0
@@ -40,3 +47,19 @@ mouse_filter = 2
 texture = SubResource("AtlasTexture_rwyhr")
 expand_mode = 3
 stretch_mode = 1
+
+[node name="PriceLabel" type="Label" parent="Panel" unique_id=1095353102]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -24.0
+offset_top = -10.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 8
+text = "0"
+label_settings = SubResource("LabelSettings_rwyhr")
+horizontal_alignment = 2

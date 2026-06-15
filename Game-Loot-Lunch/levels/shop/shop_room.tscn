@@ -5,6 +5,11 @@
 [ext_resource type="Texture2D" uid="uid://can6jqu7o5b5l" path="res://assets/art/levels/test_room/test_room_tilemap.png" id="2_8nrlq"]
 [ext_resource type="PackedScene" uid="uid://c6wv6ecrc6cff" path="res://entities/npcs/shop_npc/shop_npc.tscn" id="2_obpsm"]
 [ext_resource type="PackedScene" uid="uid://3cgeew2m05mn" path="res://entities/player/player.tscn" id="5_2xyn3"]
+[ext_resource type="Script" uid="uid://dr3t723hbciuk" path="res://systems/shop/shop_component.gd" id="5_q0dw4"]
+[ext_resource type="PackedScene" uid="uid://cexct4fg71pc5" path="res://entities/items/carne.tscn" id="6_7cgwe"]
+[ext_resource type="PackedScene" uid="uid://dd8vbsbs33ii4" path="res://entities/items/farinha.tscn" id="7_xe2u5"]
+[ext_resource type="PackedScene" uid="uid://dwlepdjd5lv8x" path="res://entities/items/tomate.tscn" id="8_m1bl1"]
+[ext_resource type="PackedScene" uid="uid://dnw8w6uoo6qef" path="res://systems/shop_menu/shop_menu.tscn" id="10_xe2u5"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dt7fw"]
 texture = ExtResource("2_8nrlq")
@@ -271,8 +276,11 @@ texture = ExtResource("2_8nrlq")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_obpsm")
 
-[node name="ShopRoom" type="Node2D" unique_id=141259000]
+[node name="ShopRoom" type="Node2D" unique_id=141259000 node_paths=PackedStringArray("shop_menu", "shop_component", "player_inventory_component")]
 script = ExtResource("1_4m7o5")
+shop_menu = NodePath("CanvasLayer/ShopMenu")
+shop_component = NodePath("ShopNpc/ShopComponent")
+player_inventory_component = NodePath("Player/InventoryComponent")
 
 [node name="LeaveArea" parent="." unique_id=1323691504 instance=ExtResource("2_2xyn3")]
 z_index = 2
@@ -490,7 +498,15 @@ tile_set = SubResource("TileSet_dt7fw")
 [node name="ShopNpc" parent="." unique_id=1279799556 instance=ExtResource("2_obpsm")]
 y_sort_enabled = true
 position = Vector2(205.32132, 32.124733)
-scale = Vector2(1, 1)
+
+[node name="ShopComponent" type="Node" parent="ShopNpc" unique_id=2082865285]
+script = ExtResource("5_q0dw4")
+items_prices = Dictionary[PackedScene, int]({
+ExtResource("6_7cgwe"): 20,
+ExtResource("8_m1bl1"): 5,
+ExtResource("7_xe2u5"): 10
+})
+metadata/_custom_type_script = "uid://dr3t723hbciuk"
 
 [node name="mesa2" type="TileMapLayer" parent="." unique_id=866060475]
 position = Vector2(-17, -64)
@@ -518,5 +534,14 @@ limit_top = -32
 limit_right = 224
 limit_bottom = 100
 
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=306904476]
+
+[node name="ShopMenu" parent="CanvasLayer" unique_id=1060735759 instance=ExtResource("10_xe2u5")]
+visible = false
+
 [connection signal="interact_with_player" from="LeaveArea" to="." method="_on_leave_area_entered"]
 [connection signal="stop_interact_with_player" from="LeaveArea" to="." method="_on_leave_area_exited"]
+[connection signal="interact_with_player" from="ShopNpc/InteractableArea" to="." method="_on_shop_npc_interactable_area_interact_with_player"]
+
+[editable path="ShopNpc"]
+[editable path="Player"]

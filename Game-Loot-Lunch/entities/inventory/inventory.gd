@@ -4,6 +4,10 @@ class_name Inventory
 
 const INVENTORY_CELL = preload("uid://b85fxrmr3ribs")
 
+
+signal cell_left_clicked(cell : InventoryCell)
+
+
 ## Dimensão do inventário, x representando a
 ## quantidade de colunas e y a quantidade de linhas
 @export var dimensions : Vector2i = Vector2i.ONE:
@@ -13,6 +17,8 @@ const INVENTORY_CELL = preload("uid://b85fxrmr3ribs")
 ## Em geral, uma [Marker2D] seria o melhor mas pode usar algo como o [Player],
 ## por exemplo.
 @export var node_to_drop : Node2D
+
+@export var can_move_items : bool = true
 
 
 var selected_cell : InventoryCell
@@ -50,10 +56,16 @@ func set_dimensions(value : Vector2i) -> void:
 		grid.columns = dimensions.x
 		for i in range(grid.get_child_count(),dimensions.x * dimensions.y):
 			cell = INVENTORY_CELL.instantiate()
-			cell.selected.connect(handle_new_selected_cell)
+			cell.left_clicked.connect(handle_cell_left_clicked)
 			cell.wants_item_removed.connect(handle_wants_item_removed)
 			grid.add_child(cell)
 		call_deferred("remove_empty_cells",grid.get_child_count()-dimensions.x * dimensions.y)
+
+
+func handle_cell_left_clicked(cell : InventoryCell) -> void:
+	cell_left_clicked.emit(cell)
+	if can_move_items:
+		handle_new_selected_cell(cell)
 
 
 ## Returns an array with the references of all empty cells
@@ -131,6 +143,11 @@ func remove_item() -> Item:
 	return null
 
 
+func cancel_selected_item() -> void:
+	if selected_cell:
+		handle_new_selected_cell(null)
+
+
 func set_selected_cell(value : InventoryCell) -> void:
 	if selected_cell:
 		selected_cell.is_selected = false
@@ -141,7 +158,9 @@ func set_selected_cell(value : InventoryCell) -> void:
 		selected_item = null
 		return
 	if selected_cell.item:
-		selected_item = selected_cell.remove_item()
+		selected_item = selected_cell.remove_item(self)
+		selected_item.top_level = true
+		selected_item.z_index = 100
 		selected_item.force_follow_mouse()
 		pass
 
