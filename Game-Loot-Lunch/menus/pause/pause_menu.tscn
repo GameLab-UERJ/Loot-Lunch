@@ -37,6 +37,7 @@ shadow_offset = Vector2(2, 2)
 
 [node name="PauseMenu" type="CanvasLayer" unique_id=463224813]
 process_mode = 3
+layer = 100
 script = ExtResource("1_3gf11")
 
 [node name="Panel" type="Panel" parent="." unique_id=1503265194]

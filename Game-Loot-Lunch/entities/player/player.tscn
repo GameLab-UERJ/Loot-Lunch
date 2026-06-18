@@ -510,9 +510,9 @@ collision_mask = 5
 script = ExtResource("2_bqsbk")
 invencibility_time = 1.0
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." index="0" unique_id=1951839530]
+[node name="InventoryLayer" type="CanvasLayer" parent="." index="0" unique_id=1951839530]
 
-[node name="Inventory" parent="CanvasLayer" index="0" unique_id=1443629152 instance=ExtResource("3_yqrof")]
+[node name="Inventory" parent="InventoryLayer" index="0" unique_id=1443629152 instance=ExtResource("3_yqrof")]
 offset_left = -239.0
 offset_top = -130.0
 offset_right = 241.0
@@ -526,7 +526,7 @@ script = ExtResource("4_wvtmh")
 
 [node name="InventoryComponent" type="Node" parent="." index="3" unique_id=379562273 node_paths=PackedStringArray("inventory")]
 script = ExtResource("15_7thud")
-inventory = NodePath("../CanvasLayer/Inventory")
+inventory = NodePath("../InventoryLayer/Inventory")
 
 [node name="AnimatedSprite2D" parent="." index="4" unique_id=552654717]
 sprite_frames = SubResource("SpriteFrames_va6lm")
