@@ -42,9 +42,9 @@ func update_gold_label(new_gold: int) -> void:
 	gold_label.text = "Gold Atual: " + str(new_gold)
 
 
-func open_shop(shop: ShopComponent, real_player_inventory: Inventory) -> void:
+func open_shop(shop: ShopComponent, inventory: Inventory) -> void:
 	current_shop = shop
-	self.real_player_inventory = real_player_inventory
+	real_player_inventory = inventory
 
 	visible = true
 	message_label.text = ""
@@ -79,7 +79,7 @@ func fill_shop_inventory() -> void:
 		
 	for item_scene: PackedScene in current_shop.get_item_scenes():
 		var item: Item = current_shop.create_item(item_scene)
-		add_child(item)
+		call_deferred("add_child",item)
 		shop_inventory.add_item(item)
 		set_item_price_text(shop_inventory, item, current_shop.get_price(item_scene), Color.GREEN)
 
@@ -357,7 +357,7 @@ func count_items(inventory: Inventory) -> int:
 
 	return total
 
-func count_empty_cells(inventory: Inventory) -> int:
+func count_empty_cells(inventory: Inventory) -> int:	
 	var total: int = 0
 
 	for cell: InventoryCell in inventory.grid.get_children():
@@ -365,7 +365,8 @@ func count_empty_cells(inventory: Inventory) -> int:
 			total += 1
 
 	return total
-	
+
+
 func can_add_buy_item() -> bool:
 	var empty_cells: int = count_empty_cells(real_player_inventory)
 	var transfer_items: int = count_items(transfer_inventory)

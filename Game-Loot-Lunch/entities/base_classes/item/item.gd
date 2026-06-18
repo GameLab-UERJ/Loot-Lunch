@@ -22,10 +22,10 @@ func _ready() -> void:
 		push_error("Item ",item_name," must have a Texture")
 	if not clickable_area:
 		clickable_area = CLICKABLE_AREA.instantiate()
-		add_child(clickable_area)
+		call_deferred("add_child",clickable_area)
 	if not interactable_area:
 		interactable_area = INTERACTABLE_AREA.instantiate()
-		add_child(interactable_area)
+		call_deferred("add_child",interactable_area)
 	interactable_area.interact_with_player.connect(emit_picked_up)
 
 
@@ -39,8 +39,12 @@ func emit_picked_up() -> void:
 
 
 func force_follow_mouse() -> void:
+	if not clickable_area:
+		return
 	clickable_area.is_following_mouse = true
 
 
 func force_stop_follow_mouse() -> void:
+	if not clickable_area:
+		return
 	clickable_area.is_following_mouse = false
