@@ -50,7 +50,9 @@ func remove_item(new_parent : Node = null, _show : bool = true) -> Item:
 		return null
 	var removed_item : Item = item
 	item = null
-	removed_item.reparent(new_parent)
+	if removed_item.get_parent():
+		removed_item.get_parent().remove_child(removed_item)
+	new_parent.add_child(removed_item)
 	if _show: 
 		removed_item.show()
 	else:
@@ -83,7 +85,9 @@ func set_item(value : Item) -> Item:
 	value.top_level = false
 	value.z_index = 0
 	value.position = Vector2.ZERO
-	value.call_deferred("reparent", self)
+	if value.get_parent():
+		value.get_parent().remove_child(value)
+	add_child(value)
 	return previous_item
 
 

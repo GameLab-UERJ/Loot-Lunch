@@ -277,7 +277,6 @@ physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_obpsm")
 
 [node name="ShopRoom" type="Node2D" unique_id=141259000 node_paths=PackedStringArray("shop_menu", "shop_component", "player_inventory_component")]
-position = Vector2(-1, 0)
 script = ExtResource("1_4m7o5")
 shop_menu = NodePath("CanvasLayer/ShopMenu")
 shop_component = NodePath("ShopNpc/ShopComponent")

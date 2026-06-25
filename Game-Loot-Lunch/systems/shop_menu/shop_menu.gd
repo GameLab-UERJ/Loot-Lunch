@@ -42,12 +42,29 @@ func update_gold_label(new_gold: int) -> void:
 	gold_label.text = "Gold Atual: " + str(new_gold)
 
 
+func _hide_all_recipes() -> void:
+	for inv in [player_inventory, transfer_inventory, shop_inventory]:
+		var recipes = inv.find_child("Recipes", false, false)
+		if recipes:
+			recipes.hide()
+
+
+func _show_player_recipes() -> void:
+	if real_player_inventory:
+		var recipes = real_player_inventory.find_child("Recipes", false, false)
+		if recipes:
+			recipes.show()
+
+
 func open_shop(shop: ShopComponent, inventory: Inventory) -> void:
 	current_shop = shop
 	real_player_inventory = inventory
 
 	visible = true
 	message_label.text = ""
+	
+	_hide_all_recipes()
+	
 	fill_player_inventory()
 	fill_shop_inventory()
 	clear_transfer()
@@ -55,9 +72,10 @@ func open_shop(shop: ShopComponent, inventory: Inventory) -> void:
 
 func close_shop() -> void:
 	clear_transfer()
-
 	clear_inventory(player_inventory)
-
+	
+	_show_player_recipes()
+	
 	visible = false
 	shop_closed.emit()
 

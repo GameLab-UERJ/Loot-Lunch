@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://cqnchp7q3uixs"]
 
 [ext_resource type="Script" uid="uid://c3wvorc8cumre" path="res://entities/inventory/inventory.gd" id="1_0tuds"]
+[ext_resource type="PackedScene" uid="uid://6sekaeftkftd" path="res://resources/Craft/recipes.tscn" id="2_q0t3s"]
+[ext_resource type="PackedScene" uid="uid://csomvy8tvdh8" path="res://resources/Craft/recipe.tscn" id="3_j40cc"]
 
 [node name="Inventory" type="Control" unique_id=1443629152]
 layout_mode = 3
@@ -29,9 +31,23 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 
-[node name="Grid" type="GridContainer" parent="Container" unique_id=370707674]
+[node name="HBoxContainer" type="HBoxContainer" parent="Container" unique_id=390434066]
+layout_mode = 2
+
+[node name="Grid" type="GridContainer" parent="Container/HBoxContainer" unique_id=370707674]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/h_separation = 0
 theme_override_constants/v_separation = 0
+
+[node name="Recipes" parent="." unique_id=65816974 instance=ExtResource("2_q0t3s")]
+layout_mode = 0
+offset_left = 59.0
+offset_top = 68.0
+offset_right = 187.0
+offset_bottom = 108.0
+recipe_scene = ExtResource("3_j40cc")
+
+[node name="Recipe" parent="Recipes" unique_id=1672701032 instance=ExtResource("3_j40cc")]
+layout_mode = 2

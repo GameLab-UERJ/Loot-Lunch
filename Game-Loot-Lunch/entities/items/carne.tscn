@@ -1,11 +1,13 @@
 [gd_scene format=3 uid="uid://cexct4fg71pc5"]
 
 [ext_resource type="Script" uid="uid://cle3p5oy53g7r" path="res://entities/base_classes/item/item.gd" id="1_vr55j"]
-[ext_resource type="Texture2D" uid="uid://xnfegqg2xfdc" path="res://assets/art/entities/items/farming_fishing.png" id="2_ao85l"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_vr55j"]
+load_path = "res://.godot/imported/farming_fishing.png-72dabe11baa527a57facd8190b0c7c10.ctex"
 
 [node name="Carne" type="Sprite2D" unique_id=1998340507]
 physics_interpolation_mode = 2
-texture = ExtResource("2_ao85l")
+texture = SubResource("CompressedTexture2D_vr55j")
 region_enabled = true
 region_rect = Rect2(48, 260, 32, 32)
 script = ExtResource("1_vr55j")

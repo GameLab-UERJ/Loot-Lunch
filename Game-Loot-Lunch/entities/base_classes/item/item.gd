@@ -11,7 +11,7 @@ signal picked_up(item : Item)
 @export var item_name : String		## Name of the Item
 @export var description : String	## Description of the Item, to e shown when inspected
 @export var is_ingredient : bool	## Ingredients can be used in recipees
-
+@export var recipe : Array[PackedScene] = []  ## Cenas dos itens ingredientes
 
 @onready var clickable_area: ClickableArea = get_node("ClickableArea") if has_node("ClickableArea") else null
 @onready var interactable_area: InteractableArea = get_node("InteractableArea") if has_node("InteractableArea") else null

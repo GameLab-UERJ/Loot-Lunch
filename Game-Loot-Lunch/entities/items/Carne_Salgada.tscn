@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://t5ajrb8nc27b"]
+
+[ext_resource type="Script" uid="uid://cle3p5oy53g7r" path="res://entities/base_classes/item/item.gd" id="1_sh28r"]
+[ext_resource type="Texture2D" uid="uid://xnfegqg2xfdc" path="res://assets/art/entities/items/farming_fishing.png" id="1_w6amc"]
+[ext_resource type="PackedScene" uid="uid://cexct4fg71pc5" path="res://entities/items/carne.tscn" id="3_kmisx"]
+[ext_resource type="PackedScene" uid="uid://dd8vbsbs33ii4" path="res://entities/items/farinha.tscn" id="4_gu778"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s0lh4"]
+atlas = ExtResource("1_w6amc")
+region = Rect2(47.321297, 513.1817, 32.15274, 28.387146)
+
+[node name="CarneSalgada" type="Sprite2D" unique_id=2085474197]
+texture = SubResource("AtlasTexture_s0lh4")
+script = ExtResource("1_sh28r")
+item_name = "Carne_Salgada"
+description = "Carne usada para fazer carne de Sol"
+recipe = Array[PackedScene]([ExtResource("3_kmisx"), ExtResource("4_gu778")])

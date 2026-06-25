@@ -8,14 +8,9 @@ const INVENTORY_CELL = preload("uid://b85fxrmr3ribs")
 signal cell_left_clicked(cell : InventoryCell)
 
 
-## Dimensão do inventário, x representando a
-## quantidade de colunas e y a quantidade de linhas
 @export var dimensions : Vector2i = Vector2i.ONE:
 	set = set_dimensions
 	
-## Representá o nó a ser usado como base para dropar itens.
-## Em geral, uma [Marker2D] seria o melhor mas pode usar algo como o [Player],
-## por exemplo.
 @export var node_to_drop : Node2D
 
 @export var can_move_items : bool = true
@@ -28,7 +23,9 @@ var selected_pos : Vector2i:
 
 
 @onready var container: PanelContainer = $Container
-@onready var grid: GridContainer = $Container/Grid
+@onready var grid: GridContainer = $Container/HBoxContainer/Grid
+@onready var recipes: Recipes = $Container/HBoxContainer/Recipes
+@onready var recipe: Recipe = $Container/HBoxContainer/Recipes/Recipe
 
 
 func _ready() -> void:
@@ -68,9 +65,6 @@ func handle_cell_left_clicked(cell : InventoryCell) -> void:
 		handle_new_selected_cell(cell)
 
 
-## Returns an array with the references of all empty cells
-## [br]
-## if 'first' is true, returns as soon as it finds one
 func find_empty_cells(first : bool = false) -> Array[InventoryCell]:
 	var result : Array[InventoryCell] = []
 	for cell : InventoryCell in grid.get_children():
@@ -81,7 +75,6 @@ func find_empty_cells(first : bool = false) -> Array[InventoryCell]:
 	return result
 
 
-## returns the amount of empty cells removed.
 func remove_empty_cells(max_number : int) -> int:
 	if not grid:
 		return 0
@@ -133,7 +126,11 @@ func handle_new_selected_cell(cell : InventoryCell) -> void:
 
 
 func add_item(item : Item) -> void:
-	var cell : InventoryCell = find_empty_cells(true)[0]
+	var empty_cells : Array[InventoryCell] = find_empty_cells(true)
+	if empty_cells.size() == 0:
+		item.queue_free()
+		return
+	var cell : InventoryCell = empty_cells[0]
 	cell.set_item(item)
 
 
@@ -162,7 +159,6 @@ func set_selected_cell(value : InventoryCell) -> void:
 		selected_item.top_level = true
 		selected_item.z_index = 100
 		selected_item.force_follow_mouse()
-		pass
 
 
 func get_selected_pos() -> Vector2i:
@@ -172,8 +168,6 @@ func get_selected_pos() -> Vector2i:
 		selected_pos = Vector2i.MIN
 	return selected_pos
 
-
-# TODO all those functions should be in a InventoryGrid class to modularize.
 
 func get_cell(pos : Vector2i) -> InventoryCell:
 	if pos.x >= dimensions.x or pos.y >= dimensions.y:
@@ -198,6 +192,22 @@ func remove_item_at(pos : Vector2i) -> Item:
 		push_warning("At pos " + str(pos) + ": ")
 		return null
 	return item
+
+
+func has_item(item_to_find : Item) -> bool:
+	for cell : InventoryCell in grid.get_children():
+		if cell.item and cell.item.item_name == item_to_find.item_name:
+			return true
+	return false
+
+
+func remove_item_by_name(item_name_to_remove : String) -> void:
+	for cell : InventoryCell in grid.get_children():
+		if cell.item and cell.item.item_name == item_name_to_remove:
+			var removed : Item = cell.remove_item()
+			if removed:
+				removed.queue_free()
+			return
 
 
 func print_inventory_cells() -> void:
