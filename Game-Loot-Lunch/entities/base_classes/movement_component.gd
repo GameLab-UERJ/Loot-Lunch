@@ -2,7 +2,7 @@ extends Node
 class_name MovementComponent
 
 
-var accerelation: int
+var acceleration: int
 var max_speed: int
 
 
@@ -18,11 +18,11 @@ func _ready():
 		set_physics_process(false)
 		queue_free() 
 	
-	accerelation = parent.accerelation
+	acceleration = parent.acceleration
 	max_speed = parent.max_speed
 
 
 func move(mov_direction: Vector2) -> void:
 	mov_direction = mov_direction.normalized()
-	parent.velocity += mov_direction * accerelation
+	parent.velocity += mov_direction * acceleration
 	parent.velocity = parent.velocity.limit_length(max_speed)
