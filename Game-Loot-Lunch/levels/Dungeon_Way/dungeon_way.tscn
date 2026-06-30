@@ -1,20 +1,21 @@
 [gd_scene format=4 uid="uid://dkaytgmdhkghj"]
 
 [ext_resource type="Texture2D" uid="uid://4k3sewl10xmk" path="res://assets/art/tilesets/exterior_1/exterior.png" id="1_bkwuf"]
+[ext_resource type="Script" uid="uid://djgvy2t6ia5cr" path="res://levels/dungeon_way/dungeon_way.gd" id="1_f10bb"]
 [ext_resource type="Texture2D" uid="uid://kysfsmoaib7g" path="res://assets/art/tilesets/exterior_2/sandwater.png" id="2_no2jk"]
 [ext_resource type="Texture2D" uid="uid://bjh0kt1bm4de6" path="res://assets/art/tilesets/dungeon_exterior/Tiled_files/Sprite-0002-Sheet.png" id="3_drym6"]
 [ext_resource type="Texture2D" uid="uid://jj86r3ewr8f2" path="res://assets/art/tilesets/exterior_1/ground_grass_details.png" id="3_gcchm"]
 [ext_resource type="Texture2D" uid="uid://barp2mdn87gem" path="res://assets/art/tilesets/exterior_2/fence.png" id="4_drym6"]
 [ext_resource type="Texture2D" uid="uid://bxycg4rtxvtro" path="res://assets/art/tilesets/dungeon_exterior/Tiled_files/agua_pe_ponte.png" id="4_eblgh"]
 [ext_resource type="PackedScene" uid="uid://3cgeew2m05mn" path="res://entities/player/player.tscn" id="5_eblgh"]
-[ext_resource type="Texture2D" uid="uid://dc142dsxmwr8g" path="res://assets/art/tilesets/Bridges/PNG_n_Tiled/Bridges.png" id="6_eblgh"]
+[ext_resource type="Texture2D" uid="uid://dc142dsxmwr8g" path="res://assets/art/tilesets/Bridges/Bridges.png" id="6_eblgh"]
 [ext_resource type="Texture2D" uid="uid://yrust6eoditq" path="res://assets/art/tilesets/dungeon_exterior/Tiled_files/water_coasts.png" id="8_eblgh"]
 [ext_resource type="Texture2D" uid="uid://cdsat7f41puml" path="res://assets/art/tilesets/shop_exterior/Pixel Lands Village Demo/premade_buildings_demo.png" id="9_0dwsw"]
 [ext_resource type="Texture2D" uid="uid://b5bdm40h5bxot" path="res://assets/art/tilesets/shop_exterior/Pixel Lands Village Demo/walls_roofs_doors_demo.png" id="10_2y4xb"]
-[ext_resource type="PackedScene" uid="uid://dog616igc8b5n" path="res://tests/level_change/level_changer.tscn" id="10_5rp7m"]
 [ext_resource type="Texture2D" uid="uid://frtkx1u1ssr2" path="res://assets/art/tilesets/shop_exterior/Pixel Lands Village Demo/objects_demo.png" id="11_t2p1a"]
 [ext_resource type="Texture2D" uid="uid://xnfegqg2xfdc" path="res://assets/art/entities/items/farming_fishing.png" id="12_t2p1a"]
 [ext_resource type="AudioStream" uid="uid://by5he5x7j2pxn" path="res://assets/music/deuslower-fantasy-medieval-mystery-ambient-292418.mp3" id="14_2y4xb"]
+[ext_resource type="Script" uid="uid://daus7y7nt2yw5" path="res://systems/interaction/interactable_area.gd" id="16_ycylx"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5rp7m"]
 texture = ExtResource("1_bkwuf")
@@ -2021,55 +2022,104 @@ texture = ExtResource("9_0dwsw")
 11:14/0 = 0
 12:14/0 = 0
 1:15/0 = 0
+1:15/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 2:15/0 = 0
+2:15/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 3:15/0 = 0
+3:15/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 4:15/0 = 0
+4:15/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 5:15/0 = 0
+5:15/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 6:15/0 = 0
+6:15/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 7:15/0 = 0
+7:15/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 8:15/0 = 0
+8:15/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 9:15/0 = 0
+9:15/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 10:15/0 = 0
+10:15/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 11:15/0 = 0
+11:15/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 12:15/0 = 0
+12:15/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 1:16/0 = 0
+1:16/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 2:16/0 = 0
+2:16/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 3:16/0 = 0
+3:16/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 4:16/0 = 0
+4:16/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 5:16/0 = 0
+5:16/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 6:16/0 = 0
+6:16/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 7:16/0 = 0
+7:16/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 8:16/0 = 0
+8:16/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 9:16/0 = 0
+9:16/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 10:16/0 = 0
+10:16/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 11:16/0 = 0
+11:16/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 12:16/0 = 0
+12:16/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 1:17/0 = 0
+1:17/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 2:17/0 = 0
+2:17/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 3:17/0 = 0
+3:17/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 4:17/0 = 0
+4:17/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 5:17/0 = 0
+5:17/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 6:17/0 = 0
+6:17/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, -2.5, -8, -3, 8, -8, 8)
 7:17/0 = 0
+7:17/0/physics_layer_0/polygon_0/points = PackedVector2Array(2.5, -8, 8, -8, 8, 8, 2.5, 8)
 8:17/0 = 0
+8:17/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 9:17/0 = 0
+9:17/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 10:17/0 = 0
+10:17/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 11:17/0 = 0
+11:17/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 12:17/0 = 0
+12:17/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 1:18/0 = 0
+1:18/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 2:18/0 = 0
+2:18/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 3:18/0 = 0
+3:18/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 4:18/0 = 0
+4:18/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 5:18/0 = 0
+5:18/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 6:18/0 = 0
+6:18/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, -2.5, -8, -3, 8, -8, 8)
 7:18/0 = 0
+7:18/0/physics_layer_0/polygon_0/points = PackedVector2Array(2.5, -8, 8, -8, 8, 8, 2.5, 8)
 8:18/0 = 0
+8:18/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 9:18/0 = 0
+9:18/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 10:18/0 = 0
+10:18/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 11:18/0 = 0
+11:18/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 12:18/0 = 0
+12:18/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 
 [sub_resource type="TileSet" id="TileSet_tii5i"]
+physics_layer_0/collision_layer = 1
 sources/3 = SubResource("TileSetAtlasSource_eo1ic")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rmmey"]
@@ -2778,7 +2828,6 @@ texture = ExtResource("11_t2p1a")
 9:5/0 = 0
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_tthbm"]
-load_path = "res://.godot/imported/shop290x248.png-f8a927f47a9ff3fc01b7af70038226ef.ctex"
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0agk2"]
 texture = SubResource("CompressedTexture2D_tthbm")
@@ -3161,10 +3210,17 @@ texture = ExtResource("12_t2p1a")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_xmtnh")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_km4v1"]
-size = Vector2(20, 28)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3ekfb"]
+size = Vector2(31, 35)
 
-[node name="DungeonWay" type="Node2D" unique_id=309474097]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jgs31"]
+size = Vector2(31.75, 29)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f10bb"]
+size = Vector2(19, 28)
+
+[node name="dungeon_way" type="Node2D" unique_id=309474097]
+script = ExtResource("1_f10bb")
 
 [node name="TileSets" type="Node" parent="." unique_id=541781352]
 
@@ -3223,22 +3279,28 @@ tile_map_data = PackedByteArray("AADe/zEAAgARAB8AAADe/zAAAgACACAAAADe/y8AAgACACA
 tile_set = SubResource("TileSet_byhfn")
 
 [node name="Shop_casas" type="TileMapLayer" parent="TileSets" unique_id=1096351729]
+z_index = 2
+y_sort_enabled = true
 tile_map_data = PackedByteArray("AAD8/wQAAQABABEAAAD8/wUAAQABABIAAAD9/wUAAQACABIAAAD+/wUAAQADABIAAAD//wUAAQAEABIAAAAAAAUAAQAFABIAAAABAAUAAQAGABIAAAACAAUAAQAHABIAAAADAAUAAQAIABIAAAAEAAUAAQAJABIAAAAFAAUAAQAKABIAAAAFAAQAAQAKABEAAAAEAAQAAQAJABEAAAADAAQAAQAIABEAAAD+/wQAAQADABEAAAD9/wQAAQACABEAAAACAAQAAQAHABEAAAABAAQAAQAGABEAAAAAAAQAAQAFABEAAAD//wQAAQAEABEAAAAGAAQAAQALABEAAAAHAAQAAQAMABEAAAAGAAUAAQALABIAAAAHAAUAAQAMABIAAAASAAIAAwABAA0AAAASAAMAAwABAA4AAAASAAQAAwABAA8AAAASAAUAAwABABAAAAASAAYAAwABABEAAAASAAcAAwABABIAAAATAAIAAwACAA0AAAATAAMAAwACAA4AAAATAAQAAwACAA8AAAATAAUAAwACABAAAAATAAYAAwACABEAAAATAAcAAwACABIAAAAUAAIAAwADAA0AAAAUAAMAAwADAA4AAAAUAAQAAwADAA8AAAAUAAUAAwADABAAAAAUAAYAAwADABEAAAAUAAcAAwADABIAAAAVAAIAAwAEAA0AAAAVAAMAAwAEAA4AAAAVAAQAAwAEAA8AAAAVAAUAAwAEABAAAAAVAAYAAwAEABEAAAAVAAcAAwAEABIAAAAWAAEAAwAFAAwAAAAWAAIAAwAFAA0AAAAWAAMAAwAFAA4AAAAWAAQAAwAFAA8AAAAWAAUAAwAFABAAAAAWAAYAAwAFABEAAAAWAAcAAwAFABIAAAAXAAAAAwAGAAsAAAAXAAEAAwAGAAwAAAAXAAIAAwAGAA0AAAAXAAMAAwAGAA4AAAAXAAQAAwAGAA8AAAAXAAUAAwAGABAAAAAXAAYAAwAGABEAAAAXAAcAAwAGABIAAAAYAAAAAwAHAAsAAAAYAAEAAwAHAAwAAAAYAAIAAwAHAA0AAAAYAAMAAwAHAA4AAAAYAAQAAwAHAA8AAAAYAAUAAwAHABAAAAAYAAYAAwAHABEAAAAYAAcAAwAHABIAAAAZAAEAAwAIAAwAAAAZAAIAAwAIAA0AAAAZAAMAAwAIAA4AAAAZAAQAAwAIAA8AAAAZAAUAAwAIABAAAAAZAAYAAwAIABEAAAAZAAcAAwAIABIAAAAaAAIAAwAJAA0AAAAaAAMAAwAJAA4AAAAaAAQAAwAJAA8AAAAaAAUAAwAJABAAAAAaAAYAAwAJABEAAAAaAAcAAwAJABIAAAAbAAIAAwAKAA0AAAAbAAMAAwAKAA4AAAAbAAQAAwAKAA8AAAAbAAUAAwAKABAAAAAbAAYAAwAKABEAAAAbAAcAAwAKABIAAAAcAAIAAwALAA0AAAAcAAMAAwALAA4AAAAcAAQAAwALAA8AAAAcAAUAAwALABAAAAAcAAYAAwALABEAAAAcAAcAAwALABIAAAAdAAIAAwAMAA0AAAAdAAMAAwAMAA4AAAAdAAQAAwAMAA8AAAAdAAUAAwAMABAAAAAdAAYAAwAMABEAAAAdAAcAAwAMABIAAAA=")
 tile_set = SubResource("TileSet_tii5i")
 
 [node name="Shop_paredes" type="TileMapLayer" parent="TileSets" unique_id=912175536]
+z_index = 2
 tile_map_data = PackedByteArray("AAATAAYAAAAEABEAAAAUAAYAAAAFABEAAAAUAAcAAAAFABIAAAATAAcAAAAEABIAAAAbAAYAAAAEABEAAAAcAAYAAAAFABEAAAAcAAcAAAAFABIAAAAbAAcAAAAEABIAAAAZAAYAAAADAAQAAAAZAAcAAAADAAQAAAAWAAYAAAADAAQAAAAWAAcAAAADAAQAAAAXAAQAAAAKAAEAAAAYAAQAAAALAAEAAAAXAAUAAAADAAMAAAAYAAUAAAADAAMAAAAXAAYAAAADAAQAAAAYAAYAAAADAAQAAAAYAAcAAAADAAQAAAAXAAcAAAADAAQAAAA=")
 tile_set = SubResource("TileSet_8oqep")
 
 [node name="Shop_janelas" type="TileMapLayer" parent="TileSets" unique_id=1839962360]
+z_index = 2
 tile_map_data = PackedByteArray("AAAXAAQAAAAGABEAAAAXAAUAAAAGABIAAAAYAAQAAAAHABEAAAAYAAUAAAAHABIAAAAXAAYAAAAQABEAAAAXAAcAAAAQABIAAAAYAAYAAAARABEAAAAYAAcAAAARABIAAAAZAAYAAAAJABEAAAAZAAcAAAAJABIAAAAWAAYAAAAJABEAAAAWAAcAAAAJABIAAAA=")
 tile_set = SubResource("TileSet_xmtnh")
 
 [node name="Shop_placa" type="TileMapLayer" parent="TileSets" unique_id=470917730]
+z_index = 2
 tile_map_data = PackedByteArray("AAASAAcAAAAAAAAAAAASAAgAAAAAAAEAAAATAAcAAAABAAAAAAATAAgAAAABAAEAAAATAAkAAAABAAIAAAA=")
 tile_set = SubResource("TileSet_dowqx")
 
 [node name="Shop_decorações" type="TileMapLayer" parent="TileSets" unique_id=861050929]
+z_index = 2
 tile_map_data = PackedByteArray("AAASAAcAAAAIAAAAAAASAAgAAAAIAAEAAAATAAcAAAAJAAAAAAATAAgAAAAJAAEAAAAZAAcAAAAIAAQAAAAZAAgAAAAIAAUAAAAaAAcAAAAJAAQAAAAaAAgAAAAJAAUAAAAbAAcAAAAIAAQAAAAbAAgAAAAIAAUAAAAcAAcAAAAJAAQAAAAcAAgAAAAJAAUAAAAdAAgAAAAAAAQAAAAUAAcAAAAIAAIAAAAVAAcAAAAJAAIAAAA=")
 tile_set = SubResource("TileSet_2d6dw")
 
@@ -3260,29 +3322,45 @@ limit_top = -20
 limit_right = 1260
 limit_bottom = 678
 
-[node name="Level_Changes" type="Node" parent="." unique_id=1895858898]
-
-[node name="back_house" parent="Level_Changes" unique_id=487844286 instance=ExtResource("10_5rp7m")]
-position = Vector2(215, -9)
-collision_mask = 2
-next_level = "res://levels/external_house/external_house.tscn"
-
-[node name="go_to_dungeo_external_area" parent="Level_Changes" unique_id=1530456032 instance=ExtResource("10_5rp7m")]
-position = Vector2(-531, 363)
-collision_mask = 2
-next_level = "res://levels/external_dungeon/dungeon_exterior.tscn"
-
-[node name="go_to_shop" parent="Level_Changes" unique_id=1525876662 instance=ExtResource("10_5rp7m")]
-position = Vector2(384, 108)
-collision_mask = 2
-next_level = "res://levels/shop/shop_room.tscn"
-
-[node name="CollisionShape2D" parent="Level_Changes/go_to_shop" index="0" unique_id=1793208406]
-position = Vector2(0, 5)
-shape = SubResource("RectangleShape2D_km4v1")
-
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=425942193]
 stream = ExtResource("14_2y4xb")
 autoplay = true
 
-[editable path="Level_Changes/go_to_shop"]
+[node name="level_change" type="Node" parent="." unique_id=1228703467]
+
+[node name="dungeon_exterior" type="Area2D" parent="level_change" unique_id=895367896]
+position = Vector2(-518, 362)
+collision_mask = 3
+script = ExtResource("16_ycylx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="level_change/dungeon_exterior" unique_id=1880999393]
+position = Vector2(-9, 1.5)
+shape = SubResource("RectangleShape2D_3ekfb")
+
+[node name="exterior_house" type="Area2D" parent="level_change" unique_id=974619514]
+position = Vector2(209, -5)
+collision_mask = 3
+script = ExtResource("16_ycylx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="level_change/exterior_house" unique_id=1058482266]
+position = Vector2(7.125, -7.5)
+shape = SubResource("RectangleShape2D_jgs31")
+
+[node name="shop" type="Area2D" parent="level_change" unique_id=1098482425]
+position = Vector2(383, 118)
+collision_mask = 3
+script = ExtResource("16_ycylx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="level_change/shop" unique_id=1461312153]
+position = Vector2(-0.5, 0)
+shape = SubResource("RectangleShape2D_f10bb")
+
+[connection signal="body_entered" from="level_change/dungeon_exterior" to="level_change/dungeon_exterior" method="_on_body_entered"]
+[connection signal="body_exited" from="level_change/dungeon_exterior" to="level_change/dungeon_exterior" method="_on_body_exited"]
+[connection signal="interact_with_player" from="level_change/dungeon_exterior" to="." method="_on_dungeon_exterior_area_entered"]
+[connection signal="body_entered" from="level_change/exterior_house" to="level_change/exterior_house" method="_on_body_entered"]
+[connection signal="body_exited" from="level_change/exterior_house" to="level_change/exterior_house" method="_on_body_exited"]
+[connection signal="interact_with_player" from="level_change/exterior_house" to="." method="_on_external_house_area_entered"]
+[connection signal="body_entered" from="level_change/shop" to="level_change/shop" method="_on_body_entered"]
+[connection signal="body_exited" from="level_change/shop" to="level_change/shop" method="_on_body_exited"]
+[connection signal="interact_with_player" from="level_change/shop" to="." method="_on_shop_area_entered"]

@@ -1,14 +1,15 @@
 [gd_scene format=4 uid="uid://b2dvhgedbkgtc"]
 
 [ext_resource type="Texture2D" uid="uid://yrust6eoditq" path="res://assets/art/tilesets/dungeon_exterior/Tiled_files/water_coasts.png" id="1_2es48"]
+[ext_resource type="Script" uid="uid://bcrjejv5616a7" path="res://levels/external_dungeon/dungeon_exterior.gd" id="1_i3155"]
 [ext_resource type="Texture2D" uid="uid://cg16okpdbew8m" path="res://assets/art/tilesets/dungeon_exterior/Tiled_files/Objects.png" id="2_t8xba"]
 [ext_resource type="Texture2D" uid="uid://bjh0kt1bm4de6" path="res://assets/art/tilesets/dungeon_exterior/Tiled_files/Sprite-0002-Sheet.png" id="3_ofyad"]
-[ext_resource type="Texture2D" uid="uid://dc142dsxmwr8g" path="res://assets/art/tilesets/Bridges/PNG_n_Tiled/Bridges.png" id="4_mcp6s"]
+[ext_resource type="Texture2D" uid="uid://dc142dsxmwr8g" path="res://assets/art/tilesets/Bridges/Bridges.png" id="4_mcp6s"]
 [ext_resource type="Texture2D" uid="uid://kysfsmoaib7g" path="res://assets/art/tilesets/exterior_2/sandwater.png" id="5_i3155"]
 [ext_resource type="Texture2D" uid="uid://bxycg4rtxvtro" path="res://assets/art/tilesets/dungeon_exterior/Tiled_files/agua_pe_ponte.png" id="6_obd50"]
 [ext_resource type="Texture2D" uid="uid://d2l581ufnrtv6" path="res://assets/art/tilesets/dungeon_exterior/Tiled_files/Objects_animated2.png" id="7_grgag"]
 [ext_resource type="PackedScene" uid="uid://3cgeew2m05mn" path="res://entities/player/player.tscn" id="8_8oikr"]
-[ext_resource type="PackedScene" uid="uid://dog616igc8b5n" path="res://tests/level_change/level_changer.tscn" id="9_rp1tq"]
+[ext_resource type="Script" uid="uid://daus7y7nt2yw5" path="res://systems/interaction/interactable_area.gd" id="10_i3155"]
 [ext_resource type="AudioStream" uid="uid://huj0511vq4kh" path="res://assets/music/montogoronto-ominousdark-medievalfantasy-song-309510.mp3" id="10_mcp6s"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pa5xr"]
@@ -1180,7 +1181,14 @@ texture = ExtResource("7_grgag")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_bg1yv")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ofyad"]
+size = Vector2(25, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mcp6s"]
+size = Vector2(15.5, 23.125)
+
 [node name="dungeon_exterior" type="Node2D" unique_id=503173019]
+script = ExtResource("1_i3155")
 
 [node name="Tilesets" type="Node" parent="." unique_id=751814081]
 
@@ -1218,23 +1226,40 @@ tile_set = SubResource("TileSet_ntje7")
 stream = ExtResource("10_mcp6s")
 autoplay = true
 
-[node name="LevelChanger" type="Node" parent="." unique_id=2115422156]
-
-[node name="go_internal_dungeon" parent="LevelChanger" unique_id=487844286 instance=ExtResource("9_rp1tq")]
-position = Vector2(-1053, -810)
-scale = Vector2(-0.51439524, 0.55744565)
-collision_mask = 2
-
-[node name="back_dungeon_way" parent="LevelChanger" unique_id=1009013093 instance=ExtResource("9_rp1tq")]
-position = Vector2(819, 130)
-collision_mask = 2
-next_level = "res://levels/Dungeon_Way/dungeon_way.tscn"
-
 [node name="Player" parent="." unique_id=1328809556 instance=ExtResource("8_8oikr")]
-position = Vector2(741, 139)
+position = Vector2(713, 149)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1463558659]
 limit_left = -1550
 limit_top = -920
 limit_right = 840
 limit_bottom = 410
+
+[node name="level_change" type="Node" parent="." unique_id=704995543]
+
+[node name="back_to_dungeon_way" type="Area2D" parent="level_change" unique_id=160364885]
+position = Vector2(809, 133)
+collision_mask = 3
+script = ExtResource("10_i3155")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="level_change/back_to_dungeon_way" unique_id=1680082364]
+position = Vector2(2.5, -2)
+shape = SubResource("RectangleShape2D_ofyad")
+
+[node name="internal_dungeon" type="Area2D" parent="level_change" unique_id=1962026186]
+position = Vector2(-1052, -807)
+collision_mask = 3
+script = ExtResource("10_i3155")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="level_change/internal_dungeon" unique_id=491092028]
+position = Vector2(-1, 1)
+shape = SubResource("RectangleShape2D_mcp6s")
+
+[connection signal="body_entered" from="level_change/back_to_dungeon_way" to="level_change/back_to_dungeon_way" method="_on_body_entered"]
+[connection signal="body_exited" from="level_change/back_to_dungeon_way" to="level_change/back_to_dungeon_way" method="_on_body_exited"]
+[connection signal="interact_with_player" from="level_change/back_to_dungeon_way" to="." method="_on_dungeon_way_area_entered"]
+[connection signal="stop_interact_with_player" from="level_change/back_to_dungeon_way" to="." method="_on_dungeon_way_area_exited"]
+[connection signal="body_entered" from="level_change/internal_dungeon" to="level_change/internal_dungeon" method="_on_body_entered"]
+[connection signal="body_exited" from="level_change/internal_dungeon" to="level_change/internal_dungeon" method="_on_body_exited"]
+[connection signal="interact_with_player" from="level_change/internal_dungeon" to="." method="_on_internal_dungeon_area_entered"]
+[connection signal="stop_interact_with_player" from="level_change/internal_dungeon" to="." method="_on_internal_dungeon_area_exited"]
