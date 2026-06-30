@@ -9,6 +9,7 @@ class_name Player
 @onready var hit_stf: AudioStreamPlayer2D = $HitStf
 @onready var hurt_sfx: AudioStreamPlayer2D = $HurtSfx
 @onready var attack_sfx: AudioStreamPlayer2D = $AttackSfx
+@onready var input_component: InputComponent = $InputComponent
 
 var can_control: bool = true
 
@@ -53,3 +54,7 @@ func _on_hitbox_component_hit() -> void:
 
 func _on_got_hurt() -> void:
 	hurt_sfx.play()
+
+
+func _on_input_component_direction_changed(new_movement_direction: Vector2) -> void:
+	movement_component.move(new_movement_direction)

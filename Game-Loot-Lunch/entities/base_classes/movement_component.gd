@@ -1,23 +1,19 @@
 extends Node
-
 class_name MovementComponent
 
 var accerelation: int
 var max_speed: int
-
-var mov_direction: Vector2 = Vector2.ZERO
 
 var path_timer
 var navigation_agent: NavigationAgent2D
 var vector_to_next_point: Vector2
 
 @onready var parent: Character = get_parent()
-
-@onready var player: CharacterBody2D = get_tree().current_scene.get_node("Player") if get_tree().current_scene.has_node("Player") else null
+@onready var player: CharacterBody2D = get_tree().current_scene.get_node_or_null("Player")
 
 
 func _ready():
-	if not parent is CharacterBody2D:
+	if not parent is Character:
 		push_error("Error: This node must be child of a CharacterBody2D.")
 		
 		set_process(false)
@@ -54,24 +50,10 @@ func chase() -> void:
 	
 	if not navigation_agent.is_target_reached():
 		vector_to_next_point = navigation_agent.get_next_path_position() - parent.global_position
-		mov_direction = vector_to_next_point
+		move(vector_to_next_point)
 
 
-# -- Used by player and enemies-- 
-func move() -> void:
+func move(mov_direction: Vector2) -> void:
 	mov_direction = mov_direction.normalized()
 	parent.velocity += mov_direction * accerelation
 	parent.velocity = parent.velocity.limit_length(max_speed)
-
-
-# -- Used by player -- 
-func get_input() -> void:
-	mov_direction = Vector2.ZERO
-	if Input.is_action_pressed("ui_down"):
-		mov_direction += Vector2.DOWN
-	if Input.is_action_pressed("ui_left"):
-		mov_direction += Vector2.LEFT
-	if Input.is_action_pressed("ui_right"):
-		mov_direction += Vector2.RIGHT
-	if Input.is_action_pressed("ui_up"):
-		mov_direction += Vector2.UP
