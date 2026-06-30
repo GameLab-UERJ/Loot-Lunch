@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://o5jiqd246gto" path="res://entities/enemies/flying_eyes/fsm/flying_eye_fsm.gd" id="2_rkmmt"]
 [ext_resource type="Texture2D" uid="uid://cic1n8jgv11hx" path="res://assets/art/entities/enemies/flying_eye/enemy_afterdead_explosion_anim_spritesheet.png" id="3_0u44y"]
 [ext_resource type="Texture2D" uid="uid://bvljt7lkqa23p" path="res://assets/art/entities/enemies/flying_eye/flying_eye_spritesheet.png" id="3_bvlnh"]
+[ext_resource type="Script" uid="uid://d304wrj33k44u" path="res://entities/base_classes/chase_component.gd" id="4_eqxgk"]
 [ext_resource type="Script" uid="uid://bt5jjpnkd7ps" path="res://entities/base_classes/movement_component.gd" id="4_usvun"]
 [ext_resource type="Script" uid="uid://bi7fdvl4vpp7o" path="res://systems/hitbox/hitbox_component.gd" id="5_5ah01"]
 [ext_resource type="AudioStream" uid="uid://bur053evb1ael" path="res://assets/sfx/bat_wing_flap.wav" id="8_5845t"]
@@ -286,17 +287,20 @@ script = ExtResource("2_0oiyv")
 [node name="FiniteStateMachine" parent="." index="0" unique_id=394854071]
 script = ExtResource("2_rkmmt")
 
-[node name="MovementComponent" type="Node" parent="." index="1" unique_id=1873778066]
+[node name="ChaseComponent" type="Node" parent="." index="1" unique_id=1206515480]
+script = ExtResource("4_eqxgk")
+
+[node name="MovementComponent" type="Node" parent="." index="2" unique_id=1873778066]
 script = ExtResource("4_usvun")
 
-[node name="AnimatedSprite2D" parent="." index="2" unique_id=552654717]
+[node name="AnimatedSprite2D" parent="." index="3" unique_id=552654717]
 sprite_frames = SubResource("SpriteFrames_scurg")
 animation = &"fly"
 
-[node name="CollisionShape2D" parent="." index="3" unique_id=398117634]
+[node name="CollisionShape2D" parent="." index="4" unique_id=398117634]
 shape = SubResource("CircleShape2D_5g253")
 
-[node name="HitboxComponent" type="Area2D" parent="." index="4" unique_id=753196878]
+[node name="HitboxComponent" type="Area2D" parent="." index="5" unique_id=753196878]
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("5_5ah01")
@@ -305,16 +309,16 @@ metadata/_custom_type_script = "uid://bi7fdvl4vpp7o"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" index="0" unique_id=1306141943]
 shape = SubResource("CircleShape2D_5ah01")
 
-[node name="AnimationPlayer" parent="." index="5" unique_id=2113090391]
+[node name="AnimationPlayer" parent="." index="6" unique_id=2113090391]
 libraries/ = SubResource("AnimationLibrary_0u44y")
 
-[node name="WingFlapSfx" type="AudioStreamPlayer2D" parent="." index="8" unique_id=345390706]
+[node name="WingFlapSfx" type="AudioStreamPlayer2D" parent="." index="7" unique_id=345390706]
 stream = ExtResource("8_5845t")
 max_distance = 200.0
 
-[node name="Shadow" type="Sprite2D" parent="." index="9" unique_id=1621882509]
+[node name="Shadow" type="Sprite2D" parent="." index="8" unique_id=1621882509]
 position = Vector2(1, 0)
 texture = ExtResource("9_ed664")
 
+[connection signal="next_chase_point_set" from="ChaseComponent" to="." method="_on_chase_component_next_chase_point_set"]
 [connection signal="frame_changed" from="AnimatedSprite2D" to="." method="_on_wing_flap"]
-[connection signal="timeout" from="PathTimer" to="MovementComponent" method="_on_path_timer_timeout"]
