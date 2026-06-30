@@ -1,7 +1,7 @@
 extends Node2D
 
 
-var combat_zone : Node2D
+var internal_dungeon : Node2D
 
 # Prelaod PauseMenu
 var pause_menu_scene: PackedScene = preload("uid://dng6eim1kbmhh")
@@ -16,8 +16,8 @@ var pause_menu: PauseMenu
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	if not combat_zone:
-		combat_zone = load("uid://d0pechf47plm7").instantiate()
+	if not internal_dungeon:
+		internal_dungeon = load("uid://c4ofg67awv6jp").instantiate()
 	if not inside_house:
 		inside_house = load("uid://beai1me2j13ef").instantiate()
 	if not external_house: 
@@ -50,9 +50,9 @@ func _on_player_can_enter_shop() -> void:
 	EasyTransition.transition_to_node(shop_room,1.5,EasyTransition.TransitionAnim.FADE)
 
 
-func _on_player_can_enter_cambat_zone() -> void:
+func _on_player_can_enter_internal_dungeon() -> void:
 	_on_change_scene()
-	EasyTransition.transition_to_node(combat_zone,1.5,EasyTransition.TransitionAnim.FADE)
+	EasyTransition.transition_to_node(internal_dungeon,1.5,EasyTransition.TransitionAnim.FADE)
 
 
 func pause_game_menu() -> void:
