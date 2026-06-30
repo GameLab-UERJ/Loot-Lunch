@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://3cgeew2m05mn" path="res://entities/player/player.tscn" id="2_nbhqf"]
 [ext_resource type="PackedScene" uid="uid://ba74yflgg7877" path="res://entities/enemies/flying_eyes/flying_eye.tscn" id="3_skqhn"]
 [ext_resource type="AudioStream" uid="uid://huj0511vq4kh" path="res://assets/music/montogoronto-ominousdark-medievalfantasy-song-309510.mp3" id="4_jebrs"]
+[ext_resource type="PackedScene" uid="uid://xpvgdmkddoyb" path="res://entities/enemies/cow/cow_monster.tscn" id="5_r8jji"]
 
 [node name="ZonaDeTeste" type="Node2D" unique_id=387460330]
 
@@ -23,10 +24,12 @@ limit_bottom = 270
 [node name="FlyingEye" parent="." unique_id=1247697002 instance=ExtResource("3_skqhn")]
 position = Vector2(336, 158)
 motion_mode = 1
-accerelation = 20
 max_speed = 50
 
 [node name="MusicStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=17724071]
 stream = ExtResource("4_jebrs")
 volume_db = -15.0
 autoplay = true
+
+[node name="CowMonster" parent="." unique_id=1374577309 instance=ExtResource("5_r8jji")]
+position = Vector2(176.46063, 189.31146)
