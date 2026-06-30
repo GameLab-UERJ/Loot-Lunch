@@ -1,0 +1,99 @@
+[gd_scene format=3 uid="uid://xpvgdmkddoyb"]
+
+[ext_resource type="Script" uid="uid://u3hlqw0a0wn3" path="res://entities/enemies/base_enemy/enemy.gd" id="1_r0fbd"]
+[ext_resource type="Texture2D" uid="uid://b43fyhe45hakj" path="res://assets/art/entities/shadow_single.png" id="2_gxvvk"]
+[ext_resource type="Texture2D" uid="uid://b3lt5yeb6mqfd" path="res://assets/art/entities/enemies/cow_monster/cow_monster_walk.png" id="3_qkfwc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m7g82"]
+atlas = ExtResource("3_qkfwc")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cafd5"]
+atlas = ExtResource("3_qkfwc")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_26p33"]
+atlas = ExtResource("3_qkfwc")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kl7m2"]
+atlas = ExtResource("3_qkfwc")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_05mk4"]
+atlas = ExtResource("3_qkfwc")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bafdc"]
+atlas = ExtResource("3_qkfwc")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ex7dd"]
+atlas = ExtResource("3_qkfwc")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u411e"]
+atlas = ExtResource("3_qkfwc")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_khs75"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m7g82")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cafd5")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_26p33")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kl7m2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_05mk4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bafdc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ex7dd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u411e")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_01d2d"]
+radius = 6.0
+
+[node name="CowMonster" type="CharacterBody2D" unique_id=1374577309]
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("1_r0fbd")
+metadata/_custom_type_script = "uid://u3hlqw0a0wn3"
+
+[node name="Shadow" type="Sprite2D" parent="." unique_id=2032840222]
+position = Vector2(1, -9)
+scale = Vector2(3, 3)
+texture = ExtResource("2_gxvvk")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=842849408]
+sprite_frames = SubResource("SpriteFrames_khs75")
+animation = &"walk"
+frame_progress = 0.6917809
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=217407853]
+visible = false
+position = Vector2(-1, 16)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_01d2d")
