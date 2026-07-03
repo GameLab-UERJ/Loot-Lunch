@@ -10,8 +10,11 @@ func _on_transited(from: Variant, to: Variant) -> void:
 	match to:
 		"Enabled":
 			enabled_machine_player.active = true
-		"Disabled", "Dead":
+		"Disabled":
 			enabled_machine_player.active = false
+		"Dead":
+			enabled_machine_player.active = false
+			
 
 
 func _on_updated(state: Variant, _delta: Variant) -> void:

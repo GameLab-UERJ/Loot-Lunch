@@ -2,10 +2,12 @@
 
 [ext_resource type="Script" uid="uid://csbgr17hekk74" path="res://entities/enemies/cow/cow_monster.gd" id="1_ex7dd"]
 [ext_resource type="Texture2D" uid="uid://b43fyhe45hakj" path="res://assets/art/entities/shadow_single.png" id="2_gxvvk"]
-[ext_resource type="Script" uid="uid://bt5jjpnkd7ps" path="res://entities/base_classes/movement_component.gd" id="2_m7g82"]
-[ext_resource type="Script" uid="uid://d304wrj33k44u" path="res://entities/base_classes/chase_component.gd" id="3_cafd5"]
+[ext_resource type="Script" uid="uid://bt5jjpnkd7ps" path="res://entities/base_classes/components/movement_component.gd" id="2_m7g82"]
+[ext_resource type="Script" uid="uid://d304wrj33k44u" path="res://entities/base_classes/components/chase_component.gd" id="3_cafd5"]
 [ext_resource type="Texture2D" uid="uid://b3lt5yeb6mqfd" path="res://assets/art/entities/enemies/cow_monster/cow_monster_walk.png" id="3_qkfwc"]
 [ext_resource type="Script" uid="uid://bi7fdvl4vpp7o" path="res://systems/hitbox/hitbox_component.gd" id="4_gxvvk"]
+[ext_resource type="Script" uid="uid://bp37504prfie7" path="res://entities/base_classes/components/drop_component.gd" id="4_khs75"]
+[ext_resource type="PackedScene" uid="uid://cexct4fg71pc5" path="res://entities/items/carne.tscn" id="5_01d2d"]
 [ext_resource type="Script" uid="uid://d0s1tai1y2tjm" path="res://entities/enemies/cow/state_machine_player.gd" id="7_ex7dd"]
 [ext_resource type="Script" uid="uid://fmqwbfp7exty" path="res://addons/imjp94.yafsm/src/states/StateMachine.gd" id="8_u411e"]
 [ext_resource type="Script" uid="uid://qijpe5f8768a" path="res://addons/imjp94.yafsm/src/states/State.gd" id="9_khs75"]
@@ -348,6 +350,12 @@ metadata/_custom_type_script = "uid://bt5jjpnkd7ps"
 script = ExtResource("3_cafd5")
 metadata/_custom_type_script = "uid://d304wrj33k44u"
 
+[node name="DropComponent" type="Node" parent="." unique_id=1183276193]
+script = ExtResource("4_khs75")
+item_scene = ExtResource("5_01d2d")
+min_amount = 2
+max_amount = 5
+
 [node name="Shadow" type="Sprite2D" parent="." unique_id=2032840222]
 position = Vector2(1, -9)
 scale = Vector2(3, 3)
@@ -385,6 +393,7 @@ state_machine = SubResource("Resource_sbckb")
 metadata/_custom_type_script = "uid://dgqp18e44y0eq"
 
 [connection signal="died" from="." to="." method="_on_died"]
+[connection signal="drop_finished" from="DropComponent" to="." method="_on_drop_component_drop_finished"]
 [connection signal="transited" from="BaseMachinePlayer" to="BaseMachinePlayer" method="_on_transited"]
 [connection signal="updated" from="BaseMachinePlayer" to="BaseMachinePlayer" method="_on_updated"]
 [connection signal="transited" from="BaseMachinePlayer/EnabledMachinePlayer" to="BaseMachinePlayer/EnabledMachinePlayer" method="_on_transited"]

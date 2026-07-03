@@ -3,6 +3,7 @@ class_name CowMonster
 
 
 @onready var base_machine_player: StateMachinePlayer = $BaseMachinePlayer
+@onready var drop_component: DropComponent = $DropComponent
 
 
 func _ready() -> void:
@@ -20,5 +21,10 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _on_died() -> void:
-	base_machine_player.set_param("enabled",false)
 	base_machine_player.set_trigger("died")
+	drop_component.drop_items()
+
+
+func _on_drop_component_drop_finished() -> void:
+	await create_tween().tween_property(animated_sprite,"modulate",Color.TRANSPARENT,10).finished
+	queue_free()
