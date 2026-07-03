@@ -3,6 +3,7 @@ class_name ChaseComponent
 
 
 signal next_chase_point_set(next_point : Vector2)
+signal there_is_no_player
 
 
 @onready var parent: Character = get_parent()
@@ -40,7 +41,7 @@ func _on_path_timer_timeout() -> void:
 			navigation_agent.target_position = player.position
 	else:
 		path_timer.stop()
-		parent.state_machine.set_state(parent.state_machine.states.idle)
+		there_is_no_player.emit()
 		navigation_agent.target_position = parent.global_position
 
 

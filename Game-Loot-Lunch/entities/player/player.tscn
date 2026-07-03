@@ -589,7 +589,9 @@ stream = ExtResource("13_j3ovn")
 [node name="AttackSfx" type="AudioStreamPlayer2D" parent="." index="12" unique_id=1883833456]
 stream = ExtResource("14_afbqv")
 
+[connection signal="died" from="." to="." method="_on_died"]
 [connection signal="got_hurt" from="." to="." method="_on_got_hurt"]
+[connection signal="took_damage" from="." to="." method="_on_took_damage"]
 [connection signal="direction_changed" from="InputComponent" to="." method="_on_input_component_direction_changed"]
 [connection signal="frame_changed" from="AnimatedSprite2D" to="." method="_on_frame_changed"]
 [connection signal="hit" from="Sword/Node2D/Sprite2D/HitboxComponent" to="." method="_on_hitbox_component_hit"]

@@ -5,7 +5,9 @@ class_name Character
 const FRICTION: float = 0.15
 
 
+signal took_damage
 signal got_hurt
+signal died
 
 
 @export var hp: int = 2
@@ -14,7 +16,6 @@ signal got_hurt
 @export var invencibility_time: float = 0.5
 
 
-@onready var state_machine: Node = get_node("FiniteStateMachine")
 @onready var animated_sprite: AnimatedSprite2D = get_node("AnimatedSprite2D")
 
 
@@ -27,22 +28,23 @@ func _physics_process(_delta: float) -> void:
 	velocity = lerp(velocity, Vector2.ZERO, FRICTION)
 
 
-func take_damage(dam: int, dir: Vector2, force: int) -> void:
+func take_damage(damage: int, direction: Vector2, force: int) -> void:
 	if is_invincible:
 		return
-  
-	is_invincible = true
+	
 	start_invincibility()
-	hp -= dam
-	got_hurt.emit()
+	
+	hp -= damage
+	took_damage.emit()
 	if hp > 0:
-		state_machine.set_state(state_machine.states.hurt)
-		velocity += dir * force
+		got_hurt.emit()
+		velocity += direction * force
 	else:
-		state_machine.set_state(state_machine.states.dead)
-		velocity += dir * force * 2
+		died.emit()
+		velocity += direction * force * 2
 
 
 func start_invincibility() -> void:
+	is_invincible = true
 	await get_tree().create_timer(invencibility_time).timeout
 	is_invincible = false

@@ -320,5 +320,9 @@ max_distance = 200.0
 position = Vector2(1, 0)
 texture = ExtResource("9_ed664")
 
+[connection signal="died" from="." to="." method="_on_died"]
+[connection signal="got_hurt" from="." to="." method="_on_got_hurt"]
+[connection signal="took_damage" from="." to="." method="_on_took_damage"]
 [connection signal="next_chase_point_set" from="ChaseComponent" to="." method="_on_chase_component_next_chase_point_set"]
+[connection signal="there_is_no_player" from="ChaseComponent" to="." method="_on_chase_component_there_is_no_player"]
 [connection signal="frame_changed" from="AnimatedSprite2D" to="." method="_on_wing_flap"]

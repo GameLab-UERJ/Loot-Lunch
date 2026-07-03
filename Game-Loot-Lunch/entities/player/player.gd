@@ -1,6 +1,10 @@
 extends Character
 class_name Player
 
+
+var can_control: bool = true
+
+
 @onready var sword: Node2D = $Sword
 @onready var sword_hitbox: HitboxComponent = $Sword/Node2D/Sprite2D/HitboxComponent
 @onready var sword_animation_player: AnimationPlayer = $Sword/SwordAnimationPlayer
@@ -10,8 +14,7 @@ class_name Player
 @onready var hurt_sfx: AudioStreamPlayer2D = $HurtSfx
 @onready var attack_sfx: AudioStreamPlayer2D = $AttackSfx
 @onready var input_component: InputComponent = $InputComponent
-
-var can_control: bool = true
+@onready var state_machine: Node = $FiniteStateMachine
 
 
 func _process(_delta: float) -> void:
@@ -52,9 +55,17 @@ func _on_hitbox_component_hit() -> void:
 	hit_stf.play(1.1)
 
 
-func _on_got_hurt() -> void:
+func _on_input_component_direction_changed(new_movement_direction: Vector2) -> void:
+	movement_component.move(new_movement_direction)
+
+
+func _on_took_damage() -> void:
 	hurt_sfx.play()
 
 
-func _on_input_component_direction_changed(new_movement_direction: Vector2) -> void:
-	movement_component.move(new_movement_direction)
+func _on_got_hurt() -> void:
+	state_machine.set_state(state_machine.states.hurt)
+
+
+func _on_died() -> void:
+	state_machine.set_state(state_machine.states.dead)

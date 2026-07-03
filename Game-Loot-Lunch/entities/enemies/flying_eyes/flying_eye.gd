@@ -1,9 +1,12 @@
 extends Enemy
+class_name FlyingEye
+
 
 @onready var hitbox_component: HitboxComponent = $HitboxComponent
 @onready var movement_component: MovementComponent = $MovementComponent
 @onready var wing_flap_sfx: AudioStreamPlayer2D = $WingFlapSfx
 @onready var chase_component: ChaseComponent = $ChaseComponent
+@onready var state_machine: Node = $FiniteStateMachine
 
 
 func _process(_delta: float) -> void:
@@ -24,3 +27,15 @@ func _on_wing_flap() -> void:
 
 func _on_chase_component_next_chase_point_set(next_point: Vector2) -> void:
 	movement_component.move(next_point)
+
+
+func _on_got_hurt() -> void:
+	state_machine.set_state(state_machine.states.hurt)
+
+
+func _on_died() -> void:
+	state_machine.set_state(state_machine.states.dead)
+
+
+func _on_chase_component_there_is_no_player() -> void:
+	state_machine.set_state(state_machine.states.idle)
