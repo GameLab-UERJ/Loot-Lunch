@@ -45,7 +45,7 @@ project/assembly_name="LootLunch"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/easytransition/plugin.cfg")
+enabled=PackedStringArray("res://addons/easytransition/plugin.cfg", "res://addons/imjp94.yafsm/plugin.cfg")
 
 [file_customization]
 

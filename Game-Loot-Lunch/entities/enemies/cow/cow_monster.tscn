@@ -1,9 +1,18 @@
 [gd_scene format=3 uid="uid://xpvgdmkddoyb"]
 
-[ext_resource type="Script" uid="uid://u3hlqw0a0wn3" path="res://entities/enemies/base_enemy/enemy.gd" id="1_r0fbd"]
+[ext_resource type="Script" uid="uid://csbgr17hekk74" path="res://entities/enemies/cow/cow_monster.gd" id="1_ex7dd"]
 [ext_resource type="Texture2D" uid="uid://b43fyhe45hakj" path="res://assets/art/entities/shadow_single.png" id="2_gxvvk"]
+[ext_resource type="Script" uid="uid://bt5jjpnkd7ps" path="res://entities/base_classes/movement_component.gd" id="2_m7g82"]
+[ext_resource type="Script" uid="uid://d304wrj33k44u" path="res://entities/base_classes/chase_component.gd" id="3_cafd5"]
 [ext_resource type="Texture2D" uid="uid://b3lt5yeb6mqfd" path="res://assets/art/entities/enemies/cow_monster/cow_monster_walk.png" id="3_qkfwc"]
 [ext_resource type="Script" uid="uid://bi7fdvl4vpp7o" path="res://systems/hitbox/hitbox_component.gd" id="4_gxvvk"]
+[ext_resource type="Script" uid="uid://d0s1tai1y2tjm" path="res://entities/enemies/cow/state_machine_player.gd" id="7_ex7dd"]
+[ext_resource type="Script" uid="uid://fmqwbfp7exty" path="res://addons/imjp94.yafsm/src/states/StateMachine.gd" id="8_u411e"]
+[ext_resource type="Script" uid="uid://qijpe5f8768a" path="res://addons/imjp94.yafsm/src/states/State.gd" id="9_khs75"]
+[ext_resource type="Script" uid="uid://jscxdqko8o26" path="res://addons/imjp94.yafsm/src/transitions/Transition.gd" id="10_01d2d"]
+[ext_resource type="Script" uid="uid://deue3orqq61jo" path="res://addons/imjp94.yafsm/src/conditions/Condition.gd" id="11_xggqq"]
+[ext_resource type="Script" uid="uid://cfapntwsgc4cs" path="res://addons/imjp94.yafsm/src/conditions/BooleanCondition.gd" id="12_m7sis"]
+[ext_resource type="Script" uid="uid://cff1nbwxh57bt" path="res://entities/enemies/cow/enabled_machine_player.gd" id="13_u411e"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m7g82"]
 atlas = ExtResource("3_qkfwc")
@@ -81,11 +90,263 @@ radius = 6.0
 radius = 12.0
 height = 38.0
 
+[sub_resource type="Resource" id="Resource_ngrnv"]
+script = ExtResource("9_khs75")
+name = "Dead"
+metadata/graph_offset = Vector2(441, 62.5)
+
+[sub_resource type="Resource" id="Resource_huuw7"]
+script = ExtResource("9_khs75")
+name = "Disabled"
+metadata/graph_offset = Vector2(539, 202.5)
+
+[sub_resource type="Resource" id="Resource_khs75"]
+script = ExtResource("9_khs75")
+name = "Enabled"
+metadata/graph_offset = Vector2(340.5, 202.5)
+
+[sub_resource type="Resource" id="Resource_ibjno"]
+script = ExtResource("9_khs75")
+name = "Entry"
+metadata/graph_offset = Vector2(241, 202.5)
+
+[sub_resource type="Resource" id="Resource_3yyeb"]
+script = ExtResource("11_xggqq")
+name = "died"
+
+[sub_resource type="Resource" id="Resource_r6lrb"]
+script = ExtResource("10_01d2d")
+from = "Disabled"
+to = "Dead"
+conditions = {
+"died": SubResource("Resource_3yyeb")
+}
+
+[sub_resource type="Resource" id="Resource_f4mcy"]
+script = ExtResource("12_m7sis")
+value = true
+name = "enabled"
+
+[sub_resource type="Resource" id="Resource_j6jy3"]
+script = ExtResource("10_01d2d")
+from = "Disabled"
+to = "Enabled"
+conditions = {
+"enabled": SubResource("Resource_f4mcy")
+}
+
+[sub_resource type="Resource" id="Resource_3npvi"]
+script = ExtResource("11_xggqq")
+name = "died"
+
+[sub_resource type="Resource" id="Resource_573ir"]
+script = ExtResource("10_01d2d")
+from = "Enabled"
+to = "Dead"
+conditions = {
+"died": SubResource("Resource_3npvi")
+}
+
+[sub_resource type="Resource" id="Resource_6yp8r"]
+script = ExtResource("12_m7sis")
+name = "enabled"
+
+[sub_resource type="Resource" id="Resource_ei85r"]
+script = ExtResource("10_01d2d")
+from = "Enabled"
+to = "Disabled"
+conditions = {
+"enabled": SubResource("Resource_6yp8r")
+}
+
+[sub_resource type="Resource" id="Resource_nrhhm"]
+script = ExtResource("10_01d2d")
+from = "Entry"
+to = "Enabled"
+
+[sub_resource type="Resource" id="Resource_5ex22"]
+script = ExtResource("8_u411e")
+states = {
+"Dead": SubResource("Resource_ngrnv"),
+"Disabled": SubResource("Resource_huuw7"),
+"Enabled": SubResource("Resource_khs75"),
+"Entry": SubResource("Resource_ibjno")
+}
+transitions = {
+"Disabled": {
+"Dead": SubResource("Resource_r6lrb"),
+"Enabled": SubResource("Resource_j6jy3")
+},
+"Enabled": {
+"Dead": SubResource("Resource_573ir"),
+"Disabled": SubResource("Resource_ei85r")
+},
+"Entry": {
+"Enabled": SubResource("Resource_nrhhm")
+}
+}
+
+[sub_resource type="Resource" id="Resource_hngln"]
+script = ExtResource("9_khs75")
+name = "Alerted"
+metadata/graph_offset = Vector2(721, 402.5)
+
+[sub_resource type="Resource" id="Resource_iixq6"]
+script = ExtResource("9_khs75")
+name = "Attacking"
+metadata/graph_offset = Vector2(977.5, 402.5)
+
+[sub_resource type="Resource" id="Resource_qp2aj"]
+script = ExtResource("9_khs75")
+name = "Entry"
+metadata/graph_offset = Vector2(261, 402.49997)
+
+[sub_resource type="Resource" id="Resource_2pyua"]
+script = ExtResource("9_khs75")
+name = "Idle"
+metadata/graph_offset = Vector2(401, 402.49997)
+
+[sub_resource type="Resource" id="Resource_hkcoi"]
+script = ExtResource("9_khs75")
+name = "Patrol"
+metadata/graph_offset = Vector2(561, 202.5)
+
+[sub_resource type="Resource" id="Resource_fgmhu"]
+script = ExtResource("11_xggqq")
+name = "attack_player"
+
+[sub_resource type="Resource" id="Resource_0i0ga"]
+script = ExtResource("10_01d2d")
+from = "Alerted"
+to = "Attacking"
+conditions = {
+"attack_player": SubResource("Resource_fgmhu")
+}
+
+[sub_resource type="Resource" id="Resource_8hu55"]
+script = ExtResource("12_m7sis")
+name = "is_player_in_sight"
+
+[sub_resource type="Resource" id="Resource_1gfcx"]
+script = ExtResource("10_01d2d")
+from = "Alerted"
+to = "Idle"
+conditions = {
+"is_player_in_sight": SubResource("Resource_8hu55")
+}
+
+[sub_resource type="Resource" id="Resource_ain55"]
+script = ExtResource("11_xggqq")
+name = "attack_player_finished"
+
+[sub_resource type="Resource" id="Resource_a07ms"]
+script = ExtResource("10_01d2d")
+from = "Attacking"
+to = "Alerted"
+conditions = {
+"attack_player_finished": SubResource("Resource_ain55")
+}
+
+[sub_resource type="Resource" id="Resource_lt5vi"]
+script = ExtResource("10_01d2d")
+from = "Entry"
+to = "Idle"
+
+[sub_resource type="Resource" id="Resource_ia3ol"]
+script = ExtResource("12_m7sis")
+value = true
+name = "is_player_in_sight"
+
+[sub_resource type="Resource" id="Resource_7ha5g"]
+script = ExtResource("10_01d2d")
+from = "Idle"
+to = "Alerted"
+conditions = {
+"is_player_in_sight": SubResource("Resource_ia3ol")
+}
+
+[sub_resource type="Resource" id="Resource_wp1l1"]
+script = ExtResource("11_xggqq")
+name = "idle_time_has_passed"
+
+[sub_resource type="Resource" id="Resource_h83sd"]
+script = ExtResource("10_01d2d")
+from = "Idle"
+to = "Patrol"
+conditions = {
+"idle_time_has_passed": SubResource("Resource_wp1l1")
+}
+
+[sub_resource type="Resource" id="Resource_f5v8h"]
+script = ExtResource("12_m7sis")
+value = true
+name = "is_player_in_sight"
+
+[sub_resource type="Resource" id="Resource_klyn7"]
+script = ExtResource("10_01d2d")
+from = "Patrol"
+to = "Alerted"
+conditions = {
+"is_player_in_sight": SubResource("Resource_f5v8h")
+}
+
+[sub_resource type="Resource" id="Resource_ejolh"]
+script = ExtResource("11_xggqq")
+name = "patrol_finished"
+
+[sub_resource type="Resource" id="Resource_q3nby"]
+script = ExtResource("10_01d2d")
+from = "Patrol"
+to = "Idle"
+conditions = {
+"patrol_finished": SubResource("Resource_ejolh")
+}
+
+[sub_resource type="Resource" id="Resource_sbckb"]
+script = ExtResource("8_u411e")
+states = {
+"Alerted": SubResource("Resource_hngln"),
+"Attacking": SubResource("Resource_iixq6"),
+"Entry": SubResource("Resource_qp2aj"),
+"Idle": SubResource("Resource_2pyua"),
+"Patrol": SubResource("Resource_hkcoi")
+}
+transitions = {
+"Alerted": {
+"Attacking": SubResource("Resource_0i0ga"),
+"Idle": SubResource("Resource_1gfcx")
+},
+"Attacking": {
+"Alerted": SubResource("Resource_a07ms")
+},
+"Entry": {
+"Idle": SubResource("Resource_lt5vi")
+},
+"Idle": {
+"Alerted": SubResource("Resource_7ha5g"),
+"Patrol": SubResource("Resource_h83sd")
+},
+"Patrol": {
+"Alerted": SubResource("Resource_klyn7"),
+"Idle": SubResource("Resource_q3nby")
+}
+}
+name = "Enabled"
+metadata/graph_offset = Vector2(340.5, 202.5)
+
 [node name="CowMonster" type="CharacterBody2D" unique_id=1374577309]
 collision_layer = 4
 collision_mask = 4
-script = ExtResource("1_r0fbd")
+script = ExtResource("1_ex7dd")
 metadata/_custom_type_script = "uid://u3hlqw0a0wn3"
+
+[node name="MovementComponent" type="Node" parent="." unique_id=320351888]
+script = ExtResource("2_m7g82")
+metadata/_custom_type_script = "uid://bt5jjpnkd7ps"
+
+[node name="ChaseComponent" type="Node" parent="." unique_id=1807438412]
+script = ExtResource("3_cafd5")
+metadata/_custom_type_script = "uid://d304wrj33k44u"
 
 [node name="Shadow" type="Sprite2D" parent="." unique_id=2032840222]
 position = Vector2(1, -9)
@@ -112,3 +373,19 @@ position = Vector2(0, 10)
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_qkfwc")
 debug_color = Color(0.9843137, 0, 0, 0.41960785)
+
+[node name="BaseMachinePlayer" type="Node" parent="." unique_id=417991340]
+script = ExtResource("7_ex7dd")
+state_machine = SubResource("Resource_5ex22")
+metadata/_custom_type_script = "uid://dgqp18e44y0eq"
+
+[node name="EnabledMachinePlayer" type="Node" parent="BaseMachinePlayer" unique_id=1592567292]
+script = ExtResource("13_u411e")
+state_machine = SubResource("Resource_sbckb")
+metadata/_custom_type_script = "uid://dgqp18e44y0eq"
+
+[connection signal="died" from="." to="." method="_on_died"]
+[connection signal="transited" from="BaseMachinePlayer" to="BaseMachinePlayer" method="_on_transited"]
+[connection signal="updated" from="BaseMachinePlayer" to="BaseMachinePlayer" method="_on_updated"]
+[connection signal="transited" from="BaseMachinePlayer/EnabledMachinePlayer" to="BaseMachinePlayer/EnabledMachinePlayer" method="_on_transited"]
+[connection signal="updated" from="BaseMachinePlayer/EnabledMachinePlayer" to="BaseMachinePlayer/EnabledMachinePlayer" method="_on_updated"]
