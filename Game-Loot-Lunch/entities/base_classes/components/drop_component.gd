@@ -13,6 +13,7 @@ signal drop_finished
 			push_error("Item scene to instantiate drops must be Item.")
 			return
 		item_scene = value
+@export var item_scale : Vector2 = Vector2.ONE
 ## -1 means the amount dropped any time is randomized between [min_amount] and 
 ## [max_amount.] Any other value implies that that exact amount is dropped
 ## everytime 
@@ -32,7 +33,8 @@ func drop_items(amount : int = fixed_amount) -> void:
 	var item : Item
 	for i in amount:
 		item = item_scene.instantiate()
-		item.global_position = get_parent().global_position + Vector2(randi_range(-50,50),randi_range(-50,50))
+		item.scale = item_scale
+		item.global_position = get_parent().global_position + Vector2(randi_range(-10,10),randi_range(-10,10))
 		get_tree().current_scene.call_deferred("add_child",item)
 		item_dropped.emit()
 	

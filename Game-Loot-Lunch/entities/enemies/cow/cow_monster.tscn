@@ -353,6 +353,7 @@ metadata/_custom_type_script = "uid://d304wrj33k44u"
 [node name="DropComponent" type="Node" parent="." unique_id=1183276193]
 script = ExtResource("4_khs75")
 item_scene = ExtResource("5_01d2d")
+item_scale = Vector2(0.5, 0.5)
 min_amount = 2
 max_amount = 5
 
