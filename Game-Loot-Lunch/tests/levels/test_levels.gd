@@ -64,3 +64,7 @@ func pause_game_menu() -> void:
 func _on_change_scene(duration : float = 1.5) -> void:
 	if music_stream_player:
 		create_tween().tween_property(music_stream_player,"volume_db",-30,duration)
+
+
+func _on_external_house_player_can_enter_shop() -> void:
+	pass # Replace with function body.

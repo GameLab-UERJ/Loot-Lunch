@@ -23,4 +23,4 @@ autoplay = true
 
 [connection signal="player_can_enter_house" from="ExternalHouse" to="." method="_on_player_can_enter_house"]
 [connection signal="player_can_enter_internal_dungeon" from="ExternalHouse" to="." method="_on_player_can_enter_internal_dungeon"]
-[connection signal="player_can_enter_shop" from="ExternalHouse" to="." method="_on_player_can_enter_internal_dungeon"]
+[connection signal="player_can_enter_shop" from="ExternalHouse" to="." method="_on_player_can_enter_shop"]
