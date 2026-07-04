@@ -2,11 +2,11 @@
 extends StateMachinePlayer
 
 
+@onready var cow_monster : CowMonster = get_parent()
 @onready var enabled_machine_player: StateMachinePlayer = $EnabledMachinePlayer
 
 
 func _on_transited(from: Variant, to: Variant) -> void:
-	print("Base: ", from, " --> ", to)
 	match to:
 		"Enabled":
 			enabled_machine_player.active = true
@@ -18,4 +18,4 @@ func _on_transited(from: Variant, to: Variant) -> void:
 
 
 func _on_updated(state: Variant, _delta: Variant) -> void:
-	print("Base current: ", state)
+	pass

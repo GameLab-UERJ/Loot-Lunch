@@ -23,6 +23,10 @@ var is_invincible: bool = false
 var mov_direction: Vector2 = Vector2.ZERO
 
 
+func _process(_delta: float) -> void:
+	pass
+
+
 func _physics_process(_delta: float) -> void:
 	move_and_slide()
 	velocity = lerp(velocity, Vector2.ZERO, FRICTION)

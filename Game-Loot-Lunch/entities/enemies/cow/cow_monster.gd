@@ -2,13 +2,13 @@ extends Enemy
 class_name CowMonster
 
 
+var is_player_in_sight : bool = false
+
+
 @onready var base_machine_player: StateMachinePlayer = $BaseMachinePlayer
+@onready var enabled_machine_player: StateMachinePlayer = $BaseMachinePlayer/EnabledMachinePlayer
 @onready var drop_component: DropComponent = $DropComponent
 
-
-func _ready() -> void:
-	await get_tree().create_timer(5).timeout
-	#base_machine_player.set_trigger("died")
 
 '''
 func _unhandled_input(event: InputEvent) -> void:
@@ -21,6 +21,12 @@ func _unhandled_input(event: InputEvent) -> void:
 		take_damage(1000,Vector2.ZERO,0)
 '''
 
+
+func _process(delta: float) -> void:
+	super._process(delta)
+	enabled_machine_player.set_param("is_player_in_sight",is_player_in_sight)
+
+
 func _on_died() -> void:
 	base_machine_player.set_trigger("died")
 	collision_layer = 0
@@ -32,3 +38,11 @@ func _on_died() -> void:
 func _on_drop_component_drop_finished() -> void:
 	await create_tween().tween_property(animated_sprite,"modulate",Color.TRANSPARENT,10).finished
 	queue_free()
+
+
+func _on_player_in_sight() -> void:
+	is_player_in_sight = true
+
+
+func _on_player_out_of_sight() -> void:
+	is_player_in_sight = false

@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://bi7fdvl4vpp7o" path="res://systems/hitbox/hitbox_component.gd" id="4_gxvvk"]
 [ext_resource type="Script" uid="uid://bp37504prfie7" path="res://entities/base_classes/components/drop_component.gd" id="4_khs75"]
 [ext_resource type="PackedScene" uid="uid://cexct4fg71pc5" path="res://entities/items/carne.tscn" id="5_01d2d"]
+[ext_resource type="Script" uid="uid://daus7y7nt2yw5" path="res://systems/interaction/interactable_area.gd" id="6_xggqq"]
 [ext_resource type="Script" uid="uid://d0s1tai1y2tjm" path="res://entities/enemies/cow/state_machine_player.gd" id="7_ex7dd"]
 [ext_resource type="Script" uid="uid://fmqwbfp7exty" path="res://addons/imjp94.yafsm/src/states/StateMachine.gd" id="8_u411e"]
 [ext_resource type="Script" uid="uid://qijpe5f8768a" path="res://addons/imjp94.yafsm/src/states/State.gd" id="9_khs75"]
@@ -15,6 +16,9 @@
 [ext_resource type="Script" uid="uid://deue3orqq61jo" path="res://addons/imjp94.yafsm/src/conditions/Condition.gd" id="11_xggqq"]
 [ext_resource type="Script" uid="uid://cfapntwsgc4cs" path="res://addons/imjp94.yafsm/src/conditions/BooleanCondition.gd" id="12_m7sis"]
 [ext_resource type="Script" uid="uid://cff1nbwxh57bt" path="res://entities/enemies/cow/enabled_machine_player.gd" id="13_u411e"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_m7sis"]
+radius = 89.02247
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m7g82"]
 atlas = ExtResource("3_qkfwc")
@@ -357,6 +361,13 @@ item_scale = Vector2(0.5, 0.5)
 min_amount = 2
 max_amount = 5
 
+[node name="PlayerInArea" type="Area2D" parent="." unique_id=889576229]
+script = ExtResource("6_xggqq")
+metadata/_custom_type_script = "uid://daus7y7nt2yw5"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerInArea" unique_id=292552103]
+shape = SubResource("CircleShape2D_m7sis")
+
 [node name="Shadow" type="Sprite2D" parent="." unique_id=2032840222]
 position = Vector2(1, -9)
 scale = Vector2(3, 3)
@@ -364,8 +375,7 @@ texture = ExtResource("2_gxvvk")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=842849408]
 sprite_frames = SubResource("SpriteFrames_khs75")
-animation = &"walk"
-frame_progress = 0.7685909
+animation = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=217407853]
 visible = false
@@ -393,9 +403,15 @@ script = ExtResource("13_u411e")
 state_machine = SubResource("Resource_sbckb")
 metadata/_custom_type_script = "uid://dgqp18e44y0eq"
 
+[node name="IdleTimer" type="Timer" parent="BaseMachinePlayer/EnabledMachinePlayer" unique_id=1074550327]
+one_shot = true
+
 [connection signal="died" from="." to="." method="_on_died"]
 [connection signal="drop_finished" from="DropComponent" to="." method="_on_drop_component_drop_finished"]
+[connection signal="interact_with_player" from="PlayerInArea" to="." method="_on_player_in_sight"]
+[connection signal="stop_interact_with_player" from="PlayerInArea" to="." method="_on_player_out_of_sight"]
 [connection signal="transited" from="BaseMachinePlayer" to="BaseMachinePlayer" method="_on_transited"]
 [connection signal="updated" from="BaseMachinePlayer" to="BaseMachinePlayer" method="_on_updated"]
 [connection signal="transited" from="BaseMachinePlayer/EnabledMachinePlayer" to="BaseMachinePlayer/EnabledMachinePlayer" method="_on_transited"]
 [connection signal="updated" from="BaseMachinePlayer/EnabledMachinePlayer" to="BaseMachinePlayer/EnabledMachinePlayer" method="_on_updated"]
+[connection signal="timeout" from="BaseMachinePlayer/EnabledMachinePlayer/IdleTimer" to="BaseMachinePlayer/EnabledMachinePlayer" method="_on_idle_timer_timeout"]

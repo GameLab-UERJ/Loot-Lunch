@@ -11,7 +11,7 @@
 [node name="Floor" parent="." unique_id=1383934597 instance=ExtResource("1_3vk44")]
 
 [node name="Player" parent="." unique_id=1426255313 instance=ExtResource("2_nbhqf")]
-position = Vector2(162, 108)
+position = Vector2(126.34001, 98.884056)
 motion_mode = 1
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=384630202]

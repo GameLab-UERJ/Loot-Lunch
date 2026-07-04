@@ -6,6 +6,12 @@ signal interact_with_player
 signal stop_interact_with_player
 
 
+func _ready() -> void:
+	body_entered.connect(_on_body_entered)
+	collision_mask = 2						# Player layer
+	collision_layer = 0						# Player layer
+
+
 func _on_body_entered(body: Node2D) -> void:
 	if body is Player:
 		interact_with_player.emit()
