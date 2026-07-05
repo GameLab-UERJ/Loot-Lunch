@@ -6,7 +6,7 @@ extends StateMachinePlayer
 @onready var enabled_machine_player: StateMachinePlayer = $EnabledMachinePlayer
 
 
-func _on_transited(from: Variant, to: Variant) -> void:
+func _on_transited(_from: Variant, to: Variant) -> void:
 	match to:
 		"Enabled":
 			enabled_machine_player.active = true
@@ -17,5 +17,5 @@ func _on_transited(from: Variant, to: Variant) -> void:
 			
 
 
-func _on_updated(state: Variant, _delta: Variant) -> void:
+func _on_updated(_state: Variant, _delta: Variant) -> void:
 	pass

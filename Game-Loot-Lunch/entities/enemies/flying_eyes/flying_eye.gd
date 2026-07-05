@@ -2,20 +2,22 @@ extends Enemy
 class_name FlyingEye
 
 
+@onready var wing_flap_sfx: AudioStreamPlayer2D = $WingFlapSfx
 @onready var hitbox_component: HitboxComponent = $HitboxComponent
 @onready var movement_component: MovementComponent = $MovementComponent
-@onready var wing_flap_sfx: AudioStreamPlayer2D = $WingFlapSfx
 @onready var chase_component: ChaseComponent = $ChaseComponent
+@onready var flip_sprite_component: FlipSpriteComponent = $FlipSpriteComponent
 @onready var state_machine: Node = $FiniteStateMachine
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 
-func _process(_delta: float) -> void:
-	if velocity.x > 0 and animated_sprite.flip_h:
-		animated_sprite.flip_h = false
-	elif velocity.x < 0 and not animated_sprite.flip_h:
-		animated_sprite.flip_h = true
+func _ready() -> void:
+	if player:
+		flip_sprite_component.node_to_face = player
+		chase_component.chased_node = player
 
+
+func _process(_delta: float) -> void:
 	hitbox_component.knockback_direction = velocity.normalized()
 
 

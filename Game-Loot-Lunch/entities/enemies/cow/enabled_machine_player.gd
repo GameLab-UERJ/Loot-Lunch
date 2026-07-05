@@ -13,7 +13,7 @@ func _on_transited(from: Variant, to: Variant) -> void:
 			idle_timer.start(randf_range(1.0,3.0))
 
 
-func _on_updated(state: Variant, _delta: Variant) -> void:
+func _on_updated(_state: Variant, _delta: Variant) -> void:
 	pass
 
 

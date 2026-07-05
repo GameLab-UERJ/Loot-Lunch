@@ -6,8 +6,10 @@ signal next_chase_point_set(next_point : Vector2)
 signal there_is_no_player
 
 
+@export var chased_node: Node2D
+
+
 @onready var parent: Character = get_parent()
-@onready var player: CharacterBody2D = get_tree().current_scene.get_node_or_null("Player")
 @onready var path_timer: Timer = get_node_or_null("PathTimer")
 @onready var navigation_agent: NavigationAgent2D = get_node_or_null("NavigationAgent2D")
 
@@ -36,9 +38,9 @@ func _on_path_timer_timeout() -> void:
 	if not path_timer:
 		return 
 	
-	if is_instance_valid(player):
-		if navigation_agent.target_position != player.position:
-			navigation_agent.target_position = player.position
+	if is_instance_valid(chased_node):
+		if navigation_agent.target_position != chased_node.position:
+			navigation_agent.target_position = chased_node.position
 	else:
 		path_timer.stop()
 		there_is_no_player.emit()
