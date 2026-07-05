@@ -14,8 +14,3 @@ func _on_transited(_from: Variant, to: Variant) -> void:
 			enabled_machine_player.active = false
 		"Dead":
 			enabled_machine_player.active = false
-			
-
-
-func _on_updated(_state: Variant, _delta: Variant) -> void:
-	pass

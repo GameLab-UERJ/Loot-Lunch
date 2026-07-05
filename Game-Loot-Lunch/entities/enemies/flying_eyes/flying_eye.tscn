@@ -284,6 +284,7 @@ _data = {
 
 [node name="FlyingEye" unique_id=1346698654 instance=ExtResource("1_scurg")]
 script = ExtResource("2_0oiyv")
+max_speed = 50
 
 [node name="FiniteStateMachine" parent="." index="0" unique_id=394854071]
 script = ExtResource("2_rkmmt")
@@ -301,6 +302,7 @@ script = ExtResource("4_usvun")
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("5_5ah01")
+knockback_force = 200
 metadata/_custom_type_script = "uid://bi7fdvl4vpp7o"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" index="0" unique_id=1306141943]

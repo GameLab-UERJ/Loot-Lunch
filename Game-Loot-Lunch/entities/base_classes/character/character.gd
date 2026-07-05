@@ -42,7 +42,6 @@ func take_damage(damage: int, direction: Vector2, force: int) -> void:
 		velocity += direction * force
 	else:
 		died.emit()
-		#velocity += direction * force * 2
 
 
 func start_invincibility() -> void:

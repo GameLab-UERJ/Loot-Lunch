@@ -186,7 +186,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:rotation")
+tracks/1/path = NodePath("Sword:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -222,7 +222,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Sprite2D/HitboxComponent/CollisionShape2D:disabled")
+tracks/4/path = NodePath("Sword/HitboxComponent/CollisionShape2D:disabled")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -251,7 +251,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:rotation")
+tracks/1/path = NodePath("Sword:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -287,7 +287,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Sprite2D/HitboxComponent/CollisionShape2D:disabled")
+tracks/4/path = NodePath("Sword/HitboxComponent/CollisionShape2D:disabled")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -545,19 +545,19 @@ shape = SubResource("CircleShape2D_7vev3")
 [node name="Node2D" type="Node2D" parent="Sword" index="0" unique_id=1380584934]
 rotation = -1.5708
 
-[node name="Sprite2D" type="Sprite2D" parent="Sword/Node2D" index="0" unique_id=2086254364]
+[node name="Sword" type="Sprite2D" parent="Sword/Node2D" index="0" unique_id=2086254364]
 position = Vector2(7, 3)
 rotation = -0.785398
 texture = ExtResource("6_osktb")
 offset = Vector2(5, -4)
 
-[node name="HitboxComponent" type="Area2D" parent="Sword/Node2D/Sprite2D" index="0" unique_id=1846553145]
+[node name="HitboxComponent" type="Area2D" parent="Sword/Node2D/Sword" index="0" unique_id=1846553145]
 collision_layer = 0
 collision_mask = 4
 script = ExtResource("7_26q78")
 metadata/_custom_type_script = "uid://bi7fdvl4vpp7o"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sword/Node2D/Sprite2D/HitboxComponent" index="0" unique_id=2101316629]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sword/Node2D/Sword/HitboxComponent" index="0" unique_id=2101316629]
 position = Vector2(4.94975, -3.53553)
 rotation = 0.785398
 shape = SubResource("CapsuleShape2D_bectd")
@@ -594,4 +594,4 @@ stream = ExtResource("14_afbqv")
 [connection signal="took_damage" from="." to="." method="_on_took_damage"]
 [connection signal="direction_changed" from="InputComponent" to="." method="_on_input_component_direction_changed"]
 [connection signal="frame_changed" from="AnimatedSprite2D" to="." method="_on_frame_changed"]
-[connection signal="hit" from="Sword/Node2D/Sprite2D/HitboxComponent" to="." method="_on_hitbox_component_hit"]
+[connection signal="hit" from="Sword/Node2D/Sword/HitboxComponent" to="." method="_on_hitbox_component_hit"]

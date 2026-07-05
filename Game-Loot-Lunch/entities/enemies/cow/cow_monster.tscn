@@ -19,11 +19,7 @@
 [ext_resource type="Script" uid="uid://cff1nbwxh57bt" path="res://entities/enemies/cow/enabled_machine_player.gd" id="13_u411e"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_m7sis"]
-radius = 64.070274
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_m7sis"]
-atlas = ExtResource("3_qkfwc")
-region = Rect2(324, 0, 54, 40)
+radius = 79.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m7g82"]
 atlas = ExtResource("3_qkfwc")
@@ -57,8 +53,46 @@ region = Rect2(256, 0, 64, 64)
 atlas = ExtResource("3_qkfwc")
 region = Rect2(320, 0, 64, 64)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_m7sis"]
+atlas = ExtResource("3_qkfwc")
+region = Rect2(324, 0, 54, 40)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_khs75"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m7g82")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cafd5")
+}],
+"loop": true,
+"name": &"alert",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_26p33")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kl7m2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_05mk4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bafdc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ex7dd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u411e")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 10.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_m7sis")
@@ -358,6 +392,8 @@ collision_layer = 4
 collision_mask = 4
 motion_mode = 1
 script = ExtResource("1_ex7dd")
+acceleration = 20
+max_speed = 300
 metadata/_custom_type_script = "uid://u3hlqw0a0wn3"
 
 [node name="MovementComponent" type="Node" parent="." unique_id=320351888]
@@ -370,6 +406,7 @@ metadata/_custom_type_script = "uid://drgd63vqf1wbv"
 
 [node name="ChaseComponent" type="Node" parent="." unique_id=1807438412]
 script = ExtResource("3_cafd5")
+enabled = false
 metadata/_custom_type_script = "uid://d304wrj33k44u"
 
 [node name="DropComponent" type="Node" parent="." unique_id=1183276193]
@@ -393,7 +430,7 @@ texture = ExtResource("2_gxvvk")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=842849408]
 sprite_frames = SubResource("SpriteFrames_khs75")
-animation = &"die"
+animation = &"attack"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=217407853]
 visible = false
@@ -402,7 +439,10 @@ rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_01d2d")
 
 [node name="HitboxComponent" type="Area2D" parent="." unique_id=1191800394]
+collision_layer = 0
+collision_mask = 2
 script = ExtResource("4_gxvvk")
+knockback_force = 500
 metadata/_custom_type_script = "uid://bi7fdvl4vpp7o"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" unique_id=1461985933]
@@ -424,14 +464,22 @@ metadata/_custom_type_script = "uid://dgqp18e44y0eq"
 [node name="IdleTimer" type="Timer" parent="BaseMachinePlayer/EnabledMachinePlayer" unique_id=1074550327]
 one_shot = true
 
+[node name="AlertedTimer" type="Timer" parent="BaseMachinePlayer/EnabledMachinePlayer" unique_id=833871215]
+one_shot = true
+
+[node name="AttackPoint" type="Marker2D" parent="." unique_id=704535964]
+
 [connection signal="died" from="." to="." method="_on_died"]
+[connection signal="got_hurt" from="." to="." method="_on_got_hurt"]
+[connection signal="next_chase_point_set" from="ChaseComponent" to="." method="_on_chase_component_next_chase_point_set"]
+[connection signal="target_reached" from="ChaseComponent" to="." method="_on_chase_component_target_reached"]
 [connection signal="drop_finished" from="DropComponent" to="." method="_on_drop_component_drop_finished"]
 [connection signal="interact_with_player" from="PlayerInArea" to="." method="_on_player_in_sight"]
 [connection signal="stop_interact_with_player" from="PlayerInArea" to="." method="_on_player_out_of_sight"]
+[connection signal="hit" from="HitboxComponent" to="." method="_on_hitbox_component_hit"]
 [connection signal="transited" from="BaseMachinePlayer" to="." method="_on_base_state_changed"]
 [connection signal="transited" from="BaseMachinePlayer" to="BaseMachinePlayer" method="_on_transited"]
-[connection signal="updated" from="BaseMachinePlayer" to="BaseMachinePlayer" method="_on_updated"]
 [connection signal="transited" from="BaseMachinePlayer/EnabledMachinePlayer" to="." method="_on_enabled_state_changed"]
 [connection signal="transited" from="BaseMachinePlayer/EnabledMachinePlayer" to="BaseMachinePlayer/EnabledMachinePlayer" method="_on_transited"]
-[connection signal="updated" from="BaseMachinePlayer/EnabledMachinePlayer" to="BaseMachinePlayer/EnabledMachinePlayer" method="_on_updated"]
 [connection signal="timeout" from="BaseMachinePlayer/EnabledMachinePlayer/IdleTimer" to="BaseMachinePlayer/EnabledMachinePlayer" method="_on_idle_timer_timeout"]
+[connection signal="timeout" from="BaseMachinePlayer/EnabledMachinePlayer/AlertedTimer" to="BaseMachinePlayer/EnabledMachinePlayer" method="attack"]

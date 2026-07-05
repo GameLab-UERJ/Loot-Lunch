@@ -13,9 +13,9 @@ func _ready() -> void:
 	
 func _state_logic(_delta: float) -> void:
 	if state == states.chase:
-		parent.chase_component.chase()
+		#parent.chase_component.chase()
 		#parent.movement_component.move()
-		
+		pass
 		
 func _get_transition() -> int:
 	match state:
@@ -31,7 +31,13 @@ func _enter_state(_previous_state: int, new_state: int) -> void:
 			animation_player.play("flying")
 		states.chase:
 			animation_player.play("flying")
+			if not parent.chase_component: return
+			parent.chase_component.enable()
 		states.hurt:
 			animation_player.play("hurt")
+			if not parent.chase_component: return
+			parent.chase_component.disable()
 		states.dead:
 			animation_player.play("dead")
+			if not parent.chase_component: return
+			parent.chase_component.disable()

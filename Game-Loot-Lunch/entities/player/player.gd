@@ -6,7 +6,7 @@ var can_control: bool = true
 
 
 @onready var sword: Node2D = $Sword
-@onready var sword_hitbox: HitboxComponent = $Sword/Node2D/Sprite2D/HitboxComponent
+@onready var sword_hitbox: HitboxComponent = $Sword/Node2D/Sword/HitboxComponent
 @onready var sword_animation_player: AnimationPlayer = $Sword/SwordAnimationPlayer
 @onready var movement_component: MovementComponent = $MovementComponent
 @onready var footsteps_sfx: AudioStreamPlayer2D = $FootstepsSfx
