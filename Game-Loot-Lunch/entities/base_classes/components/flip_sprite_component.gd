@@ -19,7 +19,7 @@ func _process(_delta: float) -> void:
 		return
 	
 	look_towards_movement()
-	print((entity.velocity.x),", ", is_zero_approx(entity.velocity.x))
+	
 	if is_zero_approx(entity.velocity.x):
 		face_node()
 
@@ -37,7 +37,7 @@ func look_towards_movement() -> void:
 func face_node() -> void:
 	if not node_to_face:
 		return
-	print('here')
+	
 	if entity.global_position.direction_to(node_to_face.global_position).x < 0:
 		entity.animated_sprite.flip_h = originally_looks_right
 	else:

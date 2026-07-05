@@ -356,6 +356,7 @@ metadata/graph_offset = Vector2(340.5, 202.5)
 [node name="CowMonster" type="CharacterBody2D" unique_id=1374577309]
 collision_layer = 4
 collision_mask = 4
+motion_mode = 1
 script = ExtResource("1_ex7dd")
 metadata/_custom_type_script = "uid://u3hlqw0a0wn3"
 

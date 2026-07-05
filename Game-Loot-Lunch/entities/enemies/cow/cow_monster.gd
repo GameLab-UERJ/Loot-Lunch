@@ -14,7 +14,6 @@ var is_player_in_sight : bool = false
 
 
 func _ready() -> void:
-	flip_sprite_component.node_to_face = player
 	chase_component.chased_node = player
 
 
@@ -45,10 +44,16 @@ func _on_player_out_of_sight() -> void:
 	is_player_in_sight = false
 
 
-func _on_enabled_state_changed(_from: Variant, to: Variant) -> void:
+func _on_enabled_state_changed(from: Variant, to: Variant) -> void:
+	match from:
+		"Alerted":
+			flip_sprite_component.node_to_face = null
+	
 	match to:
 		"Idle":
 			animated_sprite.play("idle")
+		"Alerted":
+			flip_sprite_component.node_to_face = player
 
 
 func _on_base_state_changed(from: Variant, to: Variant) -> void:
