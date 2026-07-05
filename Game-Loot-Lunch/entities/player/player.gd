@@ -15,6 +15,7 @@ var can_control: bool = true
 @onready var attack_sfx: AudioStreamPlayer2D = $AttackSfx
 @onready var input_component: InputComponent = $InputComponent
 @onready var state_machine: Node = $FiniteStateMachine
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 
 func _process(_delta: float) -> void:

@@ -18,7 +18,7 @@
 [ext_resource type="Script" uid="uid://cff1nbwxh57bt" path="res://entities/enemies/cow/enabled_machine_player.gd" id="13_u411e"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_m7sis"]
-radius = 89.02247
+radius = 64.070274
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m7g82"]
 atlas = ExtResource("3_qkfwc")
@@ -376,6 +376,8 @@ texture = ExtResource("2_gxvvk")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=842849408]
 sprite_frames = SubResource("SpriteFrames_khs75")
 animation = &"idle"
+frame = 1
+frame_progress = 0.368178
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=217407853]
 visible = false
@@ -412,6 +414,7 @@ one_shot = true
 [connection signal="stop_interact_with_player" from="PlayerInArea" to="." method="_on_player_out_of_sight"]
 [connection signal="transited" from="BaseMachinePlayer" to="BaseMachinePlayer" method="_on_transited"]
 [connection signal="updated" from="BaseMachinePlayer" to="BaseMachinePlayer" method="_on_updated"]
+[connection signal="transited" from="BaseMachinePlayer/EnabledMachinePlayer" to="." method="_on_enabled_state_changed"]
 [connection signal="transited" from="BaseMachinePlayer/EnabledMachinePlayer" to="BaseMachinePlayer/EnabledMachinePlayer" method="_on_transited"]
 [connection signal="updated" from="BaseMachinePlayer/EnabledMachinePlayer" to="BaseMachinePlayer/EnabledMachinePlayer" method="_on_updated"]
 [connection signal="timeout" from="BaseMachinePlayer/EnabledMachinePlayer/IdleTimer" to="BaseMachinePlayer/EnabledMachinePlayer" method="_on_idle_timer_timeout"]

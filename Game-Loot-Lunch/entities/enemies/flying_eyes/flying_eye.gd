@@ -7,6 +7,7 @@ class_name FlyingEye
 @onready var wing_flap_sfx: AudioStreamPlayer2D = $WingFlapSfx
 @onready var chase_component: ChaseComponent = $ChaseComponent
 @onready var state_machine: Node = $FiniteStateMachine
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 
 func _process(_delta: float) -> void:

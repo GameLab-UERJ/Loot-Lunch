@@ -8,6 +8,7 @@ var is_player_in_sight : bool = false
 @onready var base_machine_player: StateMachinePlayer = $BaseMachinePlayer
 @onready var enabled_machine_player: StateMachinePlayer = $BaseMachinePlayer/EnabledMachinePlayer
 @onready var drop_component: DropComponent = $DropComponent
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 
 '''
@@ -46,3 +47,9 @@ func _on_player_in_sight() -> void:
 
 func _on_player_out_of_sight() -> void:
 	is_player_in_sight = false
+
+
+func _on_enabled_state_changed(from: Variant, to: Variant) -> void:
+	match to:
+		"Idle":
+			animated_sprite.play("idle")

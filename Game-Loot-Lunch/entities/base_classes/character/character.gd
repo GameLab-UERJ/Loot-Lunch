@@ -16,9 +16,6 @@ signal died
 @export var invencibility_time: float = 0.5
 
 
-@onready var animated_sprite: AnimatedSprite2D = get_node("AnimatedSprite2D")
-
-
 var is_invincible: bool = false
 var mov_direction: Vector2 = Vector2.ZERO
 
