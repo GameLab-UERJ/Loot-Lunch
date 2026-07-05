@@ -37,6 +37,7 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
+	print(navigation_agent.is_target_reached())
 	if not enabled:
 		return
 	

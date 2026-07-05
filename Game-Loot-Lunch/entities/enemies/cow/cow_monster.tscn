@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://csbgr17hekk74" path="res://entities/enemies/cow/cow_monster.gd" id="1_ex7dd"]
 [ext_resource type="Texture2D" uid="uid://b43fyhe45hakj" path="res://assets/art/entities/shadow_single.png" id="2_gxvvk"]
 [ext_resource type="Script" uid="uid://bt5jjpnkd7ps" path="res://entities/base_classes/components/movement_component.gd" id="2_m7g82"]
-[ext_resource type="Script" uid="uid://d304wrj33k44u" path="res://entities/base_classes/components/chase_component.gd" id="3_cafd5"]
 [ext_resource type="Script" uid="uid://drgd63vqf1wbv" path="res://entities/base_classes/components/flip_sprite_component.gd" id="3_m7sis"]
 [ext_resource type="Texture2D" uid="uid://b3lt5yeb6mqfd" path="res://assets/art/entities/enemies/cow_monster/cow_monster_walk.png" id="3_qkfwc"]
 [ext_resource type="Script" uid="uid://bi7fdvl4vpp7o" path="res://systems/hitbox/hitbox_component.gd" id="4_gxvvk"]
@@ -392,8 +391,10 @@ collision_layer = 4
 collision_mask = 4
 motion_mode = 1
 script = ExtResource("1_ex7dd")
+hp = null
 acceleration = 20
 max_speed = 300
+invencibility_time = null
 metadata/_custom_type_script = "uid://u3hlqw0a0wn3"
 
 [node name="MovementComponent" type="Node" parent="." unique_id=320351888]
@@ -403,11 +404,6 @@ metadata/_custom_type_script = "uid://bt5jjpnkd7ps"
 [node name="FlipSpriteComponent" type="Node" parent="." unique_id=1070502729]
 script = ExtResource("3_m7sis")
 metadata/_custom_type_script = "uid://drgd63vqf1wbv"
-
-[node name="ChaseComponent" type="Node" parent="." unique_id=1807438412]
-script = ExtResource("3_cafd5")
-enabled = false
-metadata/_custom_type_script = "uid://d304wrj33k44u"
 
 [node name="DropComponent" type="Node" parent="." unique_id=1183276193]
 script = ExtResource("4_khs75")
@@ -467,12 +463,11 @@ one_shot = true
 [node name="AlertedTimer" type="Timer" parent="BaseMachinePlayer/EnabledMachinePlayer" unique_id=833871215]
 one_shot = true
 
-[node name="AttackPoint" type="Marker2D" parent="." unique_id=704535964]
+[node name="AttackTimer" type="Timer" parent="BaseMachinePlayer/EnabledMachinePlayer" unique_id=1397232453]
+one_shot = true
 
 [connection signal="died" from="." to="." method="_on_died"]
 [connection signal="got_hurt" from="." to="." method="_on_got_hurt"]
-[connection signal="next_chase_point_set" from="ChaseComponent" to="." method="_on_chase_component_next_chase_point_set"]
-[connection signal="target_reached" from="ChaseComponent" to="." method="_on_chase_component_target_reached"]
 [connection signal="drop_finished" from="DropComponent" to="." method="_on_drop_component_drop_finished"]
 [connection signal="interact_with_player" from="PlayerInArea" to="." method="_on_player_in_sight"]
 [connection signal="stop_interact_with_player" from="PlayerInArea" to="." method="_on_player_out_of_sight"]
@@ -483,3 +478,4 @@ one_shot = true
 [connection signal="transited" from="BaseMachinePlayer/EnabledMachinePlayer" to="BaseMachinePlayer/EnabledMachinePlayer" method="_on_transited"]
 [connection signal="timeout" from="BaseMachinePlayer/EnabledMachinePlayer/IdleTimer" to="BaseMachinePlayer/EnabledMachinePlayer" method="_on_idle_timer_timeout"]
 [connection signal="timeout" from="BaseMachinePlayer/EnabledMachinePlayer/AlertedTimer" to="BaseMachinePlayer/EnabledMachinePlayer" method="attack"]
+[connection signal="timeout" from="BaseMachinePlayer/EnabledMachinePlayer/AttackTimer" to="BaseMachinePlayer/EnabledMachinePlayer" method="finish_attack"]

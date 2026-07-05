@@ -4,7 +4,7 @@ class_name MovementComponent
 
 var acceleration: int
 var max_speed: int
-
+var default_direction : Vector2 = Vector2.ZERO
 
 @onready var parent: Character = get_parent()
 @onready var player: CharacterBody2D = get_tree().current_scene.get_node_or_null("Player")
@@ -22,7 +22,7 @@ func _ready():
 	max_speed = parent.max_speed
 
 
-func move(mov_direction: Vector2) -> void:
+func move(mov_direction: Vector2 = default_direction) -> void:
 	mov_direction = mov_direction.normalized()
 	parent.velocity += mov_direction * acceleration
 	parent.velocity = parent.velocity.limit_length(max_speed)
