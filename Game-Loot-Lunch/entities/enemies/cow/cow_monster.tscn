@@ -21,6 +21,10 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_m7sis"]
 radius = 64.070274
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_m7sis"]
+atlas = ExtResource("3_qkfwc")
+region = Rect2(324, 0, 54, 40)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_m7g82"]
 atlas = ExtResource("3_qkfwc")
 region = Rect2(0, 0, 64, 64)
@@ -55,6 +59,14 @@ region = Rect2(320, 0, 64, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_khs75"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m7sis")
+}],
+"loop": true,
+"name": &"die",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_m7g82")
@@ -380,9 +392,7 @@ texture = ExtResource("2_gxvvk")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=842849408]
 sprite_frames = SubResource("SpriteFrames_khs75")
-animation = &"idle"
-frame = 1
-frame_progress = 0.368178
+animation = &"die"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=217407853]
 visible = false
@@ -417,6 +427,7 @@ one_shot = true
 [connection signal="drop_finished" from="DropComponent" to="." method="_on_drop_component_drop_finished"]
 [connection signal="interact_with_player" from="PlayerInArea" to="." method="_on_player_in_sight"]
 [connection signal="stop_interact_with_player" from="PlayerInArea" to="." method="_on_player_out_of_sight"]
+[connection signal="transited" from="BaseMachinePlayer" to="." method="_on_base_state_changed"]
 [connection signal="transited" from="BaseMachinePlayer" to="BaseMachinePlayer" method="_on_transited"]
 [connection signal="updated" from="BaseMachinePlayer" to="BaseMachinePlayer" method="_on_updated"]
 [connection signal="transited" from="BaseMachinePlayer/EnabledMachinePlayer" to="." method="_on_enabled_state_changed"]

@@ -49,3 +49,9 @@ func _on_enabled_state_changed(_from: Variant, to: Variant) -> void:
 	match to:
 		"Idle":
 			animated_sprite.play("idle")
+
+
+func _on_base_state_changed(from: Variant, to: Variant) -> void:
+	match to:
+		"Dead":
+			animated_sprite.play("die")
