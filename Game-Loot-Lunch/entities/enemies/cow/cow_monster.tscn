@@ -391,10 +391,8 @@ collision_layer = 4
 collision_mask = 4
 motion_mode = 1
 script = ExtResource("1_ex7dd")
-hp = null
 acceleration = 20
 max_speed = 300
-invencibility_time = null
 metadata/_custom_type_script = "uid://u3hlqw0a0wn3"
 
 [node name="MovementComponent" type="Node" parent="." unique_id=320351888]
@@ -476,6 +474,7 @@ one_shot = true
 [connection signal="transited" from="BaseMachinePlayer" to="BaseMachinePlayer" method="_on_transited"]
 [connection signal="transited" from="BaseMachinePlayer/EnabledMachinePlayer" to="." method="_on_enabled_state_changed"]
 [connection signal="transited" from="BaseMachinePlayer/EnabledMachinePlayer" to="BaseMachinePlayer/EnabledMachinePlayer" method="_on_transited"]
-[connection signal="timeout" from="BaseMachinePlayer/EnabledMachinePlayer/IdleTimer" to="BaseMachinePlayer/EnabledMachinePlayer" method="_on_idle_timer_timeout"]
+[connection signal="updated" from="BaseMachinePlayer/EnabledMachinePlayer" to="." method="_on_enabled_machine_player_updated"]
+[connection signal="timeout" from="BaseMachinePlayer/EnabledMachinePlayer/IdleTimer" to="BaseMachinePlayer/EnabledMachinePlayer" method="patrol"]
 [connection signal="timeout" from="BaseMachinePlayer/EnabledMachinePlayer/AlertedTimer" to="BaseMachinePlayer/EnabledMachinePlayer" method="attack"]
 [connection signal="timeout" from="BaseMachinePlayer/EnabledMachinePlayer/AttackTimer" to="BaseMachinePlayer/EnabledMachinePlayer" method="finish_attack"]

@@ -9,11 +9,20 @@ extends StateMachinePlayer
 
 
 func attack() -> void:
+	await get_tree().create_timer(0.5).timeout
 	set_trigger("attack_player")
 
 
 func finish_attack() -> void:
 	set_trigger("attack_player_finished")
+
+
+func patrol() -> void:
+	set_trigger("idle_time_has_passed")
+
+
+func finish_patrol() -> void:
+	set_trigger("patrol_finished")
 
 
 func _on_transited(from: Variant, to: Variant) -> void:
@@ -26,10 +35,6 @@ func _on_transited(from: Variant, to: Variant) -> void:
 		"Idle":
 			idle_timer.start(randf_range(1.0,3.0))
 		"Alerted":
-			alerted_timer.start(3)
+			alerted_timer.start(2.5)
 		"Attacking":
 			attack_timer.start(1)
-
-
-func _on_idle_timer_timeout() -> void:
-	set_trigger("idle_time_has_passed")

@@ -11,6 +11,9 @@ signal target_reached
 @export var chased_node: Node2D
 
 
+var can_check_target_reached : bool = false
+
+
 @onready var parent: Character = get_parent()
 @onready var path_timer: Timer = get_node_or_null("PathTimer")
 @onready var navigation_agent: NavigationAgent2D = get_node_or_null("NavigationAgent2D")
@@ -33,11 +36,13 @@ func _ready() -> void:
 	
 	if not navigation_agent:
 		navigation_agent = NavigationAgent2D.new()
+		navigation_agent.path_desired_distance = 3
+		navigation_agent.target_desired_distance = 3
+		navigation_agent.path_postprocessing = NavigationPathQueryParameters2D.PATH_POSTPROCESSING_EDGECENTERED
 		parent.call_deferred("add_child",navigation_agent)
 
 
 func _process(_delta: float) -> void:
-	print(navigation_agent.is_target_reached())
 	if not enabled:
 		return
 	
@@ -45,12 +50,15 @@ func _process(_delta: float) -> void:
 
 
 func _on_path_timer_timeout() -> void:
-	if not path_timer or not enabled:
+	if not path_timer:
 		return 
 	
+	if not enabled:
+		return
+	
 	if is_instance_valid(chased_node):
-		if navigation_agent.target_position != chased_node.position:
-			navigation_agent.target_position = chased_node.position
+		navigation_agent.target_position = chased_node.position
+		can_check_target_reached = true
 	else:
 		path_timer.stop()
 		there_is_no_player.emit()
@@ -71,7 +79,8 @@ func chase() -> void:
 	):
 		return 
 	
-	if navigation_agent.is_target_reached():
+	if can_check_target_reached and navigation_agent.is_target_reached():
+		can_check_target_reached = false
 		target_reached.emit()
 		return
 	

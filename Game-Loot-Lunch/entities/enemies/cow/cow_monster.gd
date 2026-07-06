@@ -2,7 +2,12 @@ extends Enemy
 class_name CowMonster
 
 
+@export var patrol_speed : int = 50
+@export var attack_speed : int = 300
+
+
 var is_player_in_sight : bool = false
+var _patrol_marker : Marker2D
 
 
 @onready var base_machine_player: StateMachinePlayer = $BaseMachinePlayer
@@ -12,6 +17,11 @@ var is_player_in_sight : bool = false
 @onready var flip_sprite_component: FlipSpriteComponent = $FlipSpriteComponent
 @onready var movement_component: MovementComponent = $MovementComponent
 @onready var hitbox_component: HitboxComponent = $HitboxComponent
+
+
+func _ready() -> void:
+	_patrol_marker = Marker2D.new()
+	get_tree().current_scene.call_deferred("add_child",_patrol_marker)
 
 
 func _process(delta: float) -> void:
@@ -51,7 +61,7 @@ func _on_enabled_state_changed(from: Variant, to: Variant) -> void:
 	match from:
 		"Alerted":
 			flip_sprite_component.node_to_face = null
-		"Attacking":
+		"Attacking","Patrol":
 			movement_component.default_direction = Vector2.ZERO
 	
 	match to:
@@ -61,9 +71,23 @@ func _on_enabled_state_changed(from: Variant, to: Variant) -> void:
 			animated_sprite.play("alert")
 			flip_sprite_component.node_to_face = player
 		"Attacking":
-			movement_component.default_direction = global_position.direction_to(player.global_position)
 			animated_sprite.play("attack")
-			
+			movement_component.max_speed = attack_speed
+			movement_component.default_direction = global_position.direction_to(player.global_position)
+		"Patrol":
+			animated_sprite.play("walk")
+			_patrol_marker.global_position = global_position + Vector2( (randi_range(0,1)*2+-1)* randi_range(10,50),
+																		(randi_range(0,1)*2+-1)* randi_range(10,50))
+			movement_component.max_speed = patrol_speed
+			movement_component.default_direction = global_position.direction_to(_patrol_marker.global_position)
+
+
+func _on_enabled_machine_player_updated(state: Variant, _delta: Variant) -> void:
+	match state:
+		"Patrol":
+			print(global_position.distance_to(_patrol_marker.global_position))
+			if abs(global_position.distance_to(_patrol_marker.global_position)) < 5:
+				enabled_machine_player.finish_patrol()
 
 
 func _on_base_state_changed(_from: Variant, to: Variant) -> void:
@@ -72,14 +96,5 @@ func _on_base_state_changed(_from: Variant, to: Variant) -> void:
 			animated_sprite.play("die")
 
 
-func _on_chase_component_next_chase_point_set(next_point: Vector2) -> void:
-	movement_component.move(next_point)
-
-
 func _on_hitbox_component_hit() -> void:
-	enabled_machine_player.finish_attack()
-
-
-func _on_chase_component_target_reached() -> void:
-	print("oexe")
 	enabled_machine_player.finish_attack()
