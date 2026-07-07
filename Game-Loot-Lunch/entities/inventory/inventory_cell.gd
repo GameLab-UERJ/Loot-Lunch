@@ -50,7 +50,7 @@ func remove_item(new_parent : Node = null, _show : bool = true) -> Item:
 		return null
 	var removed_item : Item = item
 	item = null
-	removed_item.reparent(new_parent)
+	removed_item.call_deferred("reparent",new_parent)
 	if _show: 
 		removed_item.show()
 	else:

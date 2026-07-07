@@ -2,6 +2,9 @@ extends Node2D
 class_name Spawn
 
 
+signal spawned(spawned_creature : Character)
+
+
 @export var looping: bool = true
 @export var creature_scene: PackedScene
 @export var spawn_time: float = 1.0
@@ -26,6 +29,7 @@ func _on_timer_timeout() -> void:
 		creature = creature_scene.instantiate()
 		add_child(creature)
 		creature_counter += 1
+		spawned.emit(creature)
 
 
 func creature_died() -> void:

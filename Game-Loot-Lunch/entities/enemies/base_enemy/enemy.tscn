@@ -7,11 +7,3 @@
 collision_layer = 4
 collision_mask = 4
 script = ExtResource("2_6rbtt")
-
-[node name="PathTimer" type="Timer" parent="." index="4" unique_id=213328142]
-wait_time = 0.5
-autostart = true
-
-[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." index="5" unique_id=1153222883]
-
-[connection signal="timeout" from="PathTimer" to="." method="_on_PathTimer_timeout"]

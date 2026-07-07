@@ -1230,6 +1230,7 @@ autoplay = true
 position = Vector2(713, 149)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1463558659]
+zoom = Vector2(2, 2)
 limit_left = -1550
 limit_top = -920
 limit_right = 800
@@ -1255,11 +1256,7 @@ script = ExtResource("10_i3155")
 position = Vector2(-1, 1)
 shape = SubResource("RectangleShape2D_mcp6s")
 
-[connection signal="body_entered" from="level_change/back_to_dungeon_way" to="level_change/back_to_dungeon_way" method="_on_body_entered"]
-[connection signal="body_exited" from="level_change/back_to_dungeon_way" to="level_change/back_to_dungeon_way" method="_on_body_exited"]
 [connection signal="interact_with_player" from="level_change/back_to_dungeon_way" to="." method="_on_dungeon_way_area_entered"]
 [connection signal="stop_interact_with_player" from="level_change/back_to_dungeon_way" to="." method="_on_dungeon_way_area_exited"]
-[connection signal="body_entered" from="level_change/internal_dungeon" to="level_change/internal_dungeon" method="_on_body_entered"]
-[connection signal="body_exited" from="level_change/internal_dungeon" to="level_change/internal_dungeon" method="_on_body_exited"]
 [connection signal="interact_with_player" from="level_change/internal_dungeon" to="." method="_on_internal_dungeon_area_entered"]
 [connection signal="stop_interact_with_player" from="level_change/internal_dungeon" to="." method="_on_internal_dungeon_area_exited"]

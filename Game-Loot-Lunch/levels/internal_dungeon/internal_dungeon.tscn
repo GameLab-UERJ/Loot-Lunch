@@ -1897,6 +1897,7 @@ z_index = 1
 position = Vector2(272, 231)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=2114874898]
+zoom = Vector2(2, 2)
 limit_bottom = 270
 
 [node name="Enemies" type="Node" parent="." unique_id=1807275473]
@@ -1932,6 +1933,4 @@ position = Vector2(-236, -251)
 stream = ExtResource("10_6wgr6")
 autoplay = true
 
-[connection signal="body_entered" from="external_house" to="external_house" method="_on_body_entered"]
-[connection signal="body_exited" from="external_house" to="external_house" method="_on_body_exited"]
 [connection signal="interact_with_player" from="external_house" to="." method="_on_external_house_interact_with_player"]

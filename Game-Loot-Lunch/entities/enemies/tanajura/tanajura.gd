@@ -1,5 +1,5 @@
 extends Enemy
-class_name tanajura
+class_name Tanajura
 
 
 @export var idle_time: float = 10.0
@@ -16,8 +16,11 @@ var targets: Array[Node2D]
 
 @onready var movement_component: MovementComponent = $MovementComponent
 @onready var item_drop_component: ItemDropComponent = $ItemDropComponent
-@onready var formigueiro: Formigueiro = get_parent() if get_tree().current_scene.has_node("Formigueiro") else null
+@onready var chase_component: ChaseComponent = $ChaseComponent
+@onready var formigueiro: Spawn = get_parent() if get_tree().current_scene.has_node("Formigueiro") else null
 @onready var territory: Area2D = $Territory
+@onready var state_machine: Node = $FiniteStateMachine
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 
 
@@ -25,15 +28,7 @@ func _ready() -> void:
 	states_timer = Timer.new()
 	states_timer.one_shot = true
 	add_child(states_timer)
-
-
-func _process(_delta: float) -> void:
-	if movement_component.mov_direction.x < 0 and animated_sprite.flip_h:
-		animated_sprite.flip_h = false
-	elif movement_component.mov_direction.x > 0 and not animated_sprite.flip_h:
-		animated_sprite.flip_h = true
-	
-	hitbox_component.knockback_direction = velocity.normalized()
+	chase_component.chased_node = player
 
 
 func damage_taken_animation() -> void:
@@ -41,14 +36,10 @@ func damage_taken_animation() -> void:
 		return
 	
 	tween = create_tween()
-	hitbox_component.collision_shape.disabled = true
 	
 	for i in range(3):
 		tween.tween_property(self, "modulate:a", 0, 0.1)
 		tween.tween_property(self, "modulate:a", 1, 0.1)
-		
-	await tween.finished
-	hitbox_component.collision_shape.disabled = false
 
 
 func idle_state() -> void:
@@ -66,7 +57,7 @@ func alert_state() -> void:
 func hidden_move() -> void:
 	if formigueiro:
 		angle = randf_range(0.0, TAU)
-		radius = randf_range(0, formigueiro.collision_shape_2d.shape.radius)
+		radius = randf_range(0, formigueiro.collision_shape.shape.radius)
 		
 		position += Vector2(cos(angle), sin(angle)) * radius
 
@@ -80,3 +71,16 @@ func _on_territory_body_entered(body: Node2D) -> void:
 func _on_territory_body_exited(body: Node2D) -> void:
 	if !state_machine.states["chase"] == state_machine.state:
 		targets.erase(body)
+
+
+func _on_chase_component_next_chase_point_set(next_point: Vector2) -> void:
+	print(rad_to_deg(next_point.angle()))
+	movement_component.move(next_point)
+
+
+func _on_got_hurt() -> void:
+	damage_taken_animation()
+
+
+func _on_died() -> void:
+	state_machine.set_state(state_machine.states.dead)

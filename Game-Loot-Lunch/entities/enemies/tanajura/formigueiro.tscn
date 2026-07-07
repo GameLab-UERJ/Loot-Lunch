@@ -7,7 +7,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_m5uyx"]
 radius = 106.004715
 
-[node name="Formigueiro" type="Node2D" unique_id=352992596]
+[node name="Formigueiro" type="Node2D" unique_id=1136054396]
 script = ExtResource("1_bhfhi")
 creature_scene = ExtResource("2_18rgx")
 spawn_time = 3.0
@@ -19,5 +19,8 @@ metadata/_custom_type_script = "uid://o2tp8vrr10j2"
 shape = SubResource("CircleShape2D_m5uyx")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=898528207]
+visible = false
 scale = Vector2(0.265625, 0.265625)
 texture = ExtResource("2_rmroh")
+
+[connection signal="spawned" from="." to="." method="_on_spawned"]

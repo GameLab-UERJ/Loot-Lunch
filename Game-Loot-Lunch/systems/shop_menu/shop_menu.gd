@@ -95,7 +95,7 @@ func fill_player_inventory() -> void:
 		if cell.item:
 			var item_copy: Item = create_item_copy(cell.item)
 			if item_copy:
-				add_child(item_copy)
+				call_deferred("add_child",item_copy)
 				player_inventory.add_item(item_copy)
 				player_item_copies[item_copy] = cell.item
 				set_item_price_text(player_inventory, item_copy, get_sell_price(cell.item), Color.RED)

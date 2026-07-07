@@ -1,7 +1,7 @@
 [gd_scene format=4 uid="uid://dkaytgmdhkghj"]
 
 [ext_resource type="Texture2D" uid="uid://4k3sewl10xmk" path="res://assets/art/tilesets/exterior_1/exterior.png" id="1_bkwuf"]
-[ext_resource type="Script" uid="uid://djgvy2t6ia5cr" path="res://levels/dungeon_way/dungeon_way.gd" id="1_f10bb"]
+[ext_resource type="Script" uid="uid://djgvy2t6ia5cr" path="res://levels/Dungeon_Way/dungeon_way.gd" id="1_f10bb"]
 [ext_resource type="Texture2D" uid="uid://kysfsmoaib7g" path="res://assets/art/tilesets/exterior_2/sandwater.png" id="2_no2jk"]
 [ext_resource type="Texture2D" uid="uid://bjh0kt1bm4de6" path="res://assets/art/tilesets/dungeon_exterior/Tiled_files/Sprite-0002-Sheet.png" id="3_drym6"]
 [ext_resource type="Texture2D" uid="uid://jj86r3ewr8f2" path="res://assets/art/tilesets/exterior_1/ground_grass_details.png" id="3_gcchm"]
@@ -3111,6 +3111,7 @@ z_index = 1
 position = Vector2(216, 25)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=484531857]
+zoom = Vector2(2, 2)
 limit_left = -441
 limit_top = -20
 limit_right = 1260
@@ -3149,12 +3150,6 @@ script = ExtResource("16_ycylx")
 position = Vector2(-0.5, 0)
 shape = SubResource("RectangleShape2D_f10bb")
 
-[connection signal="body_entered" from="level_change/dungeon_exterior" to="level_change/dungeon_exterior" method="_on_body_entered"]
-[connection signal="body_exited" from="level_change/dungeon_exterior" to="level_change/dungeon_exterior" method="_on_body_exited"]
 [connection signal="interact_with_player" from="level_change/dungeon_exterior" to="." method="_on_dungeon_exterior_area_entered"]
-[connection signal="body_entered" from="level_change/exterior_house" to="level_change/exterior_house" method="_on_body_entered"]
-[connection signal="body_exited" from="level_change/exterior_house" to="level_change/exterior_house" method="_on_body_exited"]
 [connection signal="interact_with_player" from="level_change/exterior_house" to="." method="_on_external_house_area_entered"]
-[connection signal="body_entered" from="level_change/shop" to="level_change/shop" method="_on_body_entered"]
-[connection signal="body_exited" from="level_change/shop" to="level_change/shop" method="_on_body_exited"]
 [connection signal="interact_with_player" from="level_change/shop" to="." method="_on_shop_area_entered"]

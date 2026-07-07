@@ -17,8 +17,9 @@ func _ready() -> void:
 
 func _state_logic(_delta: float) -> void:
 	if state == states.chase:
-		parent.movement_component.chase()
-		parent.movement_component.move()
+		parent.chase_component.enable()
+	else:
+		parent.chase_component.disable()
 
 
 func _get_transition() -> int:
