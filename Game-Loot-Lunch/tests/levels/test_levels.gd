@@ -48,15 +48,27 @@ func _on_player_can_enter_house() -> void:
 	EasyTransition.transition_to_node(inside_house,1.5,EasyTransition.TransitionAnim.FADE)
 
 
-func _on_player_can_leave_shop() -> void:
+func _on_player_can_go_back_to_external_house() -> void:
 	_on_change_scene()
 	external_house.get_node("ExternalHouse").player_start_position = external_house.get_node("ShopEntrance")
 	EasyTransition.transition_to_node(external_house,1.5,EasyTransition.TransitionAnim.FADE)
 
 
+func _on_player_can_leave_shop() -> void:
+	_on_change_scene()
+	dungeon_way.get_node("DungeonWay").player_start_position = dungeon_way.get_node("ShopEntrance")
+	EasyTransition.transition_to_node(dungeon_way,1.5,EasyTransition.TransitionAnim.FADE)
+
+
 func _on_player_can_enter_shop() -> void:
 	_on_change_scene()
 	EasyTransition.transition_to_node(shop_room,1.5,EasyTransition.TransitionAnim.FADE)
+
+
+func _on_player_can_enter_left() -> void:
+	_on_change_scene()
+	dungeon_way.get_node("DungeonWay").player_start_position = dungeon_way.get_node("ExternalHouseWay")
+	EasyTransition.transition_to_node(dungeon_way,1.5,EasyTransition.TransitionAnim.FADE)
 
 
 func _on_player_can_enter_internal_dungeon() -> void:
@@ -76,12 +88,20 @@ func _on_player_can_leave_internal_dungeon() -> void:
 
 func _on_player_can_enter_dungeon_way() -> void:
 	_on_change_scene()
+	dungeon_way.get_node("DungeonWay").player_start_position = dungeon_way.get_node("ExternalDungeonEntrance")
 	EasyTransition.transition_to_node(dungeon_way, 1.5, EasyTransition.TransitionAnim.FADE)
 
 
 func _on_player_can_leave_dungeon_way() -> void:
 	_on_change_scene()
 	EasyTransition.transition_to_node(dungeon_exterior, 1.5, EasyTransition.TransitionAnim.FADE)
+
+
+func _on_player_can_leave_dungeon() -> void:
+	_on_change_scene()
+	dungeon_exterior.get_node("DungeonExterior").player_start_position = dungeon_exterior.get_node("DungeonInteriorEntrance")
+	EasyTransition.transition_to_node(dungeon_exterior, 1.5, EasyTransition.TransitionAnim.FADE)
+
 
 
 func pause_game_menu() -> void:

@@ -8,3 +8,5 @@ script = ExtResource("1_uo5fg")
 
 [node name="InternalDungeon" parent="." unique_id=1644355751 instance=ExtResource("2_i0ger")]
 position = Vector2(1, 0)
+
+[connection signal="player_can_leave_dungeon" from="InternalDungeon" to="." method="_on_player_can_leave_dungeon"]

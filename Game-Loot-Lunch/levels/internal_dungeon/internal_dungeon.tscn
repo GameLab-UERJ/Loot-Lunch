@@ -1934,3 +1934,4 @@ autoplay = true
 
 [connection signal="body_entered" from="external_house" to="external_house" method="_on_body_entered"]
 [connection signal="body_exited" from="external_house" to="external_house" method="_on_body_exited"]
+[connection signal="interact_with_player" from="external_house" to="." method="_on_external_house_interact_with_player"]
