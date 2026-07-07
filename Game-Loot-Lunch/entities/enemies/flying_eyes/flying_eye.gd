@@ -1,6 +1,6 @@
 extends Enemy
 
-@onready var hitbox_component: HitboxComponent = $HitboxComponent
+
 @onready var movement_component: MovementComponent = $MovementComponent
 @onready var wing_flap_sfx: AudioStreamPlayer2D = $WingFlapSfx
 
