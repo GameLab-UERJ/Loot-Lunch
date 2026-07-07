@@ -1,0 +1,123 @@
+[gd_scene format=3 uid="uid://dnw8w6uoo6qef"]
+
+[ext_resource type="Script" uid="uid://dt0gqvfdgfpyu" path="res://systems/shop_menu/shop_menu.gd" id="1_2wjfk"]
+[ext_resource type="PackedScene" uid="uid://cqnchp7q3uixs" path="res://entities/inventory/inventory.tscn" id="2_kb7b6"]
+
+[node name="ShopMenu" type="Control" unique_id=1060735759]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2wjfk")
+
+[node name="Panel" type="Panel" parent="." unique_id=1441269935]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=1514346559]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 8.0
+offset_right = -20.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 4
+
+[node name="GoldLabel" type="Label" parent="Panel/VBoxContainer" unique_id=284783921]
+layout_mode = 2
+text = "Gold Atual: 0"
+horizontal_alignment = 1
+
+[node name="MessageLabel" type="Label" parent="Panel/VBoxContainer" unique_id=1491770211]
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="Buttons" type="HBoxContainer" parent="Panel/VBoxContainer" unique_id=1481263324]
+layout_mode = 2
+alignment = 1
+
+[node name="BuyButton" type="Button" parent="Panel/VBoxContainer/Buttons" unique_id=145501965]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Comprar"
+
+[node name="SellButton" type="Button" parent="Panel/VBoxContainer/Buttons" unique_id=1700521033]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Vender"
+
+[node name="ExitButton" type="Button" parent="Panel/VBoxContainer/Buttons" unique_id=727169993]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Sair"
+
+[node name="Inventories" type="HBoxContainer" parent="Panel/VBoxContainer" unique_id=44886375]
+layout_mode = 2
+theme_override_constants/separation = 24
+alignment = 1
+
+[node name="PlayerBox" type="VBoxContainer" parent="Panel/VBoxContainer/Inventories" unique_id=1768903621]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="PlayerLabel" type="Label" parent="Panel/VBoxContainer/Inventories/PlayerBox" unique_id=676072797]
+layout_mode = 2
+text = "Seu Inventário"
+horizontal_alignment = 1
+
+[node name="PlayerInventory" parent="Panel/VBoxContainer/Inventories/PlayerBox" unique_id=1443629152 instance=ExtResource("2_kb7b6")]
+custom_minimum_size = Vector2(110, 138)
+layout_mode = 2
+size_flags_horizontal = 4
+can_move_items = false
+
+[node name="TransferBox" type="VBoxContainer" parent="Panel/VBoxContainer/Inventories" unique_id=618513615]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="TransferLabel" type="Label" parent="Panel/VBoxContainer/Inventories/TransferBox" unique_id=1896652015]
+layout_mode = 2
+text = "Transferência"
+horizontal_alignment = 1
+
+[node name="TransferInventory" parent="Panel/VBoxContainer/Inventories/TransferBox" unique_id=1893200404 instance=ExtResource("2_kb7b6")]
+custom_minimum_size = Vector2(110, 78)
+layout_mode = 2
+size_flags_horizontal = 4
+dimensions = Vector2i(3, 2)
+can_move_items = false
+
+[node name="ShopBox" type="VBoxContainer" parent="Panel/VBoxContainer/Inventories" unique_id=1482637626]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="ShopLabel" type="Label" parent="Panel/VBoxContainer/Inventories/ShopBox" unique_id=796724892]
+layout_mode = 2
+text = "Loja"
+horizontal_alignment = 1
+
+[node name="ShopInventory" parent="Panel/VBoxContainer/Inventories/ShopBox" unique_id=2138682898 instance=ExtResource("2_kb7b6")]
+custom_minimum_size = Vector2(110, 138)
+layout_mode = 2
+size_flags_horizontal = 4
+can_move_items = false
+
+[connection signal="pressed" from="Panel/VBoxContainer/Buttons/BuyButton" to="." method="_on_buy_button_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/Buttons/SellButton" to="." method="_on_sell_button_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/Buttons/ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="cell_left_clicked" from="Panel/VBoxContainer/Inventories/PlayerBox/PlayerInventory" to="." method="_on_player_inventory_cell_left_clicked"]
+[connection signal="cell_left_clicked" from="Panel/VBoxContainer/Inventories/TransferBox/TransferInventory" to="." method="_on_transfer_inventory_cell_left_clicked"]
+[connection signal="cell_left_clicked" from="Panel/VBoxContainer/Inventories/ShopBox/ShopInventory" to="." method="_on_shop_inventory_cell_left_clicked"]

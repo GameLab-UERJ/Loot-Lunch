@@ -5,8 +5,8 @@ signal player_can_enter_house
 signal stop_player_can_enter_house
 signal player_can_enter_shop
 signal stop_player_can_enter_shop
-signal player_can_enter_cambat_zone
-signal stop_player_can_enter_cambat_zone
+signal player_can_enter_internal_dungeon
+signal stop_player_can_enter_internal_dungeon
 
 
 @export var player_start_position : Marker2D
@@ -39,19 +39,21 @@ func _on_shop_area_exited() -> void:
 	stop_player_can_enter_shop.emit()
 
 
-func _on_combat_area_entered() -> void:
-	player_can_enter_cambat_zone.emit()
+func _on_internal_dungeon_area_entered() -> void:
+	player_can_enter_internal_dungeon.emit()
 
 
-func _on_combat_area_exited() -> void:
-	stop_player_can_enter_cambat_zone.emit()
+func _on_internal_dungeon_exited() -> void:
+	stop_player_can_enter_internal_dungeon.emit()
 
 
 func _on_rooster_sfx_finished() -> void:
 	await get_tree().create_timer(randi_range(5,15)).timeout
-	rooster_sfx.play()
+	if TimeCycle.is_day():
+		rooster_sfx.play()
 
 
 func _on_seagulls_sfx_finished() -> void:
 	await get_tree().create_timer(randi_range(5,15)).timeout
-	seagulls_sfx.play()
+	if TimeCycle.is_day():
+		seagulls_sfx.play()
