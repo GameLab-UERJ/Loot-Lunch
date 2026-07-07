@@ -18,7 +18,7 @@ var mov_direction: Vector2 = Vector2.ZERO
 @onready var state_machine: Node = get_node("FiniteStateMachine")
 @onready var animated_sprite: AnimatedSprite2D = get_node("AnimatedSprite2D")
 
-@onready var hitbox_component: HitboxComponent = $HitboxComponent
+@onready var hitbox_component: HitboxComponent = get_node_or_null("HitboxComponent")
 
 
 func _physics_process(_delta: float) -> void:

@@ -1,5 +1,4 @@
 extends Spawn
-
 class_name Formigueiro
 
 

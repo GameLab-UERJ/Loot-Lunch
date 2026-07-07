@@ -1,24 +1,21 @@
 extends Enemy
-
 class_name tanajura
 
 
 @export var idle_time: float = 10.0
 @export var alert_time: float = 3.0
 
-var tween: Tween
 
+var tween: Tween
 var angle: float
 var radius: float
-
 var states_timer: Timer
 var states_timer_pause: bool = false
-
 var targets: Array[Node2D]
+
 
 @onready var movement_component: MovementComponent = $MovementComponent
 @onready var item_drop_component: ItemDropComponent = $ItemDropComponent
-
 @onready var formigueiro: Formigueiro = get_parent() if get_tree().current_scene.has_node("Formigueiro") else null
 @onready var territory: Area2D = $Territory
 
@@ -59,6 +56,7 @@ func idle_state() -> void:
 	states_timer.wait_time = idle_time
 	states_timer.start()
 
+
 func alert_state() -> void:
 	states_timer.stop()
 	states_timer.wait_time = alert_time
@@ -66,7 +64,7 @@ func alert_state() -> void:
 
 
 func hidden_move() -> void:
-	if !formigueiro == null:
+	if formigueiro:
 		angle = randf_range(0.0, TAU)
 		radius = randf_range(0, formigueiro.collision_shape_2d.shape.radius)
 		
