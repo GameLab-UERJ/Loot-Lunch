@@ -1187,7 +1187,7 @@ size = Vector2(25, 24)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mcp6s"]
 size = Vector2(15.5, 23.125)
 
-[node name="dungeon_exterior" type="Node2D" unique_id=503173019]
+[node name="DungeonExterior" type="Node2D" unique_id=503173019]
 script = ExtResource("1_i3155")
 
 [node name="Tilesets" type="Node" parent="." unique_id=751814081]
@@ -1232,7 +1232,7 @@ position = Vector2(713, 149)
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1463558659]
 limit_left = -1550
 limit_top = -920
-limit_right = 840
+limit_right = 800
 limit_bottom = 410
 
 [node name="level_change" type="Node" parent="." unique_id=704995543]

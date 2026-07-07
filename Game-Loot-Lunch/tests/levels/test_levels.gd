@@ -63,31 +63,32 @@ func _on_player_can_enter_internal_dungeon() -> void:
 	_on_change_scene()
 	EasyTransition.transition_to_node(internal_dungeon,1.5,EasyTransition.TransitionAnim.FADE)
 
+
 func _on_player_can_enter_dungeon_exterior() -> void:
 	_on_change_scene()
 	EasyTransition.transition_to_node(dungeon_exterior, 1.5, EasyTransition.TransitionAnim.FADE)
 
-func _on_player_can_enter_internal_dungeon() -> void:
-	_on_change_scene()
-	EasyTransition.transition_to_node(internal_dungeon, 1.5, EasyTransition.TransitionAnim.FADE)
 
 func _on_player_can_leave_internal_dungeon() -> void:
 	_on_change_scene()
 	EasyTransition.transition_to_node(dungeon_exterior, 1.5, EasyTransition.TransitionAnim.FADE)
 
+
 func _on_player_can_enter_dungeon_way() -> void:
 	_on_change_scene()
 	EasyTransition.transition_to_node(dungeon_way, 1.5, EasyTransition.TransitionAnim.FADE)
 
+
 func _on_player_can_leave_dungeon_way() -> void:
 	_on_change_scene()
 	EasyTransition.transition_to_node(dungeon_exterior, 1.5, EasyTransition.TransitionAnim.FADE)
-	
+
 
 func pause_game_menu() -> void:
 	if !get_parent().has_node("PauseMenu"):
 		pause_menu = pause_menu_scene.instantiate() as PauseMenu
 		call_deferred("add_sibling", pause_menu)
+
 
 func _on_change_scene(duration : float = 1.5) -> void:
 	if music_stream_player:

@@ -3219,7 +3219,7 @@ size = Vector2(31.75, 29)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f10bb"]
 size = Vector2(19, 28)
 
-[node name="dungeon_way" type="Node2D" unique_id=309474097]
+[node name="DungeonWay" type="Node2D" unique_id=309474097]
 script = ExtResource("1_f10bb")
 
 [node name="TileSets" type="Node" parent="." unique_id=541781352]
@@ -3317,7 +3317,7 @@ z_index = 1
 position = Vector2(216, 25)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=484531857]
-limit_left = -546
+limit_left = -441
 limit_top = -20
 limit_right = 1260
 limit_bottom = 678
@@ -3329,7 +3329,7 @@ autoplay = true
 [node name="level_change" type="Node" parent="." unique_id=1228703467]
 
 [node name="dungeon_exterior" type="Area2D" parent="level_change" unique_id=895367896]
-position = Vector2(-518, 362)
+position = Vector2(-445, 359)
 collision_mask = 3
 script = ExtResource("16_ycylx")
 

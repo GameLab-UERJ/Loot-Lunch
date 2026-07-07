@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://y2eqacu6sy16"]
+
+[ext_resource type="Script" uid="uid://ccwtxjj01gvtl" path="res://tests/levels/test_levels.gd" id="1_aaa80"]
+[ext_resource type="PackedScene" uid="uid://dkaytgmdhkghj" path="res://levels/dungeon_way/dungeon_way.tscn" id="2_nesdy"]
+
+[node name="TesteDungeonWay" type="Node2D" unique_id=1036297167]
+script = ExtResource("1_aaa80")
+
+[node name="DungeonWay" parent="." unique_id=309474097 instance=ExtResource("2_nesdy")]
+
+[connection signal="player_can_enter_dungeon_exterior" from="DungeonWay" to="." method="_on_player_can_enter_dungeon_exterior"]
+[connection signal="player_can_enter_external_house" from="DungeonWay" to="." method="_on_player_can_leave_house"]
+[connection signal="player_can_enter_shop" from="DungeonWay" to="." method="_on_player_can_enter_shop"]
