@@ -2,7 +2,7 @@ extends Node2D
 class_name Spawn
 
 
-signal spawned(creature : Character)
+signal spawned(spawned_creature : Character)
 
 
 @export var looping: bool = true

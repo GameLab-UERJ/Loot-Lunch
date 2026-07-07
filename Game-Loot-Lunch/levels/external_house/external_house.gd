@@ -5,8 +5,8 @@ signal player_can_enter_house
 signal stop_player_can_enter_house
 signal player_can_enter_left
 signal stop_player_can_enter_left
-signal player_can_enter_internal_dungeon
-signal stop_player_can_enter_internal_dungeon
+signal player_can_enter_combat_area
+signal stop_player_can_enter_combat_area
 
 
 @export var player_start_position : Marker2D
@@ -40,12 +40,12 @@ func _on_left_area_exited() -> void:
 	stop_player_can_enter_left.emit()
 
 
-func _on_internal_dungeon_area_entered() -> void:
-	player_can_enter_internal_dungeon.emit()
+func _on_combat_area_entered() -> void:
+	player_can_enter_combat_area.emit()
 
 
-func _on_internal_dungeon_exited() -> void:
-	stop_player_can_enter_internal_dungeon.emit()
+func _on_combat_area_exited() -> void:
+	stop_player_can_enter_combat_area.emit()
 
 
 func _on_rooster_sfx_finished() -> void:

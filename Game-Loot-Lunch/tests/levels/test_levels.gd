@@ -1,15 +1,14 @@
 extends Node2D
 
 
-var combat_zone : Node2D
-
-# Prelaod PauseMenu
 var pause_menu_scene: PackedScene = preload("uid://dng6eim1kbmhh")
 var pause_menu: PauseMenu
+
 
 @onready var inside_house: Node2D = get_node("InsideHouse") if self.has_node("InsideHouse") else null
 @onready var external_house: Node2D = get_node("ExternalHouse") if self.has_node("ExternalHouse") else null
 @onready var shop_room: Node2D = get_node("ShopRoom") if self.has_node("ShopRoom") else null
+@onready var combat_zone: Node2D = null
 @onready var dungeon_way: Node2D = get_node("DungeonWay") if self.has_node("DungeonWay") else null
 @onready var dungeon_exterior: Node2D = get_node("DungeonExterior") if self.has_node("DungeonExterior") else null
 @onready var internal_dungeon: Node2D = get_node("InternalDungeon") if self.has_node("InternalDungeon") else null
@@ -17,7 +16,6 @@ var pause_menu: PauseMenu
 @onready var audio_stream_player: AudioStreamPlayer = get_node("AudioStreamPlayer") if has_node("AudioStreamPlayer") else null
 
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	if not internal_dungeon:
 		internal_dungeon = load("uid://c4ofg67awv6jp").instantiate()
@@ -33,6 +31,8 @@ func _ready() -> void:
 		internal_dungeon = load("uid://y2eqacu6sy16").instantiate()
 	if not dungeon_way:
 		dungeon_way = load("uid://y2eqacu6sy16").instantiate()
+	if not combat_zone:
+		combat_zone = load("uid://d0pechf47plm7").instantiate()
 	
 	pause_game_menu()
 
@@ -102,6 +102,10 @@ func _on_player_can_leave_dungeon() -> void:
 	dungeon_exterior.get_node("DungeonExterior").player_start_position = dungeon_exterior.get_node("DungeonInteriorEntrance")
 	EasyTransition.transition_to_node(dungeon_exterior, 1.5, EasyTransition.TransitionAnim.FADE)
 
+
+func _on_player_can_enter_combat_area() -> void:
+	_on_change_scene()
+	EasyTransition.transition_to_node(combat_zone, 1.5, EasyTransition.TransitionAnim.FADE)
 
 
 func pause_game_menu() -> void:
