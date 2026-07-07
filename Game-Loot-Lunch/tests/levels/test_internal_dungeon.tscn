@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://c4ofg67awv6jp"]
+
+[ext_resource type="Script" uid="uid://ccwtxjj01gvtl" path="res://tests/levels/test_levels.gd" id="1_uo5fg"]
+[ext_resource type="PackedScene" uid="uid://hohn4nndy86x" path="res://levels/internal_dungeon/internal_dungeon.tscn" id="2_i0ger"]
+
+[node name="test_internal_dungeon" type="Node2D" unique_id=1545306284]
+script = ExtResource("1_uo5fg")
+
+[node name="internal_dungeon" parent="." unique_id=1644355751 instance=ExtResource("2_i0ger")]
+position = Vector2(1, 0)
