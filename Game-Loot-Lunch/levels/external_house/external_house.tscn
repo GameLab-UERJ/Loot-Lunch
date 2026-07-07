@@ -1091,7 +1091,7 @@ script = ExtResource("1_nflu1")
 z_index = 2
 position = Vector2(266.3762, 146.00002)
 
-[node name="ShopArea" parent="." unique_id=1781739067 instance=ExtResource("9_pfac8")]
+[node name="LeftArea" parent="." unique_id=1781739067 instance=ExtResource("9_pfac8")]
 z_index = 2
 position = Vector2(-36.869263, 308.93915)
 scale = Vector2(4, 4)
@@ -1235,8 +1235,8 @@ limit_bottom = 360
 
 [connection signal="interact_with_player" from="HouseArea" to="." method="_on_house_area_entered"]
 [connection signal="stop_interact_with_player" from="HouseArea" to="." method="_on_house_area_exited"]
-[connection signal="interact_with_player" from="ShopArea" to="." method="_on_shop_area_entered"]
-[connection signal="stop_interact_with_player" from="ShopArea" to="." method="_on_shop_area_exited"]
+[connection signal="interact_with_player" from="LeftArea" to="." method="_on_left_area_entered"]
+[connection signal="stop_interact_with_player" from="LeftArea" to="." method="_on_left_area_exited"]
 [connection signal="interact_with_player" from="CombatArea" to="." method="_on_internal_dungeon_area_entered"]
 [connection signal="stop_interact_with_player" from="CombatArea" to="." method="_on_internal_dungeon_exited"]
 [connection signal="finished" from="RoosterSfx" to="." method="_on_rooster_sfx_finished"]

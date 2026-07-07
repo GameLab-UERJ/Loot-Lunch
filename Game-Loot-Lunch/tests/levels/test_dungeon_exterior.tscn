@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://b4stndwimfym0"]
+
+[ext_resource type="Script" uid="uid://ccwtxjj01gvtl" path="res://tests/levels/test_levels.gd" id="1_61r6v"]
+[ext_resource type="PackedScene" uid="uid://b2dvhgedbkgtc" path="res://levels/external_dungeon/dungeon_exterior.tscn" id="2_8ynp5"]
+
+[node name="TestDungeonExterior" type="Node2D" unique_id=1021776087]
+script = ExtResource("1_61r6v")
+
+[node name="DungeonExterior" parent="." unique_id=503173019 node_paths=PackedStringArray("player_start_position", "internal_dungeon_entrance", "dungeon_way_entrance") instance=ExtResource("2_8ynp5")]
+player_start_position = NodePath("../PlayerStartPosition")
+internal_dungeon_entrance = NodePath("../DungeonInteriorEntrance")
+dungeon_way_entrance = NodePath("../DungeonWayEntrance")
+
+[node name="DungeonInteriorEntrance" type="Marker2D" parent="." unique_id=2103247671]
+position = Vector2(-1055, -772)
+
+[node name="DungeonWayEntrance" type="Marker2D" parent="." unique_id=1815269236]
+position = Vector2(786, 131)
+
+[node name="PlayerStartPosition" type="Marker2D" parent="." unique_id=791282461]
+position = Vector2(778.58246, 132.19978)
+
+[connection signal="player_can_enter_dungeon_way" from="DungeonExterior" to="." method="_on_player_can_enter_dungeon_way"]
+[connection signal="player_can_enter_internal_dungeon" from="DungeonExterior" to="." method="_on_player_can_enter_internal_dungeon"]
+[connection signal="player_can_enter_shop" from="DungeonExterior" to="." method="_on_player_can_enter_shop"]
