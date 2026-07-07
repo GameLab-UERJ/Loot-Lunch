@@ -25,7 +25,7 @@ func _process(_delta: float) -> void:
 
 
 func look_towards_movement() -> void:
-	if not look_to_movement:
+	if not look_to_movement or not entity.animated_sprite:
 		return
 	
 	if entity.velocity.x > 0:

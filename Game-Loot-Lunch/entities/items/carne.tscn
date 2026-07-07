@@ -5,6 +5,7 @@
 
 [node name="Carne" type="Sprite2D" unique_id=1998340507]
 physics_interpolation_mode = 2
+scale = Vector2(0.6, 0.6)
 texture = ExtResource("2_ao85l")
 region_enabled = true
 region_rect = Rect2(48, 260, 32, 32)

@@ -85,7 +85,6 @@ func _on_enabled_state_changed(from: Variant, to: Variant) -> void:
 func _on_enabled_machine_player_updated(state: Variant, _delta: Variant) -> void:
 	match state:
 		"Patrol":
-			print(global_position.distance_to(_patrol_marker.global_position))
 			if abs(global_position.distance_to(_patrol_marker.global_position)) < 5:
 				enabled_machine_player.finish_patrol()
 

@@ -26,7 +26,6 @@ func finish_patrol() -> void:
 
 
 func _on_transited(from: Variant, to: Variant) -> void:
-	print(from, " --> ", to)
 	match from:
 		"Alerted":
 			alerted_timer.stop()

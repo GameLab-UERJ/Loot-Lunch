@@ -44,6 +44,7 @@ func take_damage(damage: int, direction: Vector2, force: int) -> void:
 		died.emit()
 
 
+
 func start_invincibility() -> void:
 	is_invincible = true
 	await get_tree().create_timer(invencibility_time).timeout
