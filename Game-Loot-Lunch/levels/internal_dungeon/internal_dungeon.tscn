@@ -1823,7 +1823,7 @@ texture = ExtResource("7_efo6u")
 [sub_resource type="TileSet" id="TileSet_nhqbk"]
 sources/0 = SubResource("TileSetAtlasSource_3uuv1")
 
-[node name="internal_dungeon" type="Node2D" unique_id=1644355751]
+[node name="InternalDungeon" type="Node2D" unique_id=1644355751]
 script = ExtResource("1_efo6u")
 
 [node name="external_house" type="Area2D" parent="." unique_id=1549377531]
@@ -1934,3 +1934,4 @@ autoplay = true
 
 [connection signal="body_entered" from="external_house" to="external_house" method="_on_body_entered"]
 [connection signal="body_exited" from="external_house" to="external_house" method="_on_body_exited"]
+[connection signal="interact_with_player" from="external_house" to="." method="_on_external_house_interact_with_player"]
