@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://bl0yv22t4oyqx"]
+
+[ext_resource type="PackedScene" uid="uid://c58rbxt3e1aij" path="res://levels/test_floor.tscn" id="1_5o4wo"]
+[ext_resource type="PackedScene" uid="uid://3cgeew2m05mn" path="res://entities/player/player.tscn" id="2_evmeg"]
+[ext_resource type="PackedScene" uid="uid://dtgxgfm27ko5o" path="res://entities/enemies/tanajura/formigueiro.tscn" id="2_w2l0g"]
+[ext_resource type="AudioStream" uid="uid://huj0511vq4kh" path="res://assets/music/montogoronto-ominousdark-medievalfantasy-song-309510.mp3" id="4_5yqos"]
+
+[node name="ZonaDeTeste" type="Node2D" unique_id=387460330]
+
+[node name="Floor" parent="." unique_id=1383934597 instance=ExtResource("1_5o4wo")]
+
+[node name="Formigueiro" parent="." unique_id=352992596 instance=ExtResource("2_w2l0g")]
+position = Vector2(256, 109)
+
+[node name="Player" parent="." unique_id=1426255313 instance=ExtResource("2_evmeg")]
+position = Vector2(57, 110)
+motion_mode = 1
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=384630202]
+limit_left = 0
+limit_top = 0
+limit_right = 480
+limit_bottom = 270
+
+[node name="MusicStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=17724071]
+stream = ExtResource("4_5yqos")
+volume_db = -15.0
+autoplay = true
