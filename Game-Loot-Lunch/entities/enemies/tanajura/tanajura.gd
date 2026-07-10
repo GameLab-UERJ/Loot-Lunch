@@ -2,8 +2,9 @@ extends Enemy
 class_name Tanajura
 
 
-@export var idle_time: float = 10.0
-@export var alert_time: float = 3.0
+@export var idle_time: float = 5.0
+@export var alert_time: float = 1.0
+@export_range (3.0, 5.0, 0.1, "or_greater", "hide_slider" ) var hidden_time_max: float
 
 
 var tween: Tween
@@ -11,24 +12,27 @@ var angle: float
 var radius: float
 var states_timer: Timer
 var states_timer_pause: bool = false
-var targets: Array[Node2D]
+var alert : bool = false
 
 
 @onready var movement_component: MovementComponent = $MovementComponent
-@onready var item_drop_component: ItemDropComponent = $ItemDropComponent
 @onready var chase_component: ChaseComponent = $ChaseComponent
+@onready var flip_sprite_component: FlipSpriteComponent = $FlipSpriteComponent
+@onready var drop_component: DropComponent = $DropComponent
 @onready var formigueiro: Spawn = get_parent() if get_tree().current_scene.has_node("Formigueiro") else null
 @onready var territory: Area2D = $Territory
 @onready var state_machine: Node = $FiniteStateMachine
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 
-
 func _ready() -> void:
+	flip_sprite_component.originally_looks_right = false
+	
 	states_timer = Timer.new()
 	states_timer.one_shot = true
 	add_child(states_timer)
-	chase_component.chased_node = player
+	
+	hidden_move()
 
 
 func damage_taken_animation() -> void:
@@ -43,44 +47,58 @@ func damage_taken_animation() -> void:
 
 
 func idle_state() -> void:
-	states_timer.stop()
-	states_timer.wait_time = idle_time
-	states_timer.start()
+	states_timer.start(idle_time)
 
 
 func alert_state() -> void:
-	states_timer.stop()
-	states_timer.wait_time = alert_time
-	states_timer.start()
+	states_timer.start(alert_time)
+
+
+func hidden_state() -> void:
+	states_timer.start(randf_range(2.0, hidden_time_max))
+
+
+func dead_state() -> void:
+	drop_component.drop_items()
+	flip_sprite_component.disable()
+	formigueiro.creature_counter -= 1
 
 
 func hidden_move() -> void:
 	if formigueiro:
 		angle = randf_range(0.0, TAU)
-		radius = randf_range(0, formigueiro.collision_shape.shape.radius)
-		
-		position += Vector2(cos(angle), sin(angle)) * radius
+		radius = randi_range(0, formigueiro.collision_shape.shape.radius)
+		position = Vector2(cos(angle), sin(angle)) * radius
 
 
-func _on_territory_body_entered(body: Node2D) -> void:
+func _on_territory_body_entered(_body: Node2D) -> void:
 	if !state_machine.states["chase"] == state_machine.state:
-		targets.append(body)
-		state_machine.set_state(state_machine.states.alert)
+		alert = true
+		flip_sprite_component.node_to_face = chase_component.chased_node
 
 
-func _on_territory_body_exited(body: Node2D) -> void:
+func _on_territory_body_exited(_body: Node2D) -> void:
 	if !state_machine.states["chase"] == state_machine.state:
-		targets.erase(body)
+		alert = false
+		flip_sprite_component.node_to_face = null
 
 
 func _on_chase_component_next_chase_point_set(next_point: Vector2) -> void:
-	print(rad_to_deg(next_point.angle()))
-	movement_component.move(next_point)
+		if !player:
+			return
+		
+		if !player.is_invincible:
+			movement_component.move(next_point)
 
 
 func _on_got_hurt() -> void:
-	damage_taken_animation()
+	state_machine.set_state(state_machine.states.hurt)
 
 
 func _on_died() -> void:
 	state_machine.set_state(state_machine.states.dead)
+
+
+func _on_chase_component_there_is_no_player() -> void:
+	alert = false
+	state_machine.set_state(state_machine.states.idle)

@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://b3tuaq1lu3ugj"]
 
-[ext_resource type="Script" uid="uid://bb2btpjrjma6p" path="res://entities/enemies/tanajura/tanajura.gd" id="1_nky4c"]
+[ext_resource type="Script" uid="uid://bb2btpjrjma6p" path="res://entities/enemies/tanajura/tanajura.gd" id="1_skdo7"]
+[ext_resource type="Script" uid="uid://bp37504prfie7" path="res://entities/base_classes/components/drop_component.gd" id="1_ux6ux"]
 [ext_resource type="Script" uid="uid://b6pi6asqtohi8" path="res://entities/enemies/tanajura/fsm/tanajura_fsm.gd" id="2_0kft3"]
 [ext_resource type="Texture2D" uid="uid://bufbgi0hy3njj" path="res://assets/art/entities/enemies/tanajura/Ants.png" id="3_6fjs1"]
 [ext_resource type="Script" uid="uid://bt5jjpnkd7ps" path="res://entities/base_classes/components/movement_component.gd" id="3_58sov"]
@@ -8,18 +9,8 @@
 [ext_resource type="Script" uid="uid://d304wrj33k44u" path="res://entities/base_classes/components/chase_component.gd" id="3_xwxu3"]
 [ext_resource type="Texture2D" uid="uid://d37adm8n6u1qm" path="res://assets/art/entities/enemies/tanajura/pipo-popupemotes004.png" id="4_6fjs1"]
 [ext_resource type="Script" uid="uid://bi7fdvl4vpp7o" path="res://systems/hitbox/hitbox_component.gd" id="4_58sov"]
-[ext_resource type="Texture2D" uid="uid://cic1n8jgv11hx" path="res://assets/art/entities/enemies/flying_eye/enemy_afterdead_explosion_anim_spritesheet.png" id="7_5tt6u"]
 [ext_resource type="Texture2D" uid="uid://bdnrulown63qs" path="res://assets/art/entities/enemies/tanajura/directional_smoke_burst_001_large_white.png" id="7_58sov"]
-[ext_resource type="Script" uid="uid://6qlaplxo126d" path="res://systems/item_drop/item_drop_component.gd" id="9_ux6ux"]
-[ext_resource type="Script" uid="uid://d36c7n3bdsn66" path="res://systems/item_drop/drop_data.gd" id="10_skdo7"]
-[ext_resource type="PackedScene" uid="uid://cexct4fg71pc5" path="res://entities/items/carne.tscn" id="11_ipcwl"]
-
-[sub_resource type="Resource" id="Resource_exli5"]
-script = ExtResource("10_skdo7")
-item = ExtResource("11_ipcwl")
-probability = 100.0
-max_amount = 4
-metadata/_custom_type_script = "uid://d36c7n3bdsn66"
+[ext_resource type="PackedScene" uid="uid://de1twbxlhogew" path="res://entities/items/tanajura_body.tscn" id="7_ipcwl"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1i86u"]
 radius = 1.0
@@ -36,22 +27,6 @@ region = Rect2(32, 0, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_ux6ux"]
 atlas = ExtResource("4_6fjs1")
 region = Rect2(64, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_lruba"]
-atlas = ExtResource("7_5tt6u")
-region = Rect2(0, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vug8p"]
-atlas = ExtResource("7_5tt6u")
-region = Rect2(16, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_snybb"]
-atlas = ExtResource("7_5tt6u")
-region = Rect2(32, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_iiums"]
-atlas = ExtResource("7_5tt6u")
-region = Rect2(48, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_skdo7"]
 atlas = ExtResource("7_58sov")
@@ -151,23 +126,6 @@ animations = [{
 }],
 "loop": false,
 "name": &"alert",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lruba")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vug8p")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_snybb")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_iiums")
-}],
-"loop": true,
-"name": &"death_smoke",
 "speed": 5.0
 }, {
 "frames": [{
@@ -353,7 +311,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("CollisionShape2D:disabled")
+tracks/2/path = NodePath("BodyCollisionShape2D:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -365,7 +323,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("CollisionShape2D:shape")
+tracks/3/path = NodePath("BodyCollisionShape2D:shape")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -377,7 +335,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("CollisionShape2D:rotation")
+tracks/4/path = NodePath("BodyCollisionShape2D:rotation")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -401,7 +359,7 @@ tracks/5/keys = {
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("HitboxComponent/CollisionShape2D:shape")
+tracks/6/path = NodePath("HitboxComponent/HitboxCollisionShape2D:shape")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
@@ -413,7 +371,7 @@ tracks/6/keys = {
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("HitboxComponent/CollisionShape2D:rotation")
+tracks/7/path = NodePath("HitboxComponent/HitboxCollisionShape2D:rotation")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
@@ -425,7 +383,7 @@ tracks/7/keys = {
 tracks/8/type = "value"
 tracks/8/imported = false
 tracks/8/enabled = true
-tracks/8/path = NodePath("HitboxComponent/CollisionShape2D:disabled")
+tracks/8/path = NodePath("HitboxComponent/HitboxCollisionShape2D:disabled")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
@@ -509,7 +467,7 @@ tracks/14/keys = {
 tracks/15/type = "value"
 tracks/15/imported = false
 tracks/15/enabled = true
-tracks/15/path = NodePath("Territory/CollisionShape2D:disabled")
+tracks/15/path = NodePath("Territory/TerritoryCollisionShape2D:disabled")
 tracks/15/interp = 1
 tracks/15/loop_wrap = true
 tracks/15/keys = {
@@ -543,7 +501,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CollisionShape2D:disabled")
+tracks/1/path = NodePath("BodyCollisionShape2D:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -555,7 +513,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("CollisionShape2D:shape")
+tracks/2/path = NodePath("BodyCollisionShape2D:shape")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -567,7 +525,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("CollisionShape2D:rotation")
+tracks/3/path = NodePath("BodyCollisionShape2D:rotation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -579,7 +537,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("HitboxComponent/CollisionShape2D:disabled")
+tracks/4/path = NodePath("HitboxComponent/HitboxCollisionShape2D:disabled")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -591,7 +549,7 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("HitboxComponent/CollisionShape2D:shape")
+tracks/5/path = NodePath("HitboxComponent/HitboxCollisionShape2D:shape")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -714,7 +672,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("CollisionShape2D:disabled")
+tracks/2/path = NodePath("BodyCollisionShape2D:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -726,7 +684,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("CollisionShape2D:shape")
+tracks/3/path = NodePath("BodyCollisionShape2D:shape")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -738,7 +696,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("CollisionShape2D:rotation")
+tracks/4/path = NodePath("BodyCollisionShape2D:rotation")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -762,7 +720,7 @@ tracks/5/keys = {
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("HitboxComponent/CollisionShape2D:disabled")
+tracks/6/path = NodePath("HitboxComponent/HitboxCollisionShape2D:disabled")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
@@ -851,19 +809,19 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CollisionShape2D:disabled")
+tracks/1/path = NodePath("BodyCollisionShape2D:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.16666667),
+"times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [false, true]
+"values": [true, false]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("CollisionShape2D:shape")
+tracks/2/path = NodePath("BodyCollisionShape2D:shape")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -875,7 +833,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("CollisionShape2D:rotation")
+tracks/3/path = NodePath("BodyCollisionShape2D:rotation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -887,19 +845,19 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("HitboxComponent/CollisionShape2D:disabled")
+tracks/4/path = NodePath("HitboxComponent/HitboxCollisionShape2D:disabled")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.16666667),
+"times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [false, true]
+"values": [true, false]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("HitboxComponent/CollisionShape2D:shape")
+tracks/5/path = NodePath("HitboxComponent/HitboxCollisionShape2D:shape")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -995,7 +953,7 @@ tracks/12/keys = {
 tracks/13/type = "value"
 tracks/13/imported = false
 tracks/13/enabled = true
-tracks/13/path = NodePath("Territory/CollisionShape2D:disabled")
+tracks/13/path = NodePath("Territory/TerritoryCollisionShape2D:disabled")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/keys = {
@@ -1022,11 +980,11 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CollisionShape2D:disabled")
+tracks/1/path = NodePath("BodyCollisionShape2D:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.16666667),
+"times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -1034,7 +992,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("CollisionShape2D:shape")
+tracks/2/path = NodePath("BodyCollisionShape2D:shape")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -1046,7 +1004,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("CollisionShape2D:rotation")
+tracks/3/path = NodePath("BodyCollisionShape2D:rotation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -1058,11 +1016,11 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("HitboxComponent/CollisionShape2D:disabled")
+tracks/4/path = NodePath("HitboxComponent/HitboxCollisionShape2D:disabled")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.16666667),
+"times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -1070,7 +1028,7 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("HitboxComponent/CollisionShape2D:shape")
+tracks/5/path = NodePath("HitboxComponent/HitboxCollisionShape2D:shape")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -1166,7 +1124,7 @@ tracks/12/keys = {
 tracks/13/type = "value"
 tracks/13/imported = false
 tracks/13/enabled = true
-tracks/13/path = NodePath("Territory/CollisionShape2D:disabled")
+tracks/13/path = NodePath("Territory/TerritoryCollisionShape2D:disabled")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/keys = {
@@ -1195,7 +1153,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CollisionShape2D:disabled")
+tracks/1/path = NodePath("BodyCollisionShape2D:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -1207,7 +1165,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("CollisionShape2D:shape")
+tracks/2/path = NodePath("BodyCollisionShape2D:shape")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -1219,7 +1177,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("CollisionShape2D:rotation")
+tracks/3/path = NodePath("BodyCollisionShape2D:rotation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -1231,7 +1189,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("HitboxComponent/CollisionShape2D:disabled")
+tracks/4/path = NodePath("HitboxComponent/HitboxCollisionShape2D:disabled")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -1243,7 +1201,7 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("HitboxComponent/CollisionShape2D:shape")
+tracks/5/path = NodePath("HitboxComponent/HitboxCollisionShape2D:shape")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -1332,7 +1290,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("CollisionShape2D:disabled")
+tracks/2/path = NodePath("BodyCollisionShape2D:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -1344,7 +1302,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("CollisionShape2D:shape")
+tracks/3/path = NodePath("BodyCollisionShape2D:shape")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -1356,7 +1314,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("CollisionShape2D:rotation")
+tracks/4/path = NodePath("BodyCollisionShape2D:rotation")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -1380,7 +1338,7 @@ tracks/5/keys = {
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("HitboxComponent/CollisionShape2D:shape")
+tracks/6/path = NodePath("HitboxComponent/HitboxCollisionShape2D:shape")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
@@ -1392,7 +1350,7 @@ tracks/6/keys = {
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("HitboxComponent/CollisionShape2D:rotation")
+tracks/7/path = NodePath("HitboxComponent/HitboxCollisionShape2D:rotation")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
@@ -1404,7 +1362,7 @@ tracks/7/keys = {
 tracks/8/type = "value"
 tracks/8/imported = false
 tracks/8/enabled = true
-tracks/8/path = NodePath("HitboxComponent/CollisionShape2D:disabled")
+tracks/8/path = NodePath("HitboxComponent/HitboxCollisionShape2D:disabled")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
@@ -1465,14 +1423,13 @@ _data = {
 radius = 58.0
 
 [node name="Tanajura" type="CharacterBody2D" unique_id=522469435]
-z_index = 6
+scale = Vector2(0.8, 0.8)
 collision_layer = 4
 collision_mask = 5
-script = ExtResource("1_nky4c")
-idle_time = 6.0
-alert_time = 2.0
+script = ExtResource("1_skdo7")
+hidden_time_max = 5.0
 hp = 1
-max_speed = 50
+max_speed = 80
 
 [node name="FiniteStateMachine" type="Node" parent="." unique_id=1602560441]
 script = ExtResource("2_0kft3")
@@ -1490,17 +1447,20 @@ metadata/_custom_type_script = "uid://drgd63vqf1wbv"
 [node name="MovementComponent" type="Node" parent="." unique_id=688840110]
 script = ExtResource("3_58sov")
 
-[node name="ItemDropComponent" type="Node" parent="." unique_id=256246881]
-script = ExtResource("9_ux6ux")
-drops = Array[ExtResource("10_skdo7")]([SubResource("Resource_exli5")])
-metadata/_custom_type_script = "uid://6qlaplxo126d"
+[node name="DropComponent" type="Node" parent="." unique_id=738461834]
+script = ExtResource("1_ux6ux")
+item_scene = ExtResource("7_ipcwl")
+item_scale = Vector2(0.2, 0.2)
+metadata/_custom_type_script = "uid://bp37504prfie7"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=545309387]
+[node name="BodyCollisionShape2D" type="CollisionShape2D" parent="." unique_id=545309387]
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_1i86u")
+script = ExtResource("1_ux6ux")
 
 [node name="Reactions" type="AnimatedSprite2D" parent="." unique_id=1324587270]
 visible = false
+z_index = 1
 sprite_frames = SubResource("SpriteFrames_skdo7")
 animation = &"smoke"
 
@@ -1519,7 +1479,7 @@ collision_mask = 2
 script = ExtResource("4_58sov")
 metadata/_custom_type_script = "uid://bi7fdvl4vpp7o"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" unique_id=1375033281]
+[node name="HitboxCollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" unique_id=1375033281]
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_2jg7y")
 debug_color = Color(1, 0, 0, 0.41960785)
@@ -1528,11 +1488,12 @@ debug_color = Color(1, 0, 0, 0.41960785)
 collision_layer = 0
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Territory" unique_id=1275515670]
+[node name="TerritoryCollisionShape2D" type="CollisionShape2D" parent="Territory" unique_id=1275515670]
 shape = SubResource("CircleShape2D_0kft3")
 
 [connection signal="died" from="." to="." method="_on_died"]
 [connection signal="got_hurt" from="." to="." method="_on_got_hurt"]
 [connection signal="next_chase_point_set" from="ChaseComponent" to="." method="_on_chase_component_next_chase_point_set"]
+[connection signal="there_is_no_player" from="ChaseComponent" to="." method="_on_chase_component_there_is_no_player"]
 [connection signal="body_entered" from="Territory" to="." method="_on_territory_body_entered"]
 [connection signal="body_exited" from="Territory" to="." method="_on_territory_body_exited"]
