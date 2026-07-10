@@ -47,21 +47,13 @@ func _process(delta: float) -> void:
 
 
 func _on_day_started() -> void:
-	if !EnvironmentManager.is_outdoor:
-		return
-	
 	_target_color = day_color
-
 	_day_target_volume = 0.0
 	_night_target_volume = -40.0
 
 
 func _on_night_started() -> void:
-	if !EnvironmentManager.is_outdoor:
-		return
-
 	_target_color = night_color
-
 	_day_target_volume = -40.0
 	_night_target_volume = 0.0
 
