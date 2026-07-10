@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://6iuhjfwsyhtx"]
+
+[ext_resource type="Texture2D" uid="uid://2ruw5eys7oow" path="res://assets/art/entities/items/plants.png" id="1_bxvcr"]
+[ext_resource type="Script" uid="uid://b5guea8isyduk" path="res://tests/plantacao/tomate.gd" id="2_p55gu"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tvbit"]
+
+[node name="Area2D" type="Area2D" unique_id=1453568913]
+script = ExtResource("2_p55gu")
+
+[node name="Item" type="Sprite2D" parent="." unique_id=666789344 groups=["itens_dropados"]]
+position = Vector2(0, -11)
+texture = ExtResource("1_bxvcr")
+hframes = 9
+vframes = 8
+frame = 63
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=667255938]
+shape = SubResource("CircleShape2D_tvbit")

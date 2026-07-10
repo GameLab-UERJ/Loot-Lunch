@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://cbahmti4ntpnb"]
+
+[ext_resource type="Script" uid="uid://cse8iww8eft88" path="res://tests/plantacao/semente_tomate.gd" id="1_csvmo"]
+[ext_resource type="Texture2D" uid="uid://cg6mxda0shilo" path="res://assets/art/entities/items/semente_tomate.png" id="1_gkp0s"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_csvmo"]
+radius = 4.1231055
+
+[node name="semente_tomate" type="Area2D" unique_id=1459577133]
+script = ExtResource("1_csvmo")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=207467063]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("1_gkp0s")
+offset = Vector2(95, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=393615021]
+shape = SubResource("CircleShape2D_csvmo")

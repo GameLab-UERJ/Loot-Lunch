@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://dbjrwi3mnwdow"]
+
+[ext_resource type="Texture2D" uid="uid://2ruw5eys7oow" path="res://assets/art/entities/items/plants.png" id="1_tq6jy"]
+[ext_resource type="Script" uid="uid://dbeebsvyxaef6" path="res://tests/plantacao/pimentao.gd" id="2_tq6jy"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_elcvw"]
+
+[node name="Area2D" type="Area2D" unique_id=1360775953]
+script = ExtResource("2_tq6jy")
+
+[node name="Item" type="Sprite2D" parent="." unique_id=221087613 groups=["itens_dropados"]]
+position = Vector2(0, -14)
+texture = ExtResource("1_tq6jy")
+hframes = 7
+vframes = 7
+frame = 45
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=495363921]
+shape = SubResource("CircleShape2D_elcvw")

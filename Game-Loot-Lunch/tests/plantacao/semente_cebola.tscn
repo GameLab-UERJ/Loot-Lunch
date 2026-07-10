@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://cneblt2yatqn0"]
+
+[ext_resource type="Script" uid="uid://dwbt3bb5bd8v1" path="res://tests/plantacao/semente_cebola.gd" id="1_1wklf"]
+[ext_resource type="Texture2D" uid="uid://pir0h1fxpdbl" path="res://assets/art/entities/items/semente_cebola.png" id="1_xxy5d"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1wklf"]
+radius = 6.3245554
+
+[node name="semente_cebola" type="Area2D" unique_id=421997841]
+script = ExtResource("1_1wklf")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=55216907]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("1_xxy5d")
+offset = Vector2(95, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=780074094]
+position = Vector2(0, 1)
+shape = SubResource("CircleShape2D_1wklf")
