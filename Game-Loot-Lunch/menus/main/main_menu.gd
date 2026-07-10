@@ -12,6 +12,8 @@ extends Control
 ## [b]Se vazio:[/b] O jogo fecha imediatamente após o clique.
 @export var press_sound: AudioStream
 
+@export var is_outdoor: bool = false
+
 var is_quitting: bool = false
 
 var save_load_menu: SaveLoadMenu
@@ -27,6 +29,7 @@ var save_load_scene: PackedScene = preload("res://menus/saver_loader/save_load_m
 
 
 func _ready() -> void:
+	EnvironmentManager.is_outdoor = is_outdoor
 	hover_audio.stream = hover_sound
 	press_audio.stream = press_sound
 

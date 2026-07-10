@@ -26,6 +26,7 @@ SaveLoadManager="*uid://bi06j1t67d10f"
 EasyTransition="*uid://cq0t7o8xelk4k"
 DayNightCycle="*uid://yr26mvbasy76"
 PlayerWallet="*uid://bs1b836vdqxr4"
+EnvironmentManager="*uid://cx07gbanpuo6o"
 
 [debug]
 
