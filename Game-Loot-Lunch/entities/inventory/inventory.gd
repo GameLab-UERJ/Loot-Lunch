@@ -51,15 +51,7 @@ func _process(_delta: float) -> void:
 
 
 
-func _gui_input(event: InputEvent) -> void:
-	if not event is InputEventMouseButton:
-		return
-	if not selected_cell:
-		return
-	
-	if event.is_action_released("right_click"):
-		if selected_cell:
-			drop_selected_item()
+
 
 
 func set_dimensions(value : Vector2i) -> void:
@@ -243,6 +235,9 @@ func add_item(item: Item) -> void:
 	if not item:
 		return
 	
+	# Se tem item carregado, restaura antes pra não duplicar
+	_restore_selected()
+	
 	var stack_comp = item.get_node("StackableComponent") if item.has_node("StackableComponent") else null
 	
 	if stack_comp:
@@ -281,18 +276,21 @@ func drop_selected_item() -> void:
 	
 	if not node_to_drop:
 		push_error("No node_to_drop set. Cannot drop item.")
-		if selected_cell.item:
-			selected_cell.count += selected_count
-			selected_item.queue_free()
-		else:
-			selected_cell.set_item(selected_item)
-			selected_cell.count = selected_count
-		_cleanup_selection()
+		_restore_selected()
 		return
 	
 	selected_cell.is_selected = false
-	selected_item.global_position = node_to_drop.global_position
-	selected_item.show()
+	
+	if selected_cell.item:
+		# Duplicado (pickup parcial / split): tira do stack e dropa no mundo
+		selected_cell.count -= selected_count
+		selected_item.reparent(get_tree().current_scene)
+		selected_item.global_position = node_to_drop.global_position
+	else:
+		# Item real (pickup total): reposiciona no mundo
+		selected_item.global_position = node_to_drop.global_position
+		selected_item.show()
+	
 	selected_item.force_stop_follow_mouse()
 	selected_item.top_level = false
 	selected_item.z_index = 0
