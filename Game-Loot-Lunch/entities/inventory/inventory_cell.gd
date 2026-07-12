@@ -5,6 +5,7 @@ class_name InventoryCell
 signal selected(cell : InventoryCell)
 signal wants_item_removed(cell : InventoryCell)
 signal left_clicked(cell : InventoryCell)
+signal split_stack(cell : InventoryCell, half : int)
 
 
 @export var item : Item:
@@ -15,17 +16,23 @@ signal left_clicked(cell : InventoryCell)
 
 var is_selected : bool = false:
 	set = set_is_selected
+## Quantas unidades deste item estão nesta célula.
+## Para itens não-stackáveis, sempre 1.
+var count : int = 1:
+	set = set_count
 
 
 @onready var item_place: TextureRect = $Panel/ItemPlace
 @onready var price_label: Label = $Panel/PriceLabel
+@onready var stack_label: Label = $Panel/StackCount
 
 
 func _ready() -> void:
 	item = item
-	add_theme_stylebox_override("panel",StyleBoxFlat.new())
+	add_theme_stylebox_override("panel", StyleBoxFlat.new())
 	_change_bg_color(background_color)
 	set_price_text("")
+	_update_stack_label()
 
 
 func _process(_delta: float) -> void:
@@ -33,15 +40,22 @@ func _process(_delta: float) -> void:
 		_change_bg_color(selected_color)
 	if not is_selected and _get_bg_color() == selected_color:
 		_change_bg_color(background_color)
-	
+
 
 func _gui_input(event: InputEvent) -> void:
 	if event.is_action_released("left_click"):
 		left_clicked.emit(self)
 	if event.is_action_released("right_click"):
-		wants_item_removed.emit(self)
+		if item and _is_stackable() and count > 1:
+			var half : int = count / 2
+			if half > 0:
+				split_stack.emit(self, half)
+		else:
+			wants_item_removed.emit(self)
 
 
+## Remove o Item Node da célula e limpa o visual (count vira 0).
+## Usado para remoção completa (não-stackável ou stack inteiro).
 func remove_item(new_parent : Node = null, _show : bool = true) -> Item:
 	if not new_parent:
 		new_parent = get_tree().current_scene
@@ -50,12 +64,41 @@ func remove_item(new_parent : Node = null, _show : bool = true) -> Item:
 		return null
 	var removed_item : Item = item
 	item = null
-	removed_item.call_deferred("reparent",new_parent)
+	removed_item.call_deferred("reparent", new_parent)
 	if _show: 
 		removed_item.show()
 	else:
 		removed_item.hide()
 	return removed_item
+
+
+## Remove o Item Node da célula mas MANTÉM o visual (textura + count).
+## Usado quando vc pega 1 unidade de um stack — a célula continua
+## mostrando o ícone e o número de unidades restantes.
+func remove_item_for_stack(new_parent: Node = null) -> Item:
+	if not new_parent:
+		new_parent = get_tree().current_scene
+	if not item:
+		return null
+	var removed: Item = item
+	item = null
+	removed.call_deferred("reparent", new_parent)
+	removed.show()
+	removed.force_stop_follow_mouse()
+	removed.top_level = false
+	removed.z_index = 0
+	removed.position = Vector2.ZERO
+	return removed
+
+
+func is_stackable() -> bool:
+	return _is_stackable()
+
+
+func _is_stackable() -> bool:
+	if not item:
+		return false
+	return item.has_node("StackableComponent")
 
 
 func set_is_selected(value : bool) -> void:
@@ -68,8 +111,10 @@ func set_item(value : Item) -> Item:
 	var previous_item : Item = item
 	item = value
 	if not item:
-		item_place.texture = null
-		set_price_text("")
+		if count <= 0:
+			item_place.texture = null
+			set_price_text("")
+		_update_stack_label()
 		return null
 	elif not item.region_enabled:
 		item_place.texture = item.texture
@@ -84,7 +129,23 @@ func set_item(value : Item) -> Item:
 	value.z_index = 0
 	value.position = Vector2.ZERO
 	value.call_deferred("reparent", self)
+	count = 1
 	return previous_item
+
+
+func set_count(value : int) -> void:
+	count = max(0, value)
+	_update_stack_label()
+
+
+func _update_stack_label() -> void:
+	if not is_inside_tree():
+		return
+	if _is_stackable() and count > 1:
+		stack_label.text = str(count)
+		stack_label.show()
+	else:
+		stack_label.hide()
 
 
 func set_price_text(value : String, color : Color = Color.WHITE) -> void:

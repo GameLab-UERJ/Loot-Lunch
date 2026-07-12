@@ -23,6 +23,10 @@ signal cell_left_clicked(cell : InventoryCell)
 
 var selected_cell : InventoryCell
 var selected_item : Item
+## Quantas unidades do item estão atualmente selecionadas/seguindo o mouse.
+## Para não-stackáveis ou full-stack, = cell.count original.
+## Para pick-up parcial (1 unidade de um stack), = 1.
+var selected_count : int = 0
 var selected_pos : Vector2i:
 	get = get_selected_pos
 
@@ -33,6 +37,8 @@ var selected_pos : Vector2i:
 
 func _ready() -> void:
 	dimensions = dimensions
+	for cell: InventoryCell in grid.get_children():
+		cell.split_stack.connect(_handle_split_stack)
 
 
 func _gui_input(event: InputEvent) -> void:
@@ -43,7 +49,8 @@ func _gui_input(event: InputEvent) -> void:
 	
 	if event.is_action_released("right_click"):
 		if selected_cell:
-			handle_new_selected_cell(null)
+			drop_selected_item()
+
 
 func set_dimensions(value : Vector2i) -> void:
 	if not value or not(value.x != 0 and value.y != 0):
@@ -58,6 +65,7 @@ func set_dimensions(value : Vector2i) -> void:
 			cell = INVENTORY_CELL.instantiate()
 			cell.left_clicked.connect(handle_cell_left_clicked)
 			cell.wants_item_removed.connect(handle_wants_item_removed)
+			cell.split_stack.connect(_handle_split_stack)
 			grid.add_child(cell)
 		call_deferred("remove_empty_cells",grid.get_child_count()-dimensions.x * dimensions.y)
 
@@ -68,13 +76,73 @@ func handle_cell_left_clicked(cell : InventoryCell) -> void:
 		handle_new_selected_cell(cell)
 
 
+## Troca o item entre selected_cell e a célula do parâmetro,
+## fazendo merge se forem do mesmo tipo stackável.
+func _swap_or_merge(source: InventoryCell, target: InventoryCell) -> void:
+	var source_item: Item = selected_item
+	var source_count: int = selected_count
+	
+	if not source_item:
+		push_warning("No item to place")
+		return
+	
+	# Merge: mesmo tipo e stackável e com espaço
+	if target.item and target.item.item_name == source_item.item_name and target.is_stackable():
+		var stack_comp = target.item.get_node("StackableComponent")
+		if not stack_comp:
+			# Fallback: swap normal
+			_do_swap(source, target, source_item, source_count)
+			return
+		var space = stack_comp.stack_size - target.count
+		if space > 0:
+			var move = mini(source_count, space)
+			target.count += move
+			source_count -= move
+			
+			if source_count <= 0:
+				source.count = 0
+				source.is_selected = false
+				source.item = null
+				selected_cell = null
+				selected_item = null
+				selected_count = 0
+				source_item.queue_free()
+				return
+			else:
+				# Ainda sobrou unidade na mão — mantém seleção
+				selected_count = source_count
+				source.is_selected = false
+				return
+		# Sem espaço, cai no swap normal
+	
+	# Swap normal (ou target com tipo diferente)
+	_do_swap(source, target, source_item, source_count)
+
+
+func _do_swap(source: InventoryCell, target: InventoryCell, source_item: Item, source_count: int) -> void:
+	var target_item: Item = target.item
+	var target_count: int = target.count
+	
+	target.item = source_item
+	target.count = source_count
+	
+	source.item = target_item
+	source.count = target_count
+	
+	source.is_selected = false
+	target.is_selected = false
+	selected_cell = null
+	selected_item = null
+	selected_count = 0
+
+
 ## Returns an array with the references of all empty cells
 ## [br]
 ## if 'first' is true, returns as soon as it finds one
 func find_empty_cells(first : bool = false) -> Array[InventoryCell]:
 	var result : Array[InventoryCell] = []
 	for cell : InventoryCell in grid.get_children():
-		if not cell.item:
+		if not cell.item and cell.count <= 0:
 			result.append(cell)
 			if first:
 				break
@@ -107,12 +175,15 @@ func handle_wants_item_removed(cell : InventoryCell) -> void:
 	else:
 		push_error("Node where to drop items is not set. Dropped at position zero of ",item.get_parent())
 
+
 func handle_new_selected_cell(cell : InventoryCell) -> void:
 	if not cell:
+		# Chamado com null = cancelar/deselect (retorna item pra célula)
 		set_selected_cell(null)
 		return
 	
 	if not selected_cell:
+		# Nada selecionado ainda — tenta selecionar esta célula
 		if not cell.item:
 			cell.is_selected = false
 			return
@@ -120,21 +191,39 @@ func handle_new_selected_cell(cell : InventoryCell) -> void:
 		return
 	
 	if selected_cell == cell:
-		handle_new_selected_cell(null)
+		# Clicou na mesma célula = deselect (retorna o item)
+		set_selected_cell(null)
 		return
-		
-	selected_cell.item = cell.item
-	cell.item = selected_item
-
-	cell.is_selected = false
-	selected_cell.is_selected = false
-	selected_cell = null
-	selected_item = null
+	
+	# Tem um item selecionado e clicou em outra célula
+	_swap_or_merge(selected_cell, cell)
 
 
+## Adiciona um Item ao inventário.
+## Se o item for stackável, tenta empilhar em células existentes
+## do mesmo tipo antes de colocar numa célula vazia.
 func add_item(item : Item) -> void:
-	var cell : InventoryCell = find_empty_cells(true)[0]
+	if not item:
+		return
+	
+	var stack_comp = item.get_node("StackableComponent") if item.has_node("StackableComponent") else null
+	
+	if stack_comp:
+		# Tenta empilhar em célula existente do mesmo tipo
+		for cell: InventoryCell in grid.get_children():
+			if cell.item and cell.item.item_name == item.item_name and cell.count < stack_comp.stack_size:
+				cell.count += 1
+				item.queue_free()
+				return
+	
+	# Se não conseguiu empilhar, coloca em célula vazia
+	var empty = find_empty_cells(true)
+	if empty.is_empty():
+		push_warning("Inventory is full!")
+		return
+	var cell = empty[0]
 	cell.set_item(item)
+	cell.count = 1
 
 
 func remove_item() -> Item:
@@ -143,26 +232,88 @@ func remove_item() -> Item:
 	return null
 
 
+## Cancela a seleção e retorna o item para a célula de origem.
 func cancel_selected_item() -> void:
 	if selected_cell:
 		handle_new_selected_cell(null)
 
 
+## Remove o item selecionado do inventário e dropa no node_to_drop.
+func drop_selected_item() -> void:
+	if not selected_cell or not selected_item:
+		return
+	
+	selected_cell.is_selected = false
+	
+	if node_to_drop:
+		selected_item.global_position = node_to_drop.global_position
+	selected_item.show()
+	selected_item.force_stop_follow_mouse()
+	selected_item.top_level = false
+	selected_item.z_index = 0
+	
+	selected_cell = null
+	selected_item = null
+	selected_count = 0
+
+
 func set_selected_cell(value : InventoryCell) -> void:
+	# Devolve item da célula anterior (se houver)
 	if selected_cell:
 		selected_cell.is_selected = false
-		selected_cell.set_item(selected_item)
-		selected_item = null
+		if selected_item:
+			selected_cell.set_item(selected_item)
+			selected_cell.count += selected_count
+			selected_item = null
+		selected_count = 0
+	
 	selected_cell = value
 	if not selected_cell:
 		selected_item = null
 		return
-	if selected_cell.item:
+	
+	# Pega o item da nova célula
+	if not selected_cell.item:
+		selected_item = null
+		return
+	
+	var is_stackable = selected_cell.is_stackable()
+	var cell_count = selected_cell.count
+	
+	# Se for stackável, count > 1 e NÃO segurou Shift → pega só 1 unidade
+	if is_stackable and cell_count > 1 and not Input.is_key_pressed(KEY_SHIFT):
+		selected_count = 1
+		selected_cell.count -= 1
+		selected_item = selected_cell.remove_item_for_stack(self)
+	else:
+		# Pega o stack inteiro
+		selected_count = cell_count
+		selected_cell.count = 0
 		selected_item = selected_cell.remove_item(self)
+	
+	if selected_item:
 		selected_item.top_level = true
 		selected_item.z_index = 100
 		selected_item.force_follow_mouse()
-		pass
+
+
+func _handle_split_stack(cell: InventoryCell, half: int) -> void:
+	if selected_cell or not cell.item:
+		return
+	if half <= 0 or half >= cell.count:
+		return
+	
+	cell.count -= half
+	
+	# Pega o Item da célula e carrega metade do stack
+	selected_item = cell.remove_item_for_stack(self)
+	selected_cell = cell
+	selected_count = half
+	
+	if selected_item:
+		selected_item.top_level = true
+		selected_item.z_index = 100
+		selected_item.force_follow_mouse()
 
 
 func get_selected_pos() -> Vector2i:
@@ -172,8 +323,6 @@ func get_selected_pos() -> Vector2i:
 		selected_pos = Vector2i.MIN
 	return selected_pos
 
-
-# TODO all those functions should be in a InventoryGrid class to modularize.
 
 func get_cell(pos : Vector2i) -> InventoryCell:
 	if pos.x >= dimensions.x or pos.y >= dimensions.y:
