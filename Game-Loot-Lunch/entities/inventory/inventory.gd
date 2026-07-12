@@ -221,14 +221,15 @@ func handle_wants_item_removed(cell: InventoryCell) -> void:
 	if not cell.item:
 		return
 	
+	if not node_to_drop:
+		push_error("No node_to_drop set. Cannot remove item from inventory.")
+		return
+	
 	# Restaura item carregado primeiro
 	_restore_selected()
 	
 	var item: Item = remove_item_at(get_pos(cell))
-	if node_to_drop:
-		item.global_position = node_to_drop.global_position
-	else:
-		push_error("Node where to drop items is not set. Dropped at position zero of ", item.get_parent())
+	item.global_position = node_to_drop.global_position
 
 
 func add_item(item: Item) -> void:
