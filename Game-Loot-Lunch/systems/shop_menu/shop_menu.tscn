@@ -80,7 +80,8 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(110, 138)
 layout_mode = 2
 size_flags_horizontal = 4
-can_move_items = false
+can_move_items = true
+can_drop_items = false
 
 [node name="TransferBox" type="VBoxContainer" parent="Panel/VBoxContainer/Inventories" unique_id=618513615]
 layout_mode = 2
@@ -98,6 +99,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 dimensions = Vector2i(3, 2)
 can_move_items = false
+can_drop_items = false
 
 [node name="ShopBox" type="VBoxContainer" parent="Panel/VBoxContainer/Inventories" unique_id=1482637626]
 layout_mode = 2
@@ -114,6 +116,7 @@ custom_minimum_size = Vector2(110, 138)
 layout_mode = 2
 size_flags_horizontal = 4
 can_move_items = false
+can_drop_items = false
 
 [connection signal="pressed" from="Panel/VBoxContainer/Buttons/BuyButton" to="." method="_on_buy_button_pressed"]
 [connection signal="pressed" from="Panel/VBoxContainer/Buttons/SellButton" to="." method="_on_sell_button_pressed"]

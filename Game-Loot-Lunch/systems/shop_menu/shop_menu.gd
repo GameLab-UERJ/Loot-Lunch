@@ -94,9 +94,15 @@ func fill_player_inventory() -> void:
 		if cell.item:
 			var item_copy: Item = create_item_copy(cell.item)
 			if item_copy:
-				player_inventory.add_item(item_copy)
-				player_item_copies[item_copy] = cell.item
-				set_item_price_text(player_inventory, item_copy, get_sell_price(cell.item), Color.RED)
+				item_copy.hide()
+				add_child(item_copy)
+				var empty: Array[InventoryCell] = player_inventory.find_empty_cells(true)
+				if not empty.is_empty():
+					var target: InventoryCell = empty[0]
+					target.set_item(item_copy)
+					target.count = cell.count
+					player_item_copies[item_copy] = cell.item
+					set_item_price_text(player_inventory, item_copy, get_sell_price(cell.item), Color.RED)
 
 
 func start_buy_mode() -> void:
@@ -215,13 +221,16 @@ func add_shop_item_to_transfer(item: Item) -> void:
 		message_label.text = "Gold insuficiente"
 		return
 
+	if not can_add_buy_item(item):
+		message_label.text = "Inventário cheio"
+		return
+
+	if not can_add_to_transfer(item):
+		message_label.text = "Transferência cheia"
+		return
+
 	var new_item: Item = current_shop.create_item(item_scene)
 	add_child(new_item)
-
-	if not can_add_buy_item(new_item):
-		message_label.text = "Inventário cheio"
-		new_item.queue_free()
-		return
 
 	var is_stackable = new_item.has_node("StackableComponent")
 	var stacked_in_transfer = false
@@ -252,6 +261,9 @@ func add_player_item_to_transfer(cell: InventoryCell) -> void:
 		return
 	if mode == ShopMode.NONE:
 		start_sell_mode()
+
+	if player_inventory.selected_item:
+		player_inventory.cancel_selected_item()
 
 	var visual_item: Item = cell.item
 	var real_item: Item = player_item_copies.get(visual_item)
@@ -293,6 +305,10 @@ func remove_real_player_item(item_to_remove: Item) -> void:
 
 
 func _on_transfer_inventory_cell_left_clicked(cell: InventoryCell) -> void:
+	if player_inventory.selected_item:
+		accept_split_for_sell()
+		return
+
 	if not cell.item:
 		return
 
@@ -300,6 +316,59 @@ func _on_transfer_inventory_cell_left_clicked(cell: InventoryCell) -> void:
 		undo_buy_item(cell)
 	elif mode == ShopMode.SELL:
 		undo_sell_item(cell)
+
+
+func accept_split_for_sell() -> void:
+	if mode == ShopMode.BUY:
+		message_label.text = "Finalize ou saia da compra atual"
+		player_inventory._restore_selected()
+		return
+
+	var source: InventoryCell = player_inventory.selected_cell
+	var selected: Item = player_inventory.selected_item
+	var count: int = player_inventory.selected_count
+
+	if not source or not selected:
+		return
+
+	if mode == ShopMode.NONE:
+		start_sell_mode()
+
+	var real_item: Item = player_item_copies.get(selected)
+	if not real_item and source.item:
+		real_item = player_item_copies.get(source.item)
+
+	if not real_item:
+		player_inventory._cleanup_selection()
+		message_label.text = "Item não encontrado no inventário"
+		return
+
+	var price: int = get_sell_price(real_item)
+	if price < 0:
+		player_inventory._cleanup_selection()
+		message_label.text = "A loja não compra esse item"
+		return
+
+	selected.reparent(self)
+	selected.hide()
+	selected.top_level = false
+	selected.z_index = 0
+	selected.position = Vector2.ZERO
+
+	transfer_inventory.add_item(selected)
+
+	for c: InventoryCell in transfer_inventory.grid.get_children():
+		if c.item == selected:
+			c.count = count
+			break
+
+	sell_items[selected] = real_item
+	transfer_item_prices[selected] = price
+	set_item_price_text(transfer_inventory, selected, price * count, Color.RED)
+	total_price += price * count
+	update_total_message()
+
+	player_inventory._cleanup_selection()
 
 
 func undo_buy_item(cell: InventoryCell) -> void:
@@ -425,3 +494,18 @@ func can_add_buy_item(item_to_buy: Item = null) -> bool:
 			units_in_transfer += cell.count
 
 	return units_in_transfer < available_stack_space
+
+
+func can_add_to_transfer(item_to_check: Item) -> bool:
+	if count_empty_cells(transfer_inventory) > 0:
+		return true
+
+	if not item_to_check.has_node("StackableComponent"):
+		return false
+
+	var stack_comp = item_to_check.get_node("StackableComponent") as StackableComponent
+	for cell: InventoryCell in transfer_inventory.grid.get_children():
+		if cell.item and cell.item.item_name == item_to_check.item_name and cell.count < stack_comp.stack_size:
+			return true
+
+	return false

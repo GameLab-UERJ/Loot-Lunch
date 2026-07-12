@@ -16,6 +16,7 @@ signal cell_left_clicked(cell : InventoryCell)
 @export var node_to_drop : Node2D
 
 @export var can_move_items : bool = true
+@export var can_drop_items : bool = true
 
 
 var selected_cell : InventoryCell
@@ -37,6 +38,8 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
+	if not can_drop_items:
+		return
 	if not Input.is_action_just_released("right_click"):
 		return
 	if not selected_cell or not selected_item:
@@ -226,6 +229,9 @@ func remove_empty_cells(max_number: int) -> int:
 
 func handle_wants_item_removed(cell: InventoryCell) -> void:
 	if not cell.item:
+		return
+	
+	if not can_drop_items:
 		return
 	
 	if not node_to_drop:
