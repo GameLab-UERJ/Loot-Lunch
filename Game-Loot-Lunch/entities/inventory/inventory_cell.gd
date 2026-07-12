@@ -21,6 +21,11 @@ var is_selected : bool = false:
 var count : int = 0:
 	set = set_count
 
+## Cache: o Item que estava nesta célula era stackável?
+## Usado quando o Item é removido (pick-up parcial) mas count > 0,
+## pra não perder o label de quantidade.
+var _was_stackable: bool = false
+
 
 @onready var item_place: TextureRect = $Panel/ItemPlace
 @onready var price_label: Label = $Panel/PriceLabel
@@ -96,9 +101,9 @@ func is_stackable() -> bool:
 
 
 func _is_stackable() -> bool:
-	if not item:
-		return false
-	return item.has_node("StackableComponent")
+	if item:
+		return item.has_node("StackableComponent")
+	return _was_stackable and count > 0
 
 
 func set_is_selected(value : bool) -> void:
@@ -111,17 +116,20 @@ func set_item(value : Item) -> Item:
 	var previous_item : Item = item
 	item = value
 	if not item:
+		_was_stackable = false
 		item_place.texture = null
 		set_price_text("")
 		count = 0
 		return null
-	elif not item.region_enabled:
-		item_place.texture = item.texture
 	else:
-		var atlas : AtlasTexture = AtlasTexture.new()
-		atlas.atlas = item.texture
-		atlas.region = item.region_rect
-		item_place.texture = atlas
+		_was_stackable = item.has_node("StackableComponent")
+		if not item.region_enabled:
+			item_place.texture = item.texture
+		else:
+			var atlas : AtlasTexture = AtlasTexture.new()
+			atlas.atlas = item.texture
+			atlas.region = item.region_rect
+			item_place.texture = atlas
 	value.hide()
 	value.force_stop_follow_mouse()
 	value.top_level = false
