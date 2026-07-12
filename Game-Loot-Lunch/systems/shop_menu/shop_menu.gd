@@ -51,6 +51,17 @@ func open_shop(shop: ShopComponent, inventory: Inventory) -> void:
 	fill_player_inventory()
 	fill_shop_inventory()
 	clear_transfer()
+
+	for cell: InventoryCell in player_inventory.grid.get_children():
+		if cell.split_stack.is_connected(player_inventory._handle_split_stack):
+			cell.split_stack.disconnect(player_inventory._handle_split_stack)
+		if not cell.split_stack.is_connected(_on_player_cell_split_stack):
+			cell.split_stack.connect(_on_player_cell_split_stack)
+		if cell.wants_item_removed.is_connected(player_inventory.handle_wants_item_removed):
+			cell.wants_item_removed.disconnect(player_inventory.handle_wants_item_removed)
+		if not cell.wants_item_removed.is_connected(_on_player_cell_wants_remove):
+			cell.wants_item_removed.connect(_on_player_cell_wants_remove)
+
 	shop_opened.emit()
 
 func close_shop() -> void:
@@ -184,7 +195,16 @@ func _on_player_inventory_cell_left_clicked(cell: InventoryCell) -> void:
 	if not cell.item:
 		return
 
-	add_player_item_to_transfer(cell)
+	var shift = Input.is_key_pressed(KEY_SHIFT)
+	add_player_item_to_transfer(cell, cell.count if shift else 1)
+
+
+func _on_player_cell_split_stack(cell: InventoryCell, half: int) -> void:
+	add_player_item_to_transfer(cell, half)
+
+
+func _on_player_cell_wants_remove(cell: InventoryCell) -> void:
+	add_player_item_to_transfer(cell, cell.count)
 
 
 func find_item_scene_by_item(item: Item) -> PackedScene:
@@ -255,7 +275,7 @@ func add_shop_item_to_transfer(item: Item) -> void:
 	update_total_message()
 
 
-func add_player_item_to_transfer(cell: InventoryCell) -> void:
+func add_player_item_to_transfer(cell: InventoryCell, amount: int = 1) -> void:
 	if mode == ShopMode.BUY:
 		message_label.text = "Finalize ou saia da compra atual"
 		return
@@ -265,26 +285,46 @@ func add_player_item_to_transfer(cell: InventoryCell) -> void:
 	if player_inventory.selected_item:
 		player_inventory.cancel_selected_item()
 
-	var visual_item: Item = cell.item
-	var real_item: Item = player_item_copies.get(visual_item)
-
+	var real_item: Item = player_item_copies.get(cell.item)
 	if not real_item:
 		message_label.text = "Item não encontrado no inventário"
 		return
 
-	var price: int = current_shop.get_price_from_item(real_item)
+	var price: int = get_sell_price(real_item)
 	if price < 0:
 		message_label.text = "A loja não compra esse item"
 		return
-	price = get_sell_price(real_item)
 
-	var item_to_sell: Item = cell.remove_item()
-	transfer_inventory.add_item(item_to_sell)
+	var sell_amount: int = mini(amount, cell.count)
+	if sell_amount <= 0:
+		return
 
-	sell_items[item_to_sell] = real_item
-	transfer_item_prices[item_to_sell] = price
-	set_item_price_text(transfer_inventory, item_to_sell, price, Color.RED)
-	total_price += price
+	var is_stackable := cell.is_stackable()
+
+	if is_stackable and cell.count > sell_amount:
+		cell.count -= sell_amount
+		var sell_item: Item = create_item_copy(cell.item)
+		if not sell_item:
+			cell.count += sell_amount
+			return
+		sell_item.hide()
+		add_child(sell_item)
+		transfer_inventory.add_item(sell_item)
+		for c: InventoryCell in transfer_inventory.grid.get_children():
+			if c.item == sell_item:
+				c.count = sell_amount
+				break
+		sell_items[sell_item] = real_item
+		transfer_item_prices[sell_item] = price
+		set_item_price_text(transfer_inventory, sell_item, price * sell_amount, Color.RED)
+	else:
+		var item_to_sell: Item = cell.remove_item()
+		transfer_inventory.add_item(item_to_sell)
+		sell_items[item_to_sell] = real_item
+		transfer_item_prices[item_to_sell] = price
+		set_item_price_text(transfer_inventory, item_to_sell, price * sell_amount, Color.RED)
+
+	total_price += price * sell_amount
 	update_total_message()
 
 
@@ -300,7 +340,15 @@ func clear_transfer() -> void:
 func remove_real_player_item(item_to_remove: Item) -> void:
 	for cell: InventoryCell in real_player_inventory.grid.get_children():
 		if cell.item == item_to_remove:
-			cell.remove_item().queue_free()
+			if cell.is_stackable() and cell.count > 1:
+				cell.count -= 1
+			else:
+				cell.remove_item().queue_free()
+			return
+
+	for cell: InventoryCell in real_player_inventory.grid.get_children():
+		if cell.item and cell.item.item_name == item_to_remove.item_name and cell.is_stackable() and cell.count > 1:
+			cell.count -= 1
 			return
 
 
@@ -394,17 +442,30 @@ func undo_buy_item(cell: InventoryCell) -> void:
 
 
 func undo_sell_item(cell: InventoryCell) -> void:
-	var item: Item = cell.remove_item()
+	var item: Item = cell.item
+	var count: int = cell.count
 	var real_item: Item = sell_items.get(item)
 
 	total_price -= transfer_item_prices.get(item, 0)
 	transfer_item_prices.erase(item)
 	sell_items.erase(item)
 
-	player_inventory.add_item(item)
-	if real_item:
-		player_item_copies[item] = real_item
-		set_item_price_text(player_inventory, item, get_sell_price(real_item), Color.RED)
+	item.reparent(self)
+	item.hide()
+	item.top_level = false
+	item.z_index = 0
+	item.position = Vector2.ZERO
+	cell.item = null
+	cell.count = 0
+
+	var empty: Array[InventoryCell] = player_inventory.find_empty_cells(true)
+	if not empty.is_empty():
+		var target: InventoryCell = empty[0]
+		target.set_item(item)
+		target.count = count
+		if real_item:
+			player_item_copies[item] = real_item
+			set_item_price_text(player_inventory, item, get_sell_price(real_item), Color.RED)
 
 	update_mode_after_undo()
 

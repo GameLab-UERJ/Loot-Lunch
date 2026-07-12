@@ -80,7 +80,7 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(110, 138)
 layout_mode = 2
 size_flags_horizontal = 4
-can_move_items = true
+can_move_items = false
 can_drop_items = false
 
 [node name="TransferBox" type="VBoxContainer" parent="Panel/VBoxContainer/Inventories" unique_id=618513615]
