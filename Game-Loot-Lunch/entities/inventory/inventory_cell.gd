@@ -87,7 +87,7 @@ func remove_item_for_stack(new_parent: Node = null) -> Item:
 		return null
 	var removed: Item = item
 	item = null
-	removed.call_deferred("reparent", new_parent)
+	removed.reparent(new_parent, false)
 	removed.show()
 	removed.force_stop_follow_mouse()
 	removed.top_level = false
