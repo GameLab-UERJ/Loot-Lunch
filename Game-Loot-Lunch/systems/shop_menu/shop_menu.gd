@@ -52,15 +52,17 @@ func open_shop(shop: ShopComponent, inventory: Inventory) -> void:
 	fill_shop_inventory()
 	clear_transfer()
 
-	for cell: InventoryCell in player_inventory.grid.get_children():
-		if cell.split_stack.is_connected(player_inventory._handle_split_stack):
-			cell.split_stack.disconnect(player_inventory._handle_split_stack)
-		if not cell.split_stack.is_connected(_on_player_cell_split_stack):
-			cell.split_stack.connect(_on_player_cell_split_stack)
-		if cell.wants_item_removed.is_connected(player_inventory.handle_wants_item_removed):
-			cell.wants_item_removed.disconnect(player_inventory.handle_wants_item_removed)
-		if not cell.wants_item_removed.is_connected(_on_player_cell_wants_remove):
-			cell.wants_item_removed.connect(_on_player_cell_wants_remove)
+	for inv: Inventory in [player_inventory, shop_inventory, transfer_inventory]:
+		for cell: InventoryCell in inv.grid.get_children():
+			if cell.split_stack.is_connected(inv._handle_split_stack):
+				cell.split_stack.disconnect(inv._handle_split_stack)
+			if cell.wants_item_removed.is_connected(inv.handle_wants_item_removed):
+				cell.wants_item_removed.disconnect(inv.handle_wants_item_removed)
+			if inv == player_inventory:
+				if not cell.split_stack.is_connected(_on_player_cell_split_stack):
+					cell.split_stack.connect(_on_player_cell_split_stack)
+				if not cell.wants_item_removed.is_connected(_on_player_cell_wants_remove):
+					cell.wants_item_removed.connect(_on_player_cell_wants_remove)
 
 	shop_opened.emit()
 
@@ -320,6 +322,10 @@ func add_player_item_to_transfer(cell: InventoryCell, amount: int = 1) -> void:
 	else:
 		var item_to_sell: Item = cell.remove_item()
 		transfer_inventory.add_item(item_to_sell)
+		for c: InventoryCell in transfer_inventory.grid.get_children():
+			if c.item == item_to_sell:
+				c.count = sell_amount
+				break
 		sell_items[item_to_sell] = real_item
 		transfer_item_prices[item_to_sell] = price
 		set_item_price_text(transfer_inventory, item_to_sell, price * sell_amount, Color.RED)
