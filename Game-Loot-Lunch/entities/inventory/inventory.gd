@@ -42,9 +42,16 @@ func _process(_delta: float) -> void:
 	if not selected_cell or not selected_item:
 		return
 	
-	# Só age se o clique foi FORA do inventário
-	var inside = Rect2(Vector2.ZERO, size).has_point(get_local_mouse_position())
-	if inside:
+	# Só dropa se o clique foi FORA das células (grid)
+	var on_cell = false
+	var mouse_global = get_global_mouse_position()
+	for cell in grid.get_children():
+		var cell_rect = Rect2(cell.global_position, cell.size)
+		if cell_rect.has_point(mouse_global):
+			on_cell = true
+			break
+	
+	if on_cell:
 		return
 	
 	drop_selected_item()
