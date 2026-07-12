@@ -95,14 +95,14 @@ func _swap_or_merge(source: InventoryCell, target: InventoryCell) -> void:
 			return
 		var space = stack_comp.stack_size - target.count
 		if space > 0:
-			var move = mini(source_count, space)
+			var move = min(source_count, space)
 			target.count += move
 			source_count -= move
 			
 			if source_count <= 0:
-				source.count = 0
+				if source.count <= 0:
+					source.item = null
 				source.is_selected = false
-				source.item = null
 				selected_cell = null
 				selected_item = null
 				selected_count = 0
