@@ -1,7 +1,8 @@
 extends Node2D
 
 
-@onready var inventory: Inventory = $CanvasLayer/Inventory
+@onready var inventory_component: InventoryComponent = $Player/InventoryComponent
+@onready var inventory: Inventory = $Player/InventoryLayer/Inventory
 @onready var carne: Item = $Carne
 @onready var carne2: Item = $Carne2
 @onready var carne3: Item = $Carne3
@@ -18,21 +19,15 @@ extends Node2D
 func _ready() -> void:
 	tutorial.text = '''
 	  Press    I    to    show/hide    Inventory
+	  Walk    over    items    to    collect    them
 	  Left    click    (stack)    to    pick    1  unit
 	  Shift+click    (stack)    to    pick    all
 	  Right    click    (stack)    to    split
 	  Right    click    (bg)    to    drop    item'''
 
-	# Adiciona 6 Carnes e 1 Tomate automaticamente
-	# As primeiras 5 carnes empilham na mesma célula (stack_size=5)
-	# A 6ª vai pra outra célula; o Tomate vai pra uma terceira.
-	inventory.add_item(carne)
-	inventory.add_item(carne2)
-	inventory.add_item(carne3)
-	inventory.add_item(carne4)
-	inventory.add_item(carne5)
-	inventory.add_item(carne6)
-	inventory.add_item(tomate)
+	# Conecta o pickup de cada item ao inventário do jogador
+	for item_node: Item in [carne, carne2, carne3, carne4, carne5, carne6, tomate]:
+		item_node.picked_up.connect(inventory_component.add_item)
 
 
 func _physics_process(_delta: float) -> void:
@@ -45,7 +40,8 @@ func _physics_process(_delta: float) -> void:
 
 func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_released("open_inventory"):
-		inventory.visible = not inventory.visible
+		# O InventoryComponent do player já alterna o inventário dele
+		pass
 
 func get_selected_position() -> Array[Vector2i]:
 	var result : Array[Vector2i] = []
