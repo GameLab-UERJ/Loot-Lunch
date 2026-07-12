@@ -4,7 +4,6 @@
 [ext_resource type="PackedScene" uid="uid://cqnchp7q3uixs" path="res://entities/inventory/inventory.tscn" id="2_i0jss"]
 [ext_resource type="PackedScene" uid="uid://cexct4fg71pc5" path="res://entities/items/carne.tscn" id="3_2ff5v"]
 [ext_resource type="PackedScene" uid="uid://dwlepdjd5lv8x" path="res://entities/items/tomate.tscn" id="4_67sjd"]
-[ext_resource type="PackedScene" uid="uid://dd8vbsbs33ii4" path="res://entities/items/farinha.tscn" id="5_7tixs"]
 [ext_resource type="FontFile" uid="uid://cvuth304y1byc" path="res://assets/fonts/tinypixel.ttf" id="6_7tixs"]
 [ext_resource type="PackedScene" uid="uid://3cgeew2m05mn" path="res://entities/player/player.tscn" id="6_67sjd"]
 
@@ -30,13 +29,25 @@ dimensions = Vector2i(3, 3)
 node_to_drop = NodePath("../../Droper")
 
 [node name="Carne" parent="." unique_id=1998340507 instance=ExtResource("3_2ff5v")]
-position = Vector2(224.00002, 134)
+position = Vector2(224, 120)
+
+[node name="Carne2" parent="." unique_id=1998340508 instance=ExtResource("3_2ff5v")]
+position = Vector2(256, 120)
+
+[node name="Carne3" parent="." unique_id=1998340509 instance=ExtResource("3_2ff5v")]
+position = Vector2(288, 120)
+
+[node name="Carne4" parent="." unique_id=1998340510 instance=ExtResource("3_2ff5v")]
+position = Vector2(224, 152)
+
+[node name="Carne5" parent="." unique_id=1998340511 instance=ExtResource("3_2ff5v")]
+position = Vector2(256, 152)
+
+[node name="Carne6" parent="." unique_id=1998340512 instance=ExtResource("3_2ff5v")]
+position = Vector2(288, 152)
 
 [node name="Tomate" parent="." unique_id=1065823031 instance=ExtResource("4_67sjd")]
-position = Vector2(302, 135)
-
-[node name="Farinha" parent="." unique_id=546262662 instance=ExtResource("5_7tixs")]
-position = Vector2(270, 181)
+position = Vector2(256, 184)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1047629312]
 offset_right = 40.0
