@@ -268,6 +268,16 @@ func drop_selected_item() -> void:
 	if not selected_cell:
 		return
 	
+	if not node_to_drop:
+		push_error("No node_to_drop set. Cannot drop item.")
+		if _ghost:
+			selected_cell.count += selected_count
+		elif selected_item:
+			selected_cell.set_item(selected_item)
+			selected_cell.count = selected_count
+		_cleanup_selection()
+		return
+	
 	# Ghost (pickup parcial) — só restaura
 	if _ghost:
 		selected_cell.count += selected_count
@@ -277,8 +287,7 @@ func drop_selected_item() -> void:
 	# Item físico seguindo o mouse — dropa no mundo
 	if selected_item:
 		selected_cell.is_selected = false
-		if node_to_drop:
-			selected_item.global_position = node_to_drop.global_position
+		selected_item.global_position = node_to_drop.global_position
 		selected_item.show()
 		selected_item.force_stop_follow_mouse()
 		selected_item.top_level = false
