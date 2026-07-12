@@ -80,22 +80,6 @@ func remove_item(new_parent : Node = null, _show : bool = true) -> Item:
 ## Remove o Item Node da célula mas MANTÉM o visual (textura + count).
 ## Usado quando vc pega 1 unidade de um stack — a célula continua
 ## mostrando o ícone e o número de unidades restantes.
-func remove_item_for_stack(new_parent: Node = null) -> Item:
-	if not new_parent:
-		new_parent = get_tree().current_scene
-	if not item:
-		return null
-	var removed: Item = item
-	item = null
-	removed.reparent(new_parent, false)
-	removed.show()
-	removed.force_stop_follow_mouse()
-	removed.top_level = false
-	removed.z_index = 0
-	removed.position = Vector2.ZERO
-	return removed
-
-
 func is_stackable() -> bool:
 	return _is_stackable()
 

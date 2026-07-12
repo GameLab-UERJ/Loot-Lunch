@@ -20,15 +20,12 @@ signal cell_left_clicked(cell : InventoryCell)
 
 var selected_cell : InventoryCell
 ## Item físico seguindo o mouse (pickup total / split).
-## Fica null quando é pickup parcial (ghost).
+## Fica null quando não há seleção.
 var selected_item : Item
 ## Quantas unidades estamos carregando.
 var selected_count : int = 0
 var selected_pos : Vector2i:
 	get = get_selected_pos
-
-## Fantasma visual para pickup parcial (quando o Item fica na célula).
-var _ghost: Sprite2D = null
 
 
 @onready var container: PanelContainer = $Container
@@ -38,10 +35,6 @@ var _ghost: Sprite2D = null
 func _ready() -> void:
 	dimensions = dimensions
 
-
-func _process(_delta: float) -> void:
-	if _ghost:
-		_ghost.global_position = get_global_mouse_position()
 
 
 func _gui_input(event: InputEvent) -> void:
@@ -101,7 +94,6 @@ func _try_merge(source: InventoryCell, target: InventoryCell, src_item: Item, sr
 		selected_item = null
 		selected_count = 0
 		src_item.queue_free()
-		_remove_ghost()
 		return true
 	
 	selected_count = src_count
@@ -120,7 +112,6 @@ func _place_on_empty(source: InventoryCell, target: InventoryCell, src_item: Ite
 	selected_cell = null
 	selected_item = null
 	selected_count = 0
-	_remove_ghost()
 
 
 func _do_swap(source: InventoryCell, target: InventoryCell, src_item: Item, src_count: int) -> void:
@@ -155,13 +146,13 @@ func handle_new_selected_cell(cell : InventoryCell) -> void:
 		set_selected_cell(null)
 		return
 	
-	# --- Tem um item/ghost selecionado, clicou em outra célula ---
+	# --- Tem um item selecionado, clicou em outra célula ---
 	
 	var source = selected_cell
 	var src_count = selected_count
 	var src_item = selected_item
 	
-	# Se for ghost (pickup parcial), o Item ainda está na source
+	# Se for pickup parcial ou split, o original ainda está na source
 	if not src_item:
 		src_item = source.item
 	
@@ -173,7 +164,7 @@ func handle_new_selected_cell(cell : InventoryCell) -> void:
 	if _try_merge(source, cell, src_item, src_count):
 		return
 	
-	# Ghost (pickup parcial) só pode merge ou cancelar
+	# Se não tem selected_item (segurança), cancela
 	if not selected_item:
 		# Return to source
 		set_selected_cell(null)
@@ -186,7 +177,7 @@ func handle_new_selected_cell(cell : InventoryCell) -> void:
 	
 	# Com Item físico: swap
 	if source.count > 0:
-		# Source tem unidades virtuais — não pode swap limpo
+		# Source tem unidades remanescentes — não pode swap
 		set_selected_cell(null)
 		return
 	
@@ -268,68 +259,46 @@ func drop_selected_item() -> void:
 	if not selected_cell:
 		return
 	
+	if not selected_item:
+		return
+	
 	if not node_to_drop:
 		push_error("No node_to_drop set. Cannot drop item.")
-		if _ghost:
+		if selected_cell.item:
 			selected_cell.count += selected_count
-		elif selected_item:
+			selected_item.queue_free()
+		else:
 			selected_cell.set_item(selected_item)
 			selected_cell.count = selected_count
 		_cleanup_selection()
 		return
 	
-	# Ghost (pickup parcial) — só restaura
-	if _ghost:
-		selected_cell.count += selected_count
-		_cleanup_selection()
-		return
-	
-	# Item físico seguindo o mouse — dropa no mundo
-	if selected_item:
-		selected_cell.is_selected = false
-		selected_item.global_position = node_to_drop.global_position
-		selected_item.show()
-		selected_item.force_stop_follow_mouse()
-		selected_item.top_level = false
-		selected_item.z_index = 0
-		_cleanup_selection()
+	selected_cell.is_selected = false
+	selected_item.global_position = node_to_drop.global_position
+	selected_item.show()
+	selected_item.force_stop_follow_mouse()
+	selected_item.top_level = false
+	selected_item.z_index = 0
+	_cleanup_selection()
 
 
 func _cleanup_selection() -> void:
-	_remove_ghost()
 	selected_cell = null
 	selected_item = null
 	selected_count = 0
-
-
-func _create_ghost(source: InventoryCell) -> void:
-	if not source.item:
-		return
-	_ghost = Sprite2D.new()
-	_ghost.texture = source.item.texture
-	_ghost.region_enabled = source.item.region_enabled
-	_ghost.region_rect = source.item.region_rect
-	_ghost.scale = source.item.scale
-	_ghost.top_level = true
-	_ghost.z_index = 100
-	add_child(_ghost)
-
-
-func _remove_ghost() -> void:
-	if _ghost:
-		_ghost.queue_free()
-		_ghost = null
 
 
 func set_selected_cell(value: InventoryCell) -> void:
 	if selected_cell:
 		selected_cell.is_selected = false
 		if selected_item:
-			var remaining: int = selected_cell.count
-			selected_cell.set_item(selected_item)
-			selected_cell.count = remaining + selected_count
+			if selected_cell.item:
+				selected_cell.count += selected_count
+				selected_item.queue_free()
+			else:
+				selected_cell.set_item(selected_item)
+				selected_cell.count = selected_count
 			selected_item = null
-		_remove_ghost()
 		selected_count = 0
 	
 	selected_cell = value
@@ -345,11 +314,14 @@ func set_selected_cell(value: InventoryCell) -> void:
 	var cell_count = selected_cell.count
 	
 	if is_stackable and cell_count > 1 and not Input.is_key_pressed(KEY_SHIFT):
-		# Pickup parcial: Item fica na célula, ghost visual segue o mouse
+		# Pickup parcial: duplica o Item, original fica na célula
 		selected_count = 1
 		selected_cell.count -= 1
-		selected_item = null
-		_create_ghost(selected_cell)
+		selected_item = selected_cell.item.duplicate()
+		add_child(selected_item)
+		selected_item.top_level = true
+		selected_item.z_index = 100
+		selected_item.force_follow_mouse()
 	else:
 		# Pickup total: Item sai da célula e segue o mouse
 		selected_count = cell_count
@@ -367,10 +339,13 @@ func _handle_split_stack(cell: InventoryCell, half: int) -> void:
 	if half <= 0 or half >= cell.count:
 		return
 	
+	# Split: duplica o Item, original fica na célula
+	var new_item = cell.item.duplicate()
+	add_child(new_item)
+	
 	cell.count -= half
 	
-	# Split pega o Item da célula (metade da stack)
-	selected_item = cell.remove_item_for_stack(self)
+	selected_item = new_item
 	selected_cell = cell
 	selected_count = half
 	
