@@ -319,6 +319,7 @@ func set_selected_cell(value: InventoryCell) -> void:
 		selected_cell.count -= 1
 		selected_item = selected_cell.item.duplicate()
 		add_child(selected_item)
+		selected_item.show()
 		selected_item.top_level = true
 		selected_item.z_index = 100
 		selected_item.force_follow_mouse()
@@ -342,6 +343,7 @@ func _handle_split_stack(cell: InventoryCell, half: int) -> void:
 	# Split: duplica o Item, original fica na célula
 	var new_item = cell.item.duplicate()
 	add_child(new_item)
+	new_item.show()
 	
 	cell.count -= half
 	
