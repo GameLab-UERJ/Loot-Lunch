@@ -79,7 +79,6 @@ func fill_shop_inventory() -> void:
 		
 	for item_scene: PackedScene in current_shop.get_item_scenes():
 		var item: Item = current_shop.create_item(item_scene)
-		call_deferred("add_child",item)
 		shop_inventory.add_item(item)
 		set_item_price_text(shop_inventory, item, current_shop.get_price(item_scene), Color.GREEN)
 
@@ -95,7 +94,6 @@ func fill_player_inventory() -> void:
 		if cell.item:
 			var item_copy: Item = create_item_copy(cell.item)
 			if item_copy:
-				call_deferred("add_child",item_copy)
 				player_inventory.add_item(item_copy)
 				player_item_copies[item_copy] = cell.item
 				set_item_price_text(player_inventory, item_copy, get_sell_price(cell.item), Color.RED)
@@ -136,8 +134,13 @@ func confirm_buy() -> void:
 
 	for cell: InventoryCell in transfer_inventory.grid.get_children():
 		if cell.item:
-			var item: Item = cell.remove_item()
-			real_player_inventory.add_item(item)
+			var item: Item = cell.item
+			var count: int = cell.count
+			for i in count:
+				var unit: Item = item if i == 0 else item.duplicate()
+				real_player_inventory.add_item(unit)
+			cell.item = null
+			cell.count = 0
 
 	clear_transfer()
 	fill_player_inventory()
@@ -211,16 +214,33 @@ func add_shop_item_to_transfer(item: Item) -> void:
 	if total_price + price > PlayerWallet.gold:
 		message_label.text = "Gold insuficiente"
 		return
-	
-	if not can_add_buy_item():
-		message_label.text = "Inventário cheio"
-		return
 
 	var new_item: Item = current_shop.create_item(item_scene)
 	add_child(new_item)
-	transfer_inventory.add_item(new_item)
-	transfer_item_prices[new_item] = price
-	set_item_price_text(transfer_inventory, new_item, price, Color.GREEN)
+
+	if not can_add_buy_item(new_item):
+		message_label.text = "Inventário cheio"
+		new_item.queue_free()
+		return
+
+	var is_stackable = new_item.has_node("StackableComponent")
+	var stacked_in_transfer = false
+
+	if is_stackable:
+		var stack_comp = new_item.get_node("StackableComponent") as StackableComponent
+		for cell: InventoryCell in transfer_inventory.grid.get_children():
+			if cell.item and cell.item.item_name == new_item.item_name and cell.count < stack_comp.stack_size:
+				cell.count += 1
+				stacked_in_transfer = true
+				set_item_price_text(transfer_inventory, cell.item, price * cell.count, Color.GREEN)
+				break
+
+	if not stacked_in_transfer:
+		transfer_inventory.add_item(new_item)
+		transfer_item_prices[new_item] = price
+		set_item_price_text(transfer_inventory, new_item, price, Color.GREEN)
+	else:
+		new_item.queue_free()
 
 	total_price += price
 	update_total_message()
@@ -283,10 +303,24 @@ func _on_transfer_inventory_cell_left_clicked(cell: InventoryCell) -> void:
 
 
 func undo_buy_item(cell: InventoryCell) -> void:
-	var item: Item = cell.remove_item()
-	total_price -= transfer_item_prices.get(item, 0)
-	transfer_item_prices.erase(item)
-	item.queue_free()
+	var item: Item = cell.item
+	if not item:
+		return
+
+	var per_unit_price: int = transfer_item_prices.get(item, 0)
+	if per_unit_price <= 0:
+		return
+
+	if cell.is_stackable() and cell.count > 1:
+		cell.count -= 1
+		total_price -= per_unit_price
+		set_item_price_text(transfer_inventory, item, per_unit_price * cell.count, Color.GREEN)
+	else:
+		cell.remove_item()
+		total_price -= per_unit_price
+		transfer_item_prices.erase(item)
+		item.queue_free()
+
 	update_mode_after_undo()
 
 
@@ -367,8 +401,27 @@ func count_empty_cells(inventory: Inventory) -> int:
 	return total
 
 
-func can_add_buy_item() -> bool:
+func can_add_buy_item(item_to_buy: Item = null) -> bool:
 	var empty_cells: int = count_empty_cells(real_player_inventory)
 	var transfer_items: int = count_items(transfer_inventory)
 
-	return transfer_items + 1 <= empty_cells
+	if transfer_items + 1 <= empty_cells:
+		return true
+
+	if not item_to_buy or not item_to_buy.has_node("StackableComponent"):
+		return false
+
+	var item_name: String = item_to_buy.item_name
+
+	var available_stack_space: int = 0
+	for cell: InventoryCell in real_player_inventory.grid.get_children():
+		if cell.item and cell.item.item_name == item_name and cell.is_stackable():
+			var stack_comp = cell.item.get_node("StackableComponent") as StackableComponent
+			available_stack_space += stack_comp.stack_size - cell.count
+
+	var units_in_transfer: int = 0
+	for cell: InventoryCell in transfer_inventory.grid.get_children():
+		if cell.item and cell.item.item_name == item_name:
+			units_in_transfer += cell.count
+
+	return units_in_transfer < available_stack_space
