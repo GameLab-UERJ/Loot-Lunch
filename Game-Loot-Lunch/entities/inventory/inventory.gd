@@ -13,22 +13,22 @@ signal cell_left_clicked(cell : InventoryCell)
 @export var dimensions : Vector2i = Vector2i.ONE:
 	set = set_dimensions
 	
-## Representá o nó a ser usado como base para dropar itens.
-## Em geral, uma [Marker2D] seria o melhor mas pode usar algo como o [Player],
-## por exemplo.
 @export var node_to_drop : Node2D
 
 @export var can_move_items : bool = true
 
 
 var selected_cell : InventoryCell
+## Item físico seguindo o mouse (pickup total / split).
+## Fica null quando é pickup parcial (ghost).
 var selected_item : Item
-## Quantas unidades do item estão atualmente selecionadas/seguindo o mouse.
-## Para não-stackáveis ou full-stack, = cell.count original.
-## Para pick-up parcial (1 unidade de um stack), = 1.
+## Quantas unidades estamos carregando.
 var selected_count : int = 0
 var selected_pos : Vector2i:
 	get = get_selected_pos
+
+## Fantasma visual para pickup parcial (quando o Item fica na célula).
+var _ghost: Sprite2D = null
 
 
 @onready var container: PanelContainer = $Container
@@ -37,6 +37,11 @@ var selected_pos : Vector2i:
 
 func _ready() -> void:
 	dimensions = dimensions
+
+
+func _process(_delta: float) -> void:
+	if _ghost:
+		_ghost.global_position = get_global_mouse_position()
 
 
 func _gui_input(event: InputEvent) -> void:
@@ -74,62 +79,53 @@ func handle_cell_left_clicked(cell : InventoryCell) -> void:
 		handle_new_selected_cell(cell)
 
 
-## Lida com o drop do item selecionado em uma célula alvo.
-## Três casos: merge (mesmo tipo stackável), mover (vazia), swap (tipo diferente).
-func _swap_or_merge(source: InventoryCell, target: InventoryCell) -> void:
-	if not selected_item:
-		return
+func _try_merge(source: InventoryCell, target: InventoryCell, src_item: Item, src_count: int) -> bool:
+	if not target.item or target.item.item_name != src_item.item_name or not target.is_stackable():
+		return false
+	var stack_comp = target.item.get_node("StackableComponent")
+	if not stack_comp:
+		return false
+	var space = stack_comp.stack_size - target.count
+	if space <= 0:
+		return false
 	
-	var src_item: Item = selected_item
-	var src_count: int = selected_count
+	var move = min(src_count, space)
+	target.count += move
+	src_count -= move
 	
-	# Caso 1: Merge — mesmo tipo, stackável, com espaço
-	if target.item and target.item.item_name == src_item.item_name and target.is_stackable():
-		var stack_comp = target.item.get_node("StackableComponent")
-		if stack_comp:
-			var space = stack_comp.stack_size - target.count
-			if space > 0:
-				var move = min(src_count, space)
-				target.count += move
-				src_count -= move
-				
-				if src_count <= 0:
-					if source.count <= 0:
-						source.item = null
-					source.is_selected = false
-					selected_cell = null
-					selected_item = null
-					selected_count = 0
-					src_item.queue_free()
-					return
-				else:
-					selected_count = src_count
-					source.is_selected = false
-					return
-	
-	# Caso 2: Célula vazia — move o item
-	if not target.item:
-		target.set_item(src_item)
-		target.count = src_count
-		
+	if src_count <= 0:
 		if source.count <= 0:
 			source.item = null
-		
 		source.is_selected = false
 		selected_cell = null
 		selected_item = null
 		selected_count = 0
-		return
+		src_item.queue_free()
+		_remove_ghost()
+		return true
 	
-	# Caso 3: Swap — tipos diferentes
-	# Se a source ainda tem unidades virtuais (pick-up parcial),
-	# não dá pra fazer swap limpo — retorna o carry pra source.
-	if source.count > 0:
-		set_selected_cell(null)
-		return
+	selected_count = src_count
+	source.is_selected = false
+	return true
+
+
+func _place_on_empty(source: InventoryCell, target: InventoryCell, src_item: Item, src_count: int) -> void:
+	target.set_item(src_item)
+	target.count = src_count
 	
-	var tgt_item: Item = target.item
-	var tgt_count: int = target.count
+	if source.count <= 0:
+		source.item = null
+	
+	source.is_selected = false
+	selected_cell = null
+	selected_item = null
+	selected_count = 0
+	_remove_ghost()
+
+
+func _do_swap(source: InventoryCell, target: InventoryCell, src_item: Item, src_count: int) -> void:
+	var tgt_item = target.item
+	var tgt_count = target.count
 	
 	target.item = src_item
 	target.count = src_count
@@ -143,12 +139,65 @@ func _swap_or_merge(source: InventoryCell, target: InventoryCell) -> void:
 	selected_count = 0
 
 
-## Returns an array with the references of all empty cells
-## [br]
-## if 'first' is true, returns as soon as it finds one
-func find_empty_cells(first : bool = false) -> Array[InventoryCell]:
-	var result : Array[InventoryCell] = []
-	for cell : InventoryCell in grid.get_children():
+func handle_new_selected_cell(cell : InventoryCell) -> void:
+	if not cell:
+		set_selected_cell(null)
+		return
+	
+	if not selected_cell:
+		if not cell.item:
+			cell.is_selected = false
+			return
+		set_selected_cell(cell)
+		return
+	
+	if selected_cell == cell:
+		set_selected_cell(null)
+		return
+	
+	# --- Tem um item/ghost selecionado, clicou em outra célula ---
+	
+	var source = selected_cell
+	var src_count = selected_count
+	var src_item = selected_item
+	
+	# Se for ghost (pickup parcial), o Item ainda está na source
+	if not src_item:
+		src_item = source.item
+	
+	if not src_item:
+		push_warning("Nothing to place")
+		return
+	
+	# Merge: mesmo tipo, stackável, com espaço
+	if _try_merge(source, cell, src_item, src_count):
+		return
+	
+	# Ghost (pickup parcial) só pode merge ou cancelar
+	if not selected_item:
+		# Return to source
+		set_selected_cell(null)
+		return
+	
+	# Com Item físico: célula vazia → move
+	if not cell.item:
+		_place_on_empty(source, cell, src_item, src_count)
+		return
+	
+	# Com Item físico: swap
+	if source.count > 0:
+		# Source tem unidades virtuais — não pode swap limpo
+		set_selected_cell(null)
+		return
+	
+	_do_swap(source, cell, src_item, src_count)
+
+
+## Returns an array with the references of all empty cells.
+## if 'first' is true, returns as soon as it finds one.
+func find_empty_cells(first: bool = false) -> Array[InventoryCell]:
+	var result: Array[InventoryCell] = []
+	for cell: InventoryCell in grid.get_children():
 		if not cell.item and cell.count <= 0:
 			result.append(cell)
 			if first:
@@ -156,14 +205,13 @@ func find_empty_cells(first : bool = false) -> Array[InventoryCell]:
 	return result
 
 
-## returns the amount of empty cells removed.
-func remove_empty_cells(max_number : int) -> int:
+func remove_empty_cells(max_number: int) -> int:
 	if not grid:
 		return 0
 	if max_number <= 0:
 		return 0
 	
-	var empty_cells : Array[InventoryCell] = find_empty_cells()
+	var empty_cells: Array[InventoryCell] = find_empty_cells()
 	if len(empty_cells) < max_number:
 		max_number = len(empty_cells)
 	
@@ -172,58 +220,30 @@ func remove_empty_cells(max_number : int) -> int:
 	return max_number
 
 
-func handle_wants_item_removed(cell : InventoryCell) -> void:
+func handle_wants_item_removed(cell: InventoryCell) -> void:
 	if selected_cell or not cell.item:
 		return
 	
-	var item : Item = remove_item_at(get_pos(cell))
+	var item: Item = remove_item_at(get_pos(cell))
 	if node_to_drop:
 		item.global_position = node_to_drop.global_position
 	else:
-		push_error("Node where to drop items is not set. Dropped at position zero of ",item.get_parent())
+		push_error("Node where to drop items is not set. Dropped at position zero of ", item.get_parent())
 
 
-func handle_new_selected_cell(cell : InventoryCell) -> void:
-	if not cell:
-		# Chamado com null = cancelar/deselect (retorna item pra célula)
-		set_selected_cell(null)
-		return
-	
-	if not selected_cell:
-		# Nada selecionado ainda — tenta selecionar esta célula
-		if not cell.item:
-			cell.is_selected = false
-			return
-		set_selected_cell(cell)
-		return
-	
-	if selected_cell == cell:
-		# Clicou na mesma célula = deselect (retorna o item)
-		set_selected_cell(null)
-		return
-	
-	# Tem um item selecionado e clicou em outra célula
-	_swap_or_merge(selected_cell, cell)
-
-
-## Adiciona um Item ao inventário.
-## Se o item for stackável, tenta empilhar em células existentes
-## do mesmo tipo antes de colocar numa célula vazia.
-func add_item(item : Item) -> void:
+func add_item(item: Item) -> void:
 	if not item:
 		return
 	
 	var stack_comp = item.get_node("StackableComponent") if item.has_node("StackableComponent") else null
 	
 	if stack_comp:
-		# Tenta empilhar em célula existente do mesmo tipo
 		for cell: InventoryCell in grid.get_children():
 			if cell.item and cell.item.item_name == item.item_name and cell.count < stack_comp.stack_size:
 				cell.count += 1
 				item.queue_free()
 				return
 	
-	# Se não conseguiu empilhar, coloca em célula vazia
 	var empty = find_empty_cells(true)
 	if empty.is_empty():
 		push_warning("Inventory is full!")
@@ -239,33 +259,60 @@ func remove_item() -> Item:
 	return null
 
 
-## Cancela a seleção e retorna o item para a célula de origem.
 func cancel_selected_item() -> void:
 	if selected_cell:
 		handle_new_selected_cell(null)
 
 
-## Remove o item selecionado do inventário e dropa no node_to_drop.
 func drop_selected_item() -> void:
-	if not selected_cell or not selected_item:
+	if not selected_cell:
 		return
 	
-	selected_cell.is_selected = false
+	# Ghost (pickup parcial) — só restaura
+	if _ghost:
+		selected_cell.count += selected_count
+		_cleanup_selection()
+		return
 	
-	if node_to_drop:
-		selected_item.global_position = node_to_drop.global_position
-	selected_item.show()
-	selected_item.force_stop_follow_mouse()
-	selected_item.top_level = false
-	selected_item.z_index = 0
-	
+	# Item físico seguindo o mouse — dropa no mundo
+	if selected_item:
+		selected_cell.is_selected = false
+		if node_to_drop:
+			selected_item.global_position = node_to_drop.global_position
+		selected_item.show()
+		selected_item.force_stop_follow_mouse()
+		selected_item.top_level = false
+		selected_item.z_index = 0
+		_cleanup_selection()
+
+
+func _cleanup_selection() -> void:
+	_remove_ghost()
 	selected_cell = null
 	selected_item = null
 	selected_count = 0
 
 
-func set_selected_cell(value : InventoryCell) -> void:
-	# Devolve item da célula anterior (se houver)
+func _create_ghost(source: InventoryCell) -> void:
+	if not source.item:
+		return
+	_ghost = Sprite2D.new()
+	_ghost.texture = source.item.texture
+	_ghost.region_enabled = source.item.region_enabled
+	_ghost.region_rect = source.item.region_rect
+	_ghost.scale = source.item.scale
+	_ghost.top_level = true
+	_ghost.z_index = 100
+	add_child(_ghost)
+
+
+func _remove_ghost() -> void:
+	if _ghost:
+		_ghost.queue_free()
+		_ghost = null
+
+
+func set_selected_cell(value: InventoryCell) -> void:
 	if selected_cell:
 		selected_cell.is_selected = false
 		if selected_item:
@@ -273,6 +320,7 @@ func set_selected_cell(value : InventoryCell) -> void:
 			selected_cell.set_item(selected_item)
 			selected_cell.count = remaining + selected_count
 			selected_item = null
+		_remove_ghost()
 		selected_count = 0
 	
 	selected_cell = value
@@ -280,7 +328,6 @@ func set_selected_cell(value : InventoryCell) -> void:
 		selected_item = null
 		return
 	
-	# Pega o item da nova célula
 	if not selected_cell.item:
 		selected_item = null
 		return
@@ -288,21 +335,21 @@ func set_selected_cell(value : InventoryCell) -> void:
 	var is_stackable = selected_cell.is_stackable()
 	var cell_count = selected_cell.count
 	
-	# Se for stackável, count > 1 e NÃO segurou Shift → pega só 1 unidade
 	if is_stackable and cell_count > 1 and not Input.is_key_pressed(KEY_SHIFT):
+		# Pickup parcial: Item fica na célula, ghost visual segue o mouse
 		selected_count = 1
 		selected_cell.count -= 1
-		selected_item = selected_cell.remove_item_for_stack(self)
+		selected_item = null
+		_create_ghost(selected_cell)
 	else:
-		# Pega o stack inteiro
+		# Pickup total: Item sai da célula e segue o mouse
 		selected_count = cell_count
 		selected_cell.count = 0
 		selected_item = selected_cell.remove_item(self)
-	
-	if selected_item:
-		selected_item.top_level = true
-		selected_item.z_index = 100
-		selected_item.force_follow_mouse()
+		if selected_item:
+			selected_item.top_level = true
+			selected_item.z_index = 100
+			selected_item.force_follow_mouse()
 
 
 func _handle_split_stack(cell: InventoryCell, half: int) -> void:
@@ -313,7 +360,7 @@ func _handle_split_stack(cell: InventoryCell, half: int) -> void:
 	
 	cell.count -= half
 	
-	# Pega o Item da célula e carrega metade do stack
+	# Split pega o Item da célula (metade da stack)
 	selected_item = cell.remove_item_for_stack(self)
 	selected_cell = cell
 	selected_count = half
@@ -332,25 +379,25 @@ func get_selected_pos() -> Vector2i:
 	return selected_pos
 
 
-func get_cell(pos : Vector2i) -> InventoryCell:
+func get_cell(pos: Vector2i) -> InventoryCell:
 	if pos.x >= dimensions.x or pos.y >= dimensions.y:
-		push_error("Position "+str(pos)+" outside of Inventory's dimensions") 
+		push_error("Position " + str(pos) + " outside of Inventory's dimensions")
 		return null
-	return grid.get_child(pos.x*dimensions.y + pos.y)
+	return grid.get_child(pos.x * dimensions.y + pos.y)
 
 
-func get_pos(cell : InventoryCell) -> Vector2i:
-	var pos : int = grid.get_children().find(cell)
+func get_pos(cell: InventoryCell) -> Vector2i:
+	var pos: int = grid.get_children().find(cell)
 	if pos == -1:
 		return Vector2i.MIN
-	return Vector2i(pos/dimensions.x, pos%dimensions.y)
+	return Vector2i(pos / dimensions.x, pos % dimensions.y)
 
 
-func remove_item_at(pos : Vector2i) -> Item:
-	var cell : InventoryCell = get_cell(pos)
+func remove_item_at(pos: Vector2i) -> Item:
+	var cell: InventoryCell = get_cell(pos)
 	if not cell:
 		return null
-	var item : Item = cell.remove_item()
+	var item: Item = cell.remove_item()
 	if not item:
 		push_warning("At pos " + str(pos) + ": ")
 		return null
@@ -358,5 +405,5 @@ func remove_item_at(pos : Vector2i) -> Item:
 
 
 func print_inventory_cells() -> void:
-	for cell : InventoryCell in grid.get_children():
+	for cell: InventoryCell in grid.get_children():
 		print(cell.get_children())
