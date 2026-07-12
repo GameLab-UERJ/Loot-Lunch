@@ -50,6 +50,7 @@ func _process(_delta: float) -> void:
 func _gui_input(event: InputEvent) -> void:
 	if event.is_action_released("left_click"):
 		left_clicked.emit(self)
+		accept_event()
 	if event.is_action_released("right_click"):
 		if item and _is_stackable() and count > 1:
 			var half : int = count / 2
@@ -57,6 +58,7 @@ func _gui_input(event: InputEvent) -> void:
 				split_stack.emit(self, half)
 		else:
 			wants_item_removed.emit(self)
+		accept_event()
 
 
 ## Remove o Item Node da célula e limpa o visual (count vira 0).

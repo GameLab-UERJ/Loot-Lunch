@@ -36,6 +36,20 @@ func _ready() -> void:
 	dimensions = dimensions
 
 
+func _process(_delta: float) -> void:
+	if not Input.is_action_just_released("right_click"):
+		return
+	if not selected_cell or not selected_item:
+		return
+	
+	# Só age se o clique foi FORA do inventário
+	var inside = Rect2(Vector2.ZERO, size).has_point(get_local_mouse_position())
+	if inside:
+		return
+	
+	drop_selected_item()
+
+
 
 func _gui_input(event: InputEvent) -> void:
 	if not event is InputEventMouseButton:
@@ -212,8 +226,11 @@ func remove_empty_cells(max_number: int) -> int:
 
 
 func handle_wants_item_removed(cell: InventoryCell) -> void:
-	if selected_cell or not cell.item:
+	if not cell.item:
 		return
+	
+	# Restaura item carregado primeiro
+	_restore_selected()
 	
 	var item: Item = remove_item_at(get_pos(cell))
 	if node_to_drop:
@@ -288,18 +305,26 @@ func _cleanup_selection() -> void:
 	selected_count = 0
 
 
+## Restaura o item carregado (se houver) para a célula de origem.
+func _restore_selected() -> void:
+	if not selected_cell:
+		return
+	if selected_item:
+		if selected_cell.item:
+			selected_cell.count += selected_count
+			selected_item.queue_free()
+		else:
+			selected_cell.set_item(selected_item)
+			selected_cell.count = selected_count
+	selected_cell = null
+	selected_item = null
+	selected_count = 0
+
+
 func set_selected_cell(value: InventoryCell) -> void:
 	if selected_cell:
 		selected_cell.is_selected = false
-		if selected_item:
-			if selected_cell.item:
-				selected_cell.count += selected_count
-				selected_item.queue_free()
-			else:
-				selected_cell.set_item(selected_item)
-				selected_cell.count = selected_count
-			selected_item = null
-		selected_count = 0
+		_restore_selected()
 	
 	selected_cell = value
 	if not selected_cell:
@@ -335,10 +360,13 @@ func set_selected_cell(value: InventoryCell) -> void:
 
 
 func _handle_split_stack(cell: InventoryCell, half: int) -> void:
-	if selected_cell or not cell.item:
+	if not cell.item:
 		return
 	if half <= 0 or half >= cell.count:
 		return
+	
+	# Restaura item carregado primeiro
+	_restore_selected()
 	
 	# Split: duplica o Item, original fica na célula
 	var new_item = cell.item.duplicate()
