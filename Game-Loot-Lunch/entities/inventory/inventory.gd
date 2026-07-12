@@ -124,6 +124,12 @@ func _swap_or_merge(source: InventoryCell, target: InventoryCell) -> void:
 		return
 	
 	# Caso 3: Swap — tipos diferentes
+	# Se a source ainda tem unidades virtuais (pick-up parcial),
+	# não dá pra fazer swap limpo — retorna o carry pra source.
+	if source.count > 0:
+		set_selected_cell(null)
+		return
+	
 	var tgt_item: Item = target.item
 	var tgt_count: int = target.count
 	
