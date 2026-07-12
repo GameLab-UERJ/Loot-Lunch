@@ -37,8 +37,6 @@ var selected_pos : Vector2i:
 
 func _ready() -> void:
 	dimensions = dimensions
-	for cell: InventoryCell in grid.get_children():
-		cell.split_stack.connect(_handle_split_stack)
 
 
 func _gui_input(event: InputEvent) -> void:
