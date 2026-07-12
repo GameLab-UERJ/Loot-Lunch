@@ -513,11 +513,12 @@ invencibility_time = 1.0
 
 [node name="InventoryLayer" type="CanvasLayer" parent="." index="0" unique_id=1951839530]
 
-[node name="Inventory" parent="InventoryLayer" index="0" unique_id=1443629152 instance=ExtResource("3_yqrof")]
+[node name="Inventory" parent="InventoryLayer" index="0" unique_id=1443629152 instance=ExtResource("3_yqrof") node_paths=PackedStringArray("node_to_drop")]
 offset_left = -239.0
 offset_top = -130.0
 offset_right = 241.0
 offset_bottom = 140.0
+node_to_drop = NodePath("../..")
 
 [node name="FiniteStateMachine" parent="." index="1" unique_id=394854071]
 script = ExtResource("3_xf5fp")
