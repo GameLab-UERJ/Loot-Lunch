@@ -76,58 +76,61 @@ func handle_cell_left_clicked(cell : InventoryCell) -> void:
 		handle_new_selected_cell(cell)
 
 
-## Troca o item entre selected_cell e a célula do parâmetro,
-## fazendo merge se forem do mesmo tipo stackável.
+## Lida com o drop do item selecionado em uma célula alvo.
+## Três casos: merge (mesmo tipo stackável), mover (vazia), swap (tipo diferente).
 func _swap_or_merge(source: InventoryCell, target: InventoryCell) -> void:
-	var source_item: Item = selected_item
-	var source_count: int = selected_count
-	
-	if not source_item:
-		push_warning("No item to place")
+	if not selected_item:
 		return
 	
-	# Merge: mesmo tipo e stackável e com espaço
-	if target.item and target.item.item_name == source_item.item_name and target.is_stackable():
+	var src_item: Item = selected_item
+	var src_count: int = selected_count
+	
+	# Caso 1: Merge — mesmo tipo, stackável, com espaço
+	if target.item and target.item.item_name == src_item.item_name and target.is_stackable():
 		var stack_comp = target.item.get_node("StackableComponent")
-		if not stack_comp:
-			# Fallback: swap normal
-			_do_swap(source, target, source_item, source_count)
-			return
-		var space = stack_comp.stack_size - target.count
-		if space > 0:
-			var move = min(source_count, space)
-			target.count += move
-			source_count -= move
-			
-			if source_count <= 0:
-				if source.count <= 0:
-					source.item = null
-				source.is_selected = false
-				selected_cell = null
-				selected_item = null
-				selected_count = 0
-				source_item.queue_free()
-				return
-			else:
-				# Ainda sobrou unidade na mão — mantém seleção
-				selected_count = source_count
-				source.is_selected = false
-				return
-		# Sem espaço, cai no swap normal
+		if stack_comp:
+			var space = stack_comp.stack_size - target.count
+			if space > 0:
+				var move = min(src_count, space)
+				target.count += move
+				src_count -= move
+				
+				if src_count <= 0:
+					if source.count <= 0:
+						source.item = null
+					source.is_selected = false
+					selected_cell = null
+					selected_item = null
+					selected_count = 0
+					src_item.queue_free()
+					return
+				else:
+					selected_count = src_count
+					source.is_selected = false
+					return
 	
-	# Swap normal (ou target com tipo diferente)
-	_do_swap(source, target, source_item, source_count)
-
-
-func _do_swap(source: InventoryCell, target: InventoryCell, source_item: Item, source_count: int) -> void:
-	var target_item: Item = target.item
-	var target_count: int = target.count
+	# Caso 2: Célula vazia — move o item
+	if not target.item:
+		target.set_item(src_item)
+		target.count = src_count
+		
+		if source.count <= 0:
+			source.item = null
+		
+		source.is_selected = false
+		selected_cell = null
+		selected_item = null
+		selected_count = 0
+		return
 	
-	target.item = source_item
-	target.count = source_count
+	# Caso 3: Swap — tipos diferentes
+	var tgt_item: Item = target.item
+	var tgt_count: int = target.count
 	
-	source.item = target_item
-	source.count = target_count
+	target.item = src_item
+	target.count = src_count
+	source.item = tgt_item
+	source.count = tgt_count
 	
 	source.is_selected = false
 	target.is_selected = false
@@ -262,8 +265,9 @@ func set_selected_cell(value : InventoryCell) -> void:
 	if selected_cell:
 		selected_cell.is_selected = false
 		if selected_item:
+			var remaining: int = selected_cell.count
 			selected_cell.set_item(selected_item)
-			selected_cell.count += selected_count
+			selected_cell.count = remaining + selected_count
 			selected_item = null
 		selected_count = 0
 	

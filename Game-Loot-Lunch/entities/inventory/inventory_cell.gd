@@ -18,7 +18,7 @@ var is_selected : bool = false:
 	set = set_is_selected
 ## Quantas unidades deste item estão nesta célula.
 ## Para itens não-stackáveis, sempre 1.
-var count : int = 1:
+var count : int = 0:
 	set = set_count
 
 
@@ -111,10 +111,9 @@ func set_item(value : Item) -> Item:
 	var previous_item : Item = item
 	item = value
 	if not item:
-		if count <= 0:
-			item_place.texture = null
-			set_price_text("")
-		_update_stack_label()
+		item_place.texture = null
+		set_price_text("")
+		count = 0
 		return null
 	elif not item.region_enabled:
 		item_place.texture = item.texture
