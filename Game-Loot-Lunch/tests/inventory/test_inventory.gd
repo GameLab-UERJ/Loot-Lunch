@@ -1,10 +1,15 @@
 extends Node2D
 
 
-@onready var inventory: Inventory = $CanvasLayer/Inventory
+@onready var inventory_component: InventoryComponent = $Player/InventoryComponent
+@onready var inventory: Inventory = $Player/InventoryLayer/Inventory
 @onready var carne: Item = $Carne
+@onready var carne2: Item = $Carne2
+@onready var carne3: Item = $Carne3
+@onready var carne4: Item = $Carne4
+@onready var carne5: Item = $Carne5
+@onready var carne6: Item = $Carne6
 @onready var tomate: Item = $Tomate
-@onready var farinha: Item = $Farinha 
 @onready var selected_cell: Label = $VBoxContainer/SelectedCell
 @onready var selected_item: Label = $VBoxContainer/SelectedItem
 @onready var selected_pos: Label = $VBoxContainer/SelectedPos
@@ -14,23 +19,15 @@ extends Node2D
 func _ready() -> void:
 	tutorial.text = '''
 	  Press    I    to    show/hide    Inventory
-	  Left    click    to    select/move    items
-	  Right    click    to    cancel    selection/remove    items'''
-					
-	carne.connect("picked_up",inventory.add_item)
-	tomate.connect("picked_up",inventory.add_item)
-	farinha.connect("picked_up",inventory.add_item)
-	'''inventory.add_item(carne)
-	inventory.add_item(tomate)
-	inventory.add_item(farinha)
-	print("root:\n",get_children(),"\n-----------")
-	print("grid:")
-	inventory.print_inventory_cells()
-	print("\n-----------")
-	await get_tree().create_timer(5).timeout
-	inventory.remove_item_at(Vector2i.RIGHT).force_follow_mouse()
-	print(get_children())
-	inventory.print_inventory_cells()'''
+	  Walk    over    items    to    collect    them
+	  Left    click    (stack)    to    pick    1  unit
+	  Shift+click    (stack)    to    pick    all
+	  Right    click    (stack)    to    split
+	  Right    click    (bg)    to    drop    item'''
+
+	# Conecta o pickup de cada item ao inventário do jogador
+	for item_node: Item in [carne, carne2, carne3, carne4, carne5, carne6, tomate]:
+		item_node.picked_up.connect(inventory_component.add_item)
 
 
 func _physics_process(_delta: float) -> void:
@@ -43,7 +40,8 @@ func _physics_process(_delta: float) -> void:
 
 func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_released("open_inventory"):
-		inventory.visible = not inventory.visible
+		# O InventoryComponent do player já alterna o inventário dele
+		pass
 
 func get_selected_position() -> Array[Vector2i]:
 	var result : Array[Vector2i] = []
