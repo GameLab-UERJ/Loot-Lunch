@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cle3p5oy53g7r" path="res://entities/base_classes/item/item.gd" id="1_vr55j"]
 [ext_resource type="Texture2D" uid="uid://xnfegqg2xfdc" path="res://assets/art/entities/items/farming_fishing.png" id="2_ao85l"]
+[ext_resource type="Script" path="res://entities/base_classes/stackable_component.gd" id="3_ti5et"]
 
 [node name="Carne" type="Sprite2D" unique_id=1998340507]
 physics_interpolation_mode = 2
@@ -14,3 +15,7 @@ item_name = "Carne"
 description = "Carne Vermelha"
 is_ingredient = true
 metadata/_custom_type_script = "uid://cle3p5oy53g7r"
+
+[node name="StackableComponent" type="Node" parent="."]
+script = ExtResource("3_ti5et")
+stack_size = 5
