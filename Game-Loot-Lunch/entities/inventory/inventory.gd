@@ -242,7 +242,11 @@ func handle_wants_item_removed(cell: InventoryCell) -> void:
 	_restore_selected()
 	
 	var item: Item = remove_item_at(get_pos(cell))
+	# Reparenta pro mundo antes de setar posição (remove_item usa deferred)
+	item.reparent(get_tree().current_scene)
 	item.global_position = node_to_drop.global_position
+	item.dropped_count = 1
+	_disable_pickup_temporarily(item)
 
 
 func add_item(item: Item) -> void:
@@ -252,22 +256,44 @@ func add_item(item: Item) -> void:
 	# Se tem item carregado, restaura antes pra não duplicar
 	_restore_selected()
 	
+	var amount = max(1, item.dropped_count)
+	item.dropped_count = 1  # reseta pro padrão
 	var stack_comp = item.get_node("StackableComponent") if item.has_node("StackableComponent") else null
 	
 	if stack_comp:
+		var stack_size = stack_comp.stack_size
+		# Empilha em células existentes do mesmo tipo
 		for cell: InventoryCell in grid.get_children():
-			if cell.item and cell.item.item_name == item.item_name and cell.count < stack_comp.stack_size:
-				cell.count += 1
+			if not cell.item or cell.item.item_name != item.item_name:
+				continue
+			var space = stack_size - cell.count
+			if space <= 0:
+				continue
+			var move = min(amount, space)
+			cell.count += move
+			amount -= move
+			if amount <= 0:
 				item.queue_free()
 				return
-	
-	var empty = find_empty_cells(true)
-	if empty.is_empty():
-		push_warning("Inventory is full!")
-		return
-	var cell = empty[0]
-	cell.set_item(item)
-	cell.count = 1
+		# Coloca o resto em célula vazia
+		if amount > 0:
+			var empty = find_empty_cells(true)
+			if empty.is_empty():
+				push_warning("Inventory is full!")
+				item.queue_free()
+				return
+			var cell = empty[0]
+			cell.set_item(item)
+			cell.count = amount
+	else:
+		# Não stackável
+		var empty = find_empty_cells(true)
+		if empty.is_empty():
+			push_warning("Inventory is full!")
+			return
+		var cell = empty[0]
+		cell.set_item(item)
+		cell.count = 1
 
 
 func remove_item() -> Item:
@@ -294,20 +320,24 @@ func drop_selected_item() -> void:
 		return
 	
 	selected_cell.is_selected = false
+	var drop_pos := node_to_drop.global_position
 	
 	if selected_cell.item:
-		# Duplicado (pickup parcial / split): tira do stack e dropa no mundo
-		selected_cell.count -= selected_count
+		# Duplicado (pickup parcial / split): dropa no mundo
 		selected_item.reparent(get_tree().current_scene)
-		selected_item.global_position = node_to_drop.global_position
+		selected_item.global_position = drop_pos
 	else:
 		# Item real (pickup total): reposiciona no mundo
-		selected_item.global_position = node_to_drop.global_position
+		selected_item.reparent(get_tree().current_scene)
+		selected_item.global_position = drop_pos
 		selected_item.show()
+	
+	selected_item.dropped_count = selected_count
 	
 	selected_item.force_stop_follow_mouse()
 	selected_item.top_level = false
 	selected_item.z_index = 0
+	_disable_pickup_temporarily(selected_item)
 	_cleanup_selection()
 
 
@@ -315,6 +345,21 @@ func _cleanup_selection() -> void:
 	selected_cell = null
 	selected_item = null
 	selected_count = 0
+
+
+## Desativa o pickup do item dropped por 0.5s pra evitar
+## que o player pegue ele de volta imediatamente.
+func _disable_pickup_temporarily(item: Item) -> void:
+	if not item or not item.interactable_area:
+		return
+	item.interactable_area.monitoring = false
+	var timer := get_tree().create_timer(0.5)
+	timer.timeout.connect(_make_dropped_item_pickupable.bind(item), CONNECT_ONE_SHOT)
+
+
+func _make_dropped_item_pickupable(item: Item) -> void:
+	if is_instance_valid(item) and item.interactable_area:
+		item.interactable_area.monitoring = true
 
 
 ## Restaura o item carregado (se houver) para a célula de origem.
@@ -364,7 +409,7 @@ func set_selected_cell(value: InventoryCell) -> void:
 		# Pickup total: Item sai da célula e segue o mouse
 		selected_count = cell_count
 		selected_cell.count = 0
-		selected_item = selected_cell.remove_item(self)
+		selected_item = selected_cell.remove_item(self, true, true)
 		if selected_item:
 			selected_item.top_level = true
 			selected_item.z_index = 100

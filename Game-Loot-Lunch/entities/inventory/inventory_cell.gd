@@ -63,7 +63,7 @@ func _gui_input(event: InputEvent) -> void:
 
 ## Remove o Item Node da célula e limpa o visual (count vira 0).
 ## Usado para remoção completa (não-stackável ou stack inteiro).
-func remove_item(new_parent : Node = null, _show : bool = true) -> Item:
+func remove_item(new_parent : Node = null, _show : bool = true, _immediate : bool = false) -> Item:
 	if not new_parent:
 		new_parent = get_tree().current_scene
 	if not item:
@@ -71,7 +71,10 @@ func remove_item(new_parent : Node = null, _show : bool = true) -> Item:
 		return null
 	var removed_item : Item = item
 	item = null
-	removed_item.call_deferred("reparent", new_parent)
+	if _immediate:
+		removed_item.reparent(new_parent)
+	else:
+		removed_item.call_deferred("reparent", new_parent)
 	if _show: 
 		removed_item.show()
 	else:
