@@ -311,21 +311,25 @@ func add_player_item_to_transfer(cell: InventoryCell, amount: int = 1) -> void:
 			return
 		sell_item.hide()
 		add_child(sell_item)
-		transfer_inventory.add_item(sell_item)
-		for c: InventoryCell in transfer_inventory.grid.get_children():
-			if c.item == sell_item:
-				c.count = sell_amount
-				break
+		var empty := transfer_inventory.find_empty_cells(true)
+		if empty.is_empty():
+			cell.count += sell_amount
+			sell_item.queue_free()
+			return
+		empty[0].set_item(sell_item)
+		empty[0].count = sell_amount
 		sell_items[sell_item] = real_item
 		transfer_item_prices[sell_item] = price
 		set_item_price_text(transfer_inventory, sell_item, price * sell_amount, Color.RED)
 	else:
 		var item_to_sell: Item = cell.remove_item()
-		transfer_inventory.add_item(item_to_sell)
-		for c: InventoryCell in transfer_inventory.grid.get_children():
-			if c.item == item_to_sell:
-				c.count = sell_amount
-				break
+		var empty := transfer_inventory.find_empty_cells(true)
+		if empty.is_empty():
+			cell.set_item(item_to_sell)
+			cell.count = sell_amount
+			return
+		empty[0].set_item(item_to_sell)
+		empty[0].count = sell_amount
 		sell_items[item_to_sell] = real_item
 		transfer_item_prices[item_to_sell] = price
 		set_item_price_text(transfer_inventory, item_to_sell, price * sell_amount, Color.RED)
@@ -409,12 +413,12 @@ func accept_split_for_sell() -> void:
 	selected.z_index = 0
 	selected.position = Vector2.ZERO
 
-	transfer_inventory.add_item(selected)
-
-	for c: InventoryCell in transfer_inventory.grid.get_children():
-		if c.item == selected:
-			c.count = count
-			break
+	var empty := transfer_inventory.find_empty_cells(true)
+	if empty.is_empty():
+		player_inventory._cleanup_selection()
+		return
+	empty[0].set_item(selected)
+	empty[0].count = count
 
 	sell_items[selected] = real_item
 	transfer_item_prices[selected] = price
