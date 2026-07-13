@@ -1,42 +1,34 @@
 [gd_scene format=3 uid="uid://b7rvih4e4hkcu"]
 
 [ext_resource type="Script" uid="uid://bk8rxeu74ypfd" path="res://tests/inventory/test_inventory.gd" id="1_372ms"]
-[ext_resource type="PackedScene" uid="uid://cqnchp7q3uixs" path="res://entities/inventory/inventory.tscn" id="2_i0jss"]
 [ext_resource type="PackedScene" uid="uid://cexct4fg71pc5" path="res://entities/items/carne.tscn" id="3_2ff5v"]
 [ext_resource type="PackedScene" uid="uid://dwlepdjd5lv8x" path="res://entities/items/tomate.tscn" id="4_67sjd"]
-[ext_resource type="PackedScene" uid="uid://dd8vbsbs33ii4" path="res://entities/items/farinha.tscn" id="5_7tixs"]
 [ext_resource type="FontFile" uid="uid://cvuth304y1byc" path="res://assets/fonts/tinypixel.ttf" id="6_7tixs"]
 [ext_resource type="PackedScene" uid="uid://3cgeew2m05mn" path="res://entities/player/player.tscn" id="6_67sjd"]
 
 [node name="TestInventory" type="Node2D" unique_id=1879085168]
 script = ExtResource("1_372ms")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=755010616]
-layer = -1
-
-[node name="Inventory" parent="CanvasLayer" unique_id=1443629152 node_paths=PackedStringArray("node_to_drop") instance=ExtResource("2_i0jss")]
-visible = false
-anchors_preset = 11
-anchor_left = 1.0
-anchor_top = 0.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -60.0
-offset_top = 0.0
-offset_right = -60.0
-offset_bottom = 0.0
-grow_horizontal = 0
-dimensions = Vector2i(3, 3)
-node_to_drop = NodePath("../../Droper")
-
 [node name="Carne" parent="." unique_id=1998340507 instance=ExtResource("3_2ff5v")]
-position = Vector2(224.00002, 134)
+position = Vector2(224, 120)
+
+[node name="Carne2" parent="." unique_id=1998340508 instance=ExtResource("3_2ff5v")]
+position = Vector2(256, 120)
+
+[node name="Carne3" parent="." unique_id=1998340509 instance=ExtResource("3_2ff5v")]
+position = Vector2(288, 120)
+
+[node name="Carne4" parent="." unique_id=1998340510 instance=ExtResource("3_2ff5v")]
+position = Vector2(224, 152)
+
+[node name="Carne5" parent="." unique_id=1998340511 instance=ExtResource("3_2ff5v")]
+position = Vector2(256, 152)
+
+[node name="Carne6" parent="." unique_id=1998340512 instance=ExtResource("3_2ff5v")]
+position = Vector2(288, 152)
 
 [node name="Tomate" parent="." unique_id=1065823031 instance=ExtResource("4_67sjd")]
-position = Vector2(302, 135)
-
-[node name="Farinha" parent="." unique_id=546262662 instance=ExtResource("5_7tixs")]
-position = Vector2(270, 181)
+position = Vector2(256, 184)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1047629312]
 offset_right = 40.0
@@ -89,26 +81,3 @@ text = "Press I for Inventory"
 
 [node name="Player" parent="." unique_id=1328809556 instance=ExtResource("6_67sjd")]
 position = Vector2(146.00002, 108)
-
-[node name="Droper" type="Marker2D" parent="." unique_id=878080529]
-position = Vector2(146.28539, 172.08502)
-
-[node name="Label" type="Label" parent="Droper" unique_id=700499900]
-texture_filter = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -27.285385
-offset_top = 1.9149628
-offset_right = 27.42923
-offset_bottom = 24.914963
-grow_horizontal = 2
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/line_spacing = 2
-theme_override_constants/paragraph_spacing = 0
-theme_override_constants/outline_size = 3
-theme_override_fonts/font = ExtResource("6_7tixs")
-theme_override_font_sizes/font_size = 5
-text = "drop area"
-horizontal_alignment = 1
-vertical_alignment = 1

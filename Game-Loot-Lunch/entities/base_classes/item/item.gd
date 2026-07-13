@@ -11,6 +11,9 @@ signal picked_up(item : Item)
 @export var item_name : String		## Name of the Item
 @export var description : String	## Description of the Item, to e shown when inspected
 @export var is_ingredient : bool	## Ingredients can be used in recipees
+## Quantas unidades este Item representa quando dropado no mundo.
+## Default 1; para stacks, pode ser > 1.
+var dropped_count: int = 1
 
 
 @onready var clickable_area: ClickableArea = get_node("ClickableArea") if has_node("ClickableArea") else null
