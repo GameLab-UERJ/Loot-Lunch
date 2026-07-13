@@ -5,6 +5,7 @@
 [ext_resource type="AudioStream" uid="uid://cws2chg3v21hb" path="res://assets/sfx/ambient/freesound_community-night-ambience-17064.mp3" id="3_daak6"]
 
 [node name="CanvasModulate" type="CanvasModulate" unique_id=2007590606]
+visible = false
 color = Color(0.75375223, 0.8162061, 0.93515855, 1)
 script = ExtResource("1_ry3t4")
 

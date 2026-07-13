@@ -4,6 +4,7 @@ extends Node2D
 signal player_can_leave_shop
 signal stop_player_can_leave_shop
 
+@export var is_outdoor: bool = false
 @export var shop_menu: ShopMenu
 @export var shop_component: ShopComponent
 @export var player_inventory_component: InventoryComponent
@@ -12,6 +13,9 @@ signal stop_player_can_leave_shop
 
 
 func _ready() -> void:
+	
+	EnvironmentManager.is_outdoor = is_outdoor
+	
 	shop_menu.shop_opened.connect(_on_shop_menu_opened)
 	shop_menu.shop_closed.connect(_on_shop_menu_closed)
 	player_inventory_component.inventory_opened.connect(_on_player_inventory_opened)
