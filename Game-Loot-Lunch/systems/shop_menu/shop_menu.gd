@@ -170,8 +170,11 @@ func confirm_sell() -> void:
 		message_label.text = "Nenhum item para vender"
 		return
 
-	for item_to_sell: Item in sell_items.values():
-		remove_real_player_item(item_to_sell)
+	for cell: InventoryCell in transfer_inventory.grid.get_children():
+		if cell.item:
+			var real_item: Item = sell_items.get(cell.item)
+			if real_item:
+				remove_real_player_item(real_item, cell.count)
 
 	PlayerWallet.add_gold(total_price)
 	clear_transfer()
@@ -347,18 +350,23 @@ func clear_transfer() -> void:
 	update_total_message()
 
 
-func remove_real_player_item(item_to_remove: Item) -> void:
+func remove_real_player_item(item_to_remove: Item, amount: int = 1) -> void:
 	for cell: InventoryCell in real_player_inventory.grid.get_children():
 		if cell.item == item_to_remove:
-			if cell.is_stackable() and cell.count > 1:
-				cell.count -= 1
+			if cell.is_stackable() and cell.count > amount:
+				cell.count -= amount
+			elif cell.is_stackable() and cell.count <= amount:
+				cell.remove_item().queue_free()
 			else:
 				cell.remove_item().queue_free()
 			return
 
 	for cell: InventoryCell in real_player_inventory.grid.get_children():
-		if cell.item and cell.item.item_name == item_to_remove.item_name and cell.is_stackable() and cell.count > 1:
-			cell.count -= 1
+		if cell.item and cell.item.item_name == item_to_remove.item_name and cell.is_stackable() and cell.count > amount:
+			cell.count -= amount
+			return
+		elif cell.item and cell.item.item_name == item_to_remove.item_name and cell.is_stackable():
+			cell.remove_item().queue_free()
 			return
 
 
