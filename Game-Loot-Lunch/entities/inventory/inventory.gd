@@ -242,7 +242,10 @@ func handle_wants_item_removed(cell: InventoryCell) -> void:
 	_restore_selected()
 	
 	var item: Item = remove_item_at(get_pos(cell))
+	# Reparenta imediatamente pro mundo (remove_item usa call_deferred)
+	item.reparent(get_tree().current_scene)
 	item.global_position = node_to_drop.global_position
+	_disable_pickup_temporarily(item)
 
 
 func add_item(item: Item) -> void:
@@ -294,20 +297,35 @@ func drop_selected_item() -> void:
 		return
 	
 	selected_cell.is_selected = false
+	var drop_pos := node_to_drop.global_position
 	
 	if selected_cell.item:
-		# Duplicado (pickup parcial / split): tira do stack e dropa no mundo
-		selected_cell.count -= selected_count
+		# Duplicado (pickup parcial / split): dropa no mundo
 		selected_item.reparent(get_tree().current_scene)
-		selected_item.global_position = node_to_drop.global_position
+		selected_item.global_position = drop_pos
 	else:
 		# Item real (pickup total): reposiciona no mundo
-		selected_item.global_position = node_to_drop.global_position
+		selected_item.reparent(get_tree().current_scene)
+		selected_item.global_position = drop_pos
 		selected_item.show()
+	
+	# Se o pickup representa múltiplas unidades (shift+click em stack
+	# ou split), spawna as extras como duplicatas
+	if selected_count > 1:
+		for i in range(selected_count - 1):
+			var extra := selected_item.duplicate()
+			extra.global_position = drop_pos + Vector2.RIGHT * ((i + 1) * 12)
+			get_tree().current_scene.add_child(extra)
+			extra.top_level = false
+			extra.z_index = 0
+			extra.force_stop_follow_mouse()
+			extra.show()
+			_disable_pickup_temporarily(extra)
 	
 	selected_item.force_stop_follow_mouse()
 	selected_item.top_level = false
 	selected_item.z_index = 0
+	_disable_pickup_temporarily(selected_item)
 	_cleanup_selection()
 
 
@@ -315,6 +333,22 @@ func _cleanup_selection() -> void:
 	selected_cell = null
 	selected_item = null
 	selected_count = 0
+
+
+## Desativa o pickup do item dropped por 0.5s pra evitar
+## que o player pegue ele de volta imediatamente (o interactable
+## area sobrepõe o player quando dropa aos pés).
+func _disable_pickup_temporarily(item: Item) -> void:
+	if not item or not item.interactable_area:
+		return
+	item.interactable_area.monitoring = false
+	var timer := get_tree().create_timer(0.5)
+	timer.timeout.connect(_make_dropped_item_pickupable.bind(item), CONNECT_ONE_SHOT)
+
+
+func _make_dropped_item_pickupable(item: Item) -> void:
+	if is_instance_valid(item) and item.interactable_area:
+		item.interactable_area.monitoring = true
 
 
 ## Restaura o item carregado (se houver) para a célula de origem.
@@ -350,10 +384,10 @@ func set_selected_cell(value: InventoryCell) -> void:
 	var is_stackable = selected_cell.is_stackable()
 	var cell_count = selected_cell.count
 	
-	if is_stackable and cell_count > 1 and not Input.is_key_pressed(KEY_SHIFT):
-		# Pickup parcial: duplica o Item, original fica na célula
-		selected_count = 1
-		selected_cell.count -= 1
+	if is_stackable and cell_count > 1:
+		# Stack com mais de 1: sempre duplica, original fica na célula
+		selected_count = cell_count if Input.is_key_pressed(KEY_SHIFT) else 1
+		selected_cell.count -= selected_count
 		selected_item = selected_cell.item.duplicate()
 		add_child(selected_item)
 		selected_item.show()
@@ -361,10 +395,10 @@ func set_selected_cell(value: InventoryCell) -> void:
 		selected_item.z_index = 100
 		selected_item.force_follow_mouse()
 	else:
-		# Pickup total: Item sai da célula e segue o mouse
+		# Não stackável ou count == 1: Item sai da célula
 		selected_count = cell_count
 		selected_cell.count = 0
-		selected_item = selected_cell.remove_item(self)
+		selected_item = selected_cell.remove_item(self, true, true)
 		if selected_item:
 			selected_item.top_level = true
 			selected_item.z_index = 100
