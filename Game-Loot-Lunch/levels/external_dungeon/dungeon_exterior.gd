@@ -10,6 +10,7 @@ signal player_can_enter_shop
 signal stop_player_can_enter_shop
 
 
+@export var is_outdoor: bool = true
 @export var player_start_position : Marker2D
 @export var internal_dungeon_entrance : Marker2D 
 @export var dungeon_way_entrance : Marker2D  
@@ -19,6 +20,9 @@ signal stop_player_can_enter_shop
 
 
 func _ready() -> void:
+	
+	EnvironmentManager.is_outdoor = is_outdoor
+	
 	if not player_start_position:
 		player.position = Vector2(35, 305)
 	else:
