@@ -1,6 +1,9 @@
 [gd_scene format=3 uid="uid://cqnchp7q3uixs"]
 
 [ext_resource type="Script" uid="uid://c3wvorc8cumre" path="res://entities/inventory/inventory.gd" id="1_0tuds"]
+[ext_resource type="PackedScene" uid="uid://dm1b5lo2dhwsx" path="res://entities/Craft/crafting_grid.tscn" id="2_q0t3s"]
+[ext_resource type="Script" uid="uid://csymt6cnu6pf" path="res://resources/Recipe/Recipe.gd" id="3_1kjwn"]
+[ext_resource type="Resource" uid="uid://472o8obempxb" path="res://resources/Carne.tres" id="4_u1r4d"]
 
 [node name="Inventory" type="Control" unique_id=1443629152]
 layout_mode = 3
@@ -35,3 +38,20 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/h_separation = 0
 theme_override_constants/v_separation = 0
+
+[node name="Button" type="Button" parent="." unique_id=1597024711]
+layout_mode = 0
+offset_left = 186.0
+offset_top = 35.0
+offset_right = 263.0
+offset_bottom = 66.0
+text = "Recepies"
+
+[node name="CraftingGrid" parent="." unique_id=631059723 node_paths=PackedStringArray("inventory") instance=ExtResource("2_q0t3s")]
+layout_mode = 0
+offset_left = 31.0
+offset_top = 63.0
+offset_right = 31.0
+offset_bottom = 63.0
+inventory = NodePath("..")
+recipes = Array[ExtResource("3_1kjwn")]([ExtResource("4_u1r4d")])

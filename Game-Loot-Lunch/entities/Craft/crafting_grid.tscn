@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://dm1b5lo2dhwsx"]
+
+[ext_resource type="Script" uid="uid://do0kxtvp5k5mf" path="res://entities/Craft/crafting_grid.gd" id="1_q7hvp"]
+
+[node name="CraftingGrid" type="HBoxContainer" unique_id=631059723]
+script = ExtResource("1_q7hvp")
+
+[node name="GridContainer3x3" type="GridContainer" parent="." unique_id=1413702602]
+layout_mode = 2

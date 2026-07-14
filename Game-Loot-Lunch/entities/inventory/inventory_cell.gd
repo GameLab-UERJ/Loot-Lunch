@@ -6,24 +6,25 @@ signal selected(cell : InventoryCell)
 signal wants_item_removed(cell : InventoryCell)
 signal left_clicked(cell : InventoryCell)
 signal split_stack(cell : InventoryCell, half : int)
+signal item_dropped(cell : InventoryCell, item : Item)  ## Novo: quando um item é solto nesta célula
+signal item_picked(cell : InventoryCell)  ## Novo: quando um item é retirado desta célula
 
 
 @export var item : Item:
 	set = set_item
 @export var background_color : Color = Color.hex(0x4ab5ae)
 @export var selected_color : Color = Color.hex(0xd99a64)
+## Se true, esta célula aceita receber itens via drag & drop
+@export var can_receive_items : bool = true
+## Se true, itens podem ser removidos desta célula (pickup)
+@export var can_remove_items : bool = true
 
 
 var is_selected : bool = false:
 	set = set_is_selected
-## Quantas unidades deste item estão nesta célula.
-## Para itens não-stackáveis, sempre 1.
 var count : int = 0:
 	set = set_count
 
-## Cache: o Item que estava nesta célula era stackável?
-## Usado quando o Item é removido (pick-up parcial) mas count > 0,
-## pra não perder o label de quantidade.
 var _was_stackable: bool = false
 
 
@@ -52,6 +53,9 @@ func _gui_input(event: InputEvent) -> void:
 		left_clicked.emit(self)
 		accept_event()
 	if event.is_action_released("right_click"):
+		# Se não pode remover, ignora
+		if not can_remove_items:
+			return
 		if item and _is_stackable() and count > 1:
 			var half : int = count / 2
 			if half > 0:
@@ -61,8 +65,25 @@ func _gui_input(event: InputEvent) -> void:
 		accept_event()
 
 
-## Remove o Item Node da célula e limpa o visual (count vira 0).
-## Usado para remoção completa (não-stackável ou stack inteiro).
+## Drag & Drop - esta célula pode receber itens?
+func _can_drop_data(_pos: Vector2, data) -> bool:
+	if not can_receive_items:
+		return false
+	if item:
+		return false  # Já tem item
+	return data is Item
+
+
+## Drag & Drop - recebeu um item
+func _drop_data(_pos: Vector2, data) -> void:
+	if not data is Item:
+		return
+	
+	item_dropped.emit(self, data)
+	# Não chamamos set_item aqui, o CraftingGrid que gerencia
+
+
+## Remove o Item Node da célula e limpa o visual
 func remove_item(new_parent : Node = null, _show : bool = true, _immediate : bool = false) -> Item:
 	if not new_parent:
 		new_parent = get_tree().current_scene
@@ -71,20 +92,25 @@ func remove_item(new_parent : Node = null, _show : bool = true, _immediate : boo
 		return null
 	var removed_item : Item = item
 	item = null
-	if _immediate:
-		removed_item.reparent(new_parent)
+	if removed_item.get_parent():
+		if _immediate:
+			removed_item.reparent(new_parent)
+		else:
+			removed_item.call_deferred("reparent", new_parent)
 	else:
-		removed_item.call_deferred("reparent", new_parent)
+		if _immediate:
+			new_parent.add_child(removed_item)
+		else:
+			new_parent.call_deferred("add_child", removed_item)
 	if _show: 
 		removed_item.show()
 	else:
 		removed_item.hide()
+	
+	item_picked.emit(self)
 	return removed_item
 
 
-## Remove o Item Node da célula mas MANTÉM o visual (textura + count).
-## Usado quando vc pega 1 unidade de um stack — a célula continua
-## mostrando o ícone e o número de unidades restantes.
 func is_stackable() -> bool:
 	return _is_stackable()
 
