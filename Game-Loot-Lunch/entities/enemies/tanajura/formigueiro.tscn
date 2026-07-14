@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://dtgxgfm27ko5o"]
+
+[ext_resource type="Script" uid="uid://o2tp8vrr10j2" path="res://entities/enemies/tanajura/formigueiro.gd" id="1_bhfhi"]
+[ext_resource type="PackedScene" uid="uid://b3tuaq1lu3ugj" path="res://entities/enemies/tanajura/tanajura.tscn" id="2_18rgx"]
+[ext_resource type="Texture2D" uid="uid://bgrx41ajqpfck" path="res://assets/art/entities/enemies/tanajura/formigueiro_3.png" id="3_18rgx"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_m5uyx"]
+radius = 106.004715
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_18rgx"]
+radius = 16.03122
+
+[node name="Formigueiro" type="Node2D" unique_id=1136054396]
+script = ExtResource("1_bhfhi")
+creature_scene = ExtResource("2_18rgx")
+spawn_time = 3.0
+metadata/_custom_type_script = "uid://o2tp8vrr10j2"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=898528207]
+texture = ExtResource("3_18rgx")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1411211002]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1757321901]
+shape = SubResource("CircleShape2D_m5uyx")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=742201568]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=428512892]
+shape = SubResource("CircleShape2D_18rgx")
+
+[connection signal="spawned" from="." to="." method="_on_spawned"]

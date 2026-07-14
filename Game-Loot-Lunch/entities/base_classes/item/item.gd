@@ -11,6 +11,9 @@ signal picked_up(item : Item)
 @export var item_name : String		## Name of the Item
 @export var description : String	## Description of the Item, to e shown when inspected
 @export var is_ingredient : bool	## Ingredients can be used in recipees
+## Quantas unidades este Item representa quando dropado no mundo.
+## Default 1; para stacks, pode ser > 1.
+var dropped_count: int = 1
 
 
 @onready var clickable_area: ClickableArea = get_node("ClickableArea") if has_node("ClickableArea") else null
@@ -22,10 +25,10 @@ func _ready() -> void:
 		push_error("Item ",item_name," must have a Texture")
 	if not clickable_area:
 		clickable_area = CLICKABLE_AREA.instantiate()
-		add_child(clickable_area)
+		call_deferred("add_child",clickable_area)
 	if not interactable_area:
 		interactable_area = INTERACTABLE_AREA.instantiate()
-		add_child(interactable_area)
+		call_deferred("add_child",interactable_area)
 	interactable_area.interact_with_player.connect(emit_picked_up)
 
 
@@ -39,8 +42,12 @@ func emit_picked_up() -> void:
 
 
 func force_follow_mouse() -> void:
+	if not clickable_area:
+		return
 	clickable_area.is_following_mouse = true
 
 
 func force_stop_follow_mouse() -> void:
+	if not clickable_area:
+		return
 	clickable_area.is_following_mouse = false

@@ -21,11 +21,11 @@ var _night_target_volume: float = -40.0
 func _ready() -> void:
 	TimeCycle.day_started.connect(_on_day_started)
 	TimeCycle.night_started.connect(_on_night_started)
+	EnvironmentManager.outdoor_changed.connect(_on_outdoor_changed)
 
 	_target_color = color
 
-	_day_ambient.play()
-	_night_ambient.play()
+	_on_outdoor_changed(EnvironmentManager.is_outdoor)
 
 
 func _process(delta: float) -> void:
@@ -48,13 +48,27 @@ func _process(delta: float) -> void:
 
 func _on_day_started() -> void:
 	_target_color = day_color
-
 	_day_target_volume = 0.0
 	_night_target_volume = -40.0
 
 
 func _on_night_started() -> void:
 	_target_color = night_color
-
 	_day_target_volume = -40.0
 	_night_target_volume = 0.0
+
+
+func _on_outdoor_changed(is_outdoor: bool) -> void:
+	visible = is_outdoor
+
+	if is_outdoor:
+		_day_ambient.play()
+		_night_ambient.play()
+
+		if TimeCycle.is_day():
+			_on_day_started()
+		else:
+			_on_night_started()
+	else:
+		_day_ambient.stop()
+		_night_ambient.stop()

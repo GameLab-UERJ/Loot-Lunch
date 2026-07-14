@@ -17,8 +17,8 @@ press_sound = ExtResource("2_jq7ry")
 
 [node name="Background" type="ColorRect" parent="." unique_id=979125322]
 layout_mode = 0
-offset_right = 480.0
-offset_bottom = 270.0
+offset_right = 652.0
+offset_bottom = 371.0
 color = Color(0.050980393, 0.050980393, 0.050980393, 1)
 
 [node name="Content" type="VBoxContainer" parent="." unique_id=71602187]

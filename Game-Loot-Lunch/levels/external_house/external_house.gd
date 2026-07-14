@@ -3,12 +3,13 @@ class_name ExternalHouse
 
 signal player_can_enter_house
 signal stop_player_can_enter_house
-signal player_can_enter_shop
-signal stop_player_can_enter_shop
-signal player_can_enter_cambat_zone
-signal stop_player_can_enter_cambat_zone
+signal player_can_enter_left
+signal stop_player_can_enter_left
+signal player_can_enter_combat_area
+signal stop_player_can_enter_combat_area
 
 
+@export var is_outdoor: bool = true
 @export var player_start_position : Marker2D
 
 
@@ -18,10 +19,14 @@ signal stop_player_can_enter_cambat_zone
 
 
 func _ready() -> void:
+	
+	EnvironmentManager.is_outdoor = is_outdoor
+	
 	if not player_start_position:
 		player.position = Vector2(35,305)
 	else:
 		player.global_position = player_start_position.global_position
+
 
 func _on_house_area_entered() -> void:
 	player_can_enter_house.emit()
@@ -31,20 +36,20 @@ func _on_house_area_exited() -> void:
 	stop_player_can_enter_house.emit()
 
 
-func _on_shop_area_entered() -> void:
-	player_can_enter_shop.emit()
+func _on_left_area_entered() -> void:
+	player_can_enter_left.emit()
 
 
-func _on_shop_area_exited() -> void:
-	stop_player_can_enter_shop.emit()
+func _on_left_area_exited() -> void:
+	stop_player_can_enter_left.emit()
 
 
 func _on_combat_area_entered() -> void:
-	player_can_enter_cambat_zone.emit()
+	player_can_enter_combat_area.emit()
 
 
 func _on_combat_area_exited() -> void:
-	stop_player_can_enter_cambat_zone.emit()
+	stop_player_can_enter_combat_area.emit()
 
 
 func _on_rooster_sfx_finished() -> void:

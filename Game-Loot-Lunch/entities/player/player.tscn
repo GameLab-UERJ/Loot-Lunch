@@ -5,8 +5,10 @@
 [ext_resource type="Texture2D" uid="uid://drd67wc3juh68" path="res://assets/art/entities/player/skeleton/idle/skeleton_idle_spritesheet.png" id="2_j341n"]
 [ext_resource type="Texture2D" uid="uid://caiej7y8h4g5f" path="res://assets/art/entities/player/skeleton/run/skeleton_run_spritesheet.png" id="3_cue0d"]
 [ext_resource type="Script" uid="uid://cu0w8akw8o7nv" path="res://entities/player/fsm/player_fsm.gd" id="3_xf5fp"]
+[ext_resource type="PackedScene" uid="uid://cqnchp7q3uixs" path="res://entities/inventory/inventory.tscn" id="3_yqrof"]
 [ext_resource type="Texture2D" uid="uid://cic1n8jgv11hx" path="res://assets/art/entities/enemies/flying_eye/enemy_afterdead_explosion_anim_spritesheet.png" id="4_bectd"]
-[ext_resource type="Script" uid="uid://bt5jjpnkd7ps" path="res://entities/base_classes/movement_component.gd" id="4_wvtmh"]
+[ext_resource type="Script" uid="uid://bt5jjpnkd7ps" path="res://entities/base_classes/components/movement_component.gd" id="4_wvtmh"]
+[ext_resource type="Script" uid="uid://dduk8xg34emb7" path="res://entities/base_classes/components/input_component.gd" id="5_3wlsy"]
 [ext_resource type="Texture2D" uid="uid://crlwael0b25ge" path="res://assets/art/weapons/bone/bone.png" id="6_osktb"]
 [ext_resource type="Texture2D" uid="uid://bmempwdj2nnk5" path="res://assets/art/weapons/bone/slash_effect_anim_spritesheet.png" id="7_7vev3"]
 [ext_resource type="Script" uid="uid://bi7fdvl4vpp7o" path="res://systems/hitbox/hitbox_component.gd" id="7_26q78"]
@@ -14,6 +16,7 @@
 [ext_resource type="AudioStream" uid="uid://ds84bc6md18au" path="res://assets/sfx/saboteurcomics-superfast-crunch-405118.mp3" id="12_a1qjk"]
 [ext_resource type="AudioStream" uid="uid://ik7r1ahndsgv" path="res://assets/sfx/player/player_hurt.wav" id="13_j3ovn"]
 [ext_resource type="AudioStream" uid="uid://jvkqdxkfgfa6" path="res://assets/sfx/player/swing.wav" id="14_afbqv"]
+[ext_resource type="Script" uid="uid://6cli41lsm0il" path="res://entities/inventory/inventory_component.gd" id="15_7thud"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wvtmh"]
 atlas = ExtResource("4_bectd")
@@ -183,7 +186,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:rotation")
+tracks/1/path = NodePath("Sword:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -219,7 +222,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Sprite2D/HitboxComponent/CollisionShape2D:disabled")
+tracks/4/path = NodePath("Sword/HitboxComponent/CollisionShape2D:disabled")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -248,7 +251,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:rotation")
+tracks/1/path = NodePath("Sword:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -284,7 +287,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Sprite2D/HitboxComponent/CollisionShape2D:disabled")
+tracks/4/path = NodePath("Sword/HitboxComponent/CollisionShape2D:disabled")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -508,38 +511,54 @@ collision_mask = 5
 script = ExtResource("2_bqsbk")
 invencibility_time = 1.0
 
-[node name="FiniteStateMachine" parent="." index="0" unique_id=394854071]
+[node name="InventoryLayer" type="CanvasLayer" parent="." index="0" unique_id=1951839530]
+
+[node name="Inventory" parent="InventoryLayer" index="0" unique_id=1443629152 node_paths=PackedStringArray("node_to_drop") instance=ExtResource("3_yqrof")]
+offset_left = -239.0
+offset_top = -130.0
+offset_right = 241.0
+offset_bottom = 140.0
+node_to_drop = NodePath("../../Marker2D")
+
+[node name="FiniteStateMachine" parent="." index="1" unique_id=394854071]
 script = ExtResource("3_xf5fp")
 
-[node name="MovementComponent" type="Node" parent="." index="1" unique_id=1947189978]
+[node name="InputComponent" type="Node" parent="." index="2" unique_id=357670435]
+script = ExtResource("5_3wlsy")
+
+[node name="MovementComponent" type="Node" parent="." index="3" unique_id=1947189978]
 script = ExtResource("4_wvtmh")
 
-[node name="AnimatedSprite2D" parent="." index="2" unique_id=552654717]
+[node name="InventoryComponent" type="Node" parent="." index="4" unique_id=379562273 node_paths=PackedStringArray("inventory")]
+script = ExtResource("15_7thud")
+inventory = NodePath("../InventoryLayer/Inventory")
+
+[node name="AnimatedSprite2D" parent="." index="5" unique_id=552654717]
 sprite_frames = SubResource("SpriteFrames_va6lm")
 animation = &"move"
 
-[node name="CollisionShape2D" parent="." index="3" unique_id=398117634]
+[node name="CollisionShape2D" parent="." index="6" unique_id=398117634]
 position = Vector2(-1, 0)
 shape = SubResource("CircleShape2D_7vev3")
 
-[node name="Sword" type="Node2D" parent="." index="4" unique_id=553499218]
+[node name="Sword" type="Node2D" parent="." index="7" unique_id=553499218]
 
 [node name="Node2D" type="Node2D" parent="Sword" index="0" unique_id=1380584934]
 rotation = -1.5708
 
-[node name="Sprite2D" type="Sprite2D" parent="Sword/Node2D" index="0" unique_id=2086254364]
+[node name="Sword" type="Sprite2D" parent="Sword/Node2D" index="0" unique_id=2086254364]
 position = Vector2(7, 3)
 rotation = -0.785398
 texture = ExtResource("6_osktb")
 offset = Vector2(5, -4)
 
-[node name="HitboxComponent" type="Area2D" parent="Sword/Node2D/Sprite2D" index="0" unique_id=1846553145]
+[node name="HitboxComponent" type="Area2D" parent="Sword/Node2D/Sword" index="0" unique_id=1846553145]
 collision_layer = 0
 collision_mask = 4
 script = ExtResource("7_26q78")
 metadata/_custom_type_script = "uid://bi7fdvl4vpp7o"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sword/Node2D/Sprite2D/HitboxComponent" index="0" unique_id=2101316629]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sword/Node2D/Sword/HitboxComponent" index="0" unique_id=2101316629]
 position = Vector2(4.94975, -3.53553)
 rotation = 0.785398
 shape = SubResource("CapsuleShape2D_bectd")
@@ -555,22 +574,28 @@ hframes = 3
 root_node = NodePath("../Node2D")
 libraries/ = SubResource("AnimationLibrary_j3ovn")
 
-[node name="AnimationPlayer" parent="." index="5" unique_id=2113090391]
+[node name="AnimationPlayer" parent="." index="8" unique_id=2113090391]
 libraries/ = SubResource("AnimationLibrary_7thud")
 
-[node name="FootstepsSfx" type="AudioStreamPlayer2D" parent="." index="6" unique_id=919751078]
+[node name="FootstepsSfx" type="AudioStreamPlayer2D" parent="." index="9" unique_id=919751078]
 stream = ExtResource("11_7thud")
 volume_db = -5.0
 
-[node name="HitStf" type="AudioStreamPlayer2D" parent="." index="7" unique_id=763403887]
+[node name="HitStf" type="AudioStreamPlayer2D" parent="." index="10" unique_id=763403887]
 stream = ExtResource("12_a1qjk")
 
-[node name="HurtSfx" type="AudioStreamPlayer2D" parent="." index="8" unique_id=1464450474]
+[node name="HurtSfx" type="AudioStreamPlayer2D" parent="." index="11" unique_id=1464450474]
 stream = ExtResource("13_j3ovn")
 
-[node name="AttackSfx" type="AudioStreamPlayer2D" parent="." index="9" unique_id=1883833456]
+[node name="AttackSfx" type="AudioStreamPlayer2D" parent="." index="12" unique_id=1883833456]
 stream = ExtResource("14_afbqv")
 
+[node name="Marker2D" type="Marker2D" parent="." index="13" unique_id=254863332]
+position = Vector2(0, 20)
+
+[connection signal="died" from="." to="." method="_on_died"]
 [connection signal="got_hurt" from="." to="." method="_on_got_hurt"]
+[connection signal="took_damage" from="." to="." method="_on_took_damage"]
+[connection signal="direction_changed" from="InputComponent" to="." method="_on_input_component_direction_changed"]
 [connection signal="frame_changed" from="AnimatedSprite2D" to="." method="_on_frame_changed"]
-[connection signal="hit" from="Sword/Node2D/Sprite2D/HitboxComponent" to="." method="_on_hitbox_component_hit"]
+[connection signal="hit" from="Sword/Node2D/Sword/HitboxComponent" to="." method="_on_hitbox_component_hit"]

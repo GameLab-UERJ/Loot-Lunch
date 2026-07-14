@@ -25,6 +25,8 @@ TimeCycle="*uid://b02svtevwxj2u"
 SaveLoadManager="*uid://bi06j1t67d10f"
 EasyTransition="*uid://cq0t7o8xelk4k"
 DayNightCycle="*uid://yr26mvbasy76"
+PlayerWallet="*uid://bs1b836vdqxr4"
+EnvironmentManager="*uid://cx07gbanpuo6o"
 
 [debug]
 
@@ -32,8 +34,8 @@ gdscript/warnings/integer_division=0
 
 [display]
 
-window/size/viewport_width=480
-window/size/viewport_height=270
+window/size/viewport_width=640
+window/size/viewport_height=360
 window/size/window_width_override=1280
 window/size/window_height_override=720
 window/stretch/mode="viewport"
@@ -44,7 +46,7 @@ project/assembly_name="LootLunch"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/easytransition/plugin.cfg")
+enabled=PackedStringArray("res://addons/easytransition/plugin.cfg", "res://addons/imjp94.yafsm/plugin.cfg")
 
 [file_customization]
 

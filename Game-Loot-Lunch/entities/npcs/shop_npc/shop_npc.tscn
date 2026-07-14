@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://c6wv6ecrc6cff"]
 
+[ext_resource type="PackedScene" uid="uid://cbs8q2hki4fym" path="res://systems/interaction/interactable_area.tscn" id="1_tu77f"]
 [ext_resource type="Texture2D" uid="uid://ckd16kqxsun71" path="res://assets/art/entities/npcs/shop_npc/Jotem spritesheet.png" id="1_ysvt8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tu77f"]
@@ -56,6 +57,9 @@ animations = [{
 radius = 8.728056
 
 [node name="ShopNpc" type="CharacterBody2D" unique_id=1279799556]
+
+[node name="InteractableArea" parent="." unique_id=1323691504 instance=ExtResource("1_tu77f")]
+scale = Vector2(2, 2)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=799428324]
 position = Vector2(0, -14)
