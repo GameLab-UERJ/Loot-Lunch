@@ -15,6 +15,11 @@ func _ready() -> void:
 
 func _on_body_entered(body: Node2D) -> void:
 	if body is Player:
+		var inv: InventoryComponent = body.get_node("InventoryComponent") as InventoryComponent
+		if inv:
+			var item := get_parent() as Item
+			if item and not item.picked_up.is_connected(inv.add_item):
+				item.picked_up.connect(inv.add_item)
 		interact_with_player.emit()
 
 
