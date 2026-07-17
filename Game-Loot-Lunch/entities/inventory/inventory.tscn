@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://c3wvorc8cumre" path="res://entities/inventory/inventory.gd" id="1_0tuds"]
 [ext_resource type="PackedScene" uid="uid://dm1b5lo2dhwsx" path="res://entities/Craft/crafting_grid.tscn" id="2_q0t3s"]
-[ext_resource type="Script" uid="uid://csymt6cnu6pf" path="res://resources/Recipe/Recipe.gd" id="3_1kjwn"]
-[ext_resource type="Resource" uid="uid://472o8obempxb" path="res://resources/Carne.tres" id="4_u1r4d"]
+[ext_resource type="Script" uid="uid://csymt6cnu6pf" path="res://resources/recipe/recipe.gd" id="3_1kjwn"]
+[ext_resource type="Resource" uid="uid://472o8obempxb" path="res://resources/carne.tres" id="4_u1r4d"]
 
 [node name="Inventory" type="Control" unique_id=1443629152]
 layout_mode = 3
