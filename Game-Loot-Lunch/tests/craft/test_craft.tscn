@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://cnjvb27ickaos"]
+
+[ext_resource type="PackedScene" uid="uid://cjd7jorsb02sh" path="res://levels/shop/shop_room.tscn" id="1_bifps"]
+[ext_resource type="FontFile" uid="uid://cvuth304y1byc" path="res://assets/fonts/tinypixel.ttf" id="2_mqsfs"]
+
+[node name="test_craft" type="Node2D" unique_id=1021481514]
+
+[node name="ShopRoom" parent="." unique_id=141259000 instance=ExtResource("1_bifps")]
+
+[node name="Label" type="Label" parent="." unique_id=1289741483]
+texture_filter = 1
+offset_left = 55.0
+offset_top = 7.0
+offset_right = 145.0
+offset_bottom = 45.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 2
+theme_override_constants/paragraph_spacing = 0
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("2_mqsfs")
+theme_override_font_sizes/font_size = 5
+text = "Buy tomatos and flour
+open inventory with I
+Click in Recipes
+Put both in the 3x3 craft
+pick the result"
