@@ -150,7 +150,10 @@ func set_item(value : Item) -> Item:
 	value.top_level = false
 	value.z_index = 0
 	value.position = Vector2.ZERO
-	value.call_deferred("reparent", self)
+	if value.get_parent():
+		value.call_deferred("reparent", self)
+	else:
+		call_deferred("add_child",value)
 	count = 1
 	return previous_item
 

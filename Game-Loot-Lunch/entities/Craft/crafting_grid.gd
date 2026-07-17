@@ -117,7 +117,7 @@ func _on_result_gui_input(event: InputEvent) -> void:
 	current_recipe = null
 
 
-func _on_item_removed(cell: InventoryCell, index: int) -> void:
+func _on_item_removed(cell: InventoryCell, _index: int) -> void:
 	if cell.item:
 		inventory.add_item(cell.item)
 		cell.item = null
