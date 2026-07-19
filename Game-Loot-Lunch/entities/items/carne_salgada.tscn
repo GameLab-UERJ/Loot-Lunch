@@ -11,6 +11,9 @@ region = Rect2(32, 292, 32, 32)
 [node name="CarneSalgada" type="Sprite2D" unique_id=1587930094]
 texture = SubResource("AtlasTexture_qd5uu")
 script = ExtResource("1_qvqgv")
+item_name = "Carne Salgada"
+description = "Precisavamos mesmo gastar um pacote de sal inteiro?"
+is_ingredient = true
 metadata/_custom_type_script = "uid://cle3p5oy53g7r"
 
 [node name="StackableComponent" type="Node" parent="." unique_id=558409276]
