@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bk8rxeu74ypfd" path="res://tests/inventory/test_inventory.gd" id="1_372ms"]
 [ext_resource type="PackedScene" uid="uid://cexct4fg71pc5" path="res://entities/items/carne.tscn" id="3_2ff5v"]
 [ext_resource type="PackedScene" uid="uid://dwlepdjd5lv8x" path="res://entities/items/tomate.tscn" id="4_67sjd"]
+[ext_resource type="PackedScene" uid="uid://cex8lco80xebi" path="res://entities/items/sal.tscn" id="4_vfcda"]
 [ext_resource type="FontFile" uid="uid://cvuth304y1byc" path="res://assets/fonts/tinypixel.ttf" id="6_7tixs"]
 [ext_resource type="PackedScene" uid="uid://3cgeew2m05mn" path="res://entities/player/player.tscn" id="6_67sjd"]
 
@@ -29,6 +30,9 @@ position = Vector2(288, 152)
 
 [node name="Tomate" parent="." unique_id=1065823031 instance=ExtResource("4_67sjd")]
 position = Vector2(256, 184)
+
+[node name="Sal" parent="." unique_id=1872620648 instance=ExtResource("4_vfcda")]
+position = Vector2(187, 193)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1047629312]
 offset_right = 40.0
