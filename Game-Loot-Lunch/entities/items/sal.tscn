@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://cex8lco80xebi"]
+
+[ext_resource type="Texture2D" uid="uid://bnlkovom34dqd" path="res://assets/art/entities/items/sprite_sal_32x32.png" id="1_palrk"]
+[ext_resource type="Script" uid="uid://c3lm5ccn6h1rs" path="res://entities/base_classes/stackable_component.gd" id="2_4k8kf"]
+
+[node name="Sal" type="Sprite2D" unique_id=1872620648]
+texture = ExtResource("1_palrk")
+
+[node name="StackableComponent" type="Node" parent="." unique_id=941177046]
+script = ExtResource("2_4k8kf")
+stack_size = 10
+metadata/_custom_type_script = "uid://c3lm5ccn6h1rs"
