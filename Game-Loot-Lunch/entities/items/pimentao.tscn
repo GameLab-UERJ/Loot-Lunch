@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://bkjr0ojwjk4ps"]
+
+[ext_resource type="Script" uid="uid://cle3p5oy53g7r" path="res://entities/base_classes/item/item.gd" id="1_7xekk"]
+[ext_resource type="Texture2D" uid="uid://bqnssonx4exce" path="res://assets/art/entities/items/Vegies.png" id="1_i2tas"]
+[ext_resource type="Script" uid="uid://c3lm5ccn6h1rs" path="res://entities/base_classes/stackable_component.gd" id="3_gfncl"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2tbrr"]
+atlas = ExtResource("1_i2tas")
+region = Rect2(63, 33, 32, 32)
+
+[node name="Pimentao" type="Sprite2D" unique_id=1187575768]
+texture = SubResource("AtlasTexture_2tbrr")
+script = ExtResource("1_7xekk")
+item_name = "Pimentão"
+description = "Grande pimenta."
+is_ingredient = true
+metadata/_custom_type_script = "uid://cle3p5oy53g7r"
+
+[node name="StackableComponent" type="Node" parent="." unique_id=2064033863]
+script = ExtResource("3_gfncl")
+metadata/_custom_type_script = "uid://c3lm5ccn6h1rs"
