@@ -12,6 +12,8 @@
 [ext_resource type="Texture2D" uid="uid://37pvxfdf085c" path="res://assets/art/tilesets/ui/scrollsandblocks.png" id="7_efo6u"]
 [ext_resource type="PackedScene" uid="uid://ba74yflgg7877" path="res://entities/enemies/flying_eyes/flying_eye.tscn" id="7_lfow4"]
 [ext_resource type="AudioStream" uid="uid://huj0511vq4kh" path="res://assets/music/montogoronto-ominousdark-medievalfantasy-song-309510.mp3" id="10_6wgr6"]
+[ext_resource type="PackedScene" uid="uid://dvs2ib7i8lmf0" path="res://entities/npcs/dialogue_npc.tscn" id="13_lfow4"]
+[ext_resource type="Resource" uid="uid://dedgx7kxo2qhp" path="res://entities/npcs/dialogos/npc1.dialogue" id="14_75d3q"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lfow4"]
 size = Vector2(41, 25)
@@ -1932,5 +1934,9 @@ position = Vector2(-236, -251)
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=750057481]
 stream = ExtResource("10_6wgr6")
 autoplay = true
+
+[node name="DialogueNpc" parent="." unique_id=1279799556 instance=ExtResource("13_lfow4")]
+position = Vector2(306, 109)
+dialogue = ExtResource("14_75d3q")
 
 [connection signal="interact_with_player" from="external_house" to="." method="_on_external_house_interact_with_player"]

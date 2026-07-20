@@ -16,6 +16,8 @@
 [ext_resource type="Texture2D" uid="uid://xnfegqg2xfdc" path="res://assets/art/entities/items/farming_fishing.png" id="12_t2p1a"]
 [ext_resource type="AudioStream" uid="uid://by5he5x7j2pxn" path="res://assets/music/deuslower-fantasy-medieval-mystery-ambient-292418.mp3" id="14_2y4xb"]
 [ext_resource type="Script" uid="uid://daus7y7nt2yw5" path="res://systems/interaction/interactable_area.gd" id="16_ycylx"]
+[ext_resource type="PackedScene" uid="uid://dvs2ib7i8lmf0" path="res://entities/npcs/dialogue_npc.tscn" id="17_xpqrl"]
+[ext_resource type="Resource" uid="uid://dedgx7kxo2qhp" path="res://entities/npcs/dialogos/npc1.dialogue" id="18_8h31e"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5rp7m"]
 texture = ExtResource("1_bkwuf")
@@ -3149,6 +3151,14 @@ script = ExtResource("16_ycylx")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="level_change/shop" unique_id=1461312153]
 position = Vector2(-0.5, 0)
 shape = SubResource("RectangleShape2D_f10bb")
+
+[node name="DialogueNpc" parent="." unique_id=1279799556 instance=ExtResource("17_xpqrl")]
+position = Vector2(-121, 331)
+dialogue = ExtResource("18_8h31e")
+
+[node name="DialogueNpc2" parent="." unique_id=190907543 instance=ExtResource("17_xpqrl")]
+position = Vector2(772, 360)
+dialogue = ExtResource("18_8h31e")
 
 [connection signal="interact_with_player" from="level_change/dungeon_exterior" to="." method="_on_dungeon_exterior_area_entered"]
 [connection signal="interact_with_player" from="level_change/exterior_house" to="." method="_on_external_house_area_entered"]
