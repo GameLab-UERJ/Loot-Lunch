@@ -13,8 +13,9 @@
 [ext_resource type="PackedScene" uid="uid://3cgeew2m05mn" path="res://entities/player/player.tscn" id="8_w4oj8"]
 [ext_resource type="PackedScene" uid="uid://cbs8q2hki4fym" path="res://systems/interaction/interactable_area.tscn" id="9_pfac8"]
 [ext_resource type="PackedScene" uid="uid://dvs2ib7i8lmf0" path="res://entities/npcs/dialogue_npc.tscn" id="13_5y8bp"]
-[ext_resource type="Resource" uid="uid://dedgx7kxo2qhp" path="res://entities/npcs/dialogos/npc1.dialogue" id="14_xvnh4"]
+[ext_resource type="Resource" uid="uid://dttdbt6ehpcxr" path="res://entities/npcs/dialogos/npc_estrada_bloqueio.dialogue" id="14_lt77x"]
 [ext_resource type="PackedScene" uid="uid://d1q0x6qrbyjlx" path="res://entities/npcs/sign.tscn" id="15_k7n0b"]
+[ext_resource type="Resource" uid="uid://dkogwulps4etc" path="res://entities/npcs/dialogos/placa_direcoes.dialogue" id="16_lt77x"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_f206e"]
 texture = ExtResource("1_xktgd")
@@ -1238,11 +1239,11 @@ limit_bottom = 360
 
 [node name="DialogueNpc" parent="." unique_id=1279799556 instance=ExtResource("13_5y8bp")]
 position = Vector2(648, 291)
-dialogue = ExtResource("14_xvnh4")
+dialogue = ExtResource("14_lt77x")
 
 [node name="Sign" parent="." unique_id=658375839 instance=ExtResource("15_k7n0b")]
-position = Vector2(58, 255)
-dialogue = ExtResource("14_xvnh4")
+position = Vector2(66, 265)
+dialogue = ExtResource("16_lt77x")
 
 [connection signal="interact_with_player" from="HouseArea" to="." method="_on_house_area_entered"]
 [connection signal="stop_interact_with_player" from="HouseArea" to="." method="_on_house_area_exited"]

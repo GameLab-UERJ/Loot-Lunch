@@ -13,7 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://ba74yflgg7877" path="res://entities/enemies/flying_eyes/flying_eye.tscn" id="7_lfow4"]
 [ext_resource type="AudioStream" uid="uid://huj0511vq4kh" path="res://assets/music/montogoronto-ominousdark-medievalfantasy-song-309510.mp3" id="10_6wgr6"]
 [ext_resource type="PackedScene" uid="uid://dvs2ib7i8lmf0" path="res://entities/npcs/dialogue_npc.tscn" id="13_lfow4"]
-[ext_resource type="Resource" uid="uid://dedgx7kxo2qhp" path="res://entities/npcs/dialogos/npc1.dialogue" id="14_75d3q"]
+[ext_resource type="Resource" uid="uid://cw03dpql70xt3" path="res://entities/npcs/dialogos/npc_dungeon_interna.dialogue" id="14_75d3q"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lfow4"]
 size = Vector2(41, 25)

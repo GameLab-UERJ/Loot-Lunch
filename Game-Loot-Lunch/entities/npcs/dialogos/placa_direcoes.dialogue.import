@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://dkogwulps4etc"
+path="res://.godot/imported/placa_direcoes.dialogue-d6857165a43d3ac409072bac84fc9a9d.tres"
+
+[deps]
+
+source_file="res://entities/npcs/dialogos/placa_direcoes.dialogue"
+dest_files=["res://.godot/imported/placa_direcoes.dialogue-d6857165a43d3ac409072bac84fc9a9d.tres"]
+
+[params]
+
+defaults=true

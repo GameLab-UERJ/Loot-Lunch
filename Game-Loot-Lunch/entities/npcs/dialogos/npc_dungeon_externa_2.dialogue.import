@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://cr8sot8fdx0tk"
+path="res://.godot/imported/npc_dungeon_externa_2.dialogue-c32ba525ae5a0cf62c0734fdebc769bc.tres"
+
+[deps]
+
+source_file="res://entities/npcs/dialogos/npc_dungeon_externa_2.dialogue"
+dest_files=["res://.godot/imported/npc_dungeon_externa_2.dialogue-c32ba525ae5a0cf62c0734fdebc769bc.tres"]
+
+[params]
+
+defaults=true
