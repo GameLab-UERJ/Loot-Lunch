@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://cel3oqtb38ds8"]
+
+[ext_resource type="Script" uid="uid://cle3p5oy53g7r" path="res://entities/base_classes/item/item.gd" id="1_da5rq"]
+[ext_resource type="Texture2D" uid="uid://cqww3kprduvlg" path="res://assets/art/entities/items/tanajura_limpa_preparada.png" id="1_e012u"]
+[ext_resource type="Script" uid="uid://c3lm5ccn6h1rs" path="res://entities/base_classes/stackable_component.gd" id="3_v8huj"]
+
+[node name="TanajuraLimpaPreparada" type="Sprite2D" unique_id=1292818509]
+texture = ExtResource("1_e012u")
+script = ExtResource("1_da5rq")
+item_name = "Tanajura Preparada"
+description = "Tanajura limpa e preparada, perfeita para a farofa de tanajura!"
+is_ingredient = true
+metadata/_custom_type_script = "uid://cle3p5oy53g7r"
+
+[node name="StackableComponent" type="Node" parent="." unique_id=70882668]
+script = ExtResource("3_v8huj")
+stack_size = 25
+metadata/_custom_type_script = "uid://c3lm5ccn6h1rs"
