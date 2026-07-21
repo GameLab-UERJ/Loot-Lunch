@@ -63,13 +63,13 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ngpyi")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_x0kht"]
-size = Vector2(20, 22)
+[sub_resource type="CircleShape2D" id="CircleShape2D_8j8jq"]
+radius = 9.0
 
 [node name="DialogueNpc" type="CharacterBody2D" unique_id=1279799556]
 script = ExtResource("1_y218w")
@@ -80,7 +80,7 @@ autoplay = "default"
 flip_h = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1299589128]
-position = Vector2(0, 1)
-shape = SubResource("RectangleShape2D_x0kht")
+position = Vector2(0, 6)
+shape = SubResource("CircleShape2D_8j8jq")
 
 [node name="Area2D" parent="." unique_id=117400201 instance=ExtResource("3_54vho")]

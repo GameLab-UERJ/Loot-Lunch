@@ -12,6 +12,9 @@
 [ext_resource type="Texture2D" uid="uid://barp2mdn87gem" path="res://assets/art/tilesets/exterior_2/fence.png" id="7_lgldh"]
 [ext_resource type="PackedScene" uid="uid://3cgeew2m05mn" path="res://entities/player/player.tscn" id="8_w4oj8"]
 [ext_resource type="PackedScene" uid="uid://cbs8q2hki4fym" path="res://systems/interaction/interactable_area.tscn" id="9_pfac8"]
+[ext_resource type="PackedScene" uid="uid://dvs2ib7i8lmf0" path="res://entities/npcs/dialogue_npc.tscn" id="13_5y8bp"]
+[ext_resource type="Resource" uid="uid://dedgx7kxo2qhp" path="res://entities/npcs/dialogos/npc1.dialogue" id="14_xvnh4"]
+[ext_resource type="PackedScene" uid="uid://d1q0x6qrbyjlx" path="res://entities/npcs/sign.tscn" id="15_k7n0b"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_f206e"]
 texture = ExtResource("1_xktgd")
@@ -1098,7 +1101,7 @@ scale = Vector2(4, 4)
 
 [node name="CombatArea" parent="." unique_id=2043151130 instance=ExtResource("9_pfac8")]
 z_index = 2
-position = Vector2(717, 308.939)
+position = Vector2(728, 308.939)
 scale = Vector2(4, 4)
 
 [node name="RoosterSfx" type="AudioStreamPlayer2D" parent="." unique_id=2135814089]
@@ -1232,6 +1235,14 @@ limit_left = 27
 limit_top = -142
 limit_right = 665
 limit_bottom = 360
+
+[node name="DialogueNpc" parent="." unique_id=1279799556 instance=ExtResource("13_5y8bp")]
+position = Vector2(648, 291)
+dialogue = ExtResource("14_xvnh4")
+
+[node name="Sign" parent="." unique_id=658375839 instance=ExtResource("15_k7n0b")]
+position = Vector2(58, 255)
+dialogue = ExtResource("14_xvnh4")
 
 [connection signal="interact_with_player" from="HouseArea" to="." method="_on_house_area_entered"]
 [connection signal="stop_interact_with_player" from="HouseArea" to="." method="_on_house_area_exited"]

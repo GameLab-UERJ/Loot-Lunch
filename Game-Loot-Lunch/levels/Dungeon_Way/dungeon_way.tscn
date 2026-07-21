@@ -18,6 +18,7 @@
 [ext_resource type="Script" uid="uid://daus7y7nt2yw5" path="res://systems/interaction/interactable_area.gd" id="16_ycylx"]
 [ext_resource type="PackedScene" uid="uid://dvs2ib7i8lmf0" path="res://entities/npcs/dialogue_npc.tscn" id="17_xpqrl"]
 [ext_resource type="Resource" uid="uid://dedgx7kxo2qhp" path="res://entities/npcs/dialogos/npc1.dialogue" id="18_8h31e"]
+[ext_resource type="PackedScene" uid="uid://bbyxjsfgjkte1" path="res://entities/npcs/broken_sign.tscn" id="19_d8bi5"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5rp7m"]
 texture = ExtResource("1_bkwuf")
@@ -3153,12 +3154,15 @@ position = Vector2(-0.5, 0)
 shape = SubResource("RectangleShape2D_f10bb")
 
 [node name="DialogueNpc" parent="." unique_id=1279799556 instance=ExtResource("17_xpqrl")]
-position = Vector2(-121, 331)
+position = Vector2(-119, 325)
 dialogue = ExtResource("18_8h31e")
 
 [node name="DialogueNpc2" parent="." unique_id=190907543 instance=ExtResource("17_xpqrl")]
 position = Vector2(772, 360)
 dialogue = ExtResource("18_8h31e")
+
+[node name="Broken Sign" parent="." unique_id=1709791569 instance=ExtResource("19_d8bi5")]
+position = Vector2(-214, 333)
 
 [connection signal="interact_with_player" from="level_change/dungeon_exterior" to="." method="_on_dungeon_exterior_area_entered"]
 [connection signal="interact_with_player" from="level_change/exterior_house" to="." method="_on_external_house_area_entered"]
