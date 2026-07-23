@@ -67,7 +67,7 @@ func dead_state() -> void:
 func hidden_move() -> void:
 	if formigueiro:
 		angle = randf_range(0.0, TAU)
-		radius = randi_range(0, formigueiro.collision_shape.shape.radius)
+		radius = randi_range(formigueiro.entrance.shape.radius, formigueiro.collision_shape.shape.radius)
 		position = Vector2(cos(angle), sin(angle)) * radius
 
 
@@ -75,12 +75,17 @@ func _on_territory_body_entered(_body: Node2D) -> void:
 	if !state_machine.states["chase"] == state_machine.state:
 		alert = true
 		flip_sprite_component.node_to_face = chase_component.chased_node
+	else:
+		alert = true
 
 
 func _on_territory_body_exited(_body: Node2D) -> void:
+	alert = false
+	
 	if !state_machine.states["chase"] == state_machine.state:
-		alert = false
 		flip_sprite_component.node_to_face = null
+	else:
+		states_timer.start(5)
 
 
 func _on_chase_component_next_chase_point_set(next_point: Vector2) -> void:
