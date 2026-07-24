@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://d3hfwcosjk0qd"
+path="res://.godot/imported/npc_ponte_aviso.dialogue-c83afbcb827e0f7935551feaa6ee4631.tres"
+
+[deps]
+
+source_file="res://entities/npcs/dialogos/npc_ponte_aviso.dialogue"
+dest_files=["res://.godot/imported/npc_ponte_aviso.dialogue-c83afbcb827e0f7935551feaa6ee4631.tres"]
+
+[params]
+
+defaults=true

@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://dttdbt6ehpcxr"
+path="res://.godot/imported/npc_estrada_bloqueio.dialogue-7fbc4e6d1bec9b20698a4c6f82d2771b.tres"
+
+[deps]
+
+source_file="res://entities/npcs/dialogos/npc_estrada_bloqueio.dialogue"
+dest_files=["res://.godot/imported/npc_estrada_bloqueio.dialogue-7fbc4e6d1bec9b20698a4c6f82d2771b.tres"]
+
+[params]
+
+defaults=true

@@ -1,0 +1,21 @@
+Criação do sistema de craft estilo minecraft, seguindo o passo a passo:
+Como criar e adicionar receitas
+Criar uma receita
+FileSystem → Botão direito → New → Resource → Recipe
+
+Preencha no Inspetor:
+
+Recipe Name: nome da receita (ex: "Carne")
+
+Ingredients: arraste as cenas dos ingredientes (ex: tomate.tscn, farinha.tscn)
+
+Result Scene: arraste a cena do item resultado (ex: carne.tscn)
+
+Result Count: quantos itens gera (geralmente 1)
+
+Adicionar ao jogo
+Abra a cena do Inventory
+
+Selecione o nó CraftingGrid
+
+No campo Recipes, aumente o Size e arraste os arquivos .tres

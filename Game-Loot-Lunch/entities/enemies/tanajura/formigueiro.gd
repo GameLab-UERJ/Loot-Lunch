@@ -6,6 +6,7 @@ class_name Formigueiro
 
 
 @onready var collision_shape: CollisionShape2D = $Area2D/CollisionShape2D
+@onready var entrance: CollisionShape2D = $EntranceStaticBody2D/CollisionShape2D
 
 
 func _on_spawned(spawned_creature: Character) -> void:

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Recipe" format=3 uid="uid://ddqpstbw4mobf"]
+
+[ext_resource type="Script" uid="uid://csymt6cnu6pf" path="res://resources/recipe/recipe.gd" id="1_06gwd"]
+[ext_resource type="PackedScene" uid="uid://cexct4fg71pc5" path="res://entities/items/carne.tscn" id="1_60dkf"]
+[ext_resource type="PackedScene" uid="uid://cex8lco80xebi" path="res://entities/items/sal.tscn" id="2_wntvo"]
+[ext_resource type="PackedScene" uid="uid://t5ajrb8nc27b" path="res://entities/items/carne_salgada.tscn" id="3_dj4e2"]
+
+[resource]
+script = ExtResource("1_06gwd")
+recipe_name = "Salgar Carne"
+ingredients = Array[PackedScene]([ExtResource("1_60dkf"), ExtResource("2_wntvo")])
+result_scene = ExtResource("3_dj4e2")
+metadata/_custom_type_script = "uid://csymt6cnu6pf"

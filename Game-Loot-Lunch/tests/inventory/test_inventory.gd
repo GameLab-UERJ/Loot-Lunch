@@ -10,6 +10,7 @@ extends Node2D
 @onready var carne5: Item = $Carne5
 @onready var carne6: Item = $Carne6
 @onready var tomate: Item = $Tomate
+@onready var sal: Item = $Sal
 @onready var selected_cell: Label = $VBoxContainer/SelectedCell
 @onready var selected_item: Label = $VBoxContainer/SelectedItem
 @onready var selected_pos: Label = $VBoxContainer/SelectedPos
@@ -26,7 +27,7 @@ func _ready() -> void:
 	  Right    click    (bg)    to    drop    item'''
 
 	# Conecta o pickup de cada item ao inventário do jogador
-	for item_node: Item in [carne, carne2, carne3, carne4, carne5, carne6, tomate]:
+	for item_node: Item in [carne, carne2, carne3, carne4, carne5, carne6, tomate, sal]:
 		item_node.picked_up.connect(inventory_component.add_item)
 
 

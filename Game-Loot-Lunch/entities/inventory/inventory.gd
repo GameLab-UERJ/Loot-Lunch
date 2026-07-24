@@ -31,11 +31,19 @@ var selected_pos : Vector2i:
 
 @onready var container: PanelContainer = $Container
 @onready var grid: GridContainer = $Container/Grid
+@onready var recipes_button: Button = $Button
+@onready var crafting_grid: CraftingGrid = $CraftingGrid
+
 
 
 func _ready() -> void:
 	dimensions = dimensions
+	crafting_grid.inventory = self
+	crafting_grid.visible = false
+	recipes_button.pressed.connect(_toggle_crafting_grid)
 
+func _toggle_crafting_grid() -> void:
+	crafting_grid.visible = not crafting_grid.visible
 
 func _process(_delta: float) -> void:
 	if not can_drop_items:
@@ -45,9 +53,27 @@ func _process(_delta: float) -> void:
 	if not selected_cell or not selected_item:
 		return
 	
-	# Só dropa se o clique foi FORA das células (grid)
-	var on_cell = false
 	var mouse_global = get_global_mouse_position()
+	
+	# Verifica se o mouse está sobre alguma célula do CraftingGrid
+	if crafting_grid and crafting_grid.visible:
+		var sobre_crafting = false
+		for craft_cell in crafting_grid.grid_cells:
+			var cell_rect = Rect2(craft_cell.global_position, craft_cell.size)
+			if cell_rect.has_point(mouse_global):
+				sobre_crafting = true
+				break
+		# Verifica também o result_slot
+		if crafting_grid.result_slot:
+			var result_rect = Rect2(crafting_grid.result_slot.global_position, crafting_grid.result_slot.size)
+			if result_rect.has_point(mouse_global):
+				sobre_crafting = true
+		
+		if sobre_crafting:
+			return  # Não dropa sobre o CraftingGrid
+	
+	# Verifica células do inventário normal
+	var on_cell = false
 	for cell in grid.get_children():
 		var cell_rect = Rect2(cell.global_position, cell.size)
 		if cell_rect.has_point(mouse_global):
@@ -58,10 +84,6 @@ func _process(_delta: float) -> void:
 		return
 	
 	drop_selected_item()
-
-
-
-
 
 
 func set_dimensions(value : Vector2i) -> void:
@@ -151,6 +173,41 @@ func handle_new_selected_cell(cell : InventoryCell) -> void:
 		set_selected_cell(null)
 		return
 	
+	# Se tem item na mão vindo do CraftingGrid (selected_item existe, selected_cell é null)
+	if selected_item and not selected_cell:
+		# Célula vazia → coloca
+		if not cell.item:
+			cell.set_item(selected_item)
+			cell.count = selected_count
+			_cleanup_selection()
+			return
+		
+		# Célula ocupada → troca: pega item da célula pra mão
+		var old_item = cell.item
+		var old_count = cell.count
+		
+		# Coloca item do CraftingGrid na célula
+		cell.item = null
+		cell.count = 0
+		cell.set_item(selected_item)
+		cell.count = selected_count
+		
+		# Item antigo vai pra mão
+		selected_item = old_item
+		selected_count = old_count
+		selected_cell = cell  # Agora o selected_cell é esta célula
+		selected_cell.is_selected = true
+		
+		# Faz seguir o mouse
+		selected_item.reparent(self)
+		selected_item.top_level = true
+		selected_item.z_index = 100
+		selected_item.force_follow_mouse()
+		selected_item.show()
+		
+		return
+	
+	# Comportamento normal do inventário
 	if not selected_cell:
 		if not cell.item:
 			cell.is_selected = false
@@ -162,13 +219,10 @@ func handle_new_selected_cell(cell : InventoryCell) -> void:
 		set_selected_cell(null)
 		return
 	
-	# --- Tem um item selecionado, clicou em outra célula ---
-	
 	var source = selected_cell
 	var src_count = selected_count
 	var src_item = selected_item
 	
-	# Se for pickup parcial ou split, o original ainda está na source
 	if not src_item:
 		src_item = source.item
 	
@@ -176,29 +230,28 @@ func handle_new_selected_cell(cell : InventoryCell) -> void:
 		push_warning("Nothing to place")
 		return
 	
-	# Merge: mesmo tipo, stackável, com espaço
 	if _try_merge(source, cell, src_item, src_count):
 		return
 	
-	# Se não tem selected_item (segurança), cancela
 	if not selected_item:
-		# Return to source
 		set_selected_cell(null)
 		return
 	
-	# Com Item físico: célula vazia → move
 	if not cell.item:
 		_place_on_empty(source, cell, src_item, src_count)
 		return
 	
-	# Com Item físico: swap
 	if source.count > 0:
-		# Source tem unidades remanescentes — não pode swap
 		set_selected_cell(null)
 		return
 	
 	_do_swap(source, cell, src_item, src_count)
+	
 
+## Coloca item em célula vazia quando NÃO tem source (item veio do CraftingGrid)
+func _place_on_empty_no_source(target: InventoryCell, src_item: Item, src_count: int) -> void:
+	target.set_item(src_item)
+	target.count = src_count
 
 ## Returns an array with the references of all empty cells.
 ## if 'first' is true, returns as soon as it finds one.
@@ -383,6 +436,16 @@ func set_selected_cell(value: InventoryCell) -> void:
 		selected_cell.is_selected = false
 		_restore_selected()
 	
+	# NOVO: Se tem item na mão mas sem selected_cell (veio do CraftingGrid)
+	# e clicou em outra célula, restaura o item do CraftingGrid primeiro
+	if selected_item and not selected_cell:
+		if value and value.item:
+			# Célula tem item - troca: devolve o do CraftingGrid, pega o novo
+			pass  # Deixa o fluxo normal seguir
+		elif not value or not value.item:
+			# Célula vazia - coloca o item do CraftingGrid nela
+			return  # Não pega novo item
+	
 	selected_cell = value
 	if not selected_cell:
 		selected_item = null
@@ -396,7 +459,6 @@ func set_selected_cell(value: InventoryCell) -> void:
 	var cell_count = selected_cell.count
 	
 	if is_stackable and cell_count > 1 and not Input.is_key_pressed(KEY_SHIFT):
-		# Pickup parcial: duplica o Item, original fica na célula
 		selected_count = 1
 		selected_cell.count -= 1
 		selected_item = selected_cell.item.duplicate()
@@ -406,7 +468,6 @@ func set_selected_cell(value: InventoryCell) -> void:
 		selected_item.z_index = 100
 		selected_item.force_follow_mouse()
 	else:
-		# Pickup total: Item sai da célula e segue o mouse
 		selected_count = cell_count
 		selected_cell.count = 0
 		selected_item = selected_cell.remove_item(self, true, true)

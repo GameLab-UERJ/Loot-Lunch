@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://c64i00jdrrapj"]
+
+[ext_resource type="Texture2D" uid="uid://dhqvdxpvloiqy" path="res://assets/art/entities/items/farofa_de_tanajura_pronta.png" id="1_0pylu"]
+[ext_resource type="Script" uid="uid://cle3p5oy53g7r" path="res://entities/base_classes/item/item.gd" id="1_vdk47"]
+
+[node name="FarofaDeTanajura" type="Sprite2D" unique_id=1647049088]
+texture = ExtResource("1_0pylu")
+script = ExtResource("1_vdk47")
+item_name = "Farofa de Tanajura"
+description = "Iguaria brasileira, pronta para consumo."
+is_ingredient = true
+metadata/_custom_type_script = "uid://cle3p5oy53g7r"
