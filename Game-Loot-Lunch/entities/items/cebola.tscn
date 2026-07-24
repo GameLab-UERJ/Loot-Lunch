@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://daxh8ww0k8cl7"]
+
+[ext_resource type="Texture2D" uid="uid://bqnssonx4exce" path="res://assets/art/entities/items/Vegies.png" id="1_1u3wv"]
+[ext_resource type="Script" uid="uid://cle3p5oy53g7r" path="res://entities/base_classes/item/item.gd" id="1_etw42"]
+[ext_resource type="Script" uid="uid://c3lm5ccn6h1rs" path="res://entities/base_classes/stackable_component.gd" id="3_lqgxo"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pklna"]
+atlas = ExtResource("1_1u3wv")
+region = Rect2(450, 0, 32, 32)
+
+[node name="Cebola" type="Sprite2D" unique_id=1618475040]
+texture = SubResource("AtlasTexture_pklna")
+script = ExtResource("1_etw42")
+item_name = "Cebola"
+description = "Feche os olhos ao cortar."
+is_ingredient = true
+metadata/_custom_type_script = "uid://cle3p5oy53g7r"
+
+[node name="StackableComponent" type="Node" parent="." unique_id=850295666]
+script = ExtResource("3_lqgxo")
+metadata/_custom_type_script = "uid://c3lm5ccn6h1rs"

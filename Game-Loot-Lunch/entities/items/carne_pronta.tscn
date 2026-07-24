@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://com7qtbfdltey"]
+
+[ext_resource type="Script" uid="uid://cle3p5oy53g7r" path="res://entities/base_classes/item/item.gd" id="1_ckrlj"]
+[ext_resource type="Texture2D" uid="uid://xnfegqg2xfdc" path="res://assets/art/entities/items/farming_fishing.png" id="1_g5rtk"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g5rtk"]
+atlas = ExtResource("1_g5rtk")
+region = Rect2(47, 260, 32, 32)
+
+[node name="CarnePronta" type="Sprite2D" unique_id=1951710902]
+texture = SubResource("AtlasTexture_g5rtk")
+script = ExtResource("1_ckrlj")
+item_name = "Carne de Sol"
+description = "Iguaria do nordeste brasileiro, agora também neste mundo."
+metadata/_custom_type_script = "uid://cle3p5oy53g7r"

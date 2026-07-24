@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://sm0m75xbj0yn"]
+
+[ext_resource type="Texture2D" uid="uid://dxo3lsky56oa2" path="res://assets/art/entities/items/prato_farofa_de_tanajura_com_carne.png" id="1_6qxjl"]
+[ext_resource type="Script" uid="uid://cle3p5oy53g7r" path="res://entities/base_classes/item/item.gd" id="1_k1tpy"]
+
+[node name="FarofaDeTanajuraComCarneDeSol" type="Sprite2D" unique_id=1681594026]
+texture = ExtResource("1_6qxjl")
+script = ExtResource("1_k1tpy")
+item_name = "Farofa de Tanajura com Carne"
+description = "Prato final da Demo do Game."
+metadata/_custom_type_script = "uid://cle3p5oy53g7r"

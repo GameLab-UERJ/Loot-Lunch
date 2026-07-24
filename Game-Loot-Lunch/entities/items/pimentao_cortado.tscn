@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://dul2alvo64mrn"]
+
+[ext_resource type="Texture2D" uid="uid://bqnssonx4exce" path="res://assets/art/entities/items/Vegies.png" id="1_24gm2"]
+[ext_resource type="Script" uid="uid://cle3p5oy53g7r" path="res://entities/base_classes/item/item.gd" id="1_tl4ml"]
+[ext_resource type="Script" uid="uid://c3lm5ccn6h1rs" path="res://entities/base_classes/stackable_component.gd" id="3_hcoqh"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8rml2"]
+atlas = ExtResource("1_24gm2")
+region = Rect2(113, 63, 32, 32)
+
+[node name="PimentaoCortado" type="Sprite2D" unique_id=1487543480]
+texture = SubResource("AtlasTexture_8rml2")
+script = ExtResource("1_tl4ml")
+item_name = "Pimentão Cortado"
+description = "Pimentão cortado em cubinhos"
+is_ingredient = true
+metadata/_custom_type_script = "uid://cle3p5oy53g7r"
+
+[node name="StackableComponent" type="Node" parent="." unique_id=1853385007]
+script = ExtResource("3_hcoqh")
+metadata/_custom_type_script = "uid://c3lm5ccn6h1rs"
