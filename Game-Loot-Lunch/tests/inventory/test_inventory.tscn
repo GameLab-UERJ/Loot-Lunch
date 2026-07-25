@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://bkjr0ojwjk4ps" path="res://entities/items/pimentao.tscn" id="9_1iaxy"]
 [ext_resource type="PackedScene" uid="uid://de1twbxlhogew" path="res://entities/items/tanajura_body.tscn" id="10_d11dw"]
 [ext_resource type="PackedScene" uid="uid://ba4so0qiuolac" path="res://entities/craft/workbenches/common_workbench.tscn" id="11_fbwvt"]
+[ext_resource type="PackedScene" uid="uid://b7kvabrxxonoc" path="res://entities/craft/workbenches/cutting_workbench.tscn" id="12_1iaxy"]
 
 [node name="TestInventory" type="Node2D" unique_id=1879085168]
 script = ExtResource("1_372ms")
@@ -105,3 +106,6 @@ position = Vector2(249, 224)
 
 [node name="CommonWorkbench" parent="." unique_id=1861521828 instance=ExtResource("11_fbwvt")]
 position = Vector2(246, 45)
+
+[node name="CuttingWorkbench" parent="CommonWorkbench" unique_id=1221274534 instance=ExtResource("12_1iaxy")]
+position = Vector2(69, 0)

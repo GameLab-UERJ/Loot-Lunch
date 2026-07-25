@@ -6,6 +6,7 @@
 
 [resource]
 script = ExtResource("1_1cm2g")
+workbench = 2
 recipe_name = "Cebola Cortada"
 ingredients = Array[PackedScene]([ExtResource("1_or3xr")])
 result_scene = ExtResource("2_crmee")

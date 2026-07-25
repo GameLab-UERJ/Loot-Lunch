@@ -8,6 +8,7 @@
 
 [resource]
 script = ExtResource("1_vgggu")
+workbench = 1
 recipe_name = "Vinagrete"
 ingredients = Array[PackedScene]([ExtResource("1_opkmx"), ExtResource("2_qrmgt"), ExtResource("3_oghtw")])
 result_scene = ExtResource("4_d8l7y")

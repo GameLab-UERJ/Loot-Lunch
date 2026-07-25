@@ -8,6 +8,7 @@
 
 [resource]
 script = ExtResource("1_grih6")
+workbench = 1
 recipe_name = "Prato Final"
 ingredients = Array[PackedScene]([ExtResource("1_6r62t"), ExtResource("2_54ivy"), ExtResource("3_54ivy")])
 result_scene = ExtResource("3_kd01x")

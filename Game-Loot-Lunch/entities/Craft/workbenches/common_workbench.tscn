@@ -25,10 +25,12 @@ region_enabled = true
 region_rect = Rect2(112, 172, 48, 44)
 
 [node name="InteractableArea" parent="." unique_id=1323691504 instance=ExtResource("2_elsjk")]
+show_behind_parent = true
 position = Vector2(0, 3)
 scale = Vector2(1.5, 1.6)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1512701054]
+show_behind_parent = true
 position = Vector2(0.5, 3)
 shape = SubResource("RectangleShape2D_elsjk")
 

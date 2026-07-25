@@ -7,6 +7,7 @@
 
 [resource]
 script = ExtResource("1_6keqw")
+workbench = 1
 recipe_name = "Farofa de Tanajura"
 ingredients = Array[PackedScene]([ExtResource("1_twh0i"), ExtResource("2_sqee5")])
 result_scene = ExtResource("3_hs14u")
