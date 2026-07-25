@@ -1,39 +1,10 @@
 [gd_scene format=3 uid="uid://dr6jrbiw3vgd3"]
 
 [ext_resource type="Script" uid="uid://cndwk0dvbqfnr" path="res://menus/saver_loader/save_load_menu.gd" id="1_kuyjo"]
-[ext_resource type="StyleBox" uid="uid://caoilc7p7lt3y" path="res://menus/saver_loader/button_config.tres" id="2_r7061"]
-[ext_resource type="StyleBox" uid="uid://crbywrlcewv6c" path="res://menus/saver_loader/button_disabled_config.tres" id="3_r7061"]
+[ext_resource type="FontFile" uid="uid://cnqv72au01vlv" path="res://assets/fonts/ui/Sta.Toasty_font (1).ttf" id="2_r7061"]
 [ext_resource type="AudioStream" uid="uid://doyfcod6s5ptl" path="res://assets/sfx/menus/abs-confirm-2.mp3" id="3_xk0oh"]
 [ext_resource type="AudioStream" uid="uid://bkiovum7ll7au" path="res://assets/sfx/menus/abs-pointer-2.mp3" id="4_83imd"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kfjq1"]
-bg_color = Color(0.6, 0.6, 0.6, 0.6745098)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(1, 1, 1, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tkpae"]
-bg_color = Color(0.6, 0.6, 0.6, 0.5294118)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(1, 1, 1, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-shadow_color = Color(0, 0, 0, 0.98039216)
-shadow_size = 1
-shadow_offset = Vector2(2, 2)
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tkpae"]
+[ext_resource type="Theme" uid="uid://blqubia4djs1d" path="res://resources/themes/ui/button.tres" id="4_xk0oh"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_kfjq1"]
 
@@ -66,15 +37,18 @@ alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/HBoxContainer" unique_id=1910022000]
 layout_mode = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 24
 alignment = 1
 
 [node name="Title" type="Label" parent="Panel/HBoxContainer/VBoxContainer" unique_id=1983192135]
 layout_mode = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/line_spacing = 3
 theme_override_constants/shadow_offset_x = 2
 theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("2_r7061")
 theme_override_font_sizes/font_size = 48
 text = "Save & Load"
 horizontal_alignment = 1
@@ -84,90 +58,54 @@ layout_mode = 2
 columns = 3
 
 [node name="SaveSlot0" type="Button" parent="Panel/HBoxContainer/VBoxContainer/SavesGridContainer" unique_id=377162089]
-custom_minimum_size = Vector2(120, 40)
+custom_minimum_size = Vector2(140, 40)
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 10
-theme_override_styles/normal = ExtResource("2_r7061")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_kfjq1")
-theme_override_styles/hover = SubResource("StyleBoxFlat_tkpae")
-theme_override_styles/disabled = ExtResource("3_r7061")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_tkpae")
+theme = ExtResource("4_xk0oh")
 toggle_mode = true
 button_group = SubResource("ButtonGroup_kfjq1")
-text = "SAVE TEST GAME 
+text = "SAVE TEST GAME
 11/11/1111  12:12:12"
 
 [node name="SaveSlot1" type="Button" parent="Panel/HBoxContainer/VBoxContainer/SavesGridContainer" unique_id=1569822485]
-custom_minimum_size = Vector2(120, 40)
+custom_minimum_size = Vector2(140, 40)
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 10
-theme_override_styles/normal = ExtResource("2_r7061")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_kfjq1")
-theme_override_styles/hover = SubResource("StyleBoxFlat_tkpae")
-theme_override_styles/disabled = ExtResource("3_r7061")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_tkpae")
+theme = ExtResource("4_xk0oh")
 toggle_mode = true
 button_group = SubResource("ButtonGroup_kfjq1")
 text = "SAVE TEST GAME 
 11/11/1111  12:12:12"
 
 [node name="SaveSlot2" type="Button" parent="Panel/HBoxContainer/VBoxContainer/SavesGridContainer" unique_id=839275212]
-custom_minimum_size = Vector2(120, 40)
+custom_minimum_size = Vector2(140, 40)
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 10
-theme_override_styles/normal = ExtResource("2_r7061")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_kfjq1")
-theme_override_styles/hover = SubResource("StyleBoxFlat_tkpae")
-theme_override_styles/disabled = ExtResource("3_r7061")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_tkpae")
+theme = ExtResource("4_xk0oh")
 toggle_mode = true
 button_group = SubResource("ButtonGroup_kfjq1")
 text = "SAVE TEST GAME 
 11/11/1111  12:12:12"
 
 [node name="SaveSlot3" type="Button" parent="Panel/HBoxContainer/VBoxContainer/SavesGridContainer" unique_id=1977831054]
-custom_minimum_size = Vector2(120, 40)
+custom_minimum_size = Vector2(140, 40)
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 10
-theme_override_styles/normal = ExtResource("2_r7061")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_kfjq1")
-theme_override_styles/hover = SubResource("StyleBoxFlat_tkpae")
-theme_override_styles/disabled = ExtResource("3_r7061")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_tkpae")
+theme = ExtResource("4_xk0oh")
 toggle_mode = true
 button_group = SubResource("ButtonGroup_kfjq1")
 text = "SAVE TEST GAME 
 11/11/1111  12:12:12"
 
 [node name="SaveSlot4" type="Button" parent="Panel/HBoxContainer/VBoxContainer/SavesGridContainer" unique_id=1391868018]
-custom_minimum_size = Vector2(120, 40)
+custom_minimum_size = Vector2(140, 40)
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 10
-theme_override_styles/normal = ExtResource("2_r7061")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_kfjq1")
-theme_override_styles/hover = SubResource("StyleBoxFlat_tkpae")
-theme_override_styles/disabled = ExtResource("3_r7061")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_tkpae")
+theme = ExtResource("4_xk0oh")
 toggle_mode = true
 button_group = SubResource("ButtonGroup_kfjq1")
 text = "SAVE TEST GAME 
 11/11/1111  12:12:12"
 
 [node name="SaveSlot5" type="Button" parent="Panel/HBoxContainer/VBoxContainer/SavesGridContainer" unique_id=601907343]
-custom_minimum_size = Vector2(120, 40)
+custom_minimum_size = Vector2(140, 40)
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 10
-theme_override_styles/normal = ExtResource("2_r7061")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_kfjq1")
-theme_override_styles/hover = SubResource("StyleBoxFlat_tkpae")
-theme_override_styles/disabled = ExtResource("3_r7061")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_tkpae")
+theme = ExtResource("4_xk0oh")
 toggle_mode = true
 button_group = SubResource("ButtonGroup_kfjq1")
 text = "SAVE TEST GAME 
@@ -181,39 +119,21 @@ columns = 3
 [node name="SaveButton" type="Button" parent="Panel/HBoxContainer/VBoxContainer/ActionsGridContainer" unique_id=1817418486]
 custom_minimum_size = Vector2(110, 20)
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 16
-theme_override_styles/normal = ExtResource("2_r7061")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_kfjq1")
-theme_override_styles/hover = SubResource("StyleBoxFlat_tkpae")
-theme_override_styles/disabled = ExtResource("3_r7061")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_tkpae")
+theme = ExtResource("4_xk0oh")
 disabled = true
 text = "Save"
 
 [node name="LoadButton" type="Button" parent="Panel/HBoxContainer/VBoxContainer/ActionsGridContainer" unique_id=1143345567]
 custom_minimum_size = Vector2(110, 20)
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 16
-theme_override_styles/normal = ExtResource("2_r7061")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_kfjq1")
-theme_override_styles/hover = SubResource("StyleBoxFlat_tkpae")
-theme_override_styles/disabled = ExtResource("3_r7061")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_tkpae")
+theme = ExtResource("4_xk0oh")
 disabled = true
 text = "Load"
 
 [node name="EraseButton" type="Button" parent="Panel/HBoxContainer/VBoxContainer/ActionsGridContainer" unique_id=1668459540]
 custom_minimum_size = Vector2(110, 20)
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 16
-theme_override_styles/normal = ExtResource("2_r7061")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_kfjq1")
-theme_override_styles/hover = SubResource("StyleBoxFlat_tkpae")
-theme_override_styles/disabled = ExtResource("3_r7061")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_tkpae")
+theme = ExtResource("4_xk0oh")
 disabled = true
 text = "Erase"
 
@@ -228,12 +148,7 @@ custom_minimum_size = Vector2(110, 20)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 16
-theme_override_styles/normal = ExtResource("2_r7061")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_kfjq1")
-theme_override_styles/hover = SubResource("StyleBoxFlat_tkpae")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_tkpae")
+theme = ExtResource("4_xk0oh")
 text = "Return"
 
 [node name="PressAudio" type="AudioStreamPlayer" parent="." unique_id=1060437237]

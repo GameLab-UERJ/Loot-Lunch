@@ -19,13 +19,13 @@ var is_quitting: bool = false
 var save_load_menu: SaveLoadMenu
 var save_load_scene: PackedScene = preload("res://menus/saver_loader/save_load_menu.tscn")
 
-@onready var new_game_button: Button = $Content/Buttons/NewGameButton
-@onready var continue_button: Button = $Content/Buttons/ContinueButton
-@onready var settings_button: Button = $Content/Buttons/SettingsButton
-@onready var quit_button: Button = $Content/Buttons/QuitButton
+@onready var new_game_button: Button = $Content/Buttons/GridContainer3/NewGameButton
+@onready var continue_button: Button = $Content/Buttons/GridContainer/ContinueButton
+@onready var settings_button: Button = $Content/Buttons/GridContainer/SettingsButton
+@onready var quit_button: Button = $Content/Buttons/GridContainer2/QuitButton
 @onready var hover_audio: AudioStreamPlayer = $HoverAudio
 @onready var press_audio: AudioStreamPlayer = $PressAudio
-@onready var content: VBoxContainer = $Content
+@onready var content: HBoxContainer = $Content
 
 
 func _ready() -> void:
@@ -64,12 +64,10 @@ func _on_continue_button_pressed() -> void:
 
 
 func _on_settings_button_pressed() -> void:
-	print(settings_button.text)
 	_play_press_sound_and_quit()
 
 
 func _on_quit_button_pressed() -> void:
-	print(quit_button.text)
 	_play_press_sound_and_quit()
 
 
