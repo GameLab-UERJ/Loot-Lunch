@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cbs8q2hki4fym" path="res://systems/interaction/interactable_area.tscn" id="2_wmods"]
 [ext_resource type="Texture2D" uid="uid://drguwsuardbi1" path="res://assets/art/tilesets/interior/Paredes_e_divisorias_cortadas.png" id="3_nrwoy"]
 [ext_resource type="PackedScene" uid="uid://3cgeew2m05mn" path="res://entities/player/player.tscn" id="4_wmods"]
+[ext_resource type="Texture2D" uid="uid://boap28k77drsw" path="res://assets/art/entities/npcs/guideman/loader.png" id="7_4ru3j"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4r4wk"]
 texture = ExtResource("1_d1boo")
@@ -361,6 +362,72 @@ texture = ExtResource("2_ani4u")
 [sub_resource type="TileSet" id="TileSet_cogxb"]
 sources/0 = SubResource("TileSetAtlasSource_wg7rf")
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_m216y"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_86747"]
+atlas = ExtResource("7_4ru3j")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vyeqd"]
+atlas = ExtResource("7_4ru3j")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wtnpl"]
+atlas = ExtResource("7_4ru3j")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qi4g6"]
+atlas = ExtResource("7_4ru3j")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n1eve"]
+atlas = ExtResource("7_4ru3j")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pvpfn"]
+atlas = ExtResource("7_4ru3j")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0hm3m"]
+atlas = ExtResource("7_4ru3j")
+region = Rect2(96, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_br0u0"]
+atlas = ExtResource("7_4ru3j")
+region = Rect2(112, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6n440"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_86747")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vyeqd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wtnpl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qi4g6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n1eve")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pvpfn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0hm3m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_br0u0")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
 [node name="InsideHouse" type="Node2D" unique_id=1172528638]
 script = ExtResource("1_nrwoy")
 metadata/_edit_vertical_guides_ = [2269.0, 396.0, -6.0]
@@ -497,6 +564,17 @@ limit_left = -5
 limit_top = -43
 limit_right = 395
 limit_bottom = 274
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=459606863]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=68525380]
+shape = SubResource("CircleShape2D_m216y")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D" unique_id=558395929]
+position = Vector2(349, 143)
+sprite_frames = SubResource("SpriteFrames_6n440")
+autoplay = "default"
+frame_progress = 0.9317574
 
 [connection signal="interact_with_player" from="Door" to="." method="_on_door_area_entered"]
 [connection signal="stop_interact_with_player" from="Door" to="." method="_on_door_area_exited"]

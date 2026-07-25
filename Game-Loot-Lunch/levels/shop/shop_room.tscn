@@ -499,6 +499,9 @@ tile_set = SubResource("TileSet_dt7fw")
 y_sort_enabled = true
 position = Vector2(205.32132, 32.124733)
 
+[node name="AnimatedSprite2D" parent="ShopNpc" index="1" unique_id=799428324]
+frame_progress = 0.0
+
 [node name="ShopComponent" type="Node" parent="ShopNpc" unique_id=2082865285]
 script = ExtResource("5_q0dw4")
 items_prices = Dictionary[PackedScene, int]({
