@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Recipe" format=3 uid="uid://cx5v0smu1h8ad"]
 
 [ext_resource type="PackedScene" uid="uid://c64i00jdrrapj" path="res://entities/items/farofa_de_tanajura.tscn" id="1_6r62t"]
-[ext_resource type="Script" uid="uid://csymt6cnu6pf" path="res://resources/recipe/recipe.gd" id="1_grih6"]
+[ext_resource type="Script" uid="uid://csymt6cnu6pf" path="res://resources/base_resources/recipe.gd" id="1_grih6"]
 [ext_resource type="PackedScene" uid="uid://com7qtbfdltey" path="res://entities/items/carne_pronta.tscn" id="2_54ivy"]
 [ext_resource type="PackedScene" uid="uid://1fdob43gb34q" path="res://entities/items/vinagrete.tscn" id="3_54ivy"]
 [ext_resource type="PackedScene" uid="uid://sm0m75xbj0yn" path="res://entities/items/farofa_de_tanajura_com_carne_de_sol.tscn" id="3_kd01x"]

@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://cqnchp7q3uixs"]
 
 [ext_resource type="Script" uid="uid://c3wvorc8cumre" path="res://entities/inventory/inventory.gd" id="1_0tuds"]
-[ext_resource type="PackedScene" uid="uid://dm1b5lo2dhwsx" path="res://entities/Craft/crafting_grid.tscn" id="2_q0t3s"]
-[ext_resource type="Script" uid="uid://csymt6cnu6pf" path="res://resources/recipe/recipe.gd" id="3_1kjwn"]
+[ext_resource type="PackedScene" uid="uid://dm1b5lo2dhwsx" path="res://entities/craft/crafting_grid.tscn" id="2_q0t3s"]
+[ext_resource type="Script" uid="uid://csymt6cnu6pf" path="res://resources/base_resources/recipe.gd" id="3_1kjwn"]
 [ext_resource type="Resource" uid="uid://ddqpstbw4mobf" path="res://resources/recipes/carne_salgada.tres" id="4_1kjwn"]
 [ext_resource type="Resource" uid="uid://b2mww70ii7ohe" path="res://resources/recipes/vinagrete.tres" id="5_kk267"]
 [ext_resource type="Resource" uid="uid://77bxbqhj0mhd" path="res://resources/recipes/carne_seca.tres" id="6_b8606"]

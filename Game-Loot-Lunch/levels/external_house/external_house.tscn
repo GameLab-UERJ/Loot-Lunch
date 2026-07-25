@@ -16,6 +16,7 @@
 [ext_resource type="Resource" uid="uid://dttdbt6ehpcxr" path="res://entities/npcs/dialogos/npc_estrada_bloqueio.dialogue" id="14_lt77x"]
 [ext_resource type="PackedScene" uid="uid://d1q0x6qrbyjlx" path="res://entities/npcs/sign.tscn" id="15_k7n0b"]
 [ext_resource type="Resource" uid="uid://dkogwulps4etc" path="res://entities/npcs/dialogos/placa_direcoes.dialogue" id="16_lt77x"]
+[ext_resource type="PackedScene" uid="uid://ba4so0qiuolac" path="res://entities/craft/workbenches/common_workbench.tscn" id="17_4uhx5"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_f206e"]
 texture = ExtResource("1_xktgd")
@@ -1244,6 +1245,9 @@ dialogue = ExtResource("14_lt77x")
 [node name="Sign" parent="." unique_id=658375839 instance=ExtResource("15_k7n0b")]
 position = Vector2(66, 265)
 dialogue = ExtResource("16_lt77x")
+
+[node name="CommonWorkbench" parent="." unique_id=1183602685 instance=ExtResource("17_4uhx5")]
+position = Vector2(382, 101)
 
 [connection signal="interact_with_player" from="HouseArea" to="." method="_on_house_area_entered"]
 [connection signal="stop_interact_with_player" from="HouseArea" to="." method="_on_house_area_exited"]

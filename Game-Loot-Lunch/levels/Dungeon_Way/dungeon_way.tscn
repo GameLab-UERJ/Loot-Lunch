@@ -1,7 +1,7 @@
 [gd_scene format=4 uid="uid://dkaytgmdhkghj"]
 
 [ext_resource type="Texture2D" uid="uid://4k3sewl10xmk" path="res://assets/art/tilesets/exterior_1/exterior.png" id="1_bkwuf"]
-[ext_resource type="Script" uid="uid://djgvy2t6ia5cr" path="res://levels/Dungeon_Way/dungeon_way.gd" id="1_f10bb"]
+[ext_resource type="Script" uid="uid://djgvy2t6ia5cr" path="res://levels/dungeon_way/dungeon_way.gd" id="1_f10bb"]
 [ext_resource type="Texture2D" uid="uid://kysfsmoaib7g" path="res://assets/art/tilesets/exterior_2/sandwater.png" id="2_no2jk"]
 [ext_resource type="Texture2D" uid="uid://bjh0kt1bm4de6" path="res://assets/art/tilesets/dungeon_exterior/Tiled_files/Sprite-0002-Sheet.png" id="3_drym6"]
 [ext_resource type="Texture2D" uid="uid://jj86r3ewr8f2" path="res://assets/art/tilesets/exterior_1/ground_grass_details.png" id="3_gcchm"]

@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Recipe" format=3 uid="uid://b2mww70ii7ohe"]
 
 [ext_resource type="PackedScene" uid="uid://dul2alvo64mrn" path="res://entities/items/pimentao_cortado.tscn" id="1_opkmx"]
-[ext_resource type="Script" uid="uid://csymt6cnu6pf" path="res://resources/recipe/recipe.gd" id="1_vgggu"]
+[ext_resource type="Script" uid="uid://csymt6cnu6pf" path="res://resources/base_resources/recipe.gd" id="1_vgggu"]
 [ext_resource type="PackedScene" uid="uid://bf2bev0bth0k7" path="res://entities/items/cebola_cortada.tscn" id="2_qrmgt"]
 [ext_resource type="PackedScene" uid="uid://qx4eg565lrr3" path="res://entities/items/tomate_cortado.tscn" id="3_oghtw"]
 [ext_resource type="PackedScene" uid="uid://1fdob43gb34q" path="res://entities/items/vinagrete.tscn" id="4_d8l7y"]

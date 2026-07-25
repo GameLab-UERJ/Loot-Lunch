@@ -1,5 +1,9 @@
-class_name Recipe
 extends Resource
+class_name Recipe
+
+
+## Workbench necessario para aplicar receita
+@export var workbench: Workbench.Type = Workbench.Type.None
 
 ## Nome da receita (ex: "Carne")
 @export var recipe_name: String = ""
@@ -16,6 +20,9 @@ extends Resource
 
 ## Verifica se um grid 3x3 de itens bate com esta receita
 func matches(grid_items: Array[Item]) -> bool:
+	if workbench != Workbench.Type.None and GlobalData.current_workbench != workbench:
+		return false
+	
 	# Conta quantos itens tem no grid (ignora vazios)
 	var grid_has: Array[Item] = []
 	for item in grid_items:
