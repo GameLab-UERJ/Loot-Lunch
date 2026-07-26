@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://cvjwbse1pwptm"]
+
+[ext_resource type="Texture2D" uid="uid://2ruw5eys7oow" path="res://assets/art/entities/items/plants.png" id="1_37dpa"]
+[ext_resource type="Script" uid="uid://f18qa8lsba14" path="res://tests/plantacao/cebola.gd" id="2_37dpa"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1t1if"]
+
+[node name="Area2D" type="Area2D" unique_id=704249269]
+script = ExtResource("2_37dpa")
+
+[node name="Item" type="Sprite2D" parent="." unique_id=185478350 groups=["itens_dropados"]]
+position = Vector2(-2, -6)
+texture = ExtResource("1_37dpa")
+hframes = 9
+vframes = 11
+frame = 91
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1106971270]
+position = Vector2(-2, 0)
+shape = SubResource("CircleShape2D_1t1if")

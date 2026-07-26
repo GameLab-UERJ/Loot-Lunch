@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://b6gh5e5k3y55g"]
+
+[ext_resource type="Script" uid="uid://ddiqk4yadgv5l" path="res://tests/plantacao/pimentao_crescendo.gd" id="1_ikj7h"]
+[ext_resource type="Texture2D" uid="uid://2ruw5eys7oow" path="res://assets/art/entities/items/plants.png" id="1_nvt31"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nvt31"]
+atlas = ExtResource("1_nvt31")
+region = Rect2(128, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ikj7h"]
+atlas = ExtResource("1_nvt31")
+region = Rect2(128, 64, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aqunq"]
+atlas = ExtResource("1_nvt31")
+region = Rect2(128, 128, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yrehj"]
+atlas = ExtResource("1_nvt31")
+region = Rect2(128, 192, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qkxo4"]
+atlas = ExtResource("1_nvt31")
+region = Rect2(128, 256, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m78b7"]
+atlas = ExtResource("1_nvt31")
+region = Rect2(128, 320, 32, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_eq3a6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nvt31")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ikj7h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aqunq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yrehj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qkxo4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m78b7")
+}],
+"loop": true,
+"name": &"default",
+"speed": 1.0
+}]
+
+[node name="pimentao_crescendo" type="Area2D" unique_id=1565949637]
+script = ExtResource("1_ikj7h")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1833681704]
+position = Vector2(1, -20)
+sprite_frames = SubResource("SpriteFrames_eq3a6")
+frame = 1
+frame_progress = 0.76307243
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=325336691]
+
+[node name="Timer" type="Timer" parent="." unique_id=1757574183]
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
