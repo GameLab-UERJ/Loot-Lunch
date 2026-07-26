@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://cw03dpql70xt3"
+path="res://.godot/imported/npc_dungeon_interna.dialogue-e59f535c02ed9e796e3437d0288a7630.tres"
+
+[deps]
+
+source_file="res://entities/npcs/dialogos/npc_dungeon_interna.dialogue"
+dest_files=["res://.godot/imported/npc_dungeon_interna.dialogue-e59f535c02ed9e796e3437d0288a7630.tres"]
+
+[params]
+
+defaults=true

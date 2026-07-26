@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://t5ajrb8nc27b"]
+
+[ext_resource type="Texture2D" uid="uid://xnfegqg2xfdc" path="res://assets/art/entities/items/farming_fishing.png" id="1_qd5uu"]
+[ext_resource type="Script" uid="uid://cle3p5oy53g7r" path="res://entities/base_classes/item/item.gd" id="1_qvqgv"]
+[ext_resource type="Script" uid="uid://c3lm5ccn6h1rs" path="res://entities/base_classes/stackable_component.gd" id="3_ry2aa"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qd5uu"]
+atlas = ExtResource("1_qd5uu")
+region = Rect2(32, 292, 32, 32)
+
+[node name="CarneSalgada" type="Sprite2D" unique_id=1587930094]
+texture = SubResource("AtlasTexture_qd5uu")
+script = ExtResource("1_qvqgv")
+item_name = "Carne Salgada"
+description = "Precisavamos mesmo gastar um pacote de sal inteiro?"
+is_ingredient = true
+metadata/_custom_type_script = "uid://cle3p5oy53g7r"
+
+[node name="StackableComponent" type="Node" parent="." unique_id=558409276]
+script = ExtResource("3_ry2aa")
+metadata/_custom_type_script = "uid://c3lm5ccn6h1rs"

@@ -1,9 +1,18 @@
 [gd_scene format=3 uid="uid://cqnchp7q3uixs"]
 
 [ext_resource type="Script" uid="uid://c3wvorc8cumre" path="res://entities/inventory/inventory.gd" id="1_0tuds"]
-[ext_resource type="PackedScene" uid="uid://dm1b5lo2dhwsx" path="res://entities/Craft/crafting_grid.tscn" id="2_q0t3s"]
-[ext_resource type="Script" uid="uid://csymt6cnu6pf" path="res://resources/recipe/recipe.gd" id="3_1kjwn"]
-[ext_resource type="Resource" uid="uid://472o8obempxb" path="res://resources/carne.tres" id="4_u1r4d"]
+[ext_resource type="PackedScene" uid="uid://dm1b5lo2dhwsx" path="res://entities/craft/crafting_grid.tscn" id="2_q0t3s"]
+[ext_resource type="Script" uid="uid://csymt6cnu6pf" path="res://resources/base_resources/recipe.gd" id="3_1kjwn"]
+[ext_resource type="Resource" uid="uid://ddqpstbw4mobf" path="res://resources/recipes/carne_salgada.tres" id="4_1kjwn"]
+[ext_resource type="Resource" uid="uid://b2mww70ii7ohe" path="res://resources/recipes/vinagrete.tres" id="5_kk267"]
+[ext_resource type="Resource" uid="uid://77bxbqhj0mhd" path="res://resources/recipes/carne_seca.tres" id="6_b8606"]
+[ext_resource type="Resource" uid="uid://b1bh3no067vij" path="res://resources/recipes/cebola_cortada.tres" id="7_g0cdr"]
+[ext_resource type="Resource" uid="uid://cunsglvdawe5t" path="res://resources/recipes/farofa_torrada.tres" id="8_pul5f"]
+[ext_resource type="Resource" uid="uid://db2orrkrytuqx" path="res://resources/recipes/tomate_cortado.tres" id="9_m0vy4"]
+[ext_resource type="Resource" uid="uid://70myqwoyfe2q" path="res://resources/recipes/pimentao_cortado.tres" id="10_ww4qh"]
+[ext_resource type="Resource" uid="uid://c0b3otedlvkom" path="res://resources/recipes/tanajura_preparada.tres" id="11_gpbhv"]
+[ext_resource type="Resource" uid="uid://dv52tb1bme0w7" path="res://resources/recipes/farofa_de_tanajura.tres" id="12_ja2xr"]
+[ext_resource type="Resource" uid="uid://cx5v0smu1h8ad" path="res://resources/recipes/prato_farofa_de_tanajura_com_carne_de_sol.tres" id="13_sb8y3"]
 
 [node name="Inventory" type="Control" unique_id=1443629152]
 layout_mode = 3
@@ -55,4 +64,4 @@ offset_top = 63.0
 offset_right = 31.0
 offset_bottom = 63.0
 inventory = NodePath("..")
-recipes = Array[ExtResource("3_1kjwn")]([ExtResource("4_u1r4d")])
+recipes = Array[ExtResource("3_1kjwn")]([ExtResource("4_1kjwn"), ExtResource("5_kk267"), ExtResource("6_b8606"), ExtResource("7_g0cdr"), ExtResource("8_pul5f"), ExtResource("9_m0vy4"), ExtResource("10_ww4qh"), ExtResource("11_gpbhv"), ExtResource("12_ja2xr"), ExtResource("13_sb8y3")])

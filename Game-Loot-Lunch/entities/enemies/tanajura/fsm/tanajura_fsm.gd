@@ -37,6 +37,9 @@ func _get_transition() -> int:
 					return states.idle
 				else:
 					return states.chase
+		states.chase:
+			if parent.states_timer.is_stopped() and !parent.alert:
+				return states.idle
 		states.hidden:
 			if parent.alert:
 				return states.digging_up
@@ -55,7 +58,6 @@ func _get_transition() -> int:
 
 
 func _enter_state(_previous_state: int, new_state: int) -> void:
-	print(states.find_key(state))
 	match new_state:
 		states.idle:
 			parent.idle_state()
@@ -81,3 +83,4 @@ func _exit_state(state_exited: int) -> void:
 	match state_exited:
 		states.hidden:
 			parent.hidden_move()
+		

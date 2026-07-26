@@ -4,9 +4,10 @@
 [ext_resource type="Texture2D" uid="uid://xnfegqg2xfdc" path="res://assets/art/entities/items/farming_fishing.png" id="2_54t5i"]
 
 [node name="Tomate" type="Sprite2D" unique_id=1065823031]
+texture_repeat = 1
 texture = ExtResource("2_54t5i")
 region_enabled = true
-region_rect = Rect2(422, 231, 24, 24)
+region_rect = Rect2(418, 227, 32, 32)
 script = ExtResource("1_h045o")
 item_name = "Tomate"
 description = "Melhor \"Vegetal\""

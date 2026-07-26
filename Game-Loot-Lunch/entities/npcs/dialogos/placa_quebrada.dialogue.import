@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://dsp5hm6v353bd"
+path="res://.godot/imported/placa_quebrada.dialogue-6146599dd1a475438e15f64cef5b2887.tres"
+
+[deps]
+
+source_file="res://entities/npcs/dialogos/placa_quebrada.dialogue"
+dest_files=["res://.godot/imported/placa_quebrada.dialogue-6146599dd1a475438e15f64cef5b2887.tres"]
+
+[params]
+
+defaults=true

@@ -11,6 +11,13 @@
 [ext_resource type="PackedScene" uid="uid://3cgeew2m05mn" path="res://entities/player/player.tscn" id="8_8oikr"]
 [ext_resource type="Script" uid="uid://daus7y7nt2yw5" path="res://systems/interaction/interactable_area.gd" id="10_i3155"]
 [ext_resource type="AudioStream" uid="uid://huj0511vq4kh" path="res://assets/music/montogoronto-ominousdark-medievalfantasy-song-309510.mp3" id="10_mcp6s"]
+[ext_resource type="PackedScene" uid="uid://dvs2ib7i8lmf0" path="res://entities/npcs/dialogue_npc.tscn" id="12_8oikr"]
+[ext_resource type="Resource" uid="uid://bqqtdor4cj34h" path="res://entities/npcs/dialogos/npc_dungeon_externa.dialogue" id="13_gdg54"]
+[ext_resource type="PackedScene" uid="uid://d1q0x6qrbyjlx" path="res://entities/npcs/sign.tscn" id="14_nm7yr"]
+[ext_resource type="Resource" uid="uid://racdbnvusk15" path="res://entities/npcs/dialogos/placa_dungeon_1.dialogue" id="15_rp1tq"]
+[ext_resource type="Resource" uid="uid://cr8sot8fdx0tk" path="res://entities/npcs/dialogos/npc_dungeon_externa_2.dialogue" id="16_3spy5"]
+[ext_resource type="Resource" uid="uid://xon0sjirckcn" path="res://entities/npcs/dialogos/placa_dungeon_2.dialogue" id="16_nm7yr"]
+[ext_resource type="Resource" uid="uid://bei52wrvl8mgv" path="res://entities/npcs/dialogos/placa_dungeon_3.dialogue" id="17_gdg54"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pa5xr"]
 texture = ExtResource("1_2es48")
@@ -1255,6 +1262,26 @@ script = ExtResource("10_i3155")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="level_change/internal_dungeon" unique_id=491092028]
 position = Vector2(-1, 1)
 shape = SubResource("RectangleShape2D_mcp6s")
+
+[node name="DialogueNpc" parent="." unique_id=1279799556 instance=ExtResource("12_8oikr")]
+position = Vector2(480, 161)
+dialogue = ExtResource("13_gdg54")
+
+[node name="Sign" parent="." unique_id=1921293989 instance=ExtResource("14_nm7yr")]
+position = Vector2(742, 110)
+dialogue = ExtResource("15_rp1tq")
+
+[node name="DialogueNpc2" parent="." unique_id=1354954757 instance=ExtResource("12_8oikr")]
+position = Vector2(-950, 45)
+dialogue = ExtResource("16_3spy5")
+
+[node name="Sign2" parent="." unique_id=900630385 instance=ExtResource("14_nm7yr")]
+position = Vector2(-45, 97)
+dialogue = ExtResource("16_nm7yr")
+
+[node name="Sign3" parent="." unique_id=1011824855 instance=ExtResource("14_nm7yr")]
+position = Vector2(-987, -25)
+dialogue = ExtResource("17_gdg54")
 
 [connection signal="interact_with_player" from="level_change/back_to_dungeon_way" to="." method="_on_dungeon_way_area_entered"]
 [connection signal="stop_interact_with_player" from="level_change/back_to_dungeon_way" to="." method="_on_dungeon_way_area_exited"]

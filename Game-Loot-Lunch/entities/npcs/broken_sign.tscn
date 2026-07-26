@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://bbyxjsfgjkte1"]
+
+[ext_resource type="PackedScene" uid="uid://d1q0x6qrbyjlx" path="res://entities/npcs/sign.tscn" id="1_xmtn6"]
+[ext_resource type="Texture2D" uid="uid://ce8701kx05rmu" path="res://assets/art/tilesets/signs/Broken sign.png" id="2_hhx6l"]
+
+[node name="Broken Sign" unique_id=1279799556 instance=ExtResource("1_xmtn6")]
+
+[node name="Sprite2D" parent="." index="2" unique_id=987721481]
+texture = ExtResource("2_hhx6l")

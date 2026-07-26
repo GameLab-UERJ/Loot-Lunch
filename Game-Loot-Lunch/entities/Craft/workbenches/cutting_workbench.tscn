@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://b7kvabrxxonoc"]
+
+[ext_resource type="Script" uid="uid://hp4754twxlej" path="res://entities/base_classes/workbench.gd" id="1_cxmeh"]
+[ext_resource type="Shader" uid="uid://i8xl186i1o18" path="res://resources/shaders/outline.tres" id="2_1myob"]
+[ext_resource type="Texture2D" uid="uid://bcjsdj346wct0" path="res://assets/art/tilesets/interior/Interior.png" id="3_5nfi3"]
+[ext_resource type="PackedScene" uid="uid://cbs8q2hki4fym" path="res://systems/interaction/interactable_area.tscn" id="4_pbqwa"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_06gsy"]
+shader = ExtResource("2_1myob")
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/width = 0.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_elsjk"]
+size = Vector2(37, 26)
+
+[node name="CuttingWorkbench" type="StaticBody2D" unique_id=1861521828]
+script = ExtResource("1_cxmeh")
+type = 2
+metadata/_custom_type_script = "uid://hp4754twxlej"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=886083074]
+material = SubResource("ShaderMaterial_06gsy")
+texture = ExtResource("3_5nfi3")
+region_enabled = true
+region_rect = Rect2(112, 172, 48, 44)
+
+[node name="Sprite2D" type="Sprite2D" parent="Sprite2D" unique_id=1359260051]
+position = Vector2(-0.5, -3.5)
+scale = Vector2(2.8999999, 1.7)
+texture = ExtResource("3_5nfi3")
+region_enabled = true
+region_rect = Rect2(163, 387, 10, 10)
+
+[node name="KnifeSprite" type="Sprite2D" parent="Sprite2D" unique_id=1127845483]
+position = Vector2(10, -5)
+rotation = -1.5707964
+texture = ExtResource("3_5nfi3")
+region_enabled = true
+region_rect = Rect2(100, 370, 26, 11)
+
+[node name="InteractableArea" parent="." unique_id=1323691504 instance=ExtResource("4_pbqwa")]
+show_behind_parent = true
+position = Vector2(0, 3)
+scale = Vector2(1.5, 1.6)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1512701054]
+show_behind_parent = true
+position = Vector2(0.5, 3)
+shape = SubResource("RectangleShape2D_elsjk")
+
+[connection signal="interact_with_player" from="InteractableArea" to="." method="_on_interactable_area_interact_with_player"]
+[connection signal="stop_interact_with_player" from="InteractableArea" to="." method="_on_interactable_area_stop_interact_with_player"]

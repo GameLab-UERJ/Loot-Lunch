@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://racdbnvusk15"
+path="res://.godot/imported/placa_dungeon_1.dialogue-4d6c0e1427d7588b552d1e66206b466e.tres"
+
+[deps]
+
+source_file="res://entities/npcs/dialogos/placa_dungeon_1.dialogue"
+dest_files=["res://.godot/imported/placa_dungeon_1.dialogue-4d6c0e1427d7588b552d1e66206b466e.tres"]
+
+[params]
+
+defaults=true

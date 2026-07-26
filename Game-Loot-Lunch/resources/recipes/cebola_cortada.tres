@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Recipe" format=3 uid="uid://b1bh3no067vij"]
+
+[ext_resource type="Script" uid="uid://csymt6cnu6pf" path="res://resources/base_resources/recipe.gd" id="1_1cm2g"]
+[ext_resource type="PackedScene" uid="uid://daxh8ww0k8cl7" path="res://entities/items/cebola.tscn" id="1_or3xr"]
+[ext_resource type="PackedScene" uid="uid://bf2bev0bth0k7" path="res://entities/items/cebola_cortada.tscn" id="2_crmee"]
+
+[resource]
+script = ExtResource("1_1cm2g")
+workbench = 2
+recipe_name = "Cebola Cortada"
+ingredients = Array[PackedScene]([ExtResource("1_or3xr")])
+result_scene = ExtResource("2_crmee")
+metadata/_custom_type_script = "uid://csymt6cnu6pf"

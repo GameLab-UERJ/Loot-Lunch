@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Recipe" format=3 uid="uid://cunsglvdawe5t"]
+
+[ext_resource type="PackedScene" uid="uid://dd8vbsbs33ii4" path="res://entities/items/farinha.tscn" id="1_r1ayy"]
+[ext_resource type="Script" uid="uid://csymt6cnu6pf" path="res://resources/base_resources/recipe.gd" id="1_yxfig"]
+[ext_resource type="PackedScene" uid="uid://dk7racedccocy" path="res://entities/items/farofa_torrada.tscn" id="2_of0cx"]
+
+[resource]
+script = ExtResource("1_yxfig")
+workbench = 4
+recipe_name = "Farofa Torrada"
+ingredients = Array[PackedScene]([ExtResource("1_r1ayy")])
+result_scene = ExtResource("2_of0cx")
+metadata/_custom_type_script = "uid://csymt6cnu6pf"

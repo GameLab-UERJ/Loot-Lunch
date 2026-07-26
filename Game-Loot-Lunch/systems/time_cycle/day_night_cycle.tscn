@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://yr26mvbasy76"]
+
+[ext_resource type="Script" uid="uid://iwo2sk5nw4iw" path="res://systems/time_cycle/day_night_cycle.gd" id="1_ry3t4"]
+[ext_resource type="AudioStream" uid="uid://cbjk8oobf3ff3" path="res://assets/sfx/ambient/freesound_community-birds-in-forest-on-sunny-day-14444.mp3" id="2_oqcn4"]
+[ext_resource type="AudioStream" uid="uid://cws2chg3v21hb" path="res://assets/sfx/ambient/freesound_community-night-ambience-17064.mp3" id="3_daak6"]
+
+[node name="CanvasModulate" type="CanvasModulate" unique_id=2007590606]
+visible = false
+color = Color(0.75375223, 0.8162061, 0.93515855, 1)
+script = ExtResource("1_ry3t4")
+
+[node name="DayAmbient" type="AudioStreamPlayer" parent="." unique_id=947052187]
+stream = ExtResource("2_oqcn4")
+
+[node name="NightAmbient" type="AudioStreamPlayer" parent="." unique_id=1697592898]
+stream = ExtResource("3_daak6")

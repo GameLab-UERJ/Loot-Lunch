@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://bf2bev0bth0k7"]
+
+[ext_resource type="Script" uid="uid://cle3p5oy53g7r" path="res://entities/base_classes/item/item.gd" id="1_p4uhn"]
+[ext_resource type="Texture2D" uid="uid://bqnssonx4exce" path="res://assets/art/entities/items/Vegies.png" id="1_pg5qs"]
+[ext_resource type="Script" uid="uid://c3lm5ccn6h1rs" path="res://entities/base_classes/stackable_component.gd" id="3_oou4a"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pg5qs"]
+atlas = ExtResource("1_pg5qs")
+region = Rect2(146, 63, 32, 32)
+
+[node name="CebolaCortada" type="Sprite2D" unique_id=653954620]
+texture = SubResource("AtlasTexture_pg5qs")
+script = ExtResource("1_p4uhn")
+item_name = "Cebola Cortada"
+description = "Cebola em cubinhos. Lágrimas rolaram."
+is_ingredient = true
+metadata/_custom_type_script = "uid://cle3p5oy53g7r"
+
+[node name="StackableComponent" type="Node" parent="." unique_id=1181937405]
+script = ExtResource("3_oou4a")
+metadata/_custom_type_script = "uid://c3lm5ccn6h1rs"

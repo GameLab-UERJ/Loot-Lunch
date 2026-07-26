@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Recipe" format=3 uid="uid://dv52tb1bme0w7"]
+
+[ext_resource type="Script" uid="uid://csymt6cnu6pf" path="res://resources/base_resources/recipe.gd" id="1_6keqw"]
+[ext_resource type="PackedScene" uid="uid://dk7racedccocy" path="res://entities/items/farofa_torrada.tscn" id="1_twh0i"]
+[ext_resource type="PackedScene" uid="uid://cel3oqtb38ds8" path="res://entities/items/tanajura_limpa_preparada.tscn" id="2_sqee5"]
+[ext_resource type="PackedScene" uid="uid://c64i00jdrrapj" path="res://entities/items/farofa_de_tanajura.tscn" id="3_hs14u"]
+
+[resource]
+script = ExtResource("1_6keqw")
+workbench = 1
+recipe_name = "Farofa de Tanajura"
+ingredients = Array[PackedScene]([ExtResource("1_twh0i"), ExtResource("2_sqee5")])
+result_scene = ExtResource("3_hs14u")
+metadata/_custom_type_script = "uid://csymt6cnu6pf"

@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://1fdob43gb34q"]
+
+[ext_resource type="Script" uid="uid://cle3p5oy53g7r" path="res://entities/base_classes/item/item.gd" id="1_m6tqc"]
+[ext_resource type="Texture2D" uid="uid://cbs7ydb1sfisg" path="res://assets/art/entities/items/sprite_cumbuca_com_vinagrete_32x32.png" id="1_prgvc"]
+
+[node name="Vinagrete" type="Sprite2D" unique_id=1581891784]
+texture = ExtResource("1_prgvc")
+script = ExtResource("1_m6tqc")
+item_name = "Vinagrete"
+description = "Pronto para ser servido ou compor outro prato."
+is_ingredient = true
+metadata/_custom_type_script = "uid://cle3p5oy53g7r"

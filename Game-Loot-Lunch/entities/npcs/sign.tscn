@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://d1q0x6qrbyjlx"]
+
+[ext_resource type="Script" uid="uid://ch4pufrtva0y1" path="res://entities/npcs/dialogue_npc.gd" id="1_x86sj"]
+[ext_resource type="PackedScene" uid="uid://jjadd5q2cswh" path="res://systems/interaction/generic_interactable_area.tscn" id="3_ofm2r"]
+[ext_resource type="Texture2D" uid="uid://bjxj7cqrefjuf" path="res://assets/art/tilesets/signs/Sign and messages3.png" id="3_x86sj"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8j8jq"]
+radius = 4.0
+
+[node name="Sign" type="CharacterBody2D" unique_id=1279799556]
+script = ExtResource("1_x86sj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1299589128]
+position = Vector2(0, 7)
+shape = SubResource("CircleShape2D_8j8jq")
+
+[node name="Area2D" parent="." unique_id=117400201 instance=ExtResource("3_ofm2r")]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=987721481]
+texture = ExtResource("3_x86sj")

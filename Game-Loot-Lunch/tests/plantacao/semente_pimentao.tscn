@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://kl4q8iin2ywd"]
+
+[ext_resource type="Texture2D" uid="uid://b4p2d5u3k8i88" path="res://assets/art/entities/items/semente_pimentao.png" id="1_lspgw"]
+[ext_resource type="Script" uid="uid://dqvbg2isojsry" path="res://tests/plantacao/semente_pimentao.gd" id="1_p38m3"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_p38m3"]
+radius = 6.0827627
+
+[node name="semente_pimentao" type="Area2D" unique_id=1267216674]
+script = ExtResource("1_p38m3")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1567121013]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("1_lspgw")
+offset = Vector2(95, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1723636396]
+position = Vector2(0, 1)
+shape = SubResource("CircleShape2D_p38m3")
