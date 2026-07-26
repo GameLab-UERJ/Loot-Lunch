@@ -2,8 +2,6 @@
 
 [ext_resource type="Texture2D" uid="uid://xnfegqg2xfdc" path="res://assets/art/entities/items/farming_fishing.png" id="1_r012m"]
 [ext_resource type="Script" uid="uid://cle3p5oy53g7r" path="res://entities/base_classes/item/item.gd" id="2_d1jw4"]
-[ext_resource type="PackedScene" uid="uid://ckaqkpas3ttwr" path="res://systems/interaction/clickable_area.tscn" id="3_d1jw4"]
-[ext_resource type="PackedScene" uid="uid://cbs8q2hki4fym" path="res://systems/interaction/interactable_area.tscn" id="4_onr7g"]
 
 [node name="Farinha" type="Sprite2D" unique_id=1998340507]
 physics_interpolation_mode = 2
@@ -15,7 +13,3 @@ item_name = "Farinha"
 description = "Farinha de mandioca"
 is_ingredient = true
 metadata/_custom_type_script = "uid://cle3p5oy53g7r"
-
-[node name="ClickableArea" parent="." unique_id=1323691504 instance=ExtResource("3_d1jw4")]
-
-[node name="InteractableArea" parent="." unique_id=1122027711 instance=ExtResource("4_onr7g")]
