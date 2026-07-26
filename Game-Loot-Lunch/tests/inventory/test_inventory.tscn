@@ -10,6 +10,10 @@
 [ext_resource type="PackedScene" uid="uid://daxh8ww0k8cl7" path="res://entities/items/cebola.tscn" id="6_fbwvt"]
 [ext_resource type="PackedScene" uid="uid://bkjr0ojwjk4ps" path="res://entities/items/pimentao.tscn" id="9_1iaxy"]
 [ext_resource type="PackedScene" uid="uid://de1twbxlhogew" path="res://entities/items/tanajura_body.tscn" id="10_d11dw"]
+[ext_resource type="PackedScene" uid="uid://ba4so0qiuolac" path="res://entities/craft/workbenches/common_workbench.tscn" id="11_fbwvt"]
+[ext_resource type="PackedScene" uid="uid://b7kvabrxxonoc" path="res://entities/craft/workbenches/cutting_workbench.tscn" id="12_1iaxy"]
+[ext_resource type="PackedScene" uid="uid://5tmuossb6jml" path="res://entities/craft/workbenches/drying_workbench.tscn" id="12_d11dw"]
+[ext_resource type="PackedScene" uid="uid://u4ib0r7y21f8" path="res://entities/craft/workbenches/cooking_workbench.tscn" id="14_uol6i"]
 
 [node name="TestInventory" type="Node2D" unique_id=1879085168]
 script = ExtResource("1_372ms")
@@ -101,3 +105,15 @@ position = Vector2(305, 196)
 
 [node name="Carne7" parent="." unique_id=1056973313 instance=ExtResource("10_d11dw")]
 position = Vector2(249, 224)
+
+[node name="DryingWorkbench" parent="." unique_id=1861521828 instance=ExtResource("12_d11dw")]
+position = Vector2(342, 34)
+
+[node name="CuttingWorkbench" parent="." unique_id=1221274534 instance=ExtResource("12_1iaxy")]
+position = Vector2(240, 45)
+
+[node name="CommonWorkbench" parent="." unique_id=1728148751 instance=ExtResource("11_fbwvt")]
+position = Vector2(153, 45)
+
+[node name="CookingWorkbench" parent="." unique_id=950534262 instance=ExtResource("14_uol6i")]
+position = Vector2(457, 38)

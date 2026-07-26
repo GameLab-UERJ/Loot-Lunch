@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://yr26mvbasy76"]
 
-[ext_resource type="Script" uid="uid://iwo2sk5nw4iw" path="res://systems/TimeCycle/day_night_cycle.gd" id="1_ry3t4"]
+[ext_resource type="Script" uid="uid://iwo2sk5nw4iw" path="res://systems/time_cycle/day_night_cycle.gd" id="1_ry3t4"]
 [ext_resource type="AudioStream" uid="uid://cbjk8oobf3ff3" path="res://assets/sfx/ambient/freesound_community-birds-in-forest-on-sunny-day-14444.mp3" id="2_oqcn4"]
 [ext_resource type="AudioStream" uid="uid://cws2chg3v21hb" path="res://assets/sfx/ambient/freesound_community-night-ambience-17064.mp3" id="3_daak6"]
 

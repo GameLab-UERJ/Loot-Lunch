@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Recipe" format=3 uid="uid://472o8obempxb"]
 
-[ext_resource type="Script" uid="uid://csymt6cnu6pf" path="res://resources/recipe/recipe.gd" id="1_n3mim"]
+[ext_resource type="Script" uid="uid://csymt6cnu6pf" path="res://resources/base_resources/recipe.gd" id="1_n3mim"]
 [ext_resource type="PackedScene" uid="uid://dd8vbsbs33ii4" path="res://entities/items/farinha.tscn" id="1_q53rw"]
 [ext_resource type="PackedScene" uid="uid://dwlepdjd5lv8x" path="res://entities/items/tomate.tscn" id="2_xrm1t"]
 [ext_resource type="PackedScene" uid="uid://cexct4fg71pc5" path="res://entities/items/carne.tscn" id="3_xotum"]

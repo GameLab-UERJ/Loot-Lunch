@@ -1,11 +1,12 @@
 [gd_resource type="Resource" script_class="Recipe" format=3 uid="uid://70myqwoyfe2q"]
 
 [ext_resource type="PackedScene" uid="uid://bkjr0ojwjk4ps" path="res://entities/items/pimentao.tscn" id="1_0liqu"]
-[ext_resource type="Script" uid="uid://csymt6cnu6pf" path="res://resources/recipe/recipe.gd" id="1_cwgko"]
+[ext_resource type="Script" uid="uid://csymt6cnu6pf" path="res://resources/base_resources/recipe.gd" id="1_cwgko"]
 [ext_resource type="PackedScene" uid="uid://dul2alvo64mrn" path="res://entities/items/pimentao_cortado.tscn" id="2_xanwn"]
 
 [resource]
 script = ExtResource("1_cwgko")
+workbench = 2
 recipe_name = "Pimentao Cortado"
 ingredients = Array[PackedScene]([ExtResource("1_0liqu")])
 result_scene = ExtResource("2_xanwn")

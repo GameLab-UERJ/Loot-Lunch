@@ -1,0 +1,77 @@
+[gd_scene format=3 uid="uid://u4ib0r7y21f8"]
+
+[ext_resource type="Script" uid="uid://hp4754twxlej" path="res://entities/base_classes/workbench.gd" id="1_fsq18"]
+[ext_resource type="Shader" uid="uid://i8xl186i1o18" path="res://resources/shaders/outline.tres" id="2_sc5x0"]
+[ext_resource type="Texture2D" uid="uid://bvml8tg0o0my" path="res://assets/art/entities/gabriel-partiallyOgenerated-oven.png" id="3_fsq18"]
+[ext_resource type="Texture2D" uid="uid://b43fyhe45hakj" path="res://assets/art/entities/shadow_single.png" id="4_sc5x0"]
+[ext_resource type="PackedScene" uid="uid://cbs8q2hki4fym" path="res://systems/interaction/interactable_area.tscn" id="4_yfdo5"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_06gsy"]
+shader = ExtResource("2_sc5x0")
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/width = 0.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sc5x0"]
+atlas = ExtResource("3_fsq18")
+region = Rect2(0, 0, 92, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wjwir"]
+atlas = ExtResource("3_fsq18")
+region = Rect2(92, 0, 92, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yfdo5"]
+atlas = ExtResource("3_fsq18")
+region = Rect2(184, 0, 92, 68)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_67u7e"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sc5x0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wjwir")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yfdo5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wjwir")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_elsjk"]
+size = Vector2(82, 9)
+
+[node name="CookingWorkbench" type="StaticBody2D" unique_id=1861521828]
+script = ExtResource("1_fsq18")
+type = 4
+metadata/_custom_type_script = "uid://hp4754twxlej"
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=737299014]
+material = SubResource("ShaderMaterial_06gsy")
+sprite_frames = SubResource("SpriteFrames_67u7e")
+autoplay = "default"
+frame_progress = 0.7396396
+
+[node name="Sprite2D" type="Sprite2D" parent="Sprite2D" unique_id=1932733632]
+z_index = -1
+position = Vector2(3, 16.000011)
+scale = Vector2(6.5, 1.801)
+texture = ExtResource("4_sc5x0")
+
+[node name="InteractableArea" parent="." unique_id=1323691504 instance=ExtResource("4_yfdo5")]
+show_behind_parent = true
+position = Vector2(0, 23)
+scale = Vector2(3, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1512701054]
+show_behind_parent = true
+position = Vector2(1, 26.5)
+shape = SubResource("RectangleShape2D_elsjk")
+
+[connection signal="interact_with_player" from="InteractableArea" to="." method="_on_interactable_area_interact_with_player"]
+[connection signal="stop_interact_with_player" from="InteractableArea" to="." method="_on_interactable_area_stop_interact_with_player"]
