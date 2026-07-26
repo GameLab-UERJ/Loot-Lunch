@@ -3,6 +3,9 @@
 [ext_resource type="AudioStream" uid="uid://bkiovum7ll7au" path="res://assets/sfx/menus/abs-pointer-2.mp3" id="1_08yj1"]
 [ext_resource type="Script" uid="uid://ddqhliryrh5qr" path="res://menus/main/main_menu.gd" id="1_jq7ry"]
 [ext_resource type="AudioStream" uid="uid://doyfcod6s5ptl" path="res://assets/sfx/menus/abs-confirm-2.mp3" id="2_jq7ry"]
+[ext_resource type="Texture2D" uid="uid://cxvyy81yierb8" path="res://assets/art/ui/LootLunch_KeyArt_Assinatura_edited.png" id="4_j2kye"]
+[ext_resource type="Theme" uid="uid://blqubia4djs1d" path="res://resources/themes/ui/button.tres" id="5_j2kye"]
+[ext_resource type="Texture2D" uid="uid://gifwqc5tx67i" path="res://assets/art/ui/LootLunch_Logo_Principal_Transparente.png" id="7_wruj6"]
 
 [node name="MainMenu" type="Control" unique_id=31903151]
 layout_mode = 3
@@ -15,67 +18,105 @@ script = ExtResource("1_jq7ry")
 hover_sound = ExtResource("1_08yj1")
 press_sound = ExtResource("2_jq7ry")
 
-[node name="Background" type="ColorRect" parent="." unique_id=979125322]
-layout_mode = 0
-offset_right = 652.0
-offset_bottom = 371.0
-color = Color(0.050980393, 0.050980393, 0.050980393, 1)
-
-[node name="Content" type="VBoxContainer" parent="." unique_id=71602187]
+[node name="TextureRect2" type="TextureRect" parent="." unique_id=539553938]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -100.0
-offset_top = -85.5
-offset_right = 100.0
-offset_bottom = 85.5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+texture = ExtResource("4_j2kye")
+expand_mode = 3
 
-[node name="Title" type="Label" parent="Content" unique_id=672600514]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 3
-size_flags_stretch_ratio = 1.7
-text = "Loot & Lunch"
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1304307869]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -64.0
+offset_bottom = -64.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_wruj6")
+expand_mode = 3
 
-[node name="Buttons" type="VBoxContainer" parent="Content" unique_id=726453624]
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_stretch_ratio = 3.48
+[node name="Content" type="HBoxContainer" parent="." unique_id=1649189227]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = 32.5
+offset_bottom = 115.5
+grow_horizontal = 2
+grow_vertical = 2
 alignment = 1
 
-[node name="NewGameButton" type="Button" parent="Content/Buttons" unique_id=2132206322]
+[node name="Buttons" type="VBoxContainer" parent="Content" unique_id=726453624]
 layout_mode = 2
-text = "Novo Jogo"
+theme_override_constants/separation = 6
+alignment = 1
 
-[node name="ContinueButton" type="Button" parent="Content/Buttons" unique_id=918243450]
+[node name="GridContainer3" type="GridContainer" parent="Content/Buttons" unique_id=1017273769]
 layout_mode = 2
-text = "Continuar Jogo"
+size_flags_horizontal = 4
+offset_transform_visual_only = false
 
-[node name="SettingsButton" type="Button" parent="Content/Buttons" unique_id=57914554]
+[node name="NewGameButton" type="Button" parent="Content/Buttons/GridContainer3" unique_id=461787224]
+custom_minimum_size = Vector2(110, 20)
 layout_mode = 2
-text = "Configurações"
+size_flags_horizontal = 4
+size_flags_vertical = 4
+offset_transform_visual_only = false
+theme = ExtResource("5_j2kye")
+text = "New Game"
 
-[node name="QuitButton" type="Button" parent="Content/Buttons" unique_id=1882131163]
+[node name="GridContainer" type="GridContainer" parent="Content/Buttons" unique_id=1872895350]
 layout_mode = 2
-text = "Sair"
+size_flags_horizontal = 4
+offset_transform_visual_only = false
+columns = 3
+
+[node name="ContinueButton" type="Button" parent="Content/Buttons/GridContainer" unique_id=760287890]
+custom_minimum_size = Vector2(110, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+offset_transform_visual_only = false
+theme = ExtResource("5_j2kye")
+text = "Continue"
+
+[node name="SettingsButton" type="Button" parent="Content/Buttons/GridContainer" unique_id=217569131]
+custom_minimum_size = Vector2(110, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+offset_transform_visual_only = false
+theme = ExtResource("5_j2kye")
+text = "Settings"
+
+[node name="GridContainer2" type="GridContainer" parent="Content/Buttons" unique_id=249026742]
+layout_mode = 2
+size_flags_horizontal = 4
+offset_transform_visual_only = false
+
+[node name="QuitButton" type="Button" parent="Content/Buttons/GridContainer2" unique_id=1319575087]
+custom_minimum_size = Vector2(110, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("5_j2kye")
+text = "Quit"
 
 [node name="HoverAudio" type="AudioStreamPlayer" parent="." unique_id=26537481]
 
 [node name="PressAudio" type="AudioStreamPlayer" parent="." unique_id=1512561003]
 
-[connection signal="mouse_entered" from="Content/Buttons/NewGameButton" to="." method="_on_button_mouse_entered"]
-[connection signal="pressed" from="Content/Buttons/NewGameButton" to="." method="_on_new_game_button_pressed"]
-[connection signal="mouse_entered" from="Content/Buttons/ContinueButton" to="." method="_on_button_mouse_entered"]
-[connection signal="pressed" from="Content/Buttons/ContinueButton" to="." method="_on_continue_button_pressed"]
-[connection signal="mouse_entered" from="Content/Buttons/SettingsButton" to="." method="_on_button_mouse_entered"]
-[connection signal="pressed" from="Content/Buttons/SettingsButton" to="." method="_on_settings_button_pressed"]
-[connection signal="mouse_entered" from="Content/Buttons/QuitButton" to="." method="_on_button_mouse_entered"]
-[connection signal="pressed" from="Content/Buttons/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="mouse_entered" from="Content/Buttons/GridContainer3/NewGameButton" to="." method="_on_button_mouse_entered"]
+[connection signal="pressed" from="Content/Buttons/GridContainer3/NewGameButton" to="." method="_on_new_game_button_pressed"]
+[connection signal="mouse_entered" from="Content/Buttons/GridContainer/ContinueButton" to="." method="_on_button_mouse_entered"]
+[connection signal="pressed" from="Content/Buttons/GridContainer/ContinueButton" to="." method="_on_continue_button_pressed"]
+[connection signal="mouse_entered" from="Content/Buttons/GridContainer/SettingsButton" to="." method="_on_button_mouse_entered"]
+[connection signal="pressed" from="Content/Buttons/GridContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="mouse_entered" from="Content/Buttons/GridContainer2/QuitButton" to="." method="_on_button_mouse_entered"]
+[connection signal="pressed" from="Content/Buttons/GridContainer2/QuitButton" to="." method="_on_quit_button_pressed"]
