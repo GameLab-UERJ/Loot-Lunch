@@ -105,11 +105,11 @@ position = Vector2(305, 196)
 [node name="Carne7" parent="." unique_id=1056973313 instance=ExtResource("10_d11dw")]
 position = Vector2(249, 224)
 
-[node name="CuttingWorkbench" parent="." unique_id=1221274534 instance=ExtResource("12_1iaxy")]
-position = Vector2(315, 45)
+[node name="DryingWorkbench" parent="." unique_id=1861521828 instance=ExtResource("12_d11dw")]
+position = Vector2(435, 34)
 
-[node name="DryingWorkbench" parent="CuttingWorkbench" unique_id=1861521828 instance=ExtResource("12_d11dw")]
-position = Vector2(72, -11)
+[node name="CuttingWorkbench" parent="." unique_id=1221274534 instance=ExtResource("12_1iaxy")]
+position = Vector2(333, 45)
 
 [node name="CommonWorkbench" parent="." unique_id=1728148751 instance=ExtResource("11_fbwvt")]
 position = Vector2(246, 45)
