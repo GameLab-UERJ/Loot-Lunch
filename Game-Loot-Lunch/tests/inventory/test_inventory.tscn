@@ -116,4 +116,4 @@ position = Vector2(240, 45)
 position = Vector2(153, 45)
 
 [node name="CookingWorkbench" parent="." unique_id=950534262 instance=ExtResource("14_uol6i")]
-position = Vector2(423, 48)
+position = Vector2(457, 38)

@@ -15,6 +15,7 @@ enum Type {None, Common, Cutter, Drying, Cooker}
 func _on_interactable_area_interact_with_player() -> void:
 	GlobalData.current_workbench = type
 	sprite.material.set("shader_parameter/width",outline_width)
+	print(name)
 
 
 func _on_interactable_area_stop_interact_with_player() -> void:
