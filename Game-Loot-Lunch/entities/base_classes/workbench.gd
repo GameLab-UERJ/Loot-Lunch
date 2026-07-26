@@ -2,7 +2,7 @@ extends StaticBody2D
 class_name Workbench
 
 
-enum Type {None, Common, Cutter, Spit, Cooker}
+enum Type {None, Common, Cutter, Drying, Cooker}
 
 
 @export var type : Workbench.Type

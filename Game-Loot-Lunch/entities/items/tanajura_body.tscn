@@ -6,7 +6,7 @@
 [node name="TanajuraBody" type="Sprite2D" unique_id=1998340507]
 physics_interpolation_mode = 2
 rotation = 3.1415927
-scale = Vector2(0.6, 0.6)
+scale = Vector2(0.25, 0.25)
 texture = ExtResource("1_yryfd")
 region_enabled = true
 region_rect = Rect2(809.99994, 145.87297, 88.73755, 44.92694)
