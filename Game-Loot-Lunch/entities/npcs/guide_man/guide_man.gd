@@ -20,7 +20,7 @@ func _on_player_entered(_player: Player) -> void:
 func _on_player_exited(_player: Player) -> void:
 	can_interact = false
 	interaction_label.hide()
-	anim_sprite.play("idle")
+	#anim_sprite.play("idle")
 
 func _unhandled_input(event: InputEvent) -> void:
 	if can_interact and event.is_action_pressed("interact"):
