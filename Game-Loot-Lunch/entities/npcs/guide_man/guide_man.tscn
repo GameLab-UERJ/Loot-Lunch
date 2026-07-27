@@ -1,7 +1,9 @@
 [gd_scene format=3 uid="uid://cyqsq4jf4isch"]
 
+[ext_resource type="Script" uid="uid://dtfisqacigl6h" path="res://entities/npcs/guide_man/guide_man.gd" id="1_lxnyj"]
 [ext_resource type="PackedScene" uid="uid://cbs8q2hki4fym" path="res://systems/interaction/interactable_area.tscn" id="1_s7qd4"]
 [ext_resource type="Texture2D" uid="uid://boap28k77drsw" path="res://assets/art/entities/npcs/guideman/loader.png" id="2_lxnyj"]
+[ext_resource type="Script" uid="uid://dhtuup4ximn3l" path="res://systems/interaction/generic_interactable_area.gd" id="3_8kj1c"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_aumce"]
 atlas = ExtResource("2_lxnyj")
@@ -62,8 +64,8 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_70ajw")
 }],
-"loop": 1,
-"name": &"default",
+"loop": 2,
+"name": &"wave",
 "speed": 5.0
 }]
 
@@ -71,19 +73,33 @@ animations = [{
 radius = 8.728056
 
 [node name="GuideMan" type="CharacterBody2D" unique_id=1191334286]
+script = ExtResource("1_lxnyj")
 
 [node name="InteractableArea" parent="." unique_id=1323691504 instance=ExtResource("1_s7qd4")]
 position = Vector2(0, -14)
 scale = Vector2(2, 2)
+script = ExtResource("3_8kj1c")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1471965564]
 position = Vector2(0, -8)
 sprite_frames = SubResource("SpriteFrames_r0pod")
-autoplay = "default"
-frame = 4
-frame_progress = 0.09200519
+animation = &"wave"
+autoplay = "wave"
 flip_h = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1105337889]
 position = Vector2(-1, -8)
 shape = SubResource("CircleShape2D_xunxm")
+
+[node name="InteractionLabel" type="Label" parent="." unique_id=10859393]
+offset_left = -38.0
+offset_top = -41.0
+offset_right = 39.0
+offset_bottom = -24.0
+size_flags_horizontal = 4
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.7
+theme_override_font_sizes/font_size = 9
+text = "[E] Conversar"
+horizontal_alignment = 1
+vertical_alignment = 1
