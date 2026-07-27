@@ -5,6 +5,8 @@ class_name PauseMenu
 var save_load_menu: SaveLoadMenu
 # Preload SaveLoadMenu
 var save_load_scene: PackedScene = preload("uid://dr6jrbiw3vgd3")
+var settings_scene: PackedScene = preload("res://menus/settings/settings_menu.tscn")
+
 
 @onready var press_audio: AudioStreamPlayer = $PressAudio
 @onready var hover_audio: AudioStreamPlayer = $HoverAudio
@@ -50,6 +52,12 @@ func _on_save_load_button_pressed() -> void:
 
 
 func _on_settings_button_pressed() -> void:
+	_on_button_mouse_pressed()
+	panel.visible = false
+	var settings_instance = settings_scene.instantiate()
+	add_child(settings_instance)
+	await settings_instance.tree_exited
+	panel.visible = true
 	print("settings")
 	await _on_button_mouse_pressed()
 

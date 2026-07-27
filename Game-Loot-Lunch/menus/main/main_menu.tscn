@@ -108,9 +108,9 @@ size_flags_vertical = 4
 theme = ExtResource("5_j2kye")
 text = "Quit"
 
-[node name="HoverAudio" type="AudioStreamPlayer" parent="." unique_id=26537481]
+[node name="HoverAudio" type="AudioStreamPlayer" parent="." unique_id=2098288693]
 
-[node name="PressAudio" type="AudioStreamPlayer" parent="." unique_id=1512561003]
+[node name="PressAudio" type="AudioStreamPlayer" parent="." unique_id=2146552209]
 
 [connection signal="mouse_entered" from="Content/Buttons/GridContainer3/NewGameButton" to="." method="_on_button_mouse_entered"]
 [connection signal="pressed" from="Content/Buttons/GridContainer3/NewGameButton" to="." method="_on_new_game_button_pressed"]

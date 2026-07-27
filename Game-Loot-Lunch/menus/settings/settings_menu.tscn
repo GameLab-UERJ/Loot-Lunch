@@ -1,0 +1,95 @@
+[gd_scene format=3 uid="uid://cq1p8um8r8ama"]
+
+[ext_resource type="Texture2D" uid="uid://cxvyy81yierb8" path="res://assets/art/ui/LootLunch_KeyArt_Assinatura_edited.png" id="1_vauo1"]
+[ext_resource type="Script" uid="uid://carc4fyt0lkju" path="res://menus/settings/settings_menu.gd" id="1_y2evm"]
+[ext_resource type="FontFile" uid="uid://cvuth304y1byc" path="res://assets/fonts/tinypixel.ttf" id="2_od2kw"]
+[ext_resource type="Theme" uid="uid://blqubia4djs1d" path="res://resources/themes/ui/button.tres" id="3_y2evm"]
+
+[node name="CanvasLayer" type="CanvasLayer" unique_id=1688462736]
+script = ExtResource("1_y2evm")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1603509067]
+offset_right = 640.0
+offset_bottom = 360.0
+color = Color(1, 1, 1, 0)
+metadata/_edit_lock_ = true
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=230627715]
+offset_right = 640.0
+offset_bottom = 360.0
+texture = ExtResource("1_vauo1")
+expand_mode = 3
+metadata/_edit_lock_ = true
+
+[node name="GridContainer" type="GridContainer" parent="TextureRect" unique_id=772319469]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 256.0
+offset_top = 72.0
+offset_right = 391.0
+offset_bottom = 131.0
+offset_transform_enabled = true
+theme = ExtResource("3_y2evm")
+accessibility_region = true
+
+[node name="AudioLabel" type="Label" parent="TextureRect/GridContainer" unique_id=1320172506]
+layout_mode = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(-30, 0)
+theme = ExtResource("3_y2evm")
+theme_override_fonts/font = ExtResource("2_od2kw")
+theme_override_font_sizes/font_size = 12
+text = "     
+                  Volume
+"
+
+[node name="AudioSlider" type="HSlider" parent="TextureRect/GridContainer" unique_id=259590492]
+modulate = Color(1, 0.3372549, 0.19607843, 1)
+layout_mode = 2
+theme = ExtResource("3_y2evm")
+
+[node name="GridContainer2" type="GridContainer" parent="TextureRect" unique_id=1013987425]
+layout_mode = 0
+offset_left = 256.0
+offset_top = 136.0
+offset_right = 424.0
+offset_bottom = 223.0
+accessibility_region = true
+
+[node name="FullScreenLabel" type="Label" parent="TextureRect/GridContainer2" unique_id=418446473]
+layout_mode = 2
+size_flags_horizontal = 6
+offset_transform_enabled = true
+offset_transform_position = Vector2(0, 20)
+offset_transform_position_ratio = Vector2(0, 0.5)
+theme_override_fonts/font = ExtResource("2_od2kw")
+theme_override_font_sizes/font_size = 12
+text = "
+Fullscreen
+"
+
+[node name="FullScreenCheckBox" type="CheckBox" parent="TextureRect/GridContainer2" unique_id=1152794219]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 6
+offset_transform_position = Vector2(0, -40)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_disabled_color = Color(0.9607843, 0.9843137, 0.9764706, 1)
+theme_override_colors/icon_disabled_color = Color(1, 1, 1, 0.4)
+
+[node name="GridContainer3" type="GridContainer" parent="TextureRect" unique_id=1744053993]
+layout_mode = 0
+offset_left = 31.0
+offset_top = 287.0
+offset_right = 76.0
+offset_bottom = 327.0
+
+[node name="Button" type="Button" parent="TextureRect/GridContainer3" unique_id=775085169]
+layout_mode = 2
+theme = ExtResource("3_y2evm")
+text = "Back
+"
+
+[node name="HoverAudio" type="AudioStreamPlayer" parent="." unique_id=987436791]
+
+[node name="PressAudio" type="AudioStreamPlayer" parent="." unique_id=970247928]
