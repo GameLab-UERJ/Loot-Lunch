@@ -3024,7 +3024,7 @@ size = Vector2(963, 14.1875)
 [node name="DungeonWay" type="Node2D" unique_id=309474097]
 script = ExtResource("1_f10bb")
 
-[node name="TileSets" type="Node" parent="." unique_id=541781352]
+[node name="TileSets" type="Node2D" parent="." unique_id=24125484]
 
 [node name="Piso_de_pedra" type="TileMapLayer" parent="TileSets" unique_id=1620513814]
 z_index = -1
@@ -3087,7 +3087,6 @@ tile_map_data = PackedByteArray("AAD8/wQAAQABABEAAAD8/wUAAQABABIAAAD9/wUAAQACABI
 tile_set = SubResource("TileSet_tii5i")
 
 [node name="Shop_paredes" type="TileMapLayer" parent="TileSets" unique_id=912175536]
-z_index = 2
 tile_map_data = PackedByteArray("AAATAAYAAAAEABEAAAAUAAYAAAAFABEAAAAUAAcAAAAFABIAAAATAAcAAAAEABIAAAAbAAYAAAAEABEAAAAcAAYAAAAFABEAAAAcAAcAAAAFABIAAAAbAAcAAAAEABIAAAAZAAYAAAADAAQAAAAZAAcAAAADAAQAAAAWAAYAAAADAAQAAAAWAAcAAAADAAQAAAAXAAQAAAAKAAEAAAAYAAQAAAALAAEAAAAXAAUAAAADAAMAAAAYAAUAAAADAAMAAAAXAAYAAAADAAQAAAAYAAYAAAADAAQAAAAYAAcAAAADAAQAAAAXAAcAAAADAAQAAAA=")
 tile_set = SubResource("TileSet_8oqep")
 
@@ -3097,7 +3096,6 @@ tile_map_data = PackedByteArray("AAAXAAQAAAAGABEAAAAXAAUAAAAGABIAAAAYAAQAAAAHABE
 tile_set = SubResource("TileSet_xmtnh")
 
 [node name="Shop_placa" type="TileMapLayer" parent="TileSets" unique_id=470917730]
-z_index = 2
 tile_map_data = PackedByteArray("AAASAAcAAAAAAAAAAAASAAgAAAAAAAEAAAATAAcAAAABAAAAAAATAAgAAAABAAEAAAATAAkAAAABAAIAAAA=")
 tile_set = SubResource("TileSet_dowqx")
 
@@ -3111,8 +3109,8 @@ tile_map_data = PackedByteArray("AAA0ABIAAAAcAAYAAAA1AA4AAAAWACAAAAAxAB0AAAAOABw
 tile_set = SubResource("TileSet_3bul7")
 
 [node name="Barraca_pescaria" type="TileMapLayer" parent="TileSets" unique_id=1774613396]
-z_index = 1
-tile_map_data = PackedByteArray("AAA0ABIAAAAcAAYAAAA1AA4AAAAWACAAAAAxAB0AAAAOABwAAAAtAA4AAAAMAAYAAAAqAA4AAAAKAAcAAAAoAA4AAAAKABAAAAAoAA8AAAAKABAAAAAoABAAAAAKABAAAAAoAA0AAAAKABAAAAA=")
+z_index = 2
+tile_map_data = PackedByteArray("AAAxAB0AAAAOABwAAAAtAA4AAAAMAAYAAAAqAA4AAAAKAAcAAAAoAA4AAAAKABAAAAAoAA8AAAAKABAAAAAoABAAAAAKABAAAAAoAA0AAAAKABAAAAA=")
 tile_set = SubResource("TileSet_3bul7")
 
 [node name="Peixes" type="TileMapLayer" parent="TileSets" unique_id=1721966635]
