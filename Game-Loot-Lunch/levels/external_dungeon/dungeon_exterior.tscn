@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://dvs2ib7i8lmf0" path="res://entities/npcs/dialogue_npc.tscn" id="12_8oikr"]
 [ext_resource type="Resource" uid="uid://bqqtdor4cj34h" path="res://entities/npcs/dialogos/npc_dungeon_externa.dialogue" id="13_gdg54"]
 [ext_resource type="PackedScene" uid="uid://d1q0x6qrbyjlx" path="res://entities/npcs/sign.tscn" id="14_nm7yr"]
+[ext_resource type="Texture2D" uid="uid://bogwm2rcwxg1g" path="res://assets/art/entities/npcs/random/Skeletons-Sheet.png" id="14_ophuf"]
 [ext_resource type="Resource" uid="uid://racdbnvusk15" path="res://entities/npcs/dialogos/placa_dungeon_1.dialogue" id="15_rp1tq"]
 [ext_resource type="Resource" uid="uid://cr8sot8fdx0tk" path="res://entities/npcs/dialogos/npc_dungeon_externa_2.dialogue" id="16_3spy5"]
 [ext_resource type="Resource" uid="uid://xon0sjirckcn" path="res://entities/npcs/dialogos/placa_dungeon_2.dialogue" id="16_nm7yr"]
@@ -1194,6 +1195,90 @@ size = Vector2(25, 24)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mcp6s"]
 size = Vector2(15.5, 23.125)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_oyufm"]
+atlas = ExtResource("14_ophuf")
+region = Rect2(0, 576, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bg1yv"]
+atlas = ExtResource("14_ophuf")
+region = Rect2(64, 576, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ntje7"]
+atlas = ExtResource("14_ophuf")
+region = Rect2(128, 576, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0sg0l"]
+atlas = ExtResource("14_ophuf")
+region = Rect2(192, 576, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_auhha"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oyufm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bg1yv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ntje7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0sg0l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ntje7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bg1yv")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gksd1"]
+atlas = ExtResource("14_ophuf")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s5ink"]
+atlas = ExtResource("14_ophuf")
+region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ww2f0"]
+atlas = ExtResource("14_ophuf")
+region = Rect2(128, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_byuko"]
+atlas = ExtResource("14_ophuf")
+region = Rect2(192, 64, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1lqda"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gksd1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s5ink")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ww2f0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_byuko")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ww2f0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s5ink")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
 [node name="DungeonExterior" type="Node2D" unique_id=503173019]
 script = ExtResource("1_i3155")
 
@@ -1267,6 +1352,10 @@ shape = SubResource("RectangleShape2D_mcp6s")
 position = Vector2(480, 161)
 dialogue = ExtResource("13_gdg54")
 
+[node name="AnimatedSprite2D" parent="DialogueNpc" index="0" unique_id=799428324]
+sprite_frames = SubResource("SpriteFrames_auhha")
+frame_progress = 0.54463565
+
 [node name="Sign" parent="." unique_id=1921293989 instance=ExtResource("14_nm7yr")]
 position = Vector2(742, 110)
 dialogue = ExtResource("15_rp1tq")
@@ -1274,6 +1363,10 @@ dialogue = ExtResource("15_rp1tq")
 [node name="DialogueNpc2" parent="." unique_id=1354954757 instance=ExtResource("12_8oikr")]
 position = Vector2(-950, 45)
 dialogue = ExtResource("16_3spy5")
+
+[node name="AnimatedSprite2D" parent="DialogueNpc2" index="0" unique_id=799428324]
+sprite_frames = SubResource("SpriteFrames_1lqda")
+frame_progress = 0.846387
 
 [node name="Sign2" parent="." unique_id=900630385 instance=ExtResource("14_nm7yr")]
 position = Vector2(-45, 97)
@@ -1287,3 +1380,6 @@ dialogue = ExtResource("17_gdg54")
 [connection signal="stop_interact_with_player" from="level_change/back_to_dungeon_way" to="." method="_on_dungeon_way_area_exited"]
 [connection signal="interact_with_player" from="level_change/internal_dungeon" to="." method="_on_internal_dungeon_area_entered"]
 [connection signal="stop_interact_with_player" from="level_change/internal_dungeon" to="." method="_on_internal_dungeon_area_exited"]
+
+[editable path="DialogueNpc"]
+[editable path="DialogueNpc2"]

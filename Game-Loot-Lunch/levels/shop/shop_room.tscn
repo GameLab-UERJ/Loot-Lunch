@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://can6jqu7o5b5l" path="res://assets/art/levels/test_room/test_room_tilemap.png" id="2_8nrlq"]
 [ext_resource type="PackedScene" uid="uid://c6wv6ecrc6cff" path="res://entities/npcs/shop_npc/shop_npc.tscn" id="2_obpsm"]
 [ext_resource type="PackedScene" uid="uid://3cgeew2m05mn" path="res://entities/player/player.tscn" id="5_2xyn3"]
+[ext_resource type="Texture2D" uid="uid://bogwm2rcwxg1g" path="res://assets/art/entities/npcs/random/Skeletons-Sheet.png" id="5_m1bl1"]
 [ext_resource type="Script" uid="uid://dr3t723hbciuk" path="res://systems/shop/shop_component.gd" id="5_q0dw4"]
 [ext_resource type="PackedScene" uid="uid://cexct4fg71pc5" path="res://entities/items/carne.tscn" id="6_7cgwe"]
 [ext_resource type="PackedScene" uid="uid://dd8vbsbs33ii4" path="res://entities/items/farinha.tscn" id="7_xe2u5"]
@@ -140,6 +141,48 @@ texture = ExtResource("2_8nrlq")
 [sub_resource type="TileSet" id="TileSet_dt7fw"]
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_1mui8")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8yefc"]
+atlas = ExtResource("5_m1bl1")
+region = Rect2(0, 512, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q2ger"]
+atlas = ExtResource("5_m1bl1")
+region = Rect2(64, 512, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xs6eg"]
+atlas = ExtResource("5_m1bl1")
+region = Rect2(128, 512, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eaqon"]
+atlas = ExtResource("5_m1bl1")
+region = Rect2(192, 512, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_k2kxr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8yefc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q2ger")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xs6eg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eaqon")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xs6eg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q2ger")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8nrlq"]
 texture = ExtResource("2_8nrlq")
@@ -498,6 +541,10 @@ tile_set = SubResource("TileSet_dt7fw")
 [node name="ShopNpc" parent="." unique_id=1279799556 instance=ExtResource("2_obpsm")]
 y_sort_enabled = true
 position = Vector2(205.32132, 32.124733)
+
+[node name="AnimatedSprite2D" parent="ShopNpc" index="1" unique_id=799428324]
+sprite_frames = SubResource("SpriteFrames_k2kxr")
+frame_progress = 0.0
 
 [node name="ShopComponent" type="Node" parent="ShopNpc" unique_id=2082865285]
 script = ExtResource("5_q0dw4")
