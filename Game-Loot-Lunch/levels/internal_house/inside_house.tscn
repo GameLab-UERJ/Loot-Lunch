@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cbs8q2hki4fym" path="res://systems/interaction/interactable_area.tscn" id="2_wmods"]
 [ext_resource type="Texture2D" uid="uid://drguwsuardbi1" path="res://assets/art/tilesets/interior/Paredes_e_divisorias_cortadas.png" id="3_nrwoy"]
 [ext_resource type="PackedScene" uid="uid://3cgeew2m05mn" path="res://entities/player/player.tscn" id="4_wmods"]
+[ext_resource type="PackedScene" uid="uid://cyqsq4jf4isch" path="res://entities/npcs/guide_man/guide_man.tscn" id="7_4ru3j"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4r4wk"]
 texture = ExtResource("1_d1boo")
@@ -497,6 +498,9 @@ limit_left = -5
 limit_top = -43
 limit_right = 395
 limit_bottom = 274
+
+[node name="GuideMan" parent="." unique_id=1191334286 instance=ExtResource("7_4ru3j")]
+position = Vector2(227, 85)
 
 [connection signal="interact_with_player" from="Door" to="." method="_on_door_area_entered"]
 [connection signal="stop_interact_with_player" from="Door" to="." method="_on_door_area_exited"]
