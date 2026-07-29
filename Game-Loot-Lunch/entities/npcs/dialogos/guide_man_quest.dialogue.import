@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://wjil3fjawo8i"
+path="res://.godot/imported/guide_man_quest.dialogue-0a711fd49093b95b6eeff86df81329de.tres"
+
+[deps]
+
+source_file="res://entities/npcs/guide_man/guide_man_quest.dialogue"
+dest_files=["res://.godot/imported/guide_man_quest.dialogue-0a711fd49093b95b6eeff86df81329de.tres"]
+
+[params]
+
+defaults=true
