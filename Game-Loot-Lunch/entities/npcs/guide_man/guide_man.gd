@@ -5,7 +5,7 @@ extends CharacterBody2D
 @onready var anim_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 var can_interact: bool = false
-const DIALOGUE_RESOURCE: DialogueResource = preload("res://entities/npcs/guide_man/guide_man_quest.dialogue")
+const DIALOGUE_RESOURCE: DialogueResource = preload("res://entities/npcs/dialogos/guide_man_quest.dialogue")
 
 func _ready() -> void:
 	interaction_label.hide()
