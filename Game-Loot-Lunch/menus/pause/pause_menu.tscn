@@ -18,21 +18,24 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel" unique_id=1489723232]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=1156793258]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -143.0
+offset_top = -200.0
+offset_right = 143.0
+offset_bottom = 200.0
 grow_horizontal = 2
 grow_vertical = 2
-alignment = 1
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/HBoxContainer" unique_id=1156793258]
-layout_mode = 2
+size_flags_horizontal = 3
 theme_override_constants/separation = 32
 alignment = 1
 
-[node name="Title" type="Label" parent="Panel/HBoxContainer/VBoxContainer" unique_id=1109312391]
+[node name="Title" type="Label" parent="Panel/VBoxContainer" unique_id=1109312391]
 layout_mode = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
@@ -45,42 +48,64 @@ theme_override_font_sizes/font_size = 48
 text = "Pause"
 horizontal_alignment = 1
 
-[node name="ActinonsGridContainer" type="GridContainer" parent="Panel/HBoxContainer/VBoxContainer" unique_id=663933086]
+[node name="ActinonsGridContainer" type="GridContainer" parent="Panel/VBoxContainer" unique_id=663933086]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="ReturnButtom" type="Button" parent="Panel/HBoxContainer/VBoxContainer/ActinonsGridContainer" unique_id=2118067430]
+[node name="ReturnButtom" type="Button" parent="Panel/VBoxContainer/ActinonsGridContainer" unique_id=2118067430]
 custom_minimum_size = Vector2(110, 20)
 layout_mode = 2
 theme = ExtResource("2_vh0r7")
 text = "Return"
 
-[node name="SaveLoadButton" type="Button" parent="Panel/HBoxContainer/VBoxContainer/ActinonsGridContainer" unique_id=1193217895]
+[node name="SaveLoadButton" type="Button" parent="Panel/VBoxContainer/ActinonsGridContainer" unique_id=1193217895]
 custom_minimum_size = Vector2(110, 20)
 layout_mode = 2
 theme = ExtResource("2_vh0r7")
 text = "Save & Load"
 
-[node name="SettingsButton" type="Button" parent="Panel/HBoxContainer/VBoxContainer/ActinonsGridContainer" unique_id=1096748490]
+[node name="SettingsButton" type="Button" parent="Panel/VBoxContainer/ActinonsGridContainer" unique_id=1096748490]
 custom_minimum_size = Vector2(110, 20)
 layout_mode = 2
 theme = ExtResource("2_vh0r7")
 text = "Settings
 "
 
-[node name="MainMenuButton" type="Button" parent="Panel/HBoxContainer/VBoxContainer/ActinonsGridContainer" unique_id=737473661]
+[node name="MainMenuButton" type="Button" parent="Panel/VBoxContainer/ActinonsGridContainer" unique_id=737473661]
 custom_minimum_size = Vector2(110, 20)
 layout_mode = 2
 theme = ExtResource("2_vh0r7")
 text = "Main Menu
 "
 
-[node name="QuitButton" type="Button" parent="Panel/HBoxContainer/VBoxContainer/ActinonsGridContainer" unique_id=528499609]
+[node name="QuitButton" type="Button" parent="Panel/VBoxContainer/ActinonsGridContainer" unique_id=528499609]
 custom_minimum_size = Vector2(110, 20)
 layout_mode = 2
 theme = ExtResource("2_vh0r7")
 text = "Quit"
+
+[node name="MissionLabel" type="Label" parent="Panel" unique_id=376446443]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -100.0
+offset_right = 200.0
+offset_bottom = 100.0
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 3
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("2_3gf11")
+theme_override_font_sizes/font_size = 12
+text = "Teste"
+vertical_alignment = 1
+autowrap_mode = 2
 
 [node name="PressAudio" type="AudioStreamPlayer" parent="." unique_id=1560593064]
 stream = ExtResource("4_ip3kt")
@@ -90,13 +115,13 @@ volume_db = -6.0
 stream = ExtResource("5_omid1")
 volume_db = -12.0
 
-[connection signal="mouse_entered" from="Panel/HBoxContainer/VBoxContainer/ActinonsGridContainer/ReturnButtom" to="." method="_on_buttom_mouse_entered"]
-[connection signal="pressed" from="Panel/HBoxContainer/VBoxContainer/ActinonsGridContainer/ReturnButtom" to="." method="_on_return_buttom_pressed"]
-[connection signal="mouse_entered" from="Panel/HBoxContainer/VBoxContainer/ActinonsGridContainer/SaveLoadButton" to="." method="_on_buttom_mouse_entered"]
-[connection signal="pressed" from="Panel/HBoxContainer/VBoxContainer/ActinonsGridContainer/SaveLoadButton" to="." method="_on_save_load_button_pressed"]
-[connection signal="mouse_entered" from="Panel/HBoxContainer/VBoxContainer/ActinonsGridContainer/SettingsButton" to="." method="_on_buttom_mouse_entered"]
-[connection signal="pressed" from="Panel/HBoxContainer/VBoxContainer/ActinonsGridContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
-[connection signal="mouse_entered" from="Panel/HBoxContainer/VBoxContainer/ActinonsGridContainer/MainMenuButton" to="." method="_on_buttom_mouse_entered"]
-[connection signal="pressed" from="Panel/HBoxContainer/VBoxContainer/ActinonsGridContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
-[connection signal="mouse_entered" from="Panel/HBoxContainer/VBoxContainer/ActinonsGridContainer/QuitButton" to="." method="_on_buttom_mouse_entered"]
-[connection signal="pressed" from="Panel/HBoxContainer/VBoxContainer/ActinonsGridContainer/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="mouse_entered" from="Panel/VBoxContainer/ActinonsGridContainer/ReturnButtom" to="." method="_on_buttom_mouse_entered"]
+[connection signal="pressed" from="Panel/VBoxContainer/ActinonsGridContainer/ReturnButtom" to="." method="_on_return_buttom_pressed"]
+[connection signal="mouse_entered" from="Panel/VBoxContainer/ActinonsGridContainer/SaveLoadButton" to="." method="_on_buttom_mouse_entered"]
+[connection signal="pressed" from="Panel/VBoxContainer/ActinonsGridContainer/SaveLoadButton" to="." method="_on_save_load_button_pressed"]
+[connection signal="mouse_entered" from="Panel/VBoxContainer/ActinonsGridContainer/SettingsButton" to="." method="_on_buttom_mouse_entered"]
+[connection signal="pressed" from="Panel/VBoxContainer/ActinonsGridContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="mouse_entered" from="Panel/VBoxContainer/ActinonsGridContainer/MainMenuButton" to="." method="_on_buttom_mouse_entered"]
+[connection signal="pressed" from="Panel/VBoxContainer/ActinonsGridContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
+[connection signal="mouse_entered" from="Panel/VBoxContainer/ActinonsGridContainer/QuitButton" to="." method="_on_buttom_mouse_entered"]
+[connection signal="pressed" from="Panel/VBoxContainer/ActinonsGridContainer/QuitButton" to="." method="_on_quit_button_pressed"]
