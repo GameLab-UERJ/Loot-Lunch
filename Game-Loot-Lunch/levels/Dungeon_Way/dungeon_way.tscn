@@ -1,7 +1,7 @@
 [gd_scene format=4 uid="uid://dkaytgmdhkghj"]
 
 [ext_resource type="Texture2D" uid="uid://4k3sewl10xmk" path="res://assets/art/tilesets/exterior_1/exterior.png" id="1_bkwuf"]
-[ext_resource type="Script" uid="uid://djgvy2t6ia5cr" path="res://levels/dungeon_way/dungeon_way.gd" id="1_f10bb"]
+[ext_resource type="Script" uid="uid://djgvy2t6ia5cr" path="res://levels/Dungeon_Way/dungeon_way.gd" id="1_f10bb"]
 [ext_resource type="Texture2D" uid="uid://kysfsmoaib7g" path="res://assets/art/tilesets/exterior_2/sandwater.png" id="2_no2jk"]
 [ext_resource type="Texture2D" uid="uid://bjh0kt1bm4de6" path="res://assets/art/tilesets/dungeon_exterior/Tiled_files/Sprite-0002-Sheet.png" id="3_drym6"]
 [ext_resource type="Texture2D" uid="uid://jj86r3ewr8f2" path="res://assets/art/tilesets/exterior_1/ground_grass_details.png" id="3_gcchm"]
@@ -2905,16 +2905,16 @@ texture = ExtResource("12_t2p1a")
 20:8/0 = 0
 19:7/0 = 0
 17:8/0 = 0
-10:7/size_in_atlas = Vector2i(2, 5)
-10:7/0 = 0
-12:6/size_in_atlas = Vector2i(4, 6)
-12:6/0 = 0
 10:14/size_in_atlas = Vector2i(2, 2)
 10:14/0 = 0
 12:14/size_in_atlas = Vector2i(2, 2)
 12:14/0 = 0
 14:14/size_in_atlas = Vector2i(2, 2)
 14:14/0 = 0
+10:7/size_in_atlas = Vector2i(2, 5)
+10:7/0 = 0
+12:6/size_in_atlas = Vector2i(4, 6)
+12:6/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_3bul7"]
 sources/0 = SubResource("TileSetAtlasSource_8oqep")
@@ -3018,10 +3018,13 @@ size = Vector2(31.75, 29)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f10bb"]
 size = Vector2(19, 28)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fex8w"]
+size = Vector2(963, 14.1875)
+
 [node name="DungeonWay" type="Node2D" unique_id=309474097]
 script = ExtResource("1_f10bb")
 
-[node name="TileSets" type="Node" parent="." unique_id=541781352]
+[node name="TileSets" type="Node2D" parent="." unique_id=24125484]
 
 [node name="Piso_de_pedra" type="TileMapLayer" parent="TileSets" unique_id=1620513814]
 z_index = -1
@@ -3084,7 +3087,6 @@ tile_map_data = PackedByteArray("AAD8/wQAAQABABEAAAD8/wUAAQABABIAAAD9/wUAAQACABI
 tile_set = SubResource("TileSet_tii5i")
 
 [node name="Shop_paredes" type="TileMapLayer" parent="TileSets" unique_id=912175536]
-z_index = 2
 tile_map_data = PackedByteArray("AAATAAYAAAAEABEAAAAUAAYAAAAFABEAAAAUAAcAAAAFABIAAAATAAcAAAAEABIAAAAbAAYAAAAEABEAAAAcAAYAAAAFABEAAAAcAAcAAAAFABIAAAAbAAcAAAAEABIAAAAZAAYAAAADAAQAAAAZAAcAAAADAAQAAAAWAAYAAAADAAQAAAAWAAcAAAADAAQAAAAXAAQAAAAKAAEAAAAYAAQAAAALAAEAAAAXAAUAAAADAAMAAAAYAAUAAAADAAMAAAAXAAYAAAADAAQAAAAYAAYAAAADAAQAAAAYAAcAAAADAAQAAAAXAAcAAAADAAQAAAA=")
 tile_set = SubResource("TileSet_8oqep")
 
@@ -3094,7 +3096,6 @@ tile_map_data = PackedByteArray("AAAXAAQAAAAGABEAAAAXAAUAAAAGABIAAAAYAAQAAAAHABE
 tile_set = SubResource("TileSet_xmtnh")
 
 [node name="Shop_placa" type="TileMapLayer" parent="TileSets" unique_id=470917730]
-z_index = 2
 tile_map_data = PackedByteArray("AAASAAcAAAAAAAAAAAASAAgAAAAAAAEAAAATAAcAAAABAAAAAAATAAgAAAABAAEAAAATAAkAAAABAAIAAAA=")
 tile_set = SubResource("TileSet_dowqx")
 
@@ -3105,6 +3106,11 @@ tile_set = SubResource("TileSet_2d6dw")
 
 [node name="Pescaria" type="TileMapLayer" parent="TileSets" unique_id=767616389]
 tile_map_data = PackedByteArray("AAA0ABIAAAAcAAYAAAA1AA4AAAAWACAAAAAxAB0AAAAOABwAAAAtAA4AAAAMAAYAAAAqAA4AAAAKAAcAAAAoAA4AAAAKABAAAAAoAA8AAAAKABAAAAAoABAAAAAKABAAAAAoAA0AAAAKABAAAAA=")
+tile_set = SubResource("TileSet_3bul7")
+
+[node name="Barraca_pescaria" type="TileMapLayer" parent="TileSets" unique_id=1774613396]
+z_index = 2
+tile_map_data = PackedByteArray("AAAxAB0AAAAOABwAAAAtAA4AAAAMAAYAAAAqAA4AAAAKAAcAAAAoAA4AAAAKABAAAAAoAA8AAAAKABAAAAAoABAAAAAKABAAAAAoAA0AAAAKABAAAAA=")
 tile_set = SubResource("TileSet_3bul7")
 
 [node name="Peixes" type="TileMapLayer" parent="TileSets" unique_id=1721966635]
@@ -3166,6 +3172,13 @@ dialogue = ExtResource("19_glf67")
 [node name="Broken Sign" parent="." unique_id=1709791569 instance=ExtResource("19_d8bi5")]
 position = Vector2(-214, 333)
 dialogue = ExtResource("21_byhfn")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1725246261]
+position = Vector2(297, 754)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1116604482]
+position = Vector2(-1.5, -75)
+shape = SubResource("RectangleShape2D_fex8w")
 
 [connection signal="interact_with_player" from="level_change/dungeon_exterior" to="." method="_on_dungeon_exterior_area_entered"]
 [connection signal="interact_with_player" from="level_change/exterior_house" to="." method="_on_external_house_area_entered"]
