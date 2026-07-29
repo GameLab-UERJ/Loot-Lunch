@@ -1,11 +1,11 @@
 ~ start
 
-if QuestManager.status_atual == QuestManager.QuestStatus.NAO_INICIADA:
+if QuestManager.current_status == QuestManager.QuestStatus.NAO_INICIADA:
 	Guide Man: Olá! Preciso que você me ajude a preparar a receita de Carne de Sol com Vinagrete e Farofa de Tanajura.
 	Guide Man: Aperte o botão de Pause a qualquer momento para conferir os ingredientes que faltam!
-	do QuestManager.avancar_missao(QuestManager.QuestStatus.PROCURAR_INGREDIENTES)
+	do QuestManager.advance_mission(QuestManager.QuestStatus.PROCURAR_INGREDIENTES)
 	
-elif QuestManager.status_atual == QuestManager.QuestStatus.PROCURAR_INGREDIENTES:
+elif QuestManager.current_status == QuestManager.QuestStatus.PROCURAR_INGREDIENTES:
 	Guide Man: O que está fazendo aqui parado? Vá procurar a Carne e as Tanajuras!
 
 => END
