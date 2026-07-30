@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bogwm2rcwxg1g"
-path="res://.godot/imported/Skeletons-Sheet.png-8202c2c14acb643a287c32c435ee1477.ctex"
+path="res://.godot/imported/Felipe-Castro-Skeletons-Sheet.png-67a57948a059b489defa0430ea4a7cbc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/entities/npcs/random/Skeletons-Sheet.png"
-dest_files=["res://.godot/imported/Skeletons-Sheet.png-8202c2c14acb643a287c32c435ee1477.ctex"]
+source_file="res://assets/art/entities/npcs/random/Felipe-Castro-Skeletons-Sheet.png"
+dest_files=["res://.godot/imported/Felipe-Castro-Skeletons-Sheet.png-67a57948a059b489defa0430ea4a7cbc.ctex"]
 
 [params]
 

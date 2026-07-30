@@ -14,7 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://dvs2ib7i8lmf0" path="res://entities/npcs/dialogue_npc.tscn" id="12_8oikr"]
 [ext_resource type="Resource" uid="uid://bqqtdor4cj34h" path="res://entities/npcs/dialogos/npc_dungeon_externa.dialogue" id="13_gdg54"]
 [ext_resource type="PackedScene" uid="uid://d1q0x6qrbyjlx" path="res://entities/npcs/sign.tscn" id="14_nm7yr"]
-[ext_resource type="Texture2D" uid="uid://bogwm2rcwxg1g" path="res://assets/art/entities/npcs/random/Skeletons-Sheet.png" id="14_ophuf"]
+[ext_resource type="Texture2D" uid="uid://bogwm2rcwxg1g" path="res://assets/art/entities/npcs/random/Felipe-Castro-Skeletons-Sheet.png" id="14_ophuf"]
 [ext_resource type="Resource" uid="uid://racdbnvusk15" path="res://entities/npcs/dialogos/placa_dungeon_1.dialogue" id="15_rp1tq"]
 [ext_resource type="Resource" uid="uid://cr8sot8fdx0tk" path="res://entities/npcs/dialogos/npc_dungeon_externa_2.dialogue" id="16_3spy5"]
 [ext_resource type="Resource" uid="uid://xon0sjirckcn" path="res://entities/npcs/dialogos/placa_dungeon_2.dialogue" id="16_nm7yr"]
