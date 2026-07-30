@@ -14,6 +14,7 @@
 [ext_resource type="AudioStream" uid="uid://huj0511vq4kh" path="res://assets/music/montogoronto-ominousdark-medievalfantasy-song-309510.mp3" id="10_6wgr6"]
 [ext_resource type="PackedScene" uid="uid://dvs2ib7i8lmf0" path="res://entities/npcs/dialogue_npc.tscn" id="13_lfow4"]
 [ext_resource type="Resource" uid="uid://cw03dpql70xt3" path="res://entities/npcs/dialogos/npc_dungeon_interna.dialogue" id="14_75d3q"]
+[ext_resource type="Texture2D" uid="uid://bogwm2rcwxg1g" path="res://assets/art/entities/npcs/random/Felipe-Castro-Skeletons-Sheet.png" id="15_3uuv1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lfow4"]
 size = Vector2(41, 25)
@@ -1825,6 +1826,38 @@ texture = ExtResource("7_efo6u")
 [sub_resource type="TileSet" id="TileSet_nhqbk"]
 sources/0 = SubResource("TileSetAtlasSource_3uuv1")
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_nhqbk"]
+atlas = ExtResource("15_3uuv1")
+region = Rect2(0, 256, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gt0ib"]
+atlas = ExtResource("15_3uuv1")
+region = Rect2(128, 256, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y5j7s"]
+atlas = ExtResource("15_3uuv1")
+region = Rect2(64, 256, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_75nec"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nhqbk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gt0ib")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gt0ib")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y5j7s")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 3.0
+}]
+
 [node name="InternalDungeon" type="Node2D" unique_id=1644355751]
 script = ExtResource("1_efo6u")
 
@@ -1939,4 +1972,10 @@ autoplay = true
 position = Vector2(306, 109)
 dialogue = ExtResource("14_75d3q")
 
+[node name="AnimatedSprite2D" parent="DialogueNpc" index="0" unique_id=799428324]
+sprite_frames = SubResource("SpriteFrames_75nec")
+frame_progress = 0.7808313
+
 [connection signal="interact_with_player" from="external_house" to="." method="_on_external_house_interact_with_player"]
+
+[editable path="DialogueNpc"]

@@ -141,7 +141,7 @@ interact={
 
 [internationalization]
 
-locale/translations_pot_files=PackedStringArray("res://entities/npcs/dialogos/npc_barco.dialogue", "res://entities/npcs/dialogos/npc_ponte_aviso.dialogue", "res://entities/npcs/dialogos/placa_quebrada.dialogue", "res://entities/npcs/dialogos/npc_estrada_bloqueio.dialogue", "res://entities/npcs/dialogos/placa_direcoes.dialogue", "res://entities/npcs/dialogos/placeholder.dialogue", "res://entities/npcs/dialogos/placa_dungeon_1.dialogue", "res://entities/npcs/dialogos/placa_dungeon_2.dialogue", "res://entities/npcs/dialogos/placa_dungeon_3.dialogue", "res://entities/npcs/dialogos/npc_dungeon_externa.dialogue", "res://entities/npcs/dialogos/npc_dungeon_externa_2.dialogue", "res://entities/npcs/dialogos/npc_dungeon_interna.dialogue", "res://entities/npcs/guide_man/guide_man_quest.dialogue")
+locale/translations_pot_files=PackedStringArray("res://entities/npcs/dialogos/npc_barco.dialogue", "res://entities/npcs/dialogos/npc_ponte_aviso.dialogue", "res://entities/npcs/dialogos/placa_quebrada.dialogue", "res://entities/npcs/dialogos/npc_estrada_bloqueio.dialogue", "res://entities/npcs/dialogos/placa_direcoes.dialogue", "res://entities/npcs/dialogos/placeholder.dialogue", "res://entities/npcs/dialogos/placa_dungeon_1.dialogue", "res://entities/npcs/dialogos/placa_dungeon_2.dialogue", "res://entities/npcs/dialogos/placa_dungeon_3.dialogue", "res://entities/npcs/dialogos/npc_dungeon_externa.dialogue", "res://entities/npcs/dialogos/npc_dungeon_externa_2.dialogue", "res://entities/npcs/dialogos/npc_dungeon_interna.dialogue", "res://entities/npcs/dialogos/guide_man_quest.dialogue")
 
 [layer_names]
 

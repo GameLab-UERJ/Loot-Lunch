@@ -1,7 +1,7 @@
 [gd_scene format=4 uid="uid://dkaytgmdhkghj"]
 
 [ext_resource type="Texture2D" uid="uid://4k3sewl10xmk" path="res://assets/art/tilesets/exterior_1/exterior.png" id="1_bkwuf"]
-[ext_resource type="Script" uid="uid://djgvy2t6ia5cr" path="res://levels/Dungeon_Way/dungeon_way.gd" id="1_f10bb"]
+[ext_resource type="Script" uid="uid://djgvy2t6ia5cr" path="res://levels/dungeon_Way/dungeon_way.gd" id="1_f10bb"]
 [ext_resource type="Texture2D" uid="uid://kysfsmoaib7g" path="res://assets/art/tilesets/exterior_2/sandwater.png" id="2_no2jk"]
 [ext_resource type="Texture2D" uid="uid://bjh0kt1bm4de6" path="res://assets/art/tilesets/dungeon_exterior/Tiled_files/Sprite-0002-Sheet.png" id="3_drym6"]
 [ext_resource type="Texture2D" uid="uid://jj86r3ewr8f2" path="res://assets/art/tilesets/exterior_1/ground_grass_details.png" id="3_gcchm"]
@@ -18,6 +18,7 @@
 [ext_resource type="Script" uid="uid://daus7y7nt2yw5" path="res://systems/interaction/interactable_area.gd" id="16_ycylx"]
 [ext_resource type="PackedScene" uid="uid://dvs2ib7i8lmf0" path="res://entities/npcs/dialogue_npc.tscn" id="17_xpqrl"]
 [ext_resource type="Resource" uid="uid://d3hfwcosjk0qd" path="res://entities/npcs/dialogos/npc_ponte_aviso.dialogue" id="18_glf67"]
+[ext_resource type="Texture2D" uid="uid://bogwm2rcwxg1g" path="res://assets/art/entities/npcs/random/Felipe-Castro-Skeletons-Sheet.png" id="19_5stdi"]
 [ext_resource type="PackedScene" uid="uid://bbyxjsfgjkte1" path="res://entities/npcs/broken_sign.tscn" id="19_d8bi5"]
 [ext_resource type="Resource" uid="uid://bgw8b63oxjtr8" path="res://entities/npcs/dialogos/npc_barco.dialogue" id="19_glf67"]
 [ext_resource type="Resource" uid="uid://dsp5hm6v353bd" path="res://entities/npcs/dialogos/placa_quebrada.dialogue" id="21_byhfn"]
@@ -3018,6 +3019,90 @@ size = Vector2(31.75, 29)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f10bb"]
 size = Vector2(19, 28)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_eo1ic"]
+atlas = ExtResource("19_5stdi")
+region = Rect2(0, 384, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tii5i"]
+atlas = ExtResource("19_5stdi")
+region = Rect2(64, 384, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rmmey"]
+atlas = ExtResource("19_5stdi")
+region = Rect2(128, 384, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8oqep"]
+atlas = ExtResource("19_5stdi")
+region = Rect2(192, 384, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3bul7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eo1ic")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tii5i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rmmey")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8oqep")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rmmey")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tii5i")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xmtnh"]
+atlas = ExtResource("19_5stdi")
+region = Rect2(0, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kj4ha"]
+atlas = ExtResource("19_5stdi")
+region = Rect2(64, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dowqx"]
+atlas = ExtResource("19_5stdi")
+region = Rect2(128, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y658s"]
+atlas = ExtResource("19_5stdi")
+region = Rect2(192, 192, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tthbm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xmtnh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kj4ha")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dowqx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y658s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dowqx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kj4ha")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fex8w"]
 size = Vector2(963, 14.1875)
 
@@ -3165,9 +3250,17 @@ shape = SubResource("RectangleShape2D_f10bb")
 position = Vector2(-119, 325)
 dialogue = ExtResource("18_glf67")
 
+[node name="AnimatedSprite2D" parent="DialogueNpc" index="0" unique_id=799428324]
+sprite_frames = SubResource("SpriteFrames_3bul7")
+frame_progress = 0.30571073
+
 [node name="DialogueNpc2" parent="." unique_id=190907543 instance=ExtResource("17_xpqrl")]
 position = Vector2(772, 360)
 dialogue = ExtResource("19_glf67")
+
+[node name="AnimatedSprite2D" parent="DialogueNpc2" index="0" unique_id=799428324]
+sprite_frames = SubResource("SpriteFrames_tthbm")
+frame_progress = 0.25513405
 
 [node name="Broken Sign" parent="." unique_id=1709791569 instance=ExtResource("19_d8bi5")]
 position = Vector2(-214, 333)
@@ -3183,3 +3276,6 @@ shape = SubResource("RectangleShape2D_fex8w")
 [connection signal="interact_with_player" from="level_change/dungeon_exterior" to="." method="_on_dungeon_exterior_area_entered"]
 [connection signal="interact_with_player" from="level_change/exterior_house" to="." method="_on_external_house_area_entered"]
 [connection signal="interact_with_player" from="level_change/shop" to="." method="_on_shop_area_entered"]
+
+[editable path="DialogueNpc"]
+[editable path="DialogueNpc2"]
