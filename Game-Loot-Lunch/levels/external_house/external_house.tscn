@@ -14,9 +14,10 @@
 [ext_resource type="PackedScene" uid="uid://cbs8q2hki4fym" path="res://systems/interaction/interactable_area.tscn" id="9_pfac8"]
 [ext_resource type="PackedScene" uid="uid://dvs2ib7i8lmf0" path="res://entities/npcs/dialogue_npc.tscn" id="13_5y8bp"]
 [ext_resource type="Resource" uid="uid://dttdbt6ehpcxr" path="res://entities/npcs/dialogos/npc_estrada_bloqueio.dialogue" id="14_lt77x"]
+[ext_resource type="Texture2D" uid="uid://bogwm2rcwxg1g" path="res://assets/art/entities/npcs/random/Felipe-Castro-Skeletons-Sheet.png" id="15_5bgo6"]
 [ext_resource type="PackedScene" uid="uid://d1q0x6qrbyjlx" path="res://entities/npcs/sign.tscn" id="15_k7n0b"]
 [ext_resource type="Resource" uid="uid://dkogwulps4etc" path="res://entities/npcs/dialogos/placa_direcoes.dialogue" id="16_lt77x"]
-[ext_resource type="PackedScene" uid="uid://ba4so0qiuolac" path="res://entities/craft/workbenches/common_workbench.tscn" id="17_4uhx5"]
+[ext_resource type="PackedScene" uid="uid://ba4so0qiuolac" path="res://entities/Craft/workbenches/common_workbench.tscn" id="17_4uhx5"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_f206e"]
 texture = ExtResource("1_xktgd")
@@ -1089,6 +1090,51 @@ texture = ExtResource("3_youtx")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_40o0v")
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_mnftn"]
+atlas = ExtResource("15_5bgo6")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c4rfl"]
+atlas = ExtResource("15_5bgo6")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p0cyg"]
+atlas = ExtResource("15_5bgo6")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6w887"]
+atlas = ExtResource("15_5bgo6")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_j2bcr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mnftn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c4rfl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p0cyg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c4rfl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6w887")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mnftn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mnftn")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 4.0
+}]
+
 [node name="ExternalHouse" type="Node2D" unique_id=1239606387]
 script = ExtResource("1_nflu1")
 
@@ -1242,6 +1288,10 @@ limit_bottom = 360
 position = Vector2(648, 291)
 dialogue = ExtResource("14_lt77x")
 
+[node name="AnimatedSprite2D" parent="DialogueNpc" index="0" unique_id=799428324]
+sprite_frames = SubResource("SpriteFrames_j2bcr")
+frame_progress = 0.1451866
+
 [node name="Sign" parent="." unique_id=658375839 instance=ExtResource("15_k7n0b")]
 position = Vector2(66, 265)
 dialogue = ExtResource("16_lt77x")
@@ -1257,3 +1307,5 @@ position = Vector2(382, 101)
 [connection signal="stop_interact_with_player" from="CombatArea" to="." method="_on_combat_area_exited"]
 [connection signal="finished" from="RoosterSfx" to="." method="_on_rooster_sfx_finished"]
 [connection signal="finished" from="SeagullsSfx" to="." method="_on_seagulls_sfx_finished"]
+
+[editable path="DialogueNpc"]

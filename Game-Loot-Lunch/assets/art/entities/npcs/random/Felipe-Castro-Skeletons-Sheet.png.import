@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://boap28k77drsw"
-path="res://.godot/imported/loader.png-6ba41076824ab62691719a886c96509b.ctex"
+uid="uid://bogwm2rcwxg1g"
+path="res://.godot/imported/Felipe-Castro-Skeletons-Sheet.png-67a57948a059b489defa0430ea4a7cbc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/entities/npcs/guideman/loader.png"
-dest_files=["res://.godot/imported/loader.png-6ba41076824ab62691719a886c96509b.ctex"]
+source_file="res://assets/art/entities/npcs/random/Felipe-Castro-Skeletons-Sheet.png"
+dest_files=["res://.godot/imported/Felipe-Castro-Skeletons-Sheet.png-67a57948a059b489defa0430ea4a7cbc.ctex"]
 
 [params]
 
