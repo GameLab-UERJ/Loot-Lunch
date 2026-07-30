@@ -29,6 +29,7 @@ PlayerWallet="*uid://bs1b836vdqxr4"
 EnvironmentManager="*uid://cx07gbanpuo6o"
 DialogueManager="*uid://c3rodes2l3gxb"
 GlobalData="*uid://c0gv2simwpirt"
+QuestManager="*uid://be7wivhqj7q85"
 
 [debug]
 
