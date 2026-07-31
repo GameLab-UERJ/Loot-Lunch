@@ -916,7 +916,7 @@ texture = ExtResource("1_bkwuf")
 0:20/0/physics_layer_0/polygon_0/points = PackedVector2Array(-13.062202, 22.858852, -9.796654, 27.990437, 1.3995209, 27.52393, 5.5980873, 27.057423, 4.1985664, 21.459332, -5.5980873, 21.459332)
 11:35/size_in_atlas = Vector2i(4, 4)
 11:35/0 = 0
-11:35/0/y_sort_origin = 11
+11:35/0/y_sort_origin = 20
 11:35/0/physics_layer_0/polygon_0/points = PackedVector2Array(-11.611233, 21.173416, -6.830139, 16.392319, 3.415062, 15.026291, 4.78109, 20.490402, 4.78109, 24.588478, -6.1471252, 23.905472)
 9:29/size_in_atlas = Vector2i(6, 5)
 9:29/0 = 0
@@ -1863,6 +1863,8 @@ texture = ExtResource("9_0dwsw")
 15:9/0 = 0
 1:11/size_in_atlas = Vector2i(12, 9)
 1:11/0 = 0
+1:11/0/physics_layer_0/polygon_0/points = PackedVector2Array(-11.53434, 55.49541, -3.6996918, 55.71304, 9.358055, 55.49541, 19.15136, 53.972008, 11.566284, 0.77108765, -14.676331, 2.2578964, -85.80005, 1.128952, -86.834, 54.189636)
+1:11/0/physics_layer_0/polygon_1/points = PackedVector2Array(12.337372, 52.81942, 87.26925, 55.06015, 81.73514, 3.8554344, 12.337372, 0.38554382)
 
 [sub_resource type="TileSet" id="TileSet_tii5i"]
 physics_layer_0/collision_layer = 1
@@ -2364,10 +2366,6 @@ texture = ExtResource("10_2y4xb")
 13:17/0 = 0
 14:17/0 = 0
 15:17/0 = 0
-16:17/0 = 0
-16:17/0/texture_origin = Vector2i(-6, 0)
-17:17/0 = 0
-17:17/0/texture_origin = Vector2i(-6, 0)
 0:18/0 = 0
 1:18/0 = 0
 2:18/0 = 0
@@ -2387,10 +2385,11 @@ texture = ExtResource("10_2y4xb")
 13:18/0 = 0
 14:18/0 = 0
 15:18/0 = 0
-16:18/0 = 0
-16:18/0/texture_origin = Vector2i(-6, 0)
-17:18/0 = 0
-17:18/0/texture_origin = Vector2i(-6, 0)
+16:17/size_in_atlas = Vector2i(2, 2)
+16:17/0 = 0
+16:17/0/texture_origin = Vector2i(-14, -8)
+16:17/0/z_index = 1
+16:17/0/y_sort_origin = 8
 
 [sub_resource type="TileSet" id="TileSet_xmtnh"]
 sources/0 = SubResource("TileSetAtlasSource_3bul7")
@@ -2485,6 +2484,7 @@ texture = ExtResource("11_t2p1a")
 8:0/0/y_sort_origin = 7
 0:0/size_in_atlas = Vector2i(2, 3)
 0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(11.323242, 11.849903, 14.746548, 10.796579, 15.273211, 21.593159, 12.113235, 21.066494)
 
 [sub_resource type="TileSet" id="TileSet_dowqx"]
 physics_layer_0/collision_layer = 1
@@ -2923,7 +2923,7 @@ collision_mask = 3
 script = ExtResource("16_ycylx")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="level_change/shop" unique_id=1461312153]
-position = Vector2(-1.5, 0)
+position = Vector2(7, 11)
 shape = SubResource("RectangleShape2D_f10bb")
 
 [node name="DialogueNpc" parent="." unique_id=1279799556 instance=ExtResource("17_xpqrl")]
