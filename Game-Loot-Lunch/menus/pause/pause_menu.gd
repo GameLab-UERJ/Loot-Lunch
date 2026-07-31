@@ -12,6 +12,10 @@ var save_load_scene: PackedScene = preload("uid://dr6jrbiw3vgd3")
 
 func _ready() -> void:
 	visible = false
+	
+	QuestManager.mission_updated.connect(_update_text_mission)
+	
+	_update_text_mission(QuestManager.current_status)
 
 
 func _process(_delta: float) -> void:
@@ -101,3 +105,18 @@ func resume() -> void:
 
 func _return_from_menus() -> void:
 	panel.visible = true
+
+func _update_text_mission(new_stage: int) -> void:
+	var mission_text: String = ""
+
+	match new_stage:
+		QuestManager.QuestStatus.NAO_INICIADA:
+			mission_text = "Objetivo: Fale com o Guide Man na casa."
+		QuestManager.QuestStatus.PROCURAR_INGREDIENTES:
+			mission_text = "Objetivo: Encontre a Carne de Sol e as Tanajuras."
+		QuestManager.QuestStatus.PREPARAR_PRATO:
+			mission_text = "Objetivo: Volte ao fogão para preparar a receita."
+		QuestManager.QuestStatus.CONCLUIDA:
+			mission_text = "Missão Concluída! Bom almoço."
+
+	$Panel/MissionLabel.text = mission_text
