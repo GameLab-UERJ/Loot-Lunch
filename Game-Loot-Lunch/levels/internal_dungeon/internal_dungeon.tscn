@@ -18,6 +18,10 @@
 [ext_resource type="PackedScene" uid="uid://cejnumlhh8uv4" path="res://entities/keys/keys.tscn" id="17_y5j7s"]
 [ext_resource type="PackedScene" uid="uid://btihxqu8nn1f7" path="res://entities/coins/scenes/coin_1_gold.tscn" id="18_75nec"]
 [ext_resource type="PackedScene" uid="uid://dbwqghcgjrwhq" path="res://entities/spikes/scenes/espinhos.tscn" id="18_y5j7s"]
+[ext_resource type="PackedScene" uid="uid://gjl72dlp67yj" path="res://entities/coins/scenes/coin_5_gold.tscn" id="19_1m323"]
+[ext_resource type="PackedScene" uid="uid://csiycdyxot2mg" path="res://entities/coins/scenes/coin_10_gold.tscn" id="20_e657i"]
+[ext_resource type="PackedScene" uid="uid://i8cv5152xt3n" path="res://entities/coins/scenes/coin_15_gold.tscn" id="21_laeui"]
+[ext_resource type="PackedScene" uid="uid://hrap2qb58qp4" path="res://entities/chest/scenes/chest.tscn" id="22_e657i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lfow4"]
 size = Vector2(41, 25)
@@ -1612,6 +1616,70 @@ scenes/1/scene = ExtResource("18_y5j7s")
 [sub_resource type="TileSet" id="TileSet_c84ob"]
 sources/1 = SubResource("TileSetScenesCollectionSource_gt0ib")
 
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_1m323"]
+scenes/1/scene = ExtResource("18_75nec")
+scenes/2/scene = ExtResource("19_1m323")
+scenes/3/scene = ExtResource("20_e657i")
+scenes/4/scene = ExtResource("21_laeui")
+
+[sub_resource type="TileSet" id="TileSet_ckb4l"]
+sources/0 = SubResource("TileSetScenesCollectionSource_1m323")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0i3oj"]
+atlas = ExtResource("2_c8okk")
+region = Rect2(164, 30, 27, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_apfvp"]
+atlas = ExtResource("3_7cswg")
+region = Rect2(0, 129, 32, 21)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dqkjj"]
+atlas = ExtResource("3_7cswg")
+region = Rect2(32, 129, 32, 21)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kgmmh"]
+atlas = ExtResource("3_7cswg")
+region = Rect2(64, 129, 32, 21)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gwcit"]
+atlas = ExtResource("3_7cswg")
+region = Rect2(96, 129, 32, 21)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gooio"]
+atlas = ExtResource("3_7cswg")
+region = Rect2(128, 129, 32, 21)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hpmeb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0i3oj")
+}],
+"loop": 1,
+"name": &"close",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_apfvp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dqkjj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kgmmh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gwcit")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gooio")
+}],
+"loop": 0,
+"name": &"open",
+"speed": 5.0
+}]
+
 [node name="InternalDungeon" type="Node2D" unique_id=1644355751]
 y_sort_enabled = true
 script = ExtResource("1_efo6u")
@@ -1634,12 +1702,7 @@ tile_set = SubResource("TileSet_3uuv1")
 
 [node name="Decorações" type="TileMapLayer" parent="tileset" unique_id=31763963]
 y_sort_enabled = true
-tile_map_data = PackedByteArray("AAAZAAAAAAAWAAIAAAAIAAcAAAAWAAIAAAAJAAcAAAAWAAAAAAAYAAAAAAAUAAIAAAASAP7/AAAWAAQAAAAPAP7/AAAWAAQAAAALAAIAAAAMAAIAAAAJAAAAAAAQAAAAAAAIAAAAAAAMAAQAAAAjAP//AAAMAAQAAAA3AO3/AAAUAAIAAAAlAPj/AAAWAAIAAAAlAPf/AAAUAAQAAAAmAO3/AAASAAAAAAAlAO3/AAAUAAQAAAAwAP//AAARAAMAAAAeAOr/AAAEAAAAAAARAOT/AAAAAAQAAAAfAOr/AAAIAAIAAAAhAOn/AAAMAAIAAAAeAOv/AAAOAAIAAAAIAPX/AAATAAUAAAAJAPL/AAAPAAIAAAAJAPn/AAAPAAIAAAAKAO3/AAASAAUAAAAKAPj/AAATAAUAAAANAPH/AAASAAUAAAAPAOz/AAAPAAIAAAAQAO3/AAARAAMAAAASAPD/AAATAAUAAAATAOz/AAARAAMAAAAVAPH/AAASAAUAAAAVAPn/AAAQAAMAAAAWAPT/AAARAAMAAAAWAPn/AAAQAAMAAAAZAPT/AAAPAAIAAADr/+f/AAAQAAMAAADz/+f/AAANAAQAAAD1/+j/AAAPAAIAAAD5/+j/AAASAAAAAAD5//f/AAAQAAMAAADq/+j/AAAGAAQAAADv/+v/AAAGAAQAAAD0//f/AAAQAAAAAAAPAOr/AAAWAAQAAAASAOr/AAAWAAQAAAA1AP3/AAAWAAQAAADa/+L/AAAWAAQAAADd/+L/AAAWAAQAAADo/+f/AAAWAAIAAADU//L/AAAWAAIAAADy//j/AAAWAAIAAADV/+T/AAASAAAAAADh/+T/AAAQAAAAAADi/+T/AAASAAMAAADi/+//AAAUAAQAAADZ/9r/AAAKAAIAAADc/9v/AAAMAAIAAADi/9v/AAAMAAIAAADY/9z/AAAOAAAAAADi/9n/AAAXAAAAAADX/9n/AAAQAAAAAAAZAAcAAAAUAAAAAAApAAAAAAAMAAIAAAAtAAUAAAAPAAIAAAA=")
-tile_set = SubResource("TileSet_gt0ib")
-
-[node name="Decorações" type="TileMapLayer" parent="tileset/Decorações" unique_id=229206247]
-y_sort_enabled = true
-tile_map_data = PackedByteArray("AADU//L/AAAWAAIAAADV/+T/AAASAAAAAADX/9n/AAAQAAAAAADY/9z/AAAOAAAAAADZ/9r/AAAKAAIAAADa/+L/AAAWAAQAAADc/9v/AAAMAAIAAADd/+L/AAAWAAQAAADh/+T/AAAQAAAAAADi/9n/AAAXAAAAAADi/9v/AAAMAAIAAADi/+T/AAASAAMAAADi/+//AAAUAAQAAADo/+f/AAAWAAIAAADq/+j/AAAGAAQAAADr/+f/AAAQAAMAAADv/+v/AAAGAAQAAADy//j/AAAWAAIAAADz/+f/AAANAAQAAAD0//f/AAAQAAAAAAD1/+j/AAAPAAIAAAD5/+j/AAASAAAAAAD5//f/AAAQAAMAAAAIAPX/AAATAAUAAAAIAAAAAAAMAAQAAAAIAAcAAAAWAAIAAAAJAPL/AAAPAAIAAAAJAPn/AAAPAAIAAAAJAAAAAAAQAAAAAAAJAAcAAAAWAAAAAAAKAO3/AAASAAUAAAAKAPj/AAATAAUAAAALAAIAAAAMAAIAAAANAPH/AAASAAUAAAAPAOr/AAAWAAQAAAAPAOz/AAAPAAIAAAAPAP7/AAAWAAQAAAAQAO3/AAARAAMAAAARAOT/AAAAAAQAAAASAOr/AAAWAAQAAAASAPD/AAATAAUAAAASAP7/AAAWAAQAAAATAOz/AAARAAMAAAAVAPH/AAASAAUAAAAVAPn/AAAQAAMAAAAWAPT/AAARAAMAAAAWAPn/AAAQAAMAAAAYAAAAAAAUAAIAAAAZAPT/AAAPAAIAAAAZAAAAAAAWAAIAAAAeAOr/AAAEAAAAAAAeAOv/AAAOAAIAAAAfAOr/AAAIAAIAAAAhAOn/AAAMAAIAAAAjAP//AAAMAAQAAAAlAO3/AAAUAAQAAAAlAPf/AAAUAAQAAAAlAPj/AAAWAAIAAAAmAO3/AAASAAAAAAAwAP//AAARAAMAAAA1AP3/AAAWAAQAAAA3AO3/AAAUAAIAAAA=")
+tile_map_data = PackedByteArray("AAAZAAAAAAAWAAIAAAAIAAcAAAAWAAIAAAAJAAcAAAAWAAAAAAAYAAAAAAAUAAIAAAASAP7/AAAWAAQAAAAPAP7/AAAWAAQAAAAJAAAAAAAQAAAAAAAIAAAAAAAMAAQAAAAjAP//AAAMAAQAAAA3AO3/AAAUAAIAAAAlAPj/AAAWAAIAAAAlAPf/AAAUAAQAAAAmAO3/AAASAAAAAAAlAO3/AAAUAAQAAAARAOT/AAAAAAQAAADz/+f/AAANAAQAAAD5/+j/AAASAAAAAADq/+j/AAAGAAQAAADv/+v/AAAGAAQAAAD0//f/AAAQAAAAAAAPAOr/AAAWAAQAAAASAOr/AAAWAAQAAAA1AP3/AAAWAAQAAADa/+L/AAAWAAQAAADd/+L/AAAWAAQAAADo/+f/AAAWAAIAAADU//L/AAAWAAIAAADy//j/AAAWAAIAAADV/+T/AAASAAAAAADh/+T/AAAQAAAAAADi/+T/AAASAAMAAADi/+//AAAUAAQAAADi/9n/AAAXAAAAAADX/9n/AAAQAAAAAAAZAAcAAAAUAAAAAAA=")
 tile_set = SubResource("TileSet_gt0ib")
 
 [node name="Alavanca" type="TileMapLayer" parent="tileset" unique_id=1851756563]
@@ -1650,7 +1713,6 @@ tile_set = SubResource("TileSet_1m323")
 [node name="Baus" type="TileMapLayer" parent="tileset" unique_id=293302743]
 z_index = -1
 y_sort_enabled = true
-tile_map_data = PackedByteArray("AAAfAOr/AAAAAAgAAADb/9v/AAAAAAgAAAA=")
 tile_set = SubResource("TileSet_laeui")
 
 [node name="Agua" type="TileMapLayer" parent="tileset" unique_id=1369457280]
@@ -1699,7 +1761,7 @@ position = Vector2(272, 231)
 zoom = Vector2(2, 2)
 limit_bottom = 270
 
-[node name="Enemies" type="Node" parent="." unique_id=1807275473]
+[node name="Enemies" type="Node2D" parent="." unique_id=1371703629]
 
 [node name="FlyingEye" parent="Enemies" unique_id=1346698654 instance=ExtResource("7_lfow4")]
 position = Vector2(735, -229)
@@ -1789,8 +1851,21 @@ tile_set = SubResource("TileSet_c84ob")
 
 [node name="Gold" type="Node2D" parent="." unique_id=2113771332]
 
-[node name="coin_1_gold" parent="Gold" unique_id=1448703071 instance=ExtResource("18_75nec")]
-position = Vector2(305, 76)
+[node name="coins" type="TileMapLayer" parent="Gold" unique_id=1532524125]
+tile_map_data = PackedByteArray("AAAXAAMAAAAAAAAAAQAMAAUAAAAAAAAAAQAkAAEAAAAAAAAAAQAxAPf/AAAAAAAAAQAqAPL/AAAAAAAAAQAVAO//AAAAAAAAAQAKAPH/AAAAAAAAAQAVAPj/AAAAAAAAAQD3/+v/AAAAAAAAAQDs/+3/AAAAAAAAAQDw/+n/AAAAAAAAAQDv/+//AAAAAAAAAQDs//P/AAAAAAAAAQD4//b/AAAAAAAAAQDX/+3/AAAAAAAAAQDg/9z/AAAAAAAAAQDX/9z/AAAAAAAAAgDf/+7/AAAAAAAAAgDt/+//AAAAAAAAAgD1//T/AAAAAAAAAgAMAO//AAAAAAAAAgAWAPX/AAAAAAAAAgAsAPf/AAAAAAAAAgAxAPL/AAAAAAAAAwASAO//AAAAAAAAAwD2/+7/AAAAAAAAAwDb/+v/AAAAAAAAAwDa/9r/AAAAAAAAAwARAOb/AAAAAAAABADe/9z/AAAAAAAABAAJAPf/AAAAAAAABAAOAAIAAAAAAAAAAgAzAAcAAAAAAAAAAwAdAOr/AAAAAAAAAgA=")
+tile_set = SubResource("TileSet_ckb4l")
+
+[node name="chest" type="Node2D" parent="." unique_id=1622631307]
+
+[node name="chest1" parent="chest" unique_id=124531781 instance=ExtResource("22_e657i")]
+position = Vector2(504, -338)
+
+[node name="chest2" parent="chest" unique_id=1825451091 instance=ExtResource("22_e657i")]
+position = Vector2(-575, -584)
+gold_value = 30
+
+[node name="AnimatedSprite2D" parent="chest/chest2" index="1" unique_id=1127862977]
+sprite_frames = SubResource("SpriteFrames_hpmeb")
 
 [connection signal="interact_with_player" from="external_house" to="." method="_on_external_house_interact_with_player"]
 [connection signal="key_collected" from="Keys/key_door_1" to="Doors/door1" method="_on_key_collected"]
@@ -1802,3 +1877,4 @@ position = Vector2(305, 76)
 
 [editable path="DialogueNpc"]
 [editable path="Doors/door_final"]
+[editable path="chest/chest2"]

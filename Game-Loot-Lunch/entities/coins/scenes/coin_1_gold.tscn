@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://btihxqu8nn1f7"]
 
-[ext_resource type="PackedScene" uid="uid://dxvw3r4u416io" path="res://entities/Coins/Scenes/pickable_gold.tscn" id="2_i1hry"]
+[ext_resource type="PackedScene" uid="uid://dxvw3r4u416io" path="res://entities/coins/scenes/pickable_gold.tscn" id="2_i1hry"]
 [ext_resource type="Texture2D" uid="uid://70ibuw3sxd0t" path="res://assets/art/tilesets/dungeon/Objects.png" id="2_yuut2"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_i1hry"]
