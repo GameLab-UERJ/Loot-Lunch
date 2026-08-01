@@ -28,51 +28,48 @@ offset_left = 256.0
 offset_top = 72.0
 offset_right = 391.0
 offset_bottom = 131.0
-offset_transform_enabled = true
-theme = ExtResource("3_y2evm")
-accessibility_region = true
 
 [node name="AudioLabel" type="Label" parent="TextureRect/GridContainer" unique_id=1320172506]
 layout_mode = 2
-offset_transform_enabled = true
-offset_transform_position = Vector2(-30, 0)
 theme = ExtResource("3_y2evm")
 theme_override_fonts/font = ExtResource("2_od2kw")
 theme_override_font_sizes/font_size = 12
 text = "     
-                  Volume
+            			   Volume
 "
 
 [node name="AudioSlider" type="HSlider" parent="TextureRect/GridContainer" unique_id=259590492]
 modulate = Color(1, 0.3372549, 0.19607843, 1)
 layout_mode = 2
 theme = ExtResource("3_y2evm")
+min_value = 0.1
+max_value = 1.0
+step = 0.1
+value = 0.1
 
 [node name="GridContainer2" type="GridContainer" parent="TextureRect" unique_id=1013987425]
 layout_mode = 0
-offset_left = 256.0
-offset_top = 136.0
-offset_right = 424.0
-offset_bottom = 223.0
-accessibility_region = true
+offset_left = 263.0
+offset_top = 131.0
+offset_right = 432.0
+offset_bottom = 246.0
 
 [node name="FullScreenLabel" type="Label" parent="TextureRect/GridContainer2" unique_id=418446473]
 layout_mode = 2
 size_flags_horizontal = 6
-offset_transform_enabled = true
-offset_transform_position = Vector2(0, 20)
-offset_transform_position_ratio = Vector2(0, 0.5)
+size_flags_vertical = 6
 theme_override_fonts/font = ExtResource("2_od2kw")
 theme_override_font_sizes/font_size = 12
 text = "
+
 Fullscreen
+
 "
 
 [node name="FullScreenCheckBox" type="CheckBox" parent="TextureRect/GridContainer2" unique_id=1152794219]
 layout_mode = 2
 size_flags_horizontal = 0
-size_flags_vertical = 6
-offset_transform_position = Vector2(0, -40)
+size_flags_vertical = 0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_disabled_color = Color(0.9607843, 0.9843137, 0.9764706, 1)
 theme_override_colors/icon_disabled_color = Color(1, 1, 1, 0.4)
