@@ -17,7 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://bogwm2rcwxg1g" path="res://assets/art/entities/npcs/random/Skeletons-Sheet.png" id="15_5bgo6"]
 [ext_resource type="PackedScene" uid="uid://d1q0x6qrbyjlx" path="res://entities/npcs/sign.tscn" id="15_k7n0b"]
 [ext_resource type="Resource" uid="uid://dkogwulps4etc" path="res://entities/npcs/dialogos/placa_direcoes.dialogue" id="16_lt77x"]
-[ext_resource type="PackedScene" uid="uid://ba4so0qiuolac" path="res://entities/Craft/workbenches/common_workbench.tscn" id="17_4uhx5"]
+[ext_resource type="PackedScene" uid="uid://ba4so0qiuolac" path="res://entities/craft/workbenches/common_workbench.tscn" id="17_4uhx5"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_f206e"]
 texture = ExtResource("1_xktgd")
