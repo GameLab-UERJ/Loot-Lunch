@@ -9,6 +9,8 @@ var current_scene_path: String = ""
 var player_position: Vector2 = Vector2.ZERO
 var inventory_data: Array[Dictionary] = []
 var time_state: int = TimeCycle.TimeState.DAY
+var time_remaining: float = 0.0
+var day_night_color: Color = Color.WHITE
 var quest_status: int = QuestManager.QuestStatus.NAO_INICIADA
 
 var _is_loading_save: bool = false
@@ -50,6 +52,8 @@ func _collect_inventory() -> void:
 
 func _collect_time_state() -> void:
 	time_state = TimeCycle.current_state
+	time_remaining = TimeCycle.get_time_remaining()
+	day_night_color = DayNightCycle.color
 
 
 func _collect_quest_status() -> void:
@@ -101,6 +105,8 @@ func _apply_deferred_restore() -> void:
 
 func _apply_time_state() -> void:
 	TimeCycle.change_state(time_state as TimeCycle.TimeState)
+	TimeCycle.set_time_remaining(time_remaining)
+	DayNightCycle.color = day_night_color
 
 
 func _apply_quest_status() -> void:

@@ -29,6 +29,10 @@ func save_data(save_position: int, save_name: String) -> void:
 	SaveFileData.player_position_y = GlobalData.player_position.y
 	SaveFileData.inventory_items = GlobalData.inventory_data
 	SaveFileData.time_state = GlobalData.time_state
+	SaveFileData.time_remaining = GlobalData.time_remaining
+	SaveFileData.day_night_color_r = GlobalData.day_night_color.r
+	SaveFileData.day_night_color_g = GlobalData.day_night_color.g
+	SaveFileData.day_night_color_b = GlobalData.day_night_color.b
 	SaveFileData.quest_status = GlobalData.quest_status
 
 	# Use .tres for testing and change to .res when in production
@@ -42,6 +46,8 @@ func load_data(file_name: String, apply_state: bool = false) -> void:
 		GlobalData.player_position = Vector2(SaveFileData.player_position_x, SaveFileData.player_position_y)
 		GlobalData.inventory_data = SaveFileData.inventory_items
 		GlobalData.time_state = SaveFileData.time_state
+		GlobalData.time_remaining = SaveFileData.time_remaining
+		GlobalData.day_night_color = Color(SaveFileData.day_night_color_r, SaveFileData.day_night_color_g, SaveFileData.day_night_color_b)
 		GlobalData.quest_status = SaveFileData.quest_status
 		if apply_state:
 			GlobalData.schedule_restore_after_load()
