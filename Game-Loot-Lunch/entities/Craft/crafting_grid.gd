@@ -56,12 +56,11 @@ func _on_grid_cell_gui_input(event: InputEvent, index: int) -> void:
 			# Devolve item existente ao inventário
 			var old_item = cell.item
 			var old_count = cell.count
-			cell.item = null
-			cell.count = 0
+			cell.set_item(null)
 			old_item.dropped_count = old_count
 			inventory.add_item(old_item)
 		
-		cell.set_item(inventory.selected_item)
+		cell.set_item(inventory.selected_item, false)
 		cell.count = inventory.selected_count
 		
 		inventory._cleanup_selection()
@@ -101,13 +100,11 @@ func _on_result_gui_input(event: InputEvent) -> void:
 	for grid_cell in grid_cells:
 		if grid_cell.item:
 			grid_cell.item.queue_free()
-			grid_cell.item = null
-			grid_cell.count = 0
+			grid_cell.set_item(null)
 	
 	# Pega o resultado
 	var result_item := result_slot.item
-	result_slot.item = null
-	result_slot.count = 0
+	result_slot.set_item(null)
 	
 	# Adiciona ao inventário
 	result_item.dropped_count = current_recipe.result_count
@@ -120,16 +117,14 @@ func _on_result_gui_input(event: InputEvent) -> void:
 func _on_item_removed(cell: InventoryCell, _index: int) -> void:
 	if cell.item:
 		inventory.add_item(cell.item)
-		cell.item = null
-		cell.count = 0
+		cell.set_item(null)
 	_validate_recipe()
 
 
 func _validate_recipe() -> void:
 	if result_slot.item:
 		result_slot.item.queue_free()
-		result_slot.item = null
-		result_slot.count = 0
+		result_slot.set_item(null)
 	
 	current_recipe = null
 	
@@ -153,7 +148,7 @@ func _validate_recipe() -> void:
 		if recipe.matches(current_items):
 			current_recipe = recipe
 			var result_item := recipe.result_scene.instantiate() as Item
-			result_slot.set_item(result_item)
+			result_slot.set_item(result_item, false)
 			result_slot.count = recipe.result_count
 			print("  >>> RECEITA ENCONTRADA: ", recipe.recipe_name)
 			return

@@ -140,11 +140,8 @@ func _try_merge(source: InventoryCell, target: InventoryCell, src_item: Item, sr
 
 
 func _place_on_empty(source: InventoryCell, target: InventoryCell, src_item: Item, src_count: int) -> void:
-	target.set_item(src_item)
+	target.set_item(src_item, false)
 	target.count = src_count
-	
-	if source.count <= 0:
-		source.item = null
 	
 	source.is_selected = false
 	selected_cell = null
@@ -155,12 +152,27 @@ func _place_on_empty(source: InventoryCell, target: InventoryCell, src_item: Ite
 func _do_swap(source: InventoryCell, target: InventoryCell, src_item: Item, src_count: int) -> void:
 	var tgt_item = target.item
 	var tgt_count = target.count
-	
+
 	target.item = src_item
 	target.count = src_count
 	source.item = tgt_item
 	source.count = tgt_count
-	
+
+	if src_item:
+		src_item.reparent(target)
+		src_item.hide()
+		src_item.force_stop_follow_mouse()
+		src_item.top_level = false
+		src_item.z_index = 0
+		src_item.position = Vector2.ZERO
+	if tgt_item:
+		tgt_item.reparent(source)
+		tgt_item.hide()
+		tgt_item.force_stop_follow_mouse()
+		tgt_item.top_level = false
+		tgt_item.z_index = 0
+		tgt_item.position = Vector2.ZERO
+
 	source.is_selected = false
 	target.is_selected = false
 	selected_cell = null
@@ -177,7 +189,7 @@ func handle_new_selected_cell(cell : InventoryCell) -> void:
 	if selected_item and not selected_cell:
 		# Célula vazia → coloca
 		if not cell.item:
-			cell.set_item(selected_item)
+			cell.set_item(selected_item, false)
 			cell.count = selected_count
 			_cleanup_selection()
 			return
@@ -187,9 +199,8 @@ func handle_new_selected_cell(cell : InventoryCell) -> void:
 		var old_count = cell.count
 		
 		# Coloca item do CraftingGrid na célula
-		cell.item = null
-		cell.count = 0
-		cell.set_item(selected_item)
+		cell.set_item(null)
+		cell.set_item(selected_item, false)
 		cell.count = selected_count
 		
 		# Item antigo vai pra mão
@@ -250,7 +261,7 @@ func handle_new_selected_cell(cell : InventoryCell) -> void:
 
 ## Coloca item em célula vazia quando NÃO tem source (item veio do CraftingGrid)
 func _place_on_empty_no_source(target: InventoryCell, src_item: Item, src_count: int) -> void:
-	target.set_item(src_item)
+	target.set_item(src_item, false)
 	target.count = src_count
 
 ## Returns an array with the references of all empty cells.
@@ -336,7 +347,7 @@ func add_item(item: Item) -> void:
 				item.queue_free()
 				return
 			var cell = empty[0]
-			cell.set_item(item)
+			cell.set_item(item, false)
 			cell.count = amount
 	else:
 		# Não stackável
@@ -345,7 +356,7 @@ func add_item(item: Item) -> void:
 			push_warning("Inventory is full!")
 			return
 		var cell = empty[0]
-		cell.set_item(item)
+		cell.set_item(item, false)
 		cell.count = 1
 
 
@@ -424,7 +435,7 @@ func _restore_selected() -> void:
 			selected_cell.count += selected_count
 			selected_item.queue_free()
 		else:
-			selected_cell.set_item(selected_item)
+			selected_cell.set_item(selected_item, false)
 			selected_cell.count = selected_count
 	selected_cell = null
 	selected_item = null
