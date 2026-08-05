@@ -69,7 +69,6 @@ func schedule_restore_after_load() -> void:
 func save_transition_state() -> void:
 	_is_transitioning = true
 	_collect_inventory()
-	_collect_player_position()
 
 
 func restore_if_transitioning() -> void:
@@ -81,7 +80,6 @@ func restore_if_transitioning() -> void:
 
 func _apply_deferred_transition_restore() -> void:
 	restore_inventory()
-	restore_player_position()
 
 
 func _enter_tree() -> void:
