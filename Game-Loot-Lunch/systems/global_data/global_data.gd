@@ -12,6 +12,7 @@ var time_state: int = TimeCycle.TimeState.DAY
 var quest_status: int = QuestManager.QuestStatus.NAO_INICIADA
 
 var _is_loading_save: bool = false
+var _is_transitioning: bool = false
 
 
 func collect_game_state() -> void:
@@ -63,6 +64,24 @@ func apply_game_state() -> void:
 
 func schedule_restore_after_load() -> void:
 	_is_loading_save = true
+
+
+func save_transition_state() -> void:
+	_is_transitioning = true
+	_collect_inventory()
+	_collect_player_position()
+
+
+func restore_if_transitioning() -> void:
+	if not _is_transitioning:
+		return
+	_is_transitioning = false
+	call_deferred("_apply_deferred_transition_restore")
+
+
+func _apply_deferred_transition_restore() -> void:
+	restore_inventory()
+	restore_player_position()
 
 
 func _enter_tree() -> void:
