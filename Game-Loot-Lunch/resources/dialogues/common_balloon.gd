@@ -89,7 +89,7 @@ func _ready() -> void:
 		start()
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if is_instance_valid(dialogue_line):
 		progress.visible = not dialogue_label.is_typing and dialogue_line.responses.size() == 0 and not dialogue_line.has_tag("voice")
 
@@ -216,3 +216,9 @@ func _on_responses_menu_response_selected(response: DialogueResponse) -> void:
 
 
 #endregion
+
+
+func _on_dialogue_label_spoke(letter: String, letter_index: int, speed: float) -> void:
+	if not %AudioStreamPlayer.playing:
+		%AudioStreamPlayer.pitch_scale = randf_range(0.8,1.5)
+		%AudioStreamPlayer.play()
