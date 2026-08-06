@@ -7,7 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://drguwsuardbi1" path="res://assets/art/tilesets/interior/Paredes_e_divisorias_cortadas.png" id="3_nrwoy"]
 [ext_resource type="PackedScene" uid="uid://3cgeew2m05mn" path="res://entities/player/player.tscn" id="4_wmods"]
 [ext_resource type="PackedScene" uid="uid://cyqsq4jf4isch" path="res://entities/npcs/guide_man/guide_man.tscn" id="7_4ru3j"]
-[ext_resource type="Script" uid="uid://jjpqio73q6j7" path="res://systems/camera/player_follower.gd" id="7_wtnpl"]
 [ext_resource type="Texture2D" uid="uid://bogwm2rcwxg1g" path="res://assets/art/entities/npcs/random/Felipe-Castro-Skeletons-Sheet.png" id="8_86747"]
 [ext_resource type="FontFile" uid="uid://fjcmb5r6tkvp" path="res://assets/fonts/Silver.ttf" id="9_vyeqd"]
 
@@ -543,7 +542,6 @@ limit_left = -5
 limit_top = -43
 limit_right = 395
 limit_bottom = 274
-script = ExtResource("7_wtnpl")
 
 [node name="GuideMan" parent="." unique_id=1191334286 instance=ExtResource("7_4ru3j")]
 position = Vector2(227, 85)
