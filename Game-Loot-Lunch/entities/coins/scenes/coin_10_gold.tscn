@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://csiycdyxot2mg"]
+
+[ext_resource type="PackedScene" uid="uid://dxvw3r4u416io" path="res://entities/coins/scenes/pickable_gold.tscn" id="1_3oe0u"]
+[ext_resource type="Texture2D" uid="uid://70ibuw3sxd0t" path="res://assets/art/tilesets/dungeon/Objects.png" id="2_s6t8n"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_87pn3"]
+atlas = ExtResource("2_s6t8n")
+region = Rect2(198.71712, 6.9008102, 19.686798, 17.546974)
+
+[node name="coin_10_gold" unique_id=1448703071 instance=ExtResource("1_3oe0u")]
+gold_value = 10
+
+[node name="Sprite2D" parent="." index="2" unique_id=1917870621]
+texture = SubResource("AtlasTexture_87pn3")

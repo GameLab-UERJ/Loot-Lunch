@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://cejnumlhh8uv4"]
+
+[ext_resource type="Script" uid="uid://qkwg02ov5of2" path="res://entities/keys/script/keys.gd" id="1_a41kx"]
+[ext_resource type="Texture2D" uid="uid://70ibuw3sxd0t" path="res://assets/art/tilesets/dungeon/Objects.png" id="2_2c3k3"]
+[ext_resource type="AudioStream" uid="uid://jvkqdxkfgfa6" path="res://assets/sfx/player/swing.wav" id="3_puyhq"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0i88t"]
+radius = 8.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v8cwn"]
+atlas = ExtResource("2_2c3k3")
+region = Rect2(48, 0, 16, 9)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ckb4l"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v8cwn")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="keys" type="Area2D" unique_id=718698344]
+collision_mask = 2
+script = ExtResource("1_a41kx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=678748998]
+shape = SubResource("CircleShape2D_0i88t")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1349760840]
+sprite_frames = SubResource("SpriteFrames_ckb4l")
+animation = &"idle"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1304702118]
+stream = ExtResource("3_puyhq")
