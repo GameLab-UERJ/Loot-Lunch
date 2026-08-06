@@ -1,7 +1,12 @@
 [gd_resource type="Theme" format=3 uid="uid://blqubia4djs1d"]
 
-[ext_resource type="FontFile" uid="uid://cvuth304y1byc" path="res://assets/fonts/tinypixel.ttf" id="1_eu7k4"]
+[ext_resource type="FontFile" uid="uid://cnqv72au01vlv" path="res://assets/fonts/ui/Sta.Toasty_font (1).ttf" id="1_w6etc"]
 [ext_resource type="Texture2D" uid="uid://dqhvnqqoa2la0" path="res://assets/art/ui/Buttons.png" id="2_rj5sn"]
+
+[sub_resource type="FontVariation" id="FontVariation_jqsv1"]
+base_font = ExtResource("1_w6etc")
+spacing_top = 5
+spacing_bottom = 4
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jqsv1"]
 texture = ExtResource("2_rj5sn")
@@ -56,7 +61,7 @@ Button/constants/h_separation = 4
 Button/constants/icon_max_width = 0
 Button/constants/outline_size = 3
 Button/font_sizes/font_size = 12
-Button/fonts/font = ExtResource("1_eu7k4")
+Button/fonts/font = SubResource("FontVariation_jqsv1")
 Button/styles/disabled = SubResource("StyleBoxTexture_jqsv1")
 Button/styles/focus = SubResource("StyleBoxEmpty_ktc3n")
 Button/styles/hover = SubResource("StyleBoxTexture_ktc3n")

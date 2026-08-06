@@ -103,6 +103,7 @@ offset_right = 76.0
 offset_bottom = 327.0
 
 [node name="Button" type="Button" parent="TextureRect/GridContainer3" unique_id=775085169]
+custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 theme = ExtResource("3_y2evm")
 text = "Back
