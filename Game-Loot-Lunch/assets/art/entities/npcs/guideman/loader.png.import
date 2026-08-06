@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bogwm2rcwxg1g"
-path="res://.godot/imported/Skeletons-Sheet.png-8202c2c14acb643a287c32c435ee1477.ctex"
+uid="uid://boap28k77drsw"
+path="res://.godot/imported/loader.png-6ba41076824ab62691719a886c96509b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/entities/npcs/random/Skeletons-Sheet.png"
-dest_files=["res://.godot/imported/Skeletons-Sheet.png-8202c2c14acb643a287c32c435ee1477.ctex"]
+source_file="res://assets/art/entities/npcs/guideman/loader.png"
+dest_files=["res://.godot/imported/loader.png-6ba41076824ab62691719a886c96509b.ctex"]
 
 [params]
 

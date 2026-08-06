@@ -15,6 +15,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="LootLunch"
+config/version="1.0.0"
 run/main_scene="uid://b2evbancyosmu"
 config/features=PackedStringArray("4.7", "Mobile")
 config/icon="res://icon.svg"
@@ -29,6 +30,7 @@ PlayerWallet="*uid://bs1b836vdqxr4"
 EnvironmentManager="*uid://cx07gbanpuo6o"
 DialogueManager="*uid://c3rodes2l3gxb"
 GlobalData="*uid://c0gv2simwpirt"
+QuestManager="*uid://be7wivhqj7q85"
 
 [debug]
 
@@ -141,7 +143,7 @@ interact={
 
 [internationalization]
 
-locale/translations_pot_files=PackedStringArray("res://entities/npcs/dialogos/npc_barco.dialogue", "res://entities/npcs/dialogos/npc_ponte_aviso.dialogue", "res://entities/npcs/dialogos/placa_quebrada.dialogue", "res://entities/npcs/dialogos/npc_estrada_bloqueio.dialogue", "res://entities/npcs/dialogos/placa_direcoes.dialogue", "res://entities/npcs/dialogos/placeholder.dialogue", "res://entities/npcs/dialogos/placa_dungeon_1.dialogue", "res://entities/npcs/dialogos/placa_dungeon_2.dialogue", "res://entities/npcs/dialogos/placa_dungeon_3.dialogue", "res://entities/npcs/dialogos/npc_dungeon_externa.dialogue", "res://entities/npcs/dialogos/npc_dungeon_externa_2.dialogue", "res://entities/npcs/dialogos/npc_dungeon_interna.dialogue")
+locale/translations_pot_files=PackedStringArray("res://entities/npcs/dialogos/npc_barco.dialogue", "res://entities/npcs/dialogos/npc_ponte_aviso.dialogue", "res://entities/npcs/dialogos/placa_quebrada.dialogue", "res://entities/npcs/dialogos/npc_estrada_bloqueio.dialogue", "res://entities/npcs/dialogos/placa_direcoes.dialogue", "res://entities/npcs/dialogos/placeholder.dialogue", "res://entities/npcs/dialogos/placa_dungeon_1.dialogue", "res://entities/npcs/dialogos/placa_dungeon_2.dialogue", "res://entities/npcs/dialogos/placa_dungeon_3.dialogue", "res://entities/npcs/dialogos/npc_dungeon_externa.dialogue", "res://entities/npcs/dialogos/npc_dungeon_externa_2.dialogue", "res://entities/npcs/dialogos/npc_dungeon_interna.dialogue", "res://entities/npcs/dialogos/guide_man_quest.dialogue")
 
 [layer_names]
 

@@ -42,12 +42,20 @@ func _on_save_button_pressed() -> void:
 func _on_load_button_pressed() -> void:
 	if SaveLoadManager.saves_info[save_slot][0] == "VAZIO" or save_slot == -1:
 		return
-		
-	SaveLoadManager.load_data(SaveLoadManager.saves_info[save_slot][0] + ".tres")
-	
-	print(SaveLoadManager.SaveFileData.save_name)
-	
+
+	SaveLoadManager.load_data(SaveLoadManager.saves_info[save_slot][0] + ".tres", true)
+
 	_on_mouse_pressed()
+	await get_tree().create_timer(0.3).timeout
+
+	var scene_path: String = GlobalData.current_scene_path
+	if scene_path.is_empty():
+		return
+
+	if get_parent() and get_parent() is PauseMenu:
+		get_tree().paused = false
+
+	EasyTransition.transition_to_path(scene_path, 1.5, EasyTransition.TransitionAnim.FADE)
 
 
 func _on_erase_button_pressed() -> void:

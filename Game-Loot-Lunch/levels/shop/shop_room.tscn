@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://can6jqu7o5b5l" path="res://assets/art/levels/test_room/test_room_tilemap.png" id="2_8nrlq"]
 [ext_resource type="PackedScene" uid="uid://c6wv6ecrc6cff" path="res://entities/npcs/shop_npc/shop_npc.tscn" id="2_obpsm"]
 [ext_resource type="PackedScene" uid="uid://3cgeew2m05mn" path="res://entities/player/player.tscn" id="5_2xyn3"]
-[ext_resource type="Texture2D" uid="uid://bogwm2rcwxg1g" path="res://assets/art/entities/npcs/random/Skeletons-Sheet.png" id="5_m1bl1"]
+[ext_resource type="Texture2D" uid="uid://bogwm2rcwxg1g" path="res://assets/art/entities/npcs/random/Felipe-Castro-Skeletons-Sheet.png" id="5_m1bl1"]
 [ext_resource type="Script" uid="uid://dr3t723hbciuk" path="res://systems/shop/shop_component.gd" id="5_q0dw4"]
 [ext_resource type="PackedScene" uid="uid://cexct4fg71pc5" path="res://entities/items/carne.tscn" id="6_7cgwe"]
 [ext_resource type="PackedScene" uid="uid://dd8vbsbs33ii4" path="res://entities/items/farinha.tscn" id="7_xe2u5"]
