@@ -1,0 +1,116 @@
+[gd_scene format=3 uid="uid://cq1p8um8r8ama"]
+
+[ext_resource type="Texture2D" uid="uid://cxvyy81yierb8" path="res://assets/art/ui/LootLunch_KeyArt_Assinatura_edited.png" id="1_vauo1"]
+[ext_resource type="Script" uid="uid://carc4fyt0lkju" path="res://menus/settings/settings_menu.gd" id="1_y2evm"]
+[ext_resource type="FontFile" uid="uid://cvuth304y1byc" path="res://assets/fonts/tinypixel.ttf" id="2_od2kw"]
+[ext_resource type="Theme" uid="uid://blqubia4djs1d" path="res://resources/themes/ui/button.tres" id="3_y2evm"]
+[ext_resource type="AudioStream" uid="uid://bkiovum7ll7au" path="res://assets/sfx/menus/abs-pointer-2.mp3" id="5_hw0oh"]
+[ext_resource type="AudioStream" uid="uid://doyfcod6s5ptl" path="res://assets/sfx/menus/abs-confirm-2.mp3" id="6_v5wmx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fdm2o"]
+bg_color = Color(0.6431373, 0.5803922, 0.47843137, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="CanvasLayer" type="CanvasLayer" unique_id=1688462736]
+script = ExtResource("1_y2evm")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1603509067]
+offset_right = 640.0
+offset_bottom = 360.0
+color = Color(1, 1, 1, 0)
+metadata/_edit_lock_ = true
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=230627715]
+offset_right = 640.0
+offset_bottom = 360.0
+texture = ExtResource("1_vauo1")
+expand_mode = 3
+metadata/_edit_lock_ = true
+
+[node name="PanelContainer" type="PanelContainer" parent="TextureRect" unique_id=2013244562]
+custom_maximum_size = Vector2(250, 250)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -62.0
+offset_top = -31.5
+offset_right = 62.0
+offset_bottom = 31.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_fdm2o")
+
+[node name="MarginContainer" type="MarginContainer" parent="TextureRect/PanelContainer" unique_id=1723829794]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="GridContainer" type="VBoxContainer" parent="TextureRect/PanelContainer/MarginContainer" unique_id=34409211]
+layout_mode = 2
+alignment = 1
+
+[node name="AudioLabel" type="Label" parent="TextureRect/PanelContainer/MarginContainer/GridContainer" unique_id=1320172506]
+layout_mode = 2
+theme = ExtResource("3_y2evm")
+theme_override_fonts/font = ExtResource("2_od2kw")
+theme_override_font_sizes/font_size = 12
+text = "Volume"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AudioSlider" type="HSlider" parent="TextureRect/PanelContainer/MarginContainer/GridContainer" unique_id=259590492]
+modulate = Color(1, 0.3372549, 0.19607843, 1)
+layout_mode = 2
+theme = ExtResource("3_y2evm")
+min_value = 0.1
+max_value = 1.0
+step = 0.1
+value = 0.1
+
+[node name="GridContainer2" type="HBoxContainer" parent="TextureRect/PanelContainer/MarginContainer/GridContainer" unique_id=721712762]
+layout_mode = 2
+
+[node name="FullScreenLabel" type="Label" parent="TextureRect/PanelContainer/MarginContainer/GridContainer/GridContainer2" unique_id=418446473]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme_override_fonts/font = ExtResource("2_od2kw")
+theme_override_font_sizes/font_size = 12
+text = "Fullscreen"
+
+[node name="FullScreenCheckBox" type="CheckBox" parent="TextureRect/PanelContainer/MarginContainer/GridContainer/GridContainer2" unique_id=1152794219]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="GridContainer3" type="GridContainer" parent="TextureRect" unique_id=1744053993]
+layout_mode = 0
+offset_left = 31.0
+offset_top = 287.0
+offset_right = 76.0
+offset_bottom = 327.0
+
+[node name="Button" type="Button" parent="TextureRect/GridContainer3" unique_id=775085169]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+theme = ExtResource("3_y2evm")
+text = "Back
+"
+
+[node name="HoverAudio" type="AudioStreamPlayer" parent="." unique_id=987436791]
+stream = ExtResource("5_hw0oh")
+
+[node name="PressAudio" type="AudioStreamPlayer" parent="." unique_id=970247928]
+stream = ExtResource("6_v5wmx")
