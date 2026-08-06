@@ -2,8 +2,39 @@
 
 [ext_resource type="PackedScene" uid="uid://d1q0x6qrbyjlx" path="res://entities/npcs/sign.tscn" id="1_xmtn6"]
 [ext_resource type="Texture2D" uid="uid://ce8701kx05rmu" path="res://assets/art/tilesets/signs/Broken sign.png" id="2_hhx6l"]
+[ext_resource type="FontFile" uid="uid://cnqv72au01vlv" path="res://assets/fonts/ui/Sta.Toasty_font (1).ttf" id="3_gk4p1"]
 
 [node name="Broken Sign" unique_id=1279799556 instance=ExtResource("1_xmtn6")]
 
 [node name="Sprite2D" parent="." index="2" unique_id=987721481]
 texture = ExtResource("2_hhx6l")
+
+[node name="InteractionLabel" type="Label" parent="." index="3" unique_id=756621458]
+unique_name_in_owner = true
+visible = false
+z_index = 5
+custom_minimum_size = Vector2(200, 200)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -29.0
+offset_top = -50.0
+offset_right = 171.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.3, 0.3)
+size_flags_horizontal = 4
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 3
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("3_gk4p1")
+text = "E"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2

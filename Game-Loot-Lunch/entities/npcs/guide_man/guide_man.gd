@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 @onready var interactable_area: GenericInteractableArea = $InteractableArea
-@onready var interaction_label: Label = $InteractionLabel
+@onready var interaction_label: Label = %InteractionLabel
 @onready var anim_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 var can_interact: bool = false
