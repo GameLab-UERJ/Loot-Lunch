@@ -3,6 +3,24 @@ class_name CommonBallon
 ## A basic dialogue balloon for use with Dialogue Manager.
 
 
+##GAMBIARRA: Formato é {nome_npc : y}, onde valores representam as regiões do spritesheet dos esqueletos
+var portraits_y : Dictionary = {
+	"Guarda" : 22,
+	"Explorador Novato" : 86,
+	"Guide Man" : 150,
+	"Pescador" : 214,
+	"Aventureiro" : 278,
+	"Loira" : 344,
+	"Viajante" : 408,
+	"Francês" : 472,
+	"Vendedor" : 534,
+	"Explorador Veterano" : 598,
+	"Nobre" : 662,
+	"Praieiro" : 726,
+	"Habitante" : 790,
+	"Default" : 854,
+}
+
 ## The dialogue resource
 @export var dialogue_resource: DialogueResource
 
@@ -112,6 +130,7 @@ func _notification(what: int) -> void:
 
 ## Start some dialogue
 func start(with_dialogue_resource: DialogueResource = null, title: String = "", extra_game_states: Array = []) -> void:
+	set_portrait()
 	temporary_game_states = [self] + extra_game_states
 	is_waiting_for_input = false
 	if is_instance_valid(with_dialogue_resource):
@@ -133,6 +152,7 @@ func apply_dialogue_line() -> void:
 
 	character_label.visible = not dialogue_line.character.is_empty()
 	character_label.text = tr(dialogue_line.character, "dialogue")
+	set_portrait(character_label.text )
 
 	dialogue_label.hide()
 	dialogue_label.dialogue_line = dialogue_line
@@ -211,6 +231,12 @@ func _on_balloon_gui_input(event: InputEvent) -> void:
 		next(dialogue_line.next_id)
 
 
+func set_portrait(npc : String = "Default") -> void:
+	if not portraits_y.get(npc):
+		npc = "Default"
+	(%Portrait.texture as AtlasTexture).region = Rect2(88,portraits_y[npc],14,14)
+
+
 func _on_responses_menu_response_selected(response: DialogueResponse) -> void:
 	next(response.next_id)
 
@@ -218,7 +244,7 @@ func _on_responses_menu_response_selected(response: DialogueResponse) -> void:
 #endregion
 
 
-func _on_dialogue_label_spoke(letter: String, letter_index: int, speed: float) -> void:
+func _on_dialogue_label_spoke(_letter: String, _letter_index: int, _speed: float) -> void:
 	if not %AudioStreamPlayer.playing:
 		%AudioStreamPlayer.pitch_scale = randf_range(0.8,1.5)
 		%AudioStreamPlayer.play()

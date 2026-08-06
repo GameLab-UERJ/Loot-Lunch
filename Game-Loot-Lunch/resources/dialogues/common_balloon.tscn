@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cjfc6m2oiadb"]
 
 [ext_resource type="Script" uid="uid://cmxsqykeqaosa" path="res://resources/dialogues/common_balloon.gd" id="1_y7wad"]
+[ext_resource type="Texture2D" uid="uid://bogwm2rcwxg1g" path="res://assets/art/entities/npcs/random/Felipe-Castro-Skeletons-Sheet.png" id="2_cdq5n"]
 [ext_resource type="PackedScene" uid="uid://ckvgyvclnwggo" path="res://addons/dialogue_manager/dialogue_label.tscn" id="2_pkgat"]
 [ext_resource type="FontFile" uid="uid://fjcmb5r6tkvp" path="res://assets/fonts/Silver.ttf" id="3_cdq5n"]
 [ext_resource type="Script" uid="uid://bb52rsfwhkxbn" path="res://addons/dialogue_manager/dialogue_responses_menu.gd" id="3_dbk0q"]
@@ -64,6 +65,22 @@ MarginContainer/constants/margin_left = 30
 MarginContainer/constants/margin_right = 30
 MarginContainer/constants/margin_top = 15
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_qkmqt")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dbk0q"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.6431373, 0.5803922, 0.47843137, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fdm2o"]
+atlas = ExtResource("2_cdq5n")
+region = Rect2(88, 150, 14, 14)
 
 [sub_resource type="Animation" id="Animation_nlsx6"]
 length = 0.001
@@ -130,12 +147,23 @@ grow_vertical = 0
 clip_children = 2
 layout_mode = 2
 mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_dbk0q")
 
 [node name="MarginContainer" type="MarginContainer" parent="Balloon/MarginContainer/PanelContainer" unique_id=1030936092]
 layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Balloon/MarginContainer/PanelContainer/MarginContainer" unique_id=1428277592]
 layout_mode = 2
+
+[node name="Portrait" type="TextureRect" parent="Balloon/MarginContainer/PanelContainer/MarginContainer/HBoxContainer" unique_id=87277685]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(56, 56)
+custom_maximum_size = Vector2(56, 56)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_fdm2o")
+expand_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Balloon/MarginContainer/PanelContainer/MarginContainer/HBoxContainer" unique_id=1624289611]
 layout_mode = 2
@@ -147,6 +175,7 @@ modulate = Color(1, 1, 1, 0.501961)
 texture_filter = 1
 layout_mode = 2
 mouse_filter = 1
+theme_override_colors/default_color = Color(1, 0.6156863, 0, 1)
 theme_override_fonts/normal_font = ExtResource("3_cdq5n")
 theme_override_font_sizes/normal_font_size = 24
 bbcode_enabled = true
@@ -158,6 +187,7 @@ scroll_active = false
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_colors/default_color = Color(0.6431373, 0.5803922, 0.47843137, 1)
 theme_override_fonts/normal_font = ExtResource("3_cdq5n")
 theme_override_font_sizes/normal_font_size = 24
 theme_override_font_sizes/bold_font_size = 32
