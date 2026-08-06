@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://cbs8q2hki4fym" path="res://systems/interaction/interactable_area.tscn" id="2_wmods"]
 [ext_resource type="Texture2D" uid="uid://drguwsuardbi1" path="res://assets/art/tilesets/interior/Paredes_e_divisorias_cortadas.png" id="3_nrwoy"]
 [ext_resource type="PackedScene" uid="uid://3cgeew2m05mn" path="res://entities/player/player.tscn" id="4_wmods"]
+[ext_resource type="PackedScene" uid="uid://cyqsq4jf4isch" path="res://entities/npcs/guide_man/guide_man.tscn" id="7_4ru3j"]
+[ext_resource type="Texture2D" uid="uid://bogwm2rcwxg1g" path="res://assets/art/entities/npcs/random/Felipe-Castro-Skeletons-Sheet.png" id="8_86747"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4r4wk"]
 texture = ExtResource("1_d1boo")
@@ -361,6 +363,48 @@ texture = ExtResource("2_ani4u")
 [sub_resource type="TileSet" id="TileSet_cogxb"]
 sources/0 = SubResource("TileSetAtlasSource_wg7rf")
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_vyeqd"]
+atlas = ExtResource("8_86747")
+region = Rect2(0, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wtnpl"]
+atlas = ExtResource("8_86747")
+region = Rect2(64, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qi4g6"]
+atlas = ExtResource("8_86747")
+region = Rect2(128, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n1eve"]
+atlas = ExtResource("8_86747")
+region = Rect2(192, 128, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pvpfn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vyeqd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wtnpl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qi4g6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n1eve")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qi4g6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wtnpl")
+}],
+"loop": 0,
+"name": &"wave",
+"speed": 5.0
+}]
+
 [node name="InsideHouse" type="Node2D" unique_id=1172528638]
 script = ExtResource("1_nrwoy")
 metadata/_edit_vertical_guides_ = [2269.0, 396.0, -6.0]
@@ -498,5 +542,15 @@ limit_top = -43
 limit_right = 395
 limit_bottom = 274
 
+[node name="GuideMan" parent="." unique_id=1191334286 instance=ExtResource("7_4ru3j")]
+position = Vector2(227, 85)
+
+[node name="AnimatedSprite2D" parent="GuideMan" index="1" unique_id=1471965564]
+sprite_frames = SubResource("SpriteFrames_pvpfn")
+frame = 5
+frame_progress = 1.0
+
 [connection signal="interact_with_player" from="Door" to="." method="_on_door_area_entered"]
 [connection signal="stop_interact_with_player" from="Door" to="." method="_on_door_area_exited"]
+
+[editable path="GuideMan"]
