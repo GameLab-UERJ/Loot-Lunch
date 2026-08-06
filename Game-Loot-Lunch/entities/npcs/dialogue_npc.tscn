@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://dvs2ib7i8lmf0"]
 
+[ext_resource type="Material" uid="uid://c146kddj2hvtf" path="res://resources/shaders/outline_material.tres" id="1_54vho"]
 [ext_resource type="Script" uid="uid://ch4pufrtva0y1" path="res://entities/npcs/dialogue_npc.gd" id="1_y218w"]
 [ext_resource type="Texture2D" uid="uid://cu6vqcbrrvqmo" path="res://assets/art/entities/npcs/random/random_idle_spritesheet.png" id="2_o5j2a"]
 [ext_resource type="PackedScene" uid="uid://jjadd5q2cswh" path="res://systems/interaction/generic_interactable_area.tscn" id="3_54vho"]
@@ -73,6 +74,7 @@ animations = [{
 radius = 9.0
 
 [node name="DialogueNpc" type="CharacterBody2D" unique_id=1279799556]
+material = ExtResource("1_54vho")
 script = ExtResource("1_y218w")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=799428324]
