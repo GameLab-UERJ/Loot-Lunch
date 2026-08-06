@@ -14,6 +14,9 @@ extends Control
 
 @export var is_outdoor: bool = false
 
+
+const settings_scene = preload("res://menus/settings/settings_menu.tscn")
+
 var is_quitting: bool = false
 
 var save_load_menu: SaveLoadMenu
@@ -26,6 +29,7 @@ var save_load_scene: PackedScene = preload("res://menus/saver_loader/save_load_m
 @onready var hover_audio: AudioStreamPlayer = $HoverAudio
 @onready var press_audio: AudioStreamPlayer = $PressAudio
 @onready var content: HBoxContainer = $Content
+
 
 
 func _ready() -> void:
@@ -63,8 +67,12 @@ func _on_continue_button_pressed() -> void:
 	_on_mouse_pressed()
 
 
+
 func _on_settings_button_pressed() -> void:
-	_play_press_sound_and_quit()
+	_on_mouse_pressed()
+	content.visible = false 
+	var settings = settings_scene.instantiate()
+	add_child(settings)
 
 
 func _on_quit_button_pressed() -> void:

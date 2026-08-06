@@ -1,0 +1,71 @@
+[gd_scene format=3 uid="uid://dbwqghcgjrwhq"]
+
+[ext_resource type="Script" uid="uid://ccxbr221r03y1" path="res://entities/spikes/script/espinhos.gd" id="1_x1fbl"]
+[ext_resource type="Texture2D" uid="uid://c8xr8yvxp75gr" path="res://assets/art/tilesets/dungeon/trap_animation.png" id="3_lhuk2"]
+[ext_resource type="Script" uid="uid://bi7fdvl4vpp7o" path="res://systems/hitbox/hitbox_component.gd" id="3_r1ux2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r1ux2"]
+atlas = ExtResource("3_lhuk2")
+region = Rect2(96, 60, 16, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qabob"]
+atlas = ExtResource("3_lhuk2")
+region = Rect2(96, 138, 16, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g4ecb"]
+atlas = ExtResource("3_lhuk2")
+region = Rect2(96, 216, 16, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3i1nu"]
+atlas = ExtResource("3_lhuk2")
+region = Rect2(96, 294, 16, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xdvrx"]
+atlas = ExtResource("3_lhuk2")
+region = Rect2(96, 372, 16, 26)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ckb4l"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r1ux2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qabob")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g4ecb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3i1nu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xdvrx")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 3.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0i88t"]
+size = Vector2(13, 13)
+
+[node name="espinhos" type="CharacterBody2D" unique_id=1846656549]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_x1fbl")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1038221819]
+sprite_frames = SubResource("SpriteFrames_ckb4l")
+autoplay = "default"
+frame = 4
+frame_progress = 0.597767
+
+[node name="HitboxComponent" type="Area2D" parent="." unique_id=531531207]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("3_r1ux2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" unique_id=2073027090]
+position = Vector2(0.5, -1.5)
+shape = SubResource("RectangleShape2D_0i88t")
