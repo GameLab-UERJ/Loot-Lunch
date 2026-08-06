@@ -140,7 +140,7 @@ func _try_merge(source: InventoryCell, target: InventoryCell, src_item: Item, sr
 
 
 func _place_on_empty(source: InventoryCell, target: InventoryCell, src_item: Item, src_count: int) -> void:
-	target.set_item(src_item, false)
+	target.set_item(src_item)
 	target.count = src_count
 	
 	source.is_selected = false
@@ -189,7 +189,7 @@ func handle_new_selected_cell(cell : InventoryCell) -> void:
 	if selected_item and not selected_cell:
 		# Célula vazia → coloca
 		if not cell.item:
-			cell.set_item(selected_item, false)
+			cell.set_item(selected_item)
 			cell.count = selected_count
 			_cleanup_selection()
 			return
@@ -200,7 +200,7 @@ func handle_new_selected_cell(cell : InventoryCell) -> void:
 		
 		# Coloca item do CraftingGrid na célula
 		cell.set_item(null)
-		cell.set_item(selected_item, false)
+		cell.set_item(selected_item)
 		cell.count = selected_count
 		
 		# Item antigo vai pra mão
@@ -261,7 +261,7 @@ func handle_new_selected_cell(cell : InventoryCell) -> void:
 
 ## Coloca item em célula vazia quando NÃO tem source (item veio do CraftingGrid)
 func _place_on_empty_no_source(target: InventoryCell, src_item: Item, src_count: int) -> void:
-	target.set_item(src_item, false)
+	target.set_item(src_item)
 	target.count = src_count
 
 ## Returns an array with the references of all empty cells.
@@ -347,7 +347,7 @@ func add_item(item: Item) -> void:
 				item.queue_free()
 				return
 			var cell = empty[0]
-			cell.set_item(item, false)
+			cell.set_item(item)
 			cell.count = amount
 	else:
 		# Não stackável
@@ -356,7 +356,7 @@ func add_item(item: Item) -> void:
 			push_warning("Inventory is full!")
 			return
 		var cell = empty[0]
-		cell.set_item(item, false)
+		cell.set_item(item)
 		cell.count = 1
 
 
@@ -435,7 +435,7 @@ func _restore_selected() -> void:
 			selected_cell.count += selected_count
 			selected_item.queue_free()
 		else:
-			selected_cell.set_item(selected_item, false)
+			selected_cell.set_item(selected_item)
 			selected_cell.count = selected_count
 	selected_cell = null
 	selected_item = null

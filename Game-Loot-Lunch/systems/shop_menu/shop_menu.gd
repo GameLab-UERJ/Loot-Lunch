@@ -112,7 +112,7 @@ func fill_player_inventory() -> void:
 				var empty: Array[InventoryCell] = player_inventory.find_empty_cells(true)
 				if not empty.is_empty():
 					var target: InventoryCell = empty[0]
-					target.set_item(item_copy, false)
+					target.set_item(item_copy)
 					target.count = cell.count
 					player_item_copies[item_copy] = cell.item
 					set_item_price_text(player_inventory, item_copy, get_sell_price(cell.item), Color.RED)
@@ -319,7 +319,7 @@ func add_player_item_to_transfer(cell: InventoryCell, amount: int = 1) -> void:
 			cell.count += sell_amount
 			sell_item.queue_free()
 			return
-		empty[0].set_item(sell_item, false)
+		empty[0].set_item(sell_item)
 		empty[0].count = sell_amount
 		sell_items[sell_item] = real_item
 		transfer_item_prices[sell_item] = price
@@ -328,10 +328,10 @@ func add_player_item_to_transfer(cell: InventoryCell, amount: int = 1) -> void:
 		var item_to_sell: Item = cell.remove_item()
 		var empty := transfer_inventory.find_empty_cells(true)
 		if empty.is_empty():
-			cell.set_item(item_to_sell, false)
+			cell.set_item(item_to_sell)
 			cell.count = sell_amount
 			return
-		empty[0].set_item(item_to_sell, false)
+		empty[0].set_item(item_to_sell)
 		empty[0].count = sell_amount
 		sell_items[item_to_sell] = real_item
 		transfer_item_prices[item_to_sell] = price
@@ -425,7 +425,7 @@ func accept_split_for_sell() -> void:
 	if empty.is_empty():
 		player_inventory._cleanup_selection()
 		return
-	empty[0].set_item(selected, false)
+	empty[0].set_item(selected)
 	empty[0].count = count
 
 	sell_items[selected] = real_item
@@ -479,7 +479,7 @@ func undo_sell_item(cell: InventoryCell) -> void:
 	var empty: Array[InventoryCell] = player_inventory.find_empty_cells(true)
 	if not empty.is_empty():
 		var target: InventoryCell = empty[0]
-		target.set_item(item, false)
+		target.set_item(item)
 		target.count = count
 		if real_item:
 			player_item_copies[item] = real_item

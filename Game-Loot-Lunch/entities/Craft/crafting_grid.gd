@@ -60,7 +60,7 @@ func _on_grid_cell_gui_input(event: InputEvent, index: int) -> void:
 			old_item.dropped_count = old_count
 			inventory.add_item(old_item)
 		
-		cell.set_item(inventory.selected_item, false)
+		cell.set_item(inventory.selected_item)
 		cell.count = inventory.selected_count
 		
 		inventory._cleanup_selection()
@@ -148,7 +148,7 @@ func _validate_recipe() -> void:
 		if recipe.matches(current_items):
 			current_recipe = recipe
 			var result_item := recipe.result_scene.instantiate() as Item
-			result_slot.set_item(result_item, false)
+			result_slot.set_item(result_item)
 			result_slot.count = recipe.result_count
 			print("  >>> RECEITA ENCONTRADA: ", recipe.recipe_name)
 			return

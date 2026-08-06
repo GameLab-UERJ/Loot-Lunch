@@ -127,7 +127,7 @@ func set_is_selected(value : bool) -> void:
 		selected.emit(self)
 
 
-func set_item(value : Item, reset_count : bool = true) -> Item:
+func set_item(value : Item) -> Item:
 	var previous_item : Item = item
 	item = value
 	if not item:
@@ -154,8 +154,7 @@ func set_item(value : Item, reset_count : bool = true) -> Item:
 		value.call_deferred("reparent", self)
 	else:
 		call_deferred("add_child",value)
-	if reset_count:
-		count = 1
+	count = 1
 	return previous_item
 
 
