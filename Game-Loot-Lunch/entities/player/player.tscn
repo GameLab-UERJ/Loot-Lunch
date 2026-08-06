@@ -105,7 +105,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_j3ovn")
 }],
-"loop": true,
+"loop": 1,
 "name": &"dead",
 "speed": 5.0
 }, {
@@ -134,7 +134,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_yhol4")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle",
 "speed": 5.0
 }, {
@@ -157,7 +157,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_8k5s7")
 }],
-"loop": true,
+"loop": 1,
 "name": &"move",
 "speed": 5.0
 }]
@@ -521,6 +521,7 @@ offset_bottom = 140.0
 node_to_drop = NodePath("../../Marker2D")
 
 [node name="FiniteStateMachine" parent="." index="1" unique_id=394854071]
+unique_name_in_owner = true
 script = ExtResource("3_xf5fp")
 
 [node name="InputComponent" type="Node" parent="." index="2" unique_id=357670435]

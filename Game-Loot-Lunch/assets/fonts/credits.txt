@@ -1,2 +1,4 @@
-NormalPixel:				https://trizg.itch.io/normal-pixel-font
-tinypixel:					https://goblin-mode-games.itch.io/tiny-pixel-font
+NormalPixel:				TRIZG							https://trizg.itch.io/normal-pixel-font
+Sta.Toasty_font (1)			Dogobongocat						https://dogobongocat.itch.io/ui-assets-pack-srt
+tinypixel:				Goblin Mode Games					https://goblin-mode-games.itch.io/tiny-pixel-font
+Silver:					Poppy Works, Wolfgang Wozniak				https://poppyworks.itch.io/

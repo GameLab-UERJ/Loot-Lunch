@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://3cgeew2m05mn" path="res://entities/player/player.tscn" id="4_wmods"]
 [ext_resource type="PackedScene" uid="uid://cyqsq4jf4isch" path="res://entities/npcs/guide_man/guide_man.tscn" id="7_4ru3j"]
 [ext_resource type="Texture2D" uid="uid://bogwm2rcwxg1g" path="res://assets/art/entities/npcs/random/Felipe-Castro-Skeletons-Sheet.png" id="8_86747"]
+[ext_resource type="FontFile" uid="uid://fjcmb5r6tkvp" path="res://assets/fonts/Silver.ttf" id="9_vyeqd"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4r4wk"]
 texture = ExtResource("1_d1boo")
@@ -545,10 +546,15 @@ limit_bottom = 274
 [node name="GuideMan" parent="." unique_id=1191334286 instance=ExtResource("7_4ru3j")]
 position = Vector2(227, 85)
 
-[node name="AnimatedSprite2D" parent="GuideMan" index="1" unique_id=1471965564]
+[node name="AnimatedSprite2D" parent="GuideMan" index="0" unique_id=1471965564]
 sprite_frames = SubResource("SpriteFrames_pvpfn")
 frame = 5
 frame_progress = 1.0
+
+[node name="InteractionLabel" parent="GuideMan" index="3" unique_id=1187989923]
+theme_override_constants/outline_size = 15
+theme_override_fonts/font = ExtResource("9_vyeqd")
+theme_override_font_sizes/font_size = 42
 
 [connection signal="interact_with_player" from="Door" to="." method="_on_door_area_entered"]
 [connection signal="stop_interact_with_player" from="Door" to="." method="_on_door_area_exited"]

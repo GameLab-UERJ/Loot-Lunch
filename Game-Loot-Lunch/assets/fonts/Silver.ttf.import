@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://8rayf5by7yoo"
-path="res://.godot/imported/NormalPixel.ttf-d8e60306094efbb06f415526efaf9683.fontdata"
+uid="uid://fjcmb5r6tkvp"
+path="res://.godot/imported/Silver.ttf-821872bb71e3788f5a26fb5a32e04f06.fontdata"
 
 [deps]
 
-source_file="res://assets/fonts/NormalPixel.ttf"
-dest_files=["res://.godot/imported/NormalPixel.ttf-d8e60306094efbb06f415526efaf9683.fontdata"]
+source_file="res://assets/fonts/Silver.ttf"
+dest_files=["res://.godot/imported/Silver.ttf-821872bb71e3788f5a26fb5a32e04f06.fontdata"]
 
 [params]
 
