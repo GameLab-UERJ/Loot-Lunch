@@ -1,7 +1,7 @@
 extends CanvasLayer
 
-@onready var fullscreen_check: CheckBox = $"TextureRect/GridContainer2/FullScreenCheckBox"
-@onready var audio_slider: HSlider = $"TextureRect/GridContainer/AudioSlider"
+@onready var fullscreen_check: CheckBox = $TextureRect/PanelContainer/MarginContainer/GridContainer/GridContainer2/FullScreenCheckBox
+@onready var audio_slider: HSlider = $"TextureRect/PanelContainer/MarginContainer/GridContainer/AudioSlider"
 @onready var back_button: Button = $"TextureRect/GridContainer3/Button"
 @onready var hover_audio: AudioStreamPlayer = $HoverAudio
 @onready var press_audio: AudioStreamPlayer = $PressAudio
@@ -21,8 +21,6 @@ func _ready() -> void:
 	back_button.pressed.connect(_on_back_button_pressed)
 	
 	back_button.mouse_entered.connect(_play_hover_sound)
-	fullscreen_check.mouse_entered.connect(_play_hover_sound)
-	audio_slider.mouse_entered.connect(_play_hover_sound)
 
 func _play_hover_sound() -> void:
 	if hover_audio and hover_audio.stream:
@@ -30,7 +28,7 @@ func _play_hover_sound() -> void:
 
 func _on_fullscreen_toggled(toggled_on: bool) -> void:
 	if press_audio and press_audio.stream:
-		press_audio.play()
+		_play_hover_sound()
 		
 	if toggled_on:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
@@ -39,7 +37,7 @@ func _on_fullscreen_toggled(toggled_on: bool) -> void:
 
 func _on_audio_slider_value_changed(value: float) -> void:
 	var master_bus_idx = AudioServer.get_bus_index("Master")
-	
+	_play_hover_sound()
 	if value <= 0.0001:
 		AudioServer.set_bus_mute(master_bus_idx, true)
 	else:
