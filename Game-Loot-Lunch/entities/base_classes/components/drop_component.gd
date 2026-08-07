@@ -14,12 +14,14 @@ signal drop_finished
 			return
 		item_scene = value
 @export var item_scale : Vector2 = Vector2.ONE
+@export var min_amount : int = 0
+@export var max_amount : int = 1
 ## -1 means the amount dropped any time is randomized between [min_amount] and 
 ## [max_amount.] Any other value implies that that exact amount is dropped
 ## everytime 
 @export var fixed_amount : int = -1 
-@export var min_amount : int = 0
-@export var max_amount : int = 1
+## Chance of dropping the item. Only relevant if fixed_amount is bigger than 0
+@export_range(0.0001,1.0,0.0001) var drop_chance : float = 1
 
 
 func drop_items(amount : int = fixed_amount) -> void:
@@ -29,6 +31,9 @@ func drop_items(amount : int = fixed_amount) -> void:
 	if amount < 0:
 		drop_items(randi_range(min_amount,max_amount))
 		return
+	
+	if randf() > drop_chance:
+		return 
 	
 	var item : Item
 	for i in amount:
