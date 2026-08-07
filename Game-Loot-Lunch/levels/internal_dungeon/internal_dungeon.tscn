@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://dvs2ib7i8lmf0" path="res://entities/npcs/dialogue_npc.tscn" id="13_lfow4"]
 [ext_resource type="Resource" uid="uid://cw03dpql70xt3" path="res://entities/npcs/dialogos/npc_dungeon_interna.dialogue" id="14_75d3q"]
 [ext_resource type="Texture2D" uid="uid://bogwm2rcwxg1g" path="res://assets/art/entities/npcs/random/Felipe-Castro-Skeletons-Sheet.png" id="15_3uuv1"]
+[ext_resource type="Resource" uid="uid://c47et1foes8a7" path="res://resources/dialogues/final_npc.dialogue" id="15_dvx6b"]
 [ext_resource type="PackedScene" uid="uid://dbb6jjh4cwdk7" path="res://systems/spawn/retangle_spawn.tscn" id="15_nhqbk"]
 [ext_resource type="PackedScene" uid="uid://b05aoq66nj1wa" path="res://entities/door/scenes/door.tscn" id="16_gt0ib"]
 [ext_resource type="PackedScene" uid="uid://cejnumlhh8uv4" path="res://entities/keys/keys.tscn" id="17_y5j7s"]
@@ -1588,36 +1589,76 @@ texture = ExtResource("1_tt8x8")
 [sub_resource type="TileSet" id="TileSet_0i88t"]
 sources/1 = SubResource("TileSetAtlasSource_gt0ib")
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_nhqbk"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_dql75"]
 atlas = ExtResource("15_3uuv1")
 region = Rect2(0, 256, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_gt0ib"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_3crac"]
+atlas = ExtResource("15_3uuv1")
+region = Rect2(64, 256, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_26631"]
 atlas = ExtResource("15_3uuv1")
 region = Rect2(128, 256, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_y5j7s"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_22mlv"]
 atlas = ExtResource("15_3uuv1")
-region = Rect2(64, 256, 64, 64)
+region = Rect2(192, 256, 64, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_75nec"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_nhqbk")
+"texture": SubResource("AtlasTexture_dql75")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_gt0ib")
+"texture": SubResource("AtlasTexture_3crac")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_gt0ib")
+"texture": SubResource("AtlasTexture_26631")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_y5j7s")
+"texture": SubResource("AtlasTexture_22mlv")
 }],
 "loop": 1,
 "name": &"default",
 "speed": 3.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7eo27"]
+atlas = ExtResource("15_3uuv1")
+region = Rect2(0, 320, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c84ob"]
+atlas = ExtResource("15_3uuv1")
+region = Rect2(64, 320, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kx68g"]
+atlas = ExtResource("15_3uuv1")
+region = Rect2(128, 320, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fve6l"]
+atlas = ExtResource("15_3uuv1")
+region = Rect2(192, 320, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rjbx4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7eo27")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c84ob")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kx68g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fve6l")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 4.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gt0ib"]
@@ -1625,35 +1666,36 @@ size = Vector2(282, 260)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y5j7s"]
 size = Vector2(259, 178)
-[sub_resource type="AtlasTexture" id="AtlasTexture_75nec"]
-atlas = ExtResource("3_7cswg")
-region = Rect2(0, 64, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_1l7on"]
-atlas = ExtResource("3_7cswg")
-region = Rect2(0, 64, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_1m323"]
-atlas = ExtResource("3_7cswg")
-region = Rect2(32, 64, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_e657i"]
-atlas = ExtResource("3_7cswg")
-region = Rect2(64, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_laeui"]
 atlas = ExtResource("3_7cswg")
-region = Rect2(96, 64, 32, 32)
+region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dvx6b"]
 atlas = ExtResource("3_7cswg")
-region = Rect2(128, 64, 32, 32)
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hpmeb"]
+atlas = ExtResource("3_7cswg")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c3gsv"]
+atlas = ExtResource("3_7cswg")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6tood"]
+atlas = ExtResource("3_7cswg")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f4mn8"]
+atlas = ExtResource("3_7cswg")
+region = Rect2(128, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_0i3oj"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_75nec")
+"texture": SubResource("AtlasTexture_laeui")
 }],
 "loop": 0,
 "name": &"close",
@@ -1661,19 +1703,19 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_1l7on")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_1m323")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_e657i")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_laeui")
-}, {
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_dvx6b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hpmeb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c3gsv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6tood")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f4mn8")
 }],
 "loop": 0,
 "name": &"open",
@@ -1772,7 +1814,7 @@ tile_set = SubResource("TileSet_3uuv1")
 
 [node name="Decorações" type="TileMapLayer" parent="tileset" unique_id=31763963]
 y_sort_enabled = true
-tile_map_data = PackedByteArray("AAAZAAAAAAAWAAIAAAAIAAcAAAAWAAIAAAAJAAcAAAAWAAAAAAAYAAAAAAAUAAIAAAASAP7/AAAWAAQAAAAPAP7/AAAWAAQAAAAJAAAAAAAQAAAAAAAIAAAAAAAMAAQAAAAjAP//AAAMAAQAAAA3AO3/AAAUAAIAAAAlAPj/AAAWAAIAAAAlAPf/AAAUAAQAAAAmAO3/AAASAAAAAAAlAO3/AAAUAAQAAAARAOT/AAAAAAQAAADz/+f/AAANAAQAAAD5/+j/AAASAAAAAADq/+j/AAAGAAQAAADv/+v/AAAGAAQAAAD0//f/AAAQAAAAAAAPAOr/AAAWAAQAAAASAOr/AAAWAAQAAAA1AP3/AAAWAAQAAADa/+L/AAAWAAQAAADd/+L/AAAWAAQAAADo/+f/AAAWAAIAAADU//L/AAAWAAIAAADy//j/AAAWAAIAAADV/+T/AAASAAAAAADh/+T/AAAQAAAAAADi/+T/AAASAAMAAADi/+//AAAUAAQAAADi/9n/AAAXAAAAAADX/9n/AAAQAAAAAAAZAAcAAAAUAAAAAAA=")
+tile_map_data = PackedByteArray("AAAZAAAAAAAWAAIAAAAIAAcAAAAWAAIAAAAJAAcAAAAWAAAAAAAYAAAAAAAUAAIAAAASAP7/AAAWAAQAAAAPAP7/AAAWAAQAAAAJAAAAAAAQAAAAAAAIAAAAAAAMAAQAAAAjAP//AAAMAAQAAAA3AO3/AAAUAAIAAAAlAPj/AAAWAAIAAAAlAPf/AAAUAAQAAAAmAO3/AAASAAAAAAAlAO3/AAAUAAQAAADz/+f/AAANAAQAAAD5/+j/AAASAAAAAADq/+j/AAAGAAQAAADv/+v/AAAGAAQAAAD0//f/AAAQAAAAAAAPAOr/AAAWAAQAAAASAOr/AAAWAAQAAAA1AP3/AAAWAAQAAADa/+L/AAAWAAQAAADd/+L/AAAWAAQAAADo/+f/AAAWAAIAAADU//L/AAAWAAIAAADy//j/AAAWAAIAAADV/+T/AAASAAAAAADh/+T/AAAQAAAAAADi/+T/AAASAAMAAADi/+//AAAUAAQAAADi/9n/AAAXAAAAAADX/9n/AAAQAAAAAAAZAAcAAAAUAAAAAAA=")
 tile_set = SubResource("TileSet_gt0ib")
 
 [node name="Alavanca" type="TileMapLayer" parent="tileset" unique_id=1851756563]
@@ -1819,7 +1861,7 @@ tile_map_data = PackedByteArray("AAARAPL/AAAMAAQAAAA=")
 tile_set = SubResource("TileSet_nhqbk")
 
 [node name="ComplementoPorta" type="TileMapLayer" parent="tileset" unique_id=976079917]
-y_sort_enabled = true
+z_index = 1
 tile_map_data = PackedByteArray("AAAQAOn/AQAFABIAAAARAOn/AQAGABIAAADb/+H/AQAFABIAAADc/+H/AQAGABIAAAA2APz/AQAFABIAAAA3APz/AQAGABIAAAAQAP3/AQAFABIAAAARAP3/AQAGABIAAAA=")
 tile_set = SubResource("TileSet_0i88t")
 
@@ -1864,13 +1906,20 @@ position = Vector2(-236, -251)
 stream = ExtResource("10_6wgr6")
 autoplay = true
 
-[node name="DialogueNpc" parent="." unique_id=1279799556 instance=ExtResource("13_lfow4")]
+[node name="Aventureiro" parent="." unique_id=1279799556 instance=ExtResource("13_lfow4")]
 position = Vector2(306, 109)
 dialogue = ExtResource("14_75d3q")
 
-[node name="AnimatedSprite2D" parent="DialogueNpc" index="0" unique_id=799428324]
+[node name="AnimatedSprite2D" parent="Aventureiro" index="0" unique_id=799428324]
 sprite_frames = SubResource("SpriteFrames_75nec")
 frame_progress = 0.7808313
+
+[node name="Julieta" parent="." unique_id=410448530 instance=ExtResource("13_lfow4")]
+position = Vector2(270, -480)
+dialogue = ExtResource("15_dvx6b")
+
+[node name="AnimatedSprite2D" parent="Julieta" index="0" unique_id=799428324]
+sprite_frames = SubResource("SpriteFrames_rjbx4")
 
 [node name="Creatures" type="Node2D" parent="." unique_id=910744237]
 
@@ -1901,30 +1950,36 @@ spawn_limit = 3.0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Creatures/Retangle_spawn2/SpawnArea" unique_id=728017872]
 position = Vector2(744.5, -764)
 shape = SubResource("RectangleShape2D_y5j7s")
+
 [node name="Doors" type="Node2D" parent="." unique_id=1681145801]
 
 [node name="door1" parent="Doors" unique_id=346175959 instance=ExtResource("16_gt0ib")]
-position = Vector2(272, -15)
+position = Vector2(272, -10)
 
 [node name="door2" parent="Doors" unique_id=1983446398 instance=ExtResource("16_gt0ib")]
-position = Vector2(880, -31)
+position = Vector2(880, -26)
 keys_needed = 2
+door_id = "door_2"
 
 [node name="door3" parent="Doors" unique_id=1732133868 instance=ExtResource("16_gt0ib")]
-position = Vector2(-576, -463)
+position = Vector2(-576, -458)
+door_id = "door_3"
 
 [node name="door_final" parent="Doors" unique_id=1181628036 instance=ExtResource("16_gt0ib")]
 position = Vector2(272, -335)
 keys_needed = 2
+door_id = "door_final"
 
 [node name="AnimatedSprite2D" parent="Doors/door_final" index="0" unique_id=141470501]
+position = Vector2(0, 5)
 sprite_frames = SubResource("SpriteFrames_0i3oj")
-animation = &"open"
+frame = 4
+frame_progress = 1.0
 
 [node name="Keys" type="Node2D" parent="." unique_id=435975647]
 
 [node name="key_door_1" parent="Keys" unique_id=718698344 instance=ExtResource("17_y5j7s")]
-position = Vector2(235, -105)
+position = Vector2(235, -110)
 
 [node name="key1_door_2" parent="Keys" unique_id=104227340 instance=ExtResource("17_y5j7s")]
 position = Vector2(738, 8)
@@ -1962,6 +2017,7 @@ position = Vector2(504, -338)
 [node name="chest2" parent="chest" unique_id=1825451091 instance=ExtResource("22_e657i")]
 position = Vector2(-575, -584)
 gold_value = 30
+chest_id = "chest_2"
 
 [node name="AnimatedSprite2D" parent="chest/chest2" index="1" unique_id=1127862977]
 sprite_frames = SubResource("SpriteFrames_hpmeb")
@@ -1974,6 +2030,7 @@ sprite_frames = SubResource("SpriteFrames_hpmeb")
 [connection signal="key_collected" from="Keys/key1_door_final" to="Doors/door_final" method="_on_key_collected"]
 [connection signal="key_collected" from="Keys/key2_door_final2" to="Doors/door_final" method="_on_key_collected"]
 
-[editable path="DialogueNpc"]
+[editable path="Aventureiro"]
+[editable path="Julieta"]
 [editable path="Doors/door_final"]
 [editable path="chest/chest2"]

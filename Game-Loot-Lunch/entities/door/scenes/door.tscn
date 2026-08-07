@@ -7,25 +7,25 @@
 atlas = ExtResource("1_ud866")
 region = Rect2(0, 96, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wb7js"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_tmq4g"]
 atlas = ExtResource("1_ud866")
-region = Rect2(0, 96, 32, 32)
+region = Rect2(0, 32, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ttkp4"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_02oi8"]
 atlas = ExtResource("1_ud866")
-region = Rect2(32, 96, 32, 32)
+region = Rect2(32, 32, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_jkep6"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_yl8dc"]
 atlas = ExtResource("1_ud866")
-region = Rect2(64, 96, 32, 32)
+region = Rect2(64, 32, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_o4cjt"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_vimxc"]
 atlas = ExtResource("1_ud866")
-region = Rect2(96, 96, 32, 32)
+region = Rect2(96, 32, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_3qj15"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_jxb27"]
 atlas = ExtResource("1_ud866")
-region = Rect2(128, 96, 32, 32)
+region = Rect2(128, 32, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ckb4l"]
 animations = [{
@@ -39,19 +39,19 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_wb7js")
+"texture": SubResource("AtlasTexture_tmq4g")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ttkp4")
+"texture": SubResource("AtlasTexture_02oi8")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_jkep6")
+"texture": SubResource("AtlasTexture_yl8dc")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_o4cjt")
+"texture": SubResource("AtlasTexture_vimxc")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_3qj15")
+"texture": SubResource("AtlasTexture_jxb27")
 }],
 "loop": 0,
 "name": &"open",
@@ -63,12 +63,13 @@ size = Vector2(20, 25)
 
 [node name="door" type="StaticBody2D" unique_id=346175959]
 y_sort_enabled = true
+collision_mask = 7
 script = ExtResource("1_vtb7y")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=141470501]
 y_sort_enabled = true
 sprite_frames = SubResource("SpriteFrames_ckb4l")
-animation = &"close"
+animation = &"open"
 autoplay = "close"
 offset = Vector2(0, -6)
 
