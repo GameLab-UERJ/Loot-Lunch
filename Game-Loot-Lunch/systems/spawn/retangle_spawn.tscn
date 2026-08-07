@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://dbb6jjh4cwdk7"]
+
+[ext_resource type="Script" uid="uid://bxw8o2xka126p" path="res://systems/spawn/retangle_spawn.gd" id="1_fgiyl"]
+[ext_resource type="PackedScene" uid="uid://b3tuaq1lu3ugj" path="res://entities/enemies/tanajura/tanajura.tscn" id="2_ms3kq"]
+
+[node name="RetangleSpawn" type="Node2D" unique_id=1136054396]
+script = ExtResource("1_fgiyl")
+creature_scene = ExtResource("2_ms3kq")
+spawn_time = 3.0
+metadata/_custom_type_script = "uid://o2tp8vrr10j2"
+
+[connection signal="spawned" from="." to="." method="_on_spawned"]

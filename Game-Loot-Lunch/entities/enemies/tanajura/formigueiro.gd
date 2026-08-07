@@ -13,3 +13,5 @@ func _on_spawned(spawned_creature: Character) -> void:
 	if chased_node:
 		(spawned_creature as Tanajura).player = chased_node
 		(spawned_creature as Tanajura).chase_component.chased_node = chased_node
+		
+		spawned_creature.hidden_move()
