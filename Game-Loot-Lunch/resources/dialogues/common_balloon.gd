@@ -10,7 +10,7 @@ var portraits_y : Dictionary = {
 	"Guide Man" : 150,
 	"Pescador" : 214,
 	"Aventureiro" : 278,
-	"Loira" : 344,
+	"Julieta" : 344,
 	"Viajante" : 408,
 	"Francês" : 472,
 	"Vendedor" : 534,
