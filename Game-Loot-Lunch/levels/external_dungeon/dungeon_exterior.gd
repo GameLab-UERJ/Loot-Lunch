@@ -24,7 +24,7 @@ func _ready() -> void:
 	EnvironmentManager.is_outdoor = is_outdoor
 	
 	if not player_start_position:
-		player.position = Vector2(35, 305)
+		player.position = Vector2(120, 150)
 	else:
 		player.global_position = player_start_position.global_position
 

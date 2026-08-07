@@ -19,7 +19,7 @@ var alert : bool = false
 @onready var chase_component: ChaseComponent = $ChaseComponent
 @onready var flip_sprite_component: FlipSpriteComponent = $FlipSpriteComponent
 @onready var drop_component: DropComponent = $DropComponent
-@onready var formigueiro: Spawn = get_parent() if get_tree().current_scene.has_node("Formigueiro") else null
+@onready var formigueiro: Spawn
 @onready var territory: Area2D = $Territory
 @onready var state_machine: Node = $FiniteStateMachine
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
@@ -32,7 +32,7 @@ func _ready() -> void:
 	states_timer.one_shot = true
 	add_child(states_timer)
 	
-	hidden_move()
+	formigueiro = get_parent()
 
 
 func damage_taken_animation() -> void:

@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://dvs2ib7i8lmf0" path="res://entities/npcs/dialogue_npc.tscn" id="13_lfow4"]
 [ext_resource type="Resource" uid="uid://cw03dpql70xt3" path="res://entities/npcs/dialogos/npc_dungeon_interna.dialogue" id="14_75d3q"]
 [ext_resource type="Texture2D" uid="uid://bogwm2rcwxg1g" path="res://assets/art/entities/npcs/random/Felipe-Castro-Skeletons-Sheet.png" id="15_3uuv1"]
+[ext_resource type="PackedScene" uid="uid://dbb6jjh4cwdk7" path="res://systems/spawn/retangle_spawn.tscn" id="15_nhqbk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lfow4"]
 size = Vector2(41, 25)
@@ -1677,18 +1678,81 @@ texture = ExtResource("4_vjm81")
 [sub_resource type="TileSet" id="TileSet_c3gsv"]
 sources/1 = SubResource("TileSetAtlasSource_hpmeb")
 
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_3uuv1"]
+vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)])
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_nhqbk"]
+vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)])
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_gt0ib"]
+vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)])
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_y5j7s"]
+vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)])
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_75nec"]
+vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)])
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_1l7on"]
+vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)])
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_1m323"]
+vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)])
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_e657i"]
+vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)])
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_laeui"]
+vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)])
+agent_radius = 0.0
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6tood"]
 texture = ExtResource("1_tt8x8")
 0:21/0 = 0
+0:21/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_3uuv1")
 1:21/0 = 0
+1:21/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_1m323")
 1:22/0 = 0
+1:22/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_e657i")
 0:22/0 = 0
+0:22/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_nhqbk")
 11:21/0 = 0
+11:21/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_gt0ib")
 11:22/0 = 0
+11:22/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_y5j7s")
 12:22/0 = 0
+12:22/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_1l7on")
 12:21/0 = 0
+12:21/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_75nec")
 1:6/0 = 0
 1:6/0/probability = 10.0
+1:6/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_laeui")
 2:5/0 = 0
 1:5/0 = 0
 0:5/0 = 0
@@ -1749,6 +1813,7 @@ texture = ExtResource("1_tt8x8")
 4:8/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_f4mn8"]
+navigation_layer_0/layers = 1
 sources/2 = SubResource("TileSetAtlasSource_6tood")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7eo27"]
@@ -1858,6 +1923,12 @@ animations = [{
 "speed": 3.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gt0ib"]
+size = Vector2(282, 260)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y5j7s"]
+size = Vector2(259, 178)
+
 [node name="InternalDungeon" type="Node2D" unique_id=1644355751]
 script = ExtResource("1_efo6u")
 
@@ -1935,35 +2006,6 @@ position = Vector2(272, 231)
 zoom = Vector2(2, 2)
 limit_bottom = 270
 
-[node name="Enemies" type="Node" parent="." unique_id=1807275473]
-
-[node name="FlyingEye" parent="Enemies" unique_id=1346698654 instance=ExtResource("7_lfow4")]
-position = Vector2(735, -229)
-
-[node name="FlyingEye2" parent="Enemies" unique_id=1305559673 instance=ExtResource("7_lfow4")]
-position = Vector2(701, -267)
-
-[node name="FlyingEye3" parent="Enemies" unique_id=1537323674 instance=ExtResource("7_lfow4")]
-position = Vector2(767, -269)
-
-[node name="FlyingEye4" parent="Enemies" unique_id=1453620143 instance=ExtResource("7_lfow4")]
-position = Vector2(-329, -347)
-
-[node name="FlyingEye5" parent="Enemies" unique_id=1488516365 instance=ExtResource("7_lfow4")]
-position = Vector2(-222, -335)
-
-[node name="FlyingEye6" parent="Enemies" unique_id=83876441 instance=ExtResource("7_lfow4")]
-position = Vector2(-347, -288)
-
-[node name="FlyingEye7" parent="Enemies" unique_id=534445690 instance=ExtResource("7_lfow4")]
-position = Vector2(-159, -215)
-
-[node name="FlyingEye8" parent="Enemies" unique_id=234580501 instance=ExtResource("7_lfow4")]
-position = Vector2(-303, -181)
-
-[node name="FlyingEye9" parent="Enemies" unique_id=961549564 instance=ExtResource("7_lfow4")]
-position = Vector2(-236, -251)
-
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=750057481]
 stream = ExtResource("10_6wgr6")
 autoplay = true
@@ -1975,6 +2017,36 @@ dialogue = ExtResource("14_75d3q")
 [node name="AnimatedSprite2D" parent="DialogueNpc" index="0" unique_id=799428324]
 sprite_frames = SubResource("SpriteFrames_75nec")
 frame_progress = 0.7808313
+
+[node name="Creatures" type="Node2D" parent="." unique_id=910744237]
+
+[node name="Retangle_spawn" parent="Creatures" unique_id=1136054396 node_paths=PackedStringArray("chased_node") instance=ExtResource("15_nhqbk")]
+position = Vector2(-15, 556)
+chased_node = NodePath("../../Player")
+looping = false
+creature_scene = ExtResource("7_lfow4")
+spawn_time = 1.0
+spawn_limit = 5.0
+
+[node name="SpawnArea" type="Area2D" parent="Creatures/Retangle_spawn" unique_id=1379941648]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Creatures/Retangle_spawn/SpawnArea" unique_id=1675073157]
+position = Vector2(-217, -815)
+shape = SubResource("RectangleShape2D_gt0ib")
+
+[node name="Retangle_spawn2" parent="Creatures" unique_id=1101112737 node_paths=PackedStringArray("chased_node") instance=ExtResource("15_nhqbk")]
+position = Vector2(-15, 556)
+chased_node = NodePath("../../Player")
+looping = false
+creature_scene = ExtResource("7_lfow4")
+spawn_time = 1.0
+spawn_limit = 3.0
+
+[node name="SpawnArea" type="Area2D" parent="Creatures/Retangle_spawn2" unique_id=1419018944]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Creatures/Retangle_spawn2/SpawnArea" unique_id=728017872]
+position = Vector2(744.5, -764)
+shape = SubResource("RectangleShape2D_y5j7s")
 
 [connection signal="interact_with_player" from="external_house" to="." method="_on_external_house_interact_with_player"]
 
