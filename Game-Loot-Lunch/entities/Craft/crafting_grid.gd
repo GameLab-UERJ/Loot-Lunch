@@ -56,8 +56,7 @@ func _on_grid_cell_gui_input(event: InputEvent, index: int) -> void:
 			# Devolve item existente ao inventário
 			var old_item = cell.item
 			var old_count = cell.count
-			cell.item = null
-			cell.count = 0
+			cell.set_item(null)
 			old_item.dropped_count = old_count
 			inventory.add_item(old_item)
 		
@@ -101,13 +100,11 @@ func _on_result_gui_input(event: InputEvent) -> void:
 	for grid_cell in grid_cells:
 		if grid_cell.item:
 			grid_cell.item.queue_free()
-			grid_cell.item = null
-			grid_cell.count = 0
+			grid_cell.set_item(null)
 	
 	# Pega o resultado
 	var result_item := result_slot.item
-	result_slot.item = null
-	result_slot.count = 0
+	result_slot.set_item(null)
 	
 	# Adiciona ao inventário
 	result_item.dropped_count = current_recipe.result_count
@@ -120,16 +117,14 @@ func _on_result_gui_input(event: InputEvent) -> void:
 func _on_item_removed(cell: InventoryCell, _index: int) -> void:
 	if cell.item:
 		inventory.add_item(cell.item)
-		cell.item = null
-		cell.count = 0
+		cell.set_item(null)
 	_validate_recipe()
 
 
 func _validate_recipe() -> void:
 	if result_slot.item:
 		result_slot.item.queue_free()
-		result_slot.item = null
-		result_slot.count = 0
+		result_slot.set_item(null)
 	
 	current_recipe = null
 	
