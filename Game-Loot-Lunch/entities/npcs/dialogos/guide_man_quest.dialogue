@@ -1,11 +1,17 @@
 ~ start
-
 if QuestManager.current_status == QuestManager.QuestStatus.NAO_INICIADA:
-	Guide Man: Olá! Preciso que você me ajude a preparar a receita de Carne de Sol com Vinagrete e Farofa de Tanajura.
-	Guide Man: Aperte o botão de Pause a qualquer momento para conferir os ingredientes que faltam!
-	do QuestManager.advance_mission(QuestManager.QuestStatus.PROCURAR_INGREDIENTES)
-	
-elif QuestManager.current_status == QuestManager.QuestStatus.PROCURAR_INGREDIENTES:
-	Guide Man: O que está fazendo aqui parado? Vá procurar a Carne e as Tanajuras!
+	Carlos - O Guia: Olá! Preciso que você me ajude...
+	Carlos - O Guia: A preparar a receita de [wave amp=25 freq=5]Carne de Sol com Vinagrete e Farofa de Tanajura[/wave].
+	Carlos - O Guia: Tenho uma noção do que fazer... Primeiro precisamos de [shake rate=20 level=10]Farinha[/shake]
+	Carlos - O Guia: Aperte o botão de Pause a qualquer momento para conferir o que fazer!
+	do QuestManager.advance_mission(QuestManager.QuestStatus.COMPRAR_FARINHA)
+elif QuestManager.current_status == QuestManager.QuestStatus.COMPRAR_FARINHA:
+	if GlobalData._find_inventory().has_item("Farinha"):
+		Carlos - O Guia: Ótimo! Você encontrou a Farinha. Agora vá ao [wave amp=25 freq=5]Forno[/wave] e torre ela.
+		do QuestManager.advance_mission(QuestManager.QuestStatus.TORRAR_FARINHA)
+	else:
+		Carlos - O Guia: O que está fazendo aqui parado? Vá comprar farinha!
+else:
+	Carlos - O Guia: Vá trabalhar rapaz! Pra que estou te pagando?
 
 => END

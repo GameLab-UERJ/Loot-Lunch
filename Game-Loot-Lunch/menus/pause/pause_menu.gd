@@ -120,11 +120,11 @@ func _update_text_mission(new_stage: int) -> void:
 	match new_stage:
 		QuestManager.QuestStatus.NAO_INICIADA:
 			mission_text = "Objetivo: Fale com o Guide Man na casa."
-		QuestManager.QuestStatus.PROCURAR_INGREDIENTES:
-			mission_text = "Objetivo: Encontre a Carne de Sol e as Tanajuras."
-		QuestManager.QuestStatus.PREPARAR_PRATO:
-			mission_text = "Objetivo: Volte ao fogão para preparar a receita."
-		QuestManager.QuestStatus.CONCLUIDA:
-			mission_text = "Missão Concluída! Bom almoço."
+		QuestManager.QuestStatus.COMPRAR_FARINHA:
+			mission_text = "Objetivo: Encontre a loja à oeste da Casa e compre Farinha"
+		QuestManager.QuestStatus.TORRAR_FARINHA:
+			mission_text = "Objetivo: Encontre o Forno ao lado da Casa e torre a Farinha"
+		_:
+			mission_text = "NÃO DEFINIDA. CHECAR pause_menu.gd"
 
 	$Panel/MissionLabel.text = mission_text

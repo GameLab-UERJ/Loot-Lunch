@@ -522,6 +522,16 @@ func get_selected_pos() -> Vector2i:
 	return selected_pos
 
 
+func has_item(item_name : String) -> bool:
+	if not item_name:
+		push_error("There is no item_name to check with ",self.name,".has_item()")
+	
+	for cell: InventoryCell in grid.get_children():
+		if cell.item and item_name == cell.item.item_name:
+			return true
+	return false
+
+
 func get_cell(pos: Vector2i) -> InventoryCell:
 	if pos.x >= dimensions.x or pos.y >= dimensions.y:
 		push_error("Position " + str(pos) + " outside of Inventory's dimensions")

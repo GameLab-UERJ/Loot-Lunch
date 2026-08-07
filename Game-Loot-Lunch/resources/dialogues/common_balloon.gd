@@ -7,7 +7,7 @@ class_name CommonBallon
 var portraits_y : Dictionary = {
 	"Guarda" : 22,
 	"Explorador Novato" : 86,
-	"Guide Man" : 150,
+	"Carlos - O Guia" : 150,
 	"Pescador" : 214,
 	"Aventureiro" : 278,
 	"Julieta" : 344,
