@@ -143,9 +143,6 @@ func _place_on_empty(source: InventoryCell, target: InventoryCell, src_item: Ite
 	target.set_item(src_item)
 	target.count = src_count
 	
-	if source.count <= 0:
-		source.item = null
-	
 	source.is_selected = false
 	selected_cell = null
 	selected_item = null
@@ -155,12 +152,27 @@ func _place_on_empty(source: InventoryCell, target: InventoryCell, src_item: Ite
 func _do_swap(source: InventoryCell, target: InventoryCell, src_item: Item, src_count: int) -> void:
 	var tgt_item = target.item
 	var tgt_count = target.count
-	
+
 	target.item = src_item
 	target.count = src_count
 	source.item = tgt_item
 	source.count = tgt_count
-	
+
+	if src_item:
+		src_item.reparent(target)
+		src_item.hide()
+		src_item.force_stop_follow_mouse()
+		src_item.top_level = false
+		src_item.z_index = 0
+		src_item.position = Vector2.ZERO
+	if tgt_item:
+		tgt_item.reparent(source)
+		tgt_item.hide()
+		tgt_item.force_stop_follow_mouse()
+		tgt_item.top_level = false
+		tgt_item.z_index = 0
+		tgt_item.position = Vector2.ZERO
+
 	source.is_selected = false
 	target.is_selected = false
 	selected_cell = null
@@ -187,8 +199,7 @@ func handle_new_selected_cell(cell : InventoryCell) -> void:
 		var old_count = cell.count
 		
 		# Coloca item do CraftingGrid na célula
-		cell.item = null
-		cell.count = 0
+		cell.set_item(null)
 		cell.set_item(selected_item)
 		cell.count = selected_count
 		

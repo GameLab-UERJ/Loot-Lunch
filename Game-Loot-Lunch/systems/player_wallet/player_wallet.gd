@@ -35,3 +35,12 @@ func remove_gold(amount: int) -> bool:
 	gold -= amount
 	gold_changed.emit(gold)
 	return true
+
+var opened_chests: Array[String] = []
+
+func is_chest_opened(chest_id: String) -> bool:
+	return chest_id in opened_chests
+
+func mark_chest_opened(chest_id: String) -> void:
+	if not chest_id in opened_chests:
+		opened_chests.append(chest_id)

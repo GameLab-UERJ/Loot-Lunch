@@ -35,6 +35,7 @@ func _ready() -> void:
 		combat_zone = load("uid://d0pechf47plm7").instantiate()
 	
 	pause_game_menu()
+	GlobalData.restore_if_transitioning()
 
 
 func _on_player_can_leave_house() -> void:
@@ -115,5 +116,6 @@ func pause_game_menu() -> void:
 
 
 func _on_change_scene(duration : float = 1.5) -> void:
+	GlobalData.save_transition_state()
 	if music_stream_player:
 		create_tween().tween_property(music_stream_player,"volume_db",-30,duration)

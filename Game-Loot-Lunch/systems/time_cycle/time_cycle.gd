@@ -55,6 +55,18 @@ func is_night() -> bool:
 	return current_state == TimeState.NIGHT
 
 
+func get_time_remaining() -> float:
+	if _timer:
+		return _timer.time_left
+	return 0.0
+
+
+func set_time_remaining(time: float) -> void:
+	if _timer:
+		_timer.stop()
+		_timer.start(time)
+
+
 func _on_timeout() -> void:
 	match current_state:
 		TimeState.DAY:

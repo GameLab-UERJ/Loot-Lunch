@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://i8cv5152xt3n"]
+
+[ext_resource type="Script" uid="uid://decyhhranl4l0" path="res://entities/coins/script/pickable_gold.gd" id="1_7ulh2"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0i88t"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_m6mm1"]
+load_path = "res://.godot/imported/Objects.png-b7db128b7718fbe0291bd22292e808b4.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7ulh2"]
+atlas = SubResource("CompressedTexture2D_m6mm1")
+region = Rect2(197.84813, 37.894894, 19.686798, 16.190018)
+
+[node name="coin_15_gold" type="Area2D" unique_id=1448703071]
+collision_mask = 2
+script = ExtResource("1_7ulh2")
+gold_value = 15
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=415598094]
+shape = SubResource("CircleShape2D_0i88t")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1660155168]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1917870621]
+texture = SubResource("AtlasTexture_7ulh2")

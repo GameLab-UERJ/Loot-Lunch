@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://btihxqu8nn1f7"]
+
+[ext_resource type="PackedScene" uid="uid://dxvw3r4u416io" path="res://entities/coins/scenes/pickable_gold.tscn" id="2_i1hry"]
+[ext_resource type="Texture2D" uid="uid://70ibuw3sxd0t" path="res://assets/art/tilesets/dungeon/Objects.png" id="2_yuut2"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_i1hry"]
+radius = 5.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_62c77"]
+atlas = ExtResource("2_yuut2")
+region = Rect2(305.95435, 82.12074, 12.5035095, 10.685318)
+
+[node name="coin_1_gold" unique_id=1448703071 instance=ExtResource("2_i1hry")]
+
+[node name="CollisionShape2D" parent="." index="0" unique_id=415598094]
+shape = SubResource("CircleShape2D_i1hry")
+
+[node name="Sprite2D" parent="." index="2" unique_id=1917870621]
+texture = SubResource("AtlasTexture_62c77")

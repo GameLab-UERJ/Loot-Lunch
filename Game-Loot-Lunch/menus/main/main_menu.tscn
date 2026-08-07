@@ -60,21 +60,18 @@ alignment = 1
 [node name="GridContainer3" type="GridContainer" parent="Content/Buttons" unique_id=1017273769]
 layout_mode = 2
 size_flags_horizontal = 4
-offset_transform_visual_only = false
 
 [node name="NewGameButton" type="Button" parent="Content/Buttons/GridContainer3" unique_id=461787224]
 custom_minimum_size = Vector2(110, 20)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-offset_transform_visual_only = false
 theme = ExtResource("5_j2kye")
 text = "New Game"
 
 [node name="GridContainer" type="GridContainer" parent="Content/Buttons" unique_id=1872895350]
 layout_mode = 2
 size_flags_horizontal = 4
-offset_transform_visual_only = false
 columns = 3
 
 [node name="ContinueButton" type="Button" parent="Content/Buttons/GridContainer" unique_id=760287890]
@@ -82,7 +79,6 @@ custom_minimum_size = Vector2(110, 20)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-offset_transform_visual_only = false
 theme = ExtResource("5_j2kye")
 text = "Continue"
 
@@ -91,14 +87,12 @@ custom_minimum_size = Vector2(110, 20)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-offset_transform_visual_only = false
 theme = ExtResource("5_j2kye")
 text = "Settings"
 
 [node name="GridContainer2" type="GridContainer" parent="Content/Buttons" unique_id=249026742]
 layout_mode = 2
 size_flags_horizontal = 4
-offset_transform_visual_only = false
 
 [node name="QuitButton" type="Button" parent="Content/Buttons/GridContainer2" unique_id=1319575087]
 custom_minimum_size = Vector2(110, 20)
@@ -108,9 +102,9 @@ size_flags_vertical = 4
 theme = ExtResource("5_j2kye")
 text = "Quit"
 
-[node name="HoverAudio" type="AudioStreamPlayer" parent="." unique_id=26537481]
+[node name="HoverAudio" type="AudioStreamPlayer" parent="." unique_id=2098288693]
 
-[node name="PressAudio" type="AudioStreamPlayer" parent="." unique_id=1512561003]
+[node name="PressAudio" type="AudioStreamPlayer" parent="." unique_id=2146552209]
 
 [connection signal="mouse_entered" from="Content/Buttons/GridContainer3/NewGameButton" to="." method="_on_button_mouse_entered"]
 [connection signal="pressed" from="Content/Buttons/GridContainer3/NewGameButton" to="." method="_on_new_game_button_pressed"]
