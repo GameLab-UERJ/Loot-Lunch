@@ -1,5 +1,7 @@
 extends FiniteStateMachine
 
+@onready var drop_component: DropComponent = $"../DropComponent"
+
 func _init() -> void:
 	_add_state("idle")
 	_add_state("chase")
@@ -38,6 +40,7 @@ func _enter_state(_previous_state: int, new_state: int) -> void:
 			if not parent.chase_component: return
 			parent.chase_component.disable()
 		states.dead:
+			drop_component.drop_items()
 			animation_player.play("dead")
 			if not parent.chase_component: return
 			parent.chase_component.disable()
