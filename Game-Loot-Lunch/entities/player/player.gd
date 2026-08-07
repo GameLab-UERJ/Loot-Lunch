@@ -77,10 +77,10 @@ func _on_died() -> void:
 	state_machine.set_state(state_machine.states.dead)
 
 
-func _on_dialogue_started(dialogue : DialogueResource) -> void:
+func _on_dialogue_started(_dialogue : DialogueResource) -> void:
 	state_machine.set_state(state_machine.states.idle)
 	state_machine.active = false
 
 
-func _on_dialogue_ended(dialogue : DialogueResource) -> void:
+func _on_dialogue_ended(_dialogue : DialogueResource) -> void:
 	state_machine.active = true
