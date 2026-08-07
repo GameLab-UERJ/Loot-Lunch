@@ -283,6 +283,7 @@ _data = {
 }
 
 [node name="FlyingEye" unique_id=1346698654 instance=ExtResource("1_scurg")]
+collision_mask = 5
 script = ExtResource("2_0oiyv")
 max_speed = 50
 

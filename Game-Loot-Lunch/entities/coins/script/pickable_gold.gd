@@ -12,12 +12,6 @@ signal gold_collected(value: int)
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 	
-	# Debug do áudio
-	if audio_stream:
-		print("AudioStreamPlayer2D OK")
-		print("Tem stream? ", audio_stream.stream != null)
-	else:
-		print("ERRO: AudioStreamPlayer2D não encontrado!")
 
 func _on_body_entered(_body: Node2D) -> void:
 	collect_gold()
@@ -32,7 +26,6 @@ func collect_gold() -> void:
 	if audio_stream and audio_stream.stream:
 		audio_stream.pitch_scale = randf_range(0.9, 1.1)
 		audio_stream.play()
-		print("🔊 Som tocando!")
 	
 	gold_collected.emit(gold_value)
 	
