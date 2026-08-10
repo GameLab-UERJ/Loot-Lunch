@@ -22,7 +22,7 @@ var can_control: bool = true
 func _ready() -> void:
 	DialogueManager.dialogue_started.connect(_on_dialogue_started)
 	DialogueManager.dialogue_ended.connect(_on_dialogue_ended)
-	
+
 
 func _process(_delta: float) -> void:
 	var mouse_direction: Vector2 = global_position.direction_to(get_global_mouse_position())

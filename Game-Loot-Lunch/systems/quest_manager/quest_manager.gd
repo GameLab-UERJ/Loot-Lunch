@@ -21,6 +21,8 @@ enum QuestStatus {
 }
 
 var current_status: QuestStatus = QuestStatus.NAO_INICIADA
+var current_inventory : Inventory
+
 
 func get_mission_text(quest : QuestStatus) -> String:
 	var mission_text: String = ""
@@ -61,6 +63,41 @@ func get_mission_text(quest : QuestStatus) -> String:
 	return mission_text
 
 
+func items_to_check() -> Array[String]:
+	
+	var waited_item_name : Array[String] = []
+	match current_status:
+		QuestManager.QuestStatus.MATAR_TANAJURA:
+			waited_item_name.append("Tanajura")
+		QuestManager.QuestStatus.CORTAR_TANAJURA:
+			waited_item_name.append("Tanajura Preparada")
+		QuestManager.QuestStatus.SALGAR_CARNE:
+			waited_item_name.append("Carne Salgada")
+		QuestManager.QuestStatus.CORTAR_INGREDIENTES_VINAGRETE:
+			waited_item_name.append("Pimentão Cortado")
+			waited_item_name.append("Cebola Cortada")
+			waited_item_name.append("Tomate Cortado")
+	
+	return waited_item_name
+
+
 func advance_mission(new_stage: QuestStatus) -> void:
 	current_status = new_stage
+	mission_updated.emit(current_status)
+
+
+func on_item_added(_item : Item) -> void:
+	auto_progress()
+
+
+func auto_progress() -> void:
+	var waited_item_name : Array[String] = items_to_check()
+	if waited_item_name.is_empty():
+		return 
+	
+	for item_name : String in waited_item_name:
+		if not current_inventory.has_item(item_name):
+			return
+	print("sartou")
+	current_status += 1
 	mission_updated.emit(current_status)

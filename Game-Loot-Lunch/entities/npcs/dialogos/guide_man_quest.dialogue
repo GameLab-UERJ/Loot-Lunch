@@ -21,7 +21,7 @@ elif QuestManager.current_status == QuestManager.QuestStatus.TORRAR_FARINHA:
 		Carlos - O Guia: Depois, misture com a farinha torrada na Mesa Simples.
 		do QuestManager.advance_mission(QuestManager.QuestStatus.MATAR_TANAJURA)
 	else:
-		Carlos - O Guia: Já conseguiu matar alguma? Eles ficam ao Sul da mesma região onde fica a Loja
+		Carlos - O Guia: Sinto cheiro de Farinha crua...
 elif QuestManager.current_status == QuestManager.QuestStatus.MATAR_TANAJURA:
 	if GlobalData._find_inventory().has_item("Tanajura"):
 		Carlos - O Guia: Não esqueça de cortar a tanajura e misturar com a farinha torrada.

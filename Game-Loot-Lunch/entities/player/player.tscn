@@ -510,6 +510,7 @@ collision_layer = 2
 collision_mask = 5
 script = ExtResource("2_bqsbk")
 hp = 5
+max_speed = 300
 invencibility_time = 1.0
 
 [node name="InventoryLayer" type="CanvasLayer" parent="." index="0" unique_id=1951839530]

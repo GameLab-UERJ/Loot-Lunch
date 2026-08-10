@@ -6,6 +6,8 @@ const INVENTORY_CELL = preload("uid://b85fxrmr3ribs")
 
 
 signal cell_left_clicked(cell : InventoryCell)
+signal item_added(item : Item)
+signal item_dropped(item : Item)
 
 
 ## Dimensão do inventário, x representando a
@@ -318,7 +320,7 @@ func handle_wants_item_removed(cell: InventoryCell) -> void:
 func add_item(item: Item) -> void:
 	if not item:
 		return
-	print("added item")
+		
 	# Se tem item carregado, restaura antes pra não duplicar
 	_restore_selected()
 	
@@ -360,12 +362,7 @@ func add_item(item: Item) -> void:
 		var cell = empty[0]
 		cell.set_item(item)
 		cell.count = 1
-
-
-func remove_item() -> Item:
-	if not selected_cell or not selected_cell.item:
-		return null
-	return null
+	item_added.emit(item)
 
 
 func cancel_selected_item() -> void:
@@ -405,6 +402,7 @@ func drop_selected_item() -> void:
 	selected_item.z_index = 0
 	_disable_pickup_temporarily(selected_item)
 	_cleanup_selection()
+	item_dropped.emit()
 
 
 func _cleanup_selection() -> void:
