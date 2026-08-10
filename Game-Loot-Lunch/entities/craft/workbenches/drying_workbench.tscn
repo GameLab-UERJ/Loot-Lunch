@@ -24,6 +24,7 @@ metadata/_custom_type_script = "uid://hp4754twxlej"
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=886083074]
 material = SubResource("ShaderMaterial_06gsy")
+position = Vector2(0, -28)
 texture = ExtResource("3_hyxsb")
 region_rect = Rect2(112, 172, 48, 44)
 
@@ -35,17 +36,16 @@ texture = ExtResource("4_uvwyg")
 
 [node name="InteractableArea" parent="." unique_id=1323691504 instance=ExtResource("4_k3coa")]
 show_behind_parent = true
-position = Vector2(0, 27)
 scale = Vector2(2.3, 0.8)
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=405224153]
 show_behind_parent = true
-position = Vector2(28, 28)
+position = Vector2(28, 0)
 shape = SubResource("RectangleShape2D_hyxsb")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1512701054]
 show_behind_parent = true
-position = Vector2(-28, 28)
+position = Vector2(-28, 0)
 shape = SubResource("RectangleShape2D_elsjk")
 
 [connection signal="interact_with_player" from="InteractableArea" to="." method="_on_interactable_area_interact_with_player"]

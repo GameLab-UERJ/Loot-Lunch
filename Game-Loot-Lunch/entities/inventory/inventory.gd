@@ -6,6 +6,8 @@ const INVENTORY_CELL = preload("uid://b85fxrmr3ribs")
 
 
 signal cell_left_clicked(cell : InventoryCell)
+signal item_added(item : Item)
+signal item_dropped(item : Item)
 
 
 ## Dimensão do inventário, x representando a
@@ -42,8 +44,10 @@ func _ready() -> void:
 	crafting_grid.visible = false
 	recipes_button.pressed.connect(_toggle_crafting_grid)
 
+
 func _toggle_crafting_grid() -> void:
 	crafting_grid.visible = not crafting_grid.visible
+
 
 func _process(_delta: float) -> void:
 	if not can_drop_items:
@@ -316,7 +320,7 @@ func handle_wants_item_removed(cell: InventoryCell) -> void:
 func add_item(item: Item) -> void:
 	if not item:
 		return
-	
+		
 	# Se tem item carregado, restaura antes pra não duplicar
 	_restore_selected()
 	
@@ -358,12 +362,7 @@ func add_item(item: Item) -> void:
 		var cell = empty[0]
 		cell.set_item(item)
 		cell.count = 1
-
-
-func remove_item() -> Item:
-	if not selected_cell or not selected_cell.item:
-		return null
-	return null
+	item_added.emit(item)
 
 
 func cancel_selected_item() -> void:
@@ -403,6 +402,7 @@ func drop_selected_item() -> void:
 	selected_item.z_index = 0
 	_disable_pickup_temporarily(selected_item)
 	_cleanup_selection()
+	item_dropped.emit()
 
 
 func _cleanup_selection() -> void:
@@ -520,6 +520,24 @@ func get_selected_pos() -> Vector2i:
 	else:
 		selected_pos = Vector2i.MIN
 	return selected_pos
+
+
+func has_item(item_name : String) -> bool:
+	if not item_name:
+		push_error("There is no item_name to check with ",self.name,".has_item()")
+	
+	return count(item_name) != 0
+
+
+func count(item_name : String) -> int:
+	if not item_name:
+		push_error("There is no item_name to check with ",self.name,".has_item()")
+	
+	var result : int = 0
+	for cell: InventoryCell in grid.get_children():
+		if cell.item and item_name == cell.item.item_name:
+			result += 1
+	return result
 
 
 func get_cell(pos: Vector2i) -> InventoryCell:

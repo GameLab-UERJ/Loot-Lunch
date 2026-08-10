@@ -306,7 +306,7 @@ script = ExtResource("7_rvhic")
 item_scene = ExtResource("8_kwgsu")
 item_scale = Vector2(0.5, 0.5)
 fixed_amount = 1
-drop_chance = 0.3
+drop_chance = 0.6
 metadata/_custom_type_script = "uid://bp37504prfie7"
 
 [node name="HitboxComponent" type="Area2D" parent="." index="5" unique_id=753196878]

@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://lem0argj2yqt"]
+
+[ext_resource type="Script" uid="uid://crj3seiymuk3e" path="res://menus/final/thanks.gd" id="1_kanyn"]
+[ext_resource type="Texture2D" uid="uid://cxvyy81yierb8" path="res://assets/art/ui/LootLunch_KeyArt_Assinatura_edited.png" id="2_dc7ql"]
+[ext_resource type="FontFile" uid="uid://fjcmb5r6tkvp" path="res://assets/fonts/Silver.ttf" id="3_f0n4s"]
+[ext_resource type="Theme" uid="uid://blqubia4djs1d" path="res://resources/themes/ui/button.tres" id="4_o7tmn"]
+[ext_resource type="AudioStream" uid="uid://doyfcod6s5ptl" path="res://assets/sfx/menus/abs-confirm-2.mp3" id="5_afglh"]
+[ext_resource type="AudioStream" uid="uid://bkiovum7ll7au" path="res://assets/sfx/menus/abs-pointer-2.mp3" id="6_lh47b"]
+
+[node name="Thanks" type="Control" unique_id=1118711394]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_kanyn")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1279156644]
+custom_maximum_size = Vector2(640, 360)
+layout_mode = 0
+offset_right = 640.0
+offset_bottom = 360.0
+texture = ExtResource("2_dc7ql")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=59145302]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+offset_transform_enabled = true
+theme_override_constants/separation = 60
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer" unique_id=1781233280]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 12
+theme_override_fonts/font = ExtResource("3_f0n4s")
+theme_override_font_sizes/font_size = 57
+text = "Muito Obrigado Por Jogar"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="VBoxContainer" unique_id=2015435807]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("4_o7tmn")
+text = "Voltar"
+
+[node name="TypingSfx" type="AudioStreamPlayer" parent="." unique_id=672567446]
+
+[node name="PressAudio" type="AudioStreamPlayer" parent="." unique_id=992517257]
+stream = ExtResource("5_afglh")
+volume_db = -6.0
+
+[node name="HoverAudio" type="AudioStreamPlayer" parent="." unique_id=896295988]
+stream = ExtResource("6_lh47b")
+volume_db = -12.0
+
+[connection signal="mouse_entered" from="VBoxContainer/Button" to="." method="_on_button_hovered"]
+[connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_button_pressed"]

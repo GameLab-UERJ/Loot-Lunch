@@ -27,10 +27,15 @@ var can_toggle_inventory: bool = true
 
 
 func _ready() -> void:
-	if inventory:
-		inventory.visible = starts_visible
-		if inventory.visible:
-			inventory_opened.emit()
+	if not inventory:
+		return
+	
+	inventory.item_added.connect(QuestManager.on_item_added)
+	QuestManager.current_inventory = inventory
+	
+	inventory.visible = starts_visible
+	if inventory.visible:
+		inventory_opened.emit()
 
 
 func _unhandled_input(event: InputEvent) -> void:
