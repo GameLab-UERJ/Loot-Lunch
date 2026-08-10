@@ -11,6 +11,36 @@ elif QuestManager.current_status == QuestManager.QuestStatus.COMPRAR_FARINHA:
 		do QuestManager.advance_mission(QuestManager.QuestStatus.TORRAR_FARINHA)
 	else:
 		Carlos - O Guia: O que está fazendo aqui parado? Vá comprar farinha!
+elif QuestManager.current_status == QuestManager.QuestStatus.TORRAR_FARINHA:
+	if GlobalData._find_inventory().has_item("Farofa Torrada"):
+		Carlos - O Guia: Oxe, onde você conseguiu achar um Forno?
+		Carlos - O Guia: Mas que bom que encontrou! Essa farinha está cheirando bastante...
+		Carlos - O Guia: Agora, para concluir, precisamos de Tanajuras.
+		Carlos - O Guia: Ao Sul da Loja você irá encontrar um formigueiro. Ao matar algumas delas você deve conseguir pelo menos um corpo inteiro o suficiente.
+		Carlos - O Guia: Quando conseguir, vá até a Mesa de Corte e separe a parte traseira.
+		Carlos - O Guia: Depois, misture com a farinha torrada na Mesa Simples.
+		do QuestManager.advance_mission(QuestManager.QuestStatus.MATAR_TANAJURA)
+	else:
+		Carlos - O Guia: Já conseguiu matar alguma? Eles ficam ao Sul da mesma região onde fica a Loja
+elif QuestManager.current_status == QuestManager.QuestStatus.MATAR_TANAJURA:
+	if GlobalData._find_inventory().has_item("Tanajura"):
+		Carlos - O Guia: Não esqueça de cortar a tanajura e misturar com a farinha torrada.
+		do QuestManager.advance_mission(QuestManager.QuestStatus.CORTAR_TANAJURA)
+elif QuestManager.current_status == QuestManager.QuestStatus.CORTAR_TANAJURA:
+	if GlobalData._find_inventory().has_item("Tanajura Preparada"):
+		Carlos - O Guia: Só falta misturar com a Farinha!
+		do QuestManager.advance_mission(QuestManager.QuestStatus.FAZER_FAROFA)
+elif QuestManager.current_status == QuestManager.QuestStatus.FAZER_FAROFA:
+	if GlobalData._find_inventory().has_item("Farofa de Tanajura"):
+		Carlos - O Guia: Nossa, mas isso está cheirando muito bem!
+		Carlos - O Guia: Meus parabéns, você é um ótimo misturador de coisas!
+		Carlos - O Guia: Mas a farofa é só um acompanhamento. Para deixar as coisas mais crocantes...
+		Carlos - O Guia: Vamos agora atrás do principal, a PROTEÍNA.
+		Carlos - O Guia: À Oeste da região da Loja você encontrará alguns Monstros Bovinos. A Carne deles é simplesmente deliciosa.
+		Carlos - O Guia: Uma Carne será suficiente.
+		do QuestManager.advance_mission(QuestManager.QuestStatus.MATAR_BOVINO)
+	else:
+		Carlos - O Guia: Ainda falta misturar com a Farinha!
 else:
 	Carlos - O Guia: Vá trabalhar rapaz! Pra que estou te pagando?
 	Player: ([speed=0.5]Ele não está me pagando...)
