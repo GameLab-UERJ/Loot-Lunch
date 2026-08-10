@@ -17,7 +17,6 @@ enum QuestStatus {
 	CORTAR_INGREDIENTES_VINAGRETE,
 	FAZER_VINAGRETE,
 	FAZER_REFEICAO_FINAL,
-	ENTREGAR_AO_GUIA,
 	ENTREGAR_A_JULIETA
 }
 
@@ -27,7 +26,7 @@ func get_mission_text(quest : QuestStatus) -> String:
 	var mission_text: String = ""
 	match quest:
 		QuestManager.QuestStatus.NAO_INICIADA:
-			mission_text = "Objetivo: Fale com o Guide Man na casa."
+			mission_text = "Objetivo: Fale com Carlos - O Guia na casa."
 		QuestManager.QuestStatus.COMPRAR_FARINHA:
 			mission_text = "Objetivo: Encontre a loja a Oeste da Casa e compre Farinha"
 		QuestManager.QuestStatus.TORRAR_FARINHA:
@@ -41,9 +40,23 @@ func get_mission_text(quest : QuestStatus) -> String:
 		QuestManager.QuestStatus.MATAR_BOVINO:
 			mission_text = "Objetivo: Pegue carne de um Monstro Bovino ou compre na Loja"
 		QuestManager.QuestStatus.MATAR_OLHOS:
-			mission_text = "Objetivo: Pegue três sacos de sal de Olhos Voadores na região após a ponte."
+			mission_text = "Objetivo: Pegue Saco de Sal de Olhos Voadores na zona depois da ponte."
+		QuestManager.QuestStatus.SALGAR_CARNE:
+			mission_text = "Objetivo: Na Mesa Simples, Misture a Carne com o Sal."
+		QuestManager.QuestStatus.SECAR_CARNE:
+			mission_text = "Objetivo: Coloque a Carne para secar no Varal."
+		QuestManager.QuestStatus.PEGAR_INGREDIENTES_VINAGRETE:
+			mission_text = "Objetivo: Na Horta, pegue Tomate, Cebola e Pimentao"
+		QuestManager.QuestStatus.CORTAR_INGREDIENTES_VINAGRETE:
+			mission_text = "Objetivo: Na Mesa de Corte, corte o Tomate, a Cebola e o Pimentao"
+		QuestManager.QuestStatus.FAZER_VINAGRETE:
+			mission_text = "Objetivo: Na Mesa Simples, misture o Tomate, a Cebola e o Pimentao para fazer o Vinagrete"
+		QuestManager.QuestStatus.FAZER_REFEICAO_FINAL:
+			mission_text = "Objetivo: Na Mesa Simples, misture os 3 pratos em um."
+		QuestManager.QuestStatus.ENTREGAR_A_JULIETA:
+			mission_text = "Objetivo: Leve a Carne de Sol com Farofa de Tanajura e Vinagrete para Julieta na Masmorra."
 		_:
-			mission_text = "NÃO DEFINIDA. CHECAR pause_menu.gd"
+			mission_text = "NÃO DEFINIDA. CHECAR quest_manager.gd"
 	
 	return mission_text
 

@@ -21,6 +21,9 @@
 [ext_resource type="PackedScene" uid="uid://u4ib0r7y21f8" path="res://entities/craft/workbenches/cooking_workbench.tscn" id="18_p0cyg"]
 [ext_resource type="PackedScene" uid="uid://5tmuossb6jml" path="res://entities/craft/workbenches/drying_workbench.tscn" id="19_6w887"]
 [ext_resource type="PackedScene" uid="uid://b7kvabrxxonoc" path="res://entities/craft/workbenches/cutting_workbench.tscn" id="20_j2bcr"]
+[ext_resource type="PackedScene" uid="uid://daxh8ww0k8cl7" path="res://entities/items/cebola.tscn" id="22_f7t7y"]
+[ext_resource type="PackedScene" uid="uid://bkjr0ojwjk4ps" path="res://entities/items/pimentao.tscn" id="23_fdcj4"]
+[ext_resource type="PackedScene" uid="uid://dwlepdjd5lv8x" path="res://entities/items/tomate.tscn" id="24_l58qu"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_f206e"]
 texture = ExtResource("1_xktgd")
@@ -991,6 +994,17 @@ position = Vector2(364.12204, 201.0367)
 
 [node name="CommonWorkbench" parent="." unique_id=1183602685 instance=ExtResource("17_4uhx5")]
 position = Vector2(364, 133)
+
+[node name="Cebola" parent="." unique_id=1618475040 instance=ExtResource("22_f7t7y")]
+position = Vector2(518, 161)
+scale = Vector2(0.5, 0.5)
+
+[node name="Pimentao" parent="." unique_id=1187575768 instance=ExtResource("23_fdcj4")]
+position = Vector2(582, 176)
+scale = Vector2(0.5, 0.5)
+
+[node name="Tomate" parent="." unique_id=1065823031 instance=ExtResource("24_l58qu")]
+position = Vector2(511.27875, 125.32413)
 
 [connection signal="interact_with_player" from="HouseArea" to="." method="_on_house_area_entered"]
 [connection signal="stop_interact_with_player" from="HouseArea" to="." method="_on_house_area_exited"]

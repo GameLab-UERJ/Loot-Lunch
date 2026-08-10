@@ -42,8 +42,10 @@ func _ready() -> void:
 	crafting_grid.visible = false
 	recipes_button.pressed.connect(_toggle_crafting_grid)
 
+
 func _toggle_crafting_grid() -> void:
 	crafting_grid.visible = not crafting_grid.visible
+
 
 func _process(_delta: float) -> void:
 	if not can_drop_items:
@@ -316,7 +318,7 @@ func handle_wants_item_removed(cell: InventoryCell) -> void:
 func add_item(item: Item) -> void:
 	if not item:
 		return
-	
+	print("added item")
 	# Se tem item carregado, restaura antes pra não duplicar
 	_restore_selected()
 	

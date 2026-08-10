@@ -1,5 +1,4 @@
 extends CanvasLayer
-
 class_name PauseMenu
 
 var save_load_menu: SaveLoadMenu
