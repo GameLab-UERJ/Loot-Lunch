@@ -13,5 +13,6 @@ elif QuestManager.current_status == QuestManager.QuestStatus.COMPRAR_FARINHA:
 		Carlos - O Guia: O que está fazendo aqui parado? Vá comprar farinha!
 else:
 	Carlos - O Guia: Vá trabalhar rapaz! Pra que estou te pagando?
+	Player: ([speed=0.5]Ele não está me pagando...)
 
 => END
