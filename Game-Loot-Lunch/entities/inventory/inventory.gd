@@ -526,10 +526,18 @@ func has_item(item_name : String) -> bool:
 	if not item_name:
 		push_error("There is no item_name to check with ",self.name,".has_item()")
 	
+	return count(item_name) != 0
+
+
+func count(item_name : String) -> int:
+	if not item_name:
+		push_error("There is no item_name to check with ",self.name,".has_item()")
+	
+	var result : int = 0
 	for cell: InventoryCell in grid.get_children():
 		if cell.item and item_name == cell.item.item_name:
-			return true
-	return false
+			result += 1
+	return result
 
 
 func get_cell(pos: Vector2i) -> InventoryCell:

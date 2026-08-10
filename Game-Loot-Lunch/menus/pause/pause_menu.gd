@@ -115,16 +115,4 @@ func _return_from_menus() -> void:
 	panel.visible = true
 
 func _update_text_mission(new_stage: int) -> void:
-	var mission_text: String = ""
-
-	match new_stage:
-		QuestManager.QuestStatus.NAO_INICIADA:
-			mission_text = "Objetivo: Fale com o Guide Man na casa."
-		QuestManager.QuestStatus.COMPRAR_FARINHA:
-			mission_text = "Objetivo: Encontre a loja à oeste da Casa e compre Farinha"
-		QuestManager.QuestStatus.TORRAR_FARINHA:
-			mission_text = "Objetivo: Encontre o Forno ao lado da Casa e torre a Farinha"
-		_:
-			mission_text = "NÃO DEFINIDA. CHECAR pause_menu.gd"
-
-	$Panel/MissionLabel.text = mission_text
+	$Panel/MissionLabel.text = QuestManager.get_mission_text(new_stage)

@@ -26,6 +26,10 @@ elif QuestManager.current_status == QuestManager.QuestStatus.MATAR_TANAJURA:
 	if GlobalData._find_inventory().has_item("Tanajura"):
 		Carlos - O Guia: Não esqueça de cortar a tanajura e misturar com a farinha torrada.
 		do QuestManager.advance_mission(QuestManager.QuestStatus.CORTAR_TANAJURA)
+	else:
+		Carlos - O Guia: Ao Sul da Loja você irá encontrar o formigueiro.
+		Carlos - O Guia: Vá matar Tanajuras! 
+		
 elif QuestManager.current_status == QuestManager.QuestStatus.CORTAR_TANAJURA:
 	if GlobalData._find_inventory().has_item("Tanajura Preparada"):
 		Carlos - O Guia: Só falta misturar com a Farinha!
@@ -41,6 +45,23 @@ elif QuestManager.current_status == QuestManager.QuestStatus.FAZER_FAROFA:
 		do QuestManager.advance_mission(QuestManager.QuestStatus.MATAR_BOVINO)
 	else:
 		Carlos - O Guia: Ainda falta misturar com a Farinha!
+elif QuestManager.current_status == QuestManager.QuestStatus.MATAR_BOVINO:
+	if GlobalData._find_inventory().has_item("Carne"):
+		Carlos - O Guia: A Carne desses Monstros Bovinos realmente parece muito boa!
+		Carlos - O Guia: Mas para fazer a Carne de Sol, me lembrei agora que precisaremos de Sal também...
+		Carlos - O Guia: Infelizmente para conseguir ele você precisará de Olhos Voadores.
+		Carlos - O Guia: Eles produzem de tempos em tempos, então ao matar alguns, você deve conseguir Sal.
+		Carlos - O Guia: Acredito que três sacos sejam o suficiente.
+		Carlos - O Guia: Eles ficam na Região da Masmorra, depois da ponte, à Oeste. 
+		do QuestManager.advance_mission(QuestManager.QuestStatus.MATAR_OLHOS)
+	else:
+		Carlos - O Guia: Não estou vendo nenhuma Carne rapaz! Eles ficam à Oeste da região da Loja.
+elif QuestManager.current_status == QuestManager.QuestStatus.MATAR_OLHOS:
+	if GlobalData._find_inventory().has_item("Sal"):
+		Carlos - O Guia: ...
+		do QuestManager.advance_mission(QuestManager.QuestStatus.SALGAR_CARNE)
+	else:
+		Carlos - O Guia: Não estou vendo nenhuma Carne rapaz! Eles ficam à Oeste da região da Loja.
 else:
 	Carlos - O Guia: Vá trabalhar rapaz! Pra que estou te pagando?
 	Player: ([speed=0.5]Ele não está me pagando...)
