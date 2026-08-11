@@ -6,10 +6,13 @@ var previous_state: int = -1
 var state: int = -1: set = set_state
 
 @onready var parent: Character = get_parent()
+@onready var active: bool = true
 @onready var animation_player: AnimationPlayer = parent.get_node("AnimationPlayer")
 
 
 func _physics_process(delta: float) -> void:
+	if not active:
+		return
 	if state != -1:
 		_state_logic(delta)
 		var transition: int = _get_transition()

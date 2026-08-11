@@ -14,8 +14,14 @@ var can_control: bool = true
 @onready var hurt_sfx: AudioStreamPlayer2D = $HurtSfx
 @onready var attack_sfx: AudioStreamPlayer2D = $AttackSfx
 @onready var input_component: InputComponent = $InputComponent
-@onready var state_machine: Node = $FiniteStateMachine
+@onready var state_machine: FiniteStateMachine = %FiniteStateMachine
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var collision_shape: CollisionShape2D = $CollisionShape2D
+
+
+func _ready() -> void:
+	DialogueManager.dialogue_started.connect(_on_dialogue_started)
+	DialogueManager.dialogue_ended.connect(_on_dialogue_ended)
 
 
 func _process(_delta: float) -> void:
@@ -70,3 +76,14 @@ func _on_got_hurt() -> void:
 
 func _on_died() -> void:
 	state_machine.set_state(state_machine.states.dead)
+
+
+func _on_dialogue_started(_dialogue : DialogueResource) -> void:
+	state_machine.set_state(state_machine.states.idle)
+	state_machine.active = false
+	collision_shape.disabled = true
+
+
+func _on_dialogue_ended(_dialogue : DialogueResource) -> void:
+	state_machine.active = true
+	collision_shape.disabled = false

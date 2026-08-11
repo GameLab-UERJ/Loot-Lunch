@@ -105,7 +105,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_j3ovn")
 }],
-"loop": true,
+"loop": 1,
 "name": &"dead",
 "speed": 5.0
 }, {
@@ -134,7 +134,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_yhol4")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle",
 "speed": 5.0
 }, {
@@ -157,7 +157,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_8k5s7")
 }],
-"loop": true,
+"loop": 1,
 "name": &"move",
 "speed": 5.0
 }]
@@ -509,6 +509,7 @@ _data = {
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("2_bqsbk")
+hp = 5
 invencibility_time = 1.0
 
 [node name="InventoryLayer" type="CanvasLayer" parent="." index="0" unique_id=1951839530]
@@ -519,8 +520,11 @@ offset_top = -130.0
 offset_right = 241.0
 offset_bottom = 140.0
 node_to_drop = NodePath("../../Marker2D")
+can_move_items = null
+can_drop_items = null
 
 [node name="FiniteStateMachine" parent="." index="1" unique_id=394854071]
+unique_name_in_owner = true
 script = ExtResource("3_xf5fp")
 
 [node name="InputComponent" type="Node" parent="." index="2" unique_id=357670435]

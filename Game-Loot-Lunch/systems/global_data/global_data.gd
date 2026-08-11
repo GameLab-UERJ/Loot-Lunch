@@ -129,6 +129,7 @@ func restore_inventory() -> void:
 			if item_scene:
 				var item: Item = item_scene.instantiate()
 				item.dropped_count = item_data["count"]
+				add_child(item)
 				inventory.add_item(item)
 
 

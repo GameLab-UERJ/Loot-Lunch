@@ -90,7 +90,9 @@ shape = SubResource("CircleShape2D_xunxm")
 [node name="InteractableArea" parent="." unique_id=1323691504 instance=ExtResource("1_s7qd4")]
 script = ExtResource("3_8kj1c")
 
-[node name="InteractionLabel" type="Label" parent="." unique_id=1187989923]
+[node name="InteractionLabel" type="Label" parent="." unique_id=541255394]
+unique_name_in_owner = true
+visible = false
 z_index = 5
 custom_minimum_size = Vector2(200, 200)
 anchors_preset = 8
@@ -113,7 +115,8 @@ theme_override_constants/shadow_offset_x = 2
 theme_override_constants/shadow_offset_y = 2
 theme_override_constants/outline_size = 5
 theme_override_fonts/font = ExtResource("2_ygnps")
-text = "[E] Conversar"
+theme_override_font_sizes/font_size = 36
+text = "E"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2

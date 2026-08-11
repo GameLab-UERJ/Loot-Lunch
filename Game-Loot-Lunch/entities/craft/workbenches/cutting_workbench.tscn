@@ -11,7 +11,7 @@ shader_parameter/outline_color = Color(1, 1, 1, 1)
 shader_parameter/width = 0.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_elsjk"]
-size = Vector2(37, 26)
+size = Vector2(34, 29)
 
 [node name="CuttingWorkbench" type="StaticBody2D" unique_id=1861521828]
 script = ExtResource("1_cxmeh")
@@ -45,7 +45,7 @@ scale = Vector2(1.5, 1.6)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1512701054]
 show_behind_parent = true
-position = Vector2(0.5, 3)
+position = Vector2(0, 1.5)
 shape = SubResource("RectangleShape2D_elsjk")
 
 [connection signal="interact_with_player" from="InteractableArea" to="." method="_on_interactable_area_interact_with_player"]

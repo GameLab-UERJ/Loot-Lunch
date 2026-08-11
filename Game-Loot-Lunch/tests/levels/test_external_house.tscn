@@ -14,7 +14,7 @@ player_start_position = NodePath("../ShopEntrance")
 position = Vector2(44, 306)
 
 [node name="HouseEntrance" type="Marker2D" parent="." unique_id=7488185]
-position = Vector2(265.54062, 175.32198)
+position = Vector2(266.54062, 180.32198)
 
 [node name="MusicStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1389734099]
 stream = ExtResource("3_mxcgn")

@@ -14,7 +14,8 @@ signal picked_up(item : Item)
 ## Quantas unidades este Item representa quando dropado no mundo.
 ## Default 1; para stacks, pode ser > 1.
 var dropped_count: int = 1
-
+var delay_to_pick_up : float = 0.5
+var pick_up_enabled : bool = false
 
 @onready var clickable_area: ClickableArea = get_node("ClickableArea") if has_node("ClickableArea") else null
 @onready var interactable_area: InteractableArea = get_node("InteractableArea") if has_node("InteractableArea") else null
@@ -30,6 +31,8 @@ func _ready() -> void:
 		interactable_area = INTERACTABLE_AREA.instantiate()
 		call_deferred("add_child",interactable_area)
 	interactable_area.interact_with_player.connect(emit_picked_up)
+	await get_tree().create_timer(delay_to_pick_up).timeout
+	pick_up_enabled = true
 
 
 func _process(_delta: float) -> void:
@@ -38,6 +41,8 @@ func _process(_delta: float) -> void:
 
 
 func emit_picked_up() -> void:
+	if not pick_up_enabled:
+		return
 	picked_up.emit(self)
 
 

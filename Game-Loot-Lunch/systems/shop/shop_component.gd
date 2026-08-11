@@ -24,7 +24,7 @@ func get_item_scenes() -> Array[PackedScene]:
 
 func create_item(item_scene: PackedScene) -> Item:
 	var item := item_scene.instantiate() as Item
-
+	
 	if not item:
 		push_error("A cena configurada na loja não é um Item: ", item_scene)
 		return null

@@ -1,11 +1,137 @@
 ~ start
-
 if QuestManager.current_status == QuestManager.QuestStatus.NAO_INICIADA:
-	Guide Man: Olá! Preciso que você me ajude a preparar a receita de Carne de Sol com Vinagrete e Farofa de Tanajura.
-	Guide Man: Aperte o botão de Pause a qualquer momento para conferir os ingredientes que faltam!
-	do QuestManager.advance_mission(QuestManager.QuestStatus.PROCURAR_INGREDIENTES)
-	
-elif QuestManager.current_status == QuestManager.QuestStatus.PROCURAR_INGREDIENTES:
-	Guide Man: O que está fazendo aqui parado? Vá procurar a Carne e as Tanajuras!
+	Carlos - O Guia: Olá! Preciso que você me ajude...
+	Carlos - O Guia: A preparar a receita de [wave amp=25 freq=5]Carne de Sol com Vinagrete e Farofa de Tanajura[/wave].
+	Carlos - O Guia: Tenho uma noção do que fazer... Primeiro precisamos de [shake rate=20 level=10]Farinha[/shake]
+	Carlos - O Guia: Aperte o botão de Pause a qualquer momento para conferir o que fazer!
+	do QuestManager.advance_mission(QuestManager.QuestStatus.COMPRAR_FARINHA)
+elif QuestManager.current_status == QuestManager.QuestStatus.COMPRAR_FARINHA:
+	if GlobalData._find_inventory().has_item("Farinha"):
+		Carlos - O Guia: Ótimo! Você encontrou a Farinha. Agora vá ao [wave amp=25 freq=5]Forno[/wave] e torre ela.
+		do QuestManager.advance_mission(QuestManager.QuestStatus.TORRAR_FARINHA)
+	else:
+		Carlos - O Guia: O que está fazendo aqui parado? Vá comprar farinha!
+elif QuestManager.current_status == QuestManager.QuestStatus.TORRAR_FARINHA:
+	if GlobalData._find_inventory().has_item("Farofa Torrada"):
+		Carlos - O Guia: Oxe, onde você conseguiu achar um Forno?
+		Carlos - O Guia: Mas que bom que encontrou! Essa farinha está cheirando bastante...
+		Carlos - O Guia: Agora, para concluir, precisamos de Tanajuras.
+		Carlos - O Guia: Ao Sul da Loja você irá encontrar um formigueiro. Ao matar algumas delas você deve conseguir pelo menos um corpo inteiro o suficiente.
+		Carlos - O Guia: Quando conseguir, vá até a Mesa de Corte e separe a parte traseira.
+		Carlos - O Guia: Depois, misture com a farinha torrada na Mesa Simples.
+		do QuestManager.advance_mission(QuestManager.QuestStatus.MATAR_TANAJURA)
+	else:
+		Carlos - O Guia: Sinto cheiro de Farinha crua...
+elif QuestManager.current_status == QuestManager.QuestStatus.MATAR_TANAJURA:
+	if GlobalData._find_inventory().has_item("Tanajura"):
+		Carlos - O Guia: Não esqueça de cortar a tanajura e misturar com a farinha torrada.
+		do QuestManager.advance_mission(QuestManager.QuestStatus.CORTAR_TANAJURA)
+	else:
+		Carlos - O Guia: Ao Sul da Loja você irá encontrar o formigueiro.
+		Carlos - O Guia: Vá matar Tanajuras! 
+		
+elif QuestManager.current_status == QuestManager.QuestStatus.CORTAR_TANAJURA:
+	if GlobalData._find_inventory().has_item("Tanajura Preparada"):
+		Carlos - O Guia: Só falta misturar com a Farinha!
+		do QuestManager.advance_mission(QuestManager.QuestStatus.FAZER_FAROFA)
+	else:
+		Carlos - O Guia: Donde esta la trasera?
+		
+elif QuestManager.current_status == QuestManager.QuestStatus.FAZER_FAROFA:
+	if GlobalData._find_inventory().has_item("Farofa de Tanajura"):
+		Carlos - O Guia: Nossa, mas isso está cheirando muito bem!
+		Carlos - O Guia: Meus parabéns, você é um ótimo misturador de coisas!
+		Carlos - O Guia: Mas a farofa é só um acompanhamento. Para deixar as coisas mais crocantes...
+		Carlos - O Guia: Vamos agora atrás do principal, a PROTEÍNA.
+		Carlos - O Guia: À Oeste da região da Loja você encontrará alguns [wave amp=25 freq=5]Monstros Bovinos[/wave]. A Carne deles é simplesmente deliciosa.
+		Carlos - O Guia: Uma Carne será suficiente.
+		do QuestManager.advance_mission(QuestManager.QuestStatus.MATAR_BOVINO)
+	else:
+		Carlos - O Guia: Ainda falta misturar com a Farinha!
+elif QuestManager.current_status == QuestManager.QuestStatus.MATAR_BOVINO:
+	if GlobalData._find_inventory().has_item("Carne"):
+		Carlos - O Guia: A Carne desses Monstros Bovinos realmente parece muito boa!
+		Carlos - O Guia: Mas para fazer a Carne de Sol, me lembrei agora que precisaremos de Sal também...
+		Carlos - O Guia: Infelizmente para conseguir ele você precisará de [wave amp=25 freq=5]Olhos Voadores[/wave].
+		Carlos - O Guia: Eles produzem de tempos em tempos, então ao matar alguns, você deve conseguir Sal.
+		Carlos - O Guia: Acredito que três sacos sejam o suficiente.
+		Carlos - O Guia: Eles ficam na Região da Masmorra, depois da ponte, à Oeste. 
+		do QuestManager.advance_mission(QuestManager.QuestStatus.MATAR_OLHOS)
+	else:
+		Carlos - O Guia: Não estou vendo nenhuma Carne rapaz! Eles ficam à Oeste da região da Loja.
+elif QuestManager.current_status == QuestManager.QuestStatus.MATAR_OLHOS:
+	if GlobalData._find_inventory().has_item("Sal"):
+		Carlos - O Guia: Perfeito! Espero que não tenham dado muito trabalho.
+		Carlos - O Guia: Agora é só misturar os dois e colocar para secar no Varal de Carnes.
+		Carlos - O Guia: Deve haver algum aqui perto também.
+		do QuestManager.advance_mission(QuestManager.QuestStatus.SALGAR_CARNE)
+	else:
+		Carlos - O Guia: Os Olhos Voadores ficam na Região da Masmorra, depois da ponte, à Oeste. 
+		Carlos - O Guia: Eles também ficam dentro da Masmorra se preferir Hahaha 
+elif QuestManager.current_status == QuestManager.QuestStatus.SALGAR_CARNE:
+	if GlobalData._find_inventory().has_item("Carne Salgada"):
+		Carlos - O Guia: Perfeito! Espero que não tenham dado muito trabalho.
+		Carlos - O Guia: Agora é só misturar os dois e colocar para secar no Varal de Carnes.
+		Carlos - O Guia: Deve haver algum aqui perto também.
+		do QuestManager.advance_mission(QuestManager.QuestStatus.SECAR_CARNE)
+	else:
+		Carlos - O Guia: Só misturar meu caro. Não tem mistério...
+elif QuestManager.current_status == QuestManager.QuestStatus.SECAR_CARNE:
+	if GlobalData._find_inventory().has_item("Carne de Sol"):
+		Carlos - O Guia: Agora siiim! Essa carne parece uma delícia!
+		Carlos - O Guia: Juntando já temos um prato maravilhoso.
+		Carlos - O Guia: Mas vou te falar... Falta alguma coisa...
+		Carlos - O Guia: Alguma coisa pra dar um TCHAN!
+		Carlos - O Guia: ...
+		Carlos - O Guia: Ah, lógico. Esqueci do Vinagrete!
+		Carlos - O Guia: Vá na Horta e pegue um Tomate, um Pimentão e uma Cebola.
+		do QuestManager.advance_mission(QuestManager.QuestStatus.PEGAR_INGREDIENTES_VINAGRETE)
+	else:
+		Carlos - O Guia: A Carne continua molhada cara!
+
+elif QuestManager.current_status == QuestManager.QuestStatus.PEGAR_INGREDIENTES_VINAGRETE:
+	if GlobalData._find_inventory().has_item("Pimentão") and GlobalData._find_inventory().has_item("Tomate") and GlobalData._find_inventory().has_item("Cebola"):
+		Carlos - O Guia: Ótimo, agora é só picotar eles e Misturar!
+		do QuestManager.advance_mission(QuestManager.QuestStatus.CORTAR_INGREDIENTES_VINAGRETE)
+	else:
+		Carlos - O Guia: A Horta fica aqui perto. Ao leste.
+		Carlos - O Guia: Talvez precise esperar passar o dia para que amadureça.
+
+elif QuestManager.current_status == QuestManager.QuestStatus.CORTAR_INGREDIENTES_VINAGRETE:
+	if GlobalData._find_inventory().has_item("Pimentão Cortado") and GlobalData._find_inventory().has_item("Tomate Cortado") and GlobalData._find_inventory().has_item("Cebola Cortada"):
+		Carlos - O Guia: Mistura tudo e estamos resolvidos!
+		do QuestManager.advance_mission(QuestManager.QuestStatus.FAZER_VINAGRETE)
+	else:
+		Carlos - O Guia: Esqueceu de Cortar alguma coisa meu caro. VAMOS NESSA FALTA TÃO POUCO!!!
+
+elif QuestManager.current_status == QuestManager.QuestStatus.FAZER_VINAGRETE:
+	if GlobalData._find_inventory().has_item("Vinagrete"):
+		Carlos - O Guia: Que saudades de comer um Vinagrete. Está sensacional.
+		Carlos - O Guia: Cada um dos pratos está perfeito... A Carne de Sol, a Farofa e o Vinagrete.
+		Carlos - O Guia: Poderia, por gentileza, colocar em um prato uma porção de cada para que eu possa saborear de verdade?
+		do QuestManager.advance_mission(QuestManager.QuestStatus.FAZER_REFEICAO_FINAL)
+	else:
+		Carlos - O Guia: Mistura tudo na Mesa Simples!
+
+elif QuestManager.current_status == QuestManager.QuestStatus.FAZER_REFEICAO_FINAL:
+	if GlobalData._find_inventory().has_item("Farofa de Tanajura com Carne"):
+		Carlos - O Guia: ...
+		Carlos - O Guia: ...
+		Carlos - O Guia: Você é uma benção...
+		Carlos - O Guia: Por favor, leve o restante para Julieta.
+		Carlos - O Guia: Ela passa todo tempo dela em uma cela nas Masmorras.
+		Carlos - O Guia: Eu juro que esse é meu último pedido para você.
+		Carlos - O Guia: ... Muito Obrigado... De verdade... 
+		do QuestManager.advance_mission(QuestManager.QuestStatus.ENTREGAR_A_JULIETA)
+	else:
+		Carlos - O Guia: Só colocar em um prato na Mesa Simples.[wait=1] Por favor...
+
+elif QuestManager.current_status == QuestManager.QuestStatus.ENTREGAR_A_JULIETA:
+	Carlos - O Guia: As masmorras ficam depois dos Olhos Voadores.
+	Carlos - O Guia: Ao norte dos restos do Rei Gigante.
+	Carlos - O Guia: Novamente,[wait=0.5] muito obrigado.
+else:
+	Carlos - O Guia: Vá trabalhar rapaz! Pra que estou te pagando?
+	Player: ([speed=0.5]Ele não está me pagando...)
 
 => END

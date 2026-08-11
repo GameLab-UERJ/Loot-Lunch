@@ -6,6 +6,8 @@ const INVENTORY_CELL = preload("uid://b85fxrmr3ribs")
 
 
 signal cell_left_clicked(cell : InventoryCell)
+signal item_added(item : Item)
+signal item_dropped(item : Item)
 
 
 ## Dimensão do inventário, x representando a
@@ -42,8 +44,10 @@ func _ready() -> void:
 	crafting_grid.visible = false
 	recipes_button.pressed.connect(_toggle_crafting_grid)
 
+
 func _toggle_crafting_grid() -> void:
 	crafting_grid.visible = not crafting_grid.visible
+
 
 func _process(_delta: float) -> void:
 	if not can_drop_items:
@@ -127,7 +131,6 @@ func _try_merge(source: InventoryCell, target: InventoryCell, src_item: Item, sr
 	if src_count <= 0:
 		if source.count <= 0:
 			source.item = null
-		source.is_selected = false
 		selected_cell = null
 		selected_item = null
 		selected_count = 0
@@ -135,18 +138,13 @@ func _try_merge(source: InventoryCell, target: InventoryCell, src_item: Item, sr
 		return true
 	
 	selected_count = src_count
-	source.is_selected = false
 	return true
 
 
-func _place_on_empty(source: InventoryCell, target: InventoryCell, src_item: Item, src_count: int) -> void:
+func _place_on_empty(_source: InventoryCell, target: InventoryCell, src_item: Item, src_count: int) -> void:
 	target.set_item(src_item)
 	target.count = src_count
 	
-	if source.count <= 0:
-		source.item = null
-	
-	source.is_selected = false
 	selected_cell = null
 	selected_item = null
 	selected_count = 0
@@ -155,14 +153,23 @@ func _place_on_empty(source: InventoryCell, target: InventoryCell, src_item: Ite
 func _do_swap(source: InventoryCell, target: InventoryCell, src_item: Item, src_count: int) -> void:
 	var tgt_item = target.item
 	var tgt_count = target.count
-	
+
 	target.item = src_item
 	target.count = src_count
 	source.item = tgt_item
 	source.count = tgt_count
-	
-	source.is_selected = false
-	target.is_selected = false
+
+	if src_item:
+		src_item.reparent(target)
+		src_item.hide()
+		stop_follow_mouse(src_item)
+		src_item.position = Vector2.ZERO
+	if tgt_item:
+		tgt_item.reparent(source)
+		tgt_item.hide()
+		stop_follow_mouse(tgt_item)
+		tgt_item.position = Vector2.ZERO
+
 	selected_cell = null
 	selected_item = null
 	selected_count = 0
@@ -187,8 +194,7 @@ func handle_new_selected_cell(cell : InventoryCell) -> void:
 		var old_count = cell.count
 		
 		# Coloca item do CraftingGrid na célula
-		cell.item = null
-		cell.count = 0
+		cell.set_item(null)
 		cell.set_item(selected_item)
 		cell.count = selected_count
 		
@@ -196,13 +202,10 @@ func handle_new_selected_cell(cell : InventoryCell) -> void:
 		selected_item = old_item
 		selected_count = old_count
 		selected_cell = cell  # Agora o selected_cell é esta célula
-		selected_cell.is_selected = true
 		
 		# Faz seguir o mouse
 		selected_item.reparent(self)
-		selected_item.top_level = true
-		selected_item.z_index = 100
-		selected_item.force_follow_mouse()
+		follow_mouse(selected_item)
 		selected_item.show()
 		
 		return
@@ -210,7 +213,6 @@ func handle_new_selected_cell(cell : InventoryCell) -> void:
 	# Comportamento normal do inventário
 	if not selected_cell:
 		if not cell.item:
-			cell.is_selected = false
 			return
 		set_selected_cell(cell)
 		return
@@ -295,6 +297,8 @@ func handle_wants_item_removed(cell: InventoryCell) -> void:
 	_restore_selected()
 	
 	var item: Item = remove_item_at(get_pos(cell))
+	if not item:
+		return
 	# Reparenta pro mundo antes de setar posição (remove_item usa deferred)
 	item.reparent(get_tree().current_scene)
 	item.global_position = node_to_drop.global_position
@@ -308,10 +312,10 @@ func add_item(item: Item) -> void:
 	
 	# Se tem item carregado, restaura antes pra não duplicar
 	_restore_selected()
-	
+	item.interactable_area.enabled = false
 	var amount = max(1, item.dropped_count)
 	item.dropped_count = 1  # reseta pro padrão
-	var stack_comp = item.get_node("StackableComponent") if item.has_node("StackableComponent") else null
+	var stack_comp = item.get_node_or_null("StackableComponent")
 	
 	if stack_comp:
 		var stack_size = stack_comp.stack_size
@@ -347,12 +351,7 @@ func add_item(item: Item) -> void:
 		var cell = empty[0]
 		cell.set_item(item)
 		cell.count = 1
-
-
-func remove_item() -> Item:
-	if not selected_cell or not selected_cell.item:
-		return null
-	return null
+	item_added.emit(item)
 
 
 func cancel_selected_item() -> void:
@@ -372,7 +371,6 @@ func drop_selected_item() -> void:
 		_restore_selected()
 		return
 	
-	selected_cell.is_selected = false
 	var drop_pos := node_to_drop.global_position
 	
 	if selected_cell.item:
@@ -387,11 +385,10 @@ func drop_selected_item() -> void:
 	
 	selected_item.dropped_count = selected_count
 	
-	selected_item.force_stop_follow_mouse()
-	selected_item.top_level = false
-	selected_item.z_index = 0
+	stop_follow_mouse(selected_item)
 	_disable_pickup_temporarily(selected_item)
 	_cleanup_selection()
+	item_dropped.emit()
 
 
 func _cleanup_selection() -> void:
@@ -413,6 +410,8 @@ func _disable_pickup_temporarily(item: Item) -> void:
 func _make_dropped_item_pickupable(item: Item) -> void:
 	if is_instance_valid(item) and item.interactable_area:
 		item.interactable_area.monitoring = true
+		item.interactable_area.enabled = true
+
 
 
 ## Restaura o item carregado (se houver) para a célula de origem.
@@ -433,7 +432,6 @@ func _restore_selected() -> void:
 
 func set_selected_cell(value: InventoryCell) -> void:
 	if selected_cell:
-		selected_cell.is_selected = false
 		_restore_selected()
 	
 	# NOVO: Se tem item na mão mas sem selected_cell (veio do CraftingGrid)
@@ -464,17 +462,13 @@ func set_selected_cell(value: InventoryCell) -> void:
 		selected_item = selected_cell.item.duplicate()
 		add_child(selected_item)
 		selected_item.show()
-		selected_item.top_level = true
-		selected_item.z_index = 100
-		selected_item.force_follow_mouse()
+		follow_mouse(selected_item)
 	else:
 		selected_count = cell_count
 		selected_cell.count = 0
 		selected_item = selected_cell.remove_item(self, true, true)
 		if selected_item:
-			selected_item.top_level = true
-			selected_item.z_index = 100
-			selected_item.force_follow_mouse()
+			follow_mouse(selected_item)
 
 
 func _handle_split_stack(cell: InventoryCell, half: int) -> void:
@@ -498,9 +492,20 @@ func _handle_split_stack(cell: InventoryCell, half: int) -> void:
 	selected_count = half
 	
 	if selected_item:
-		selected_item.top_level = true
-		selected_item.z_index = 100
-		selected_item.force_follow_mouse()
+		follow_mouse(selected_item)
+
+
+func follow_mouse(item : Item) -> void:
+	item.interactable_area.enabled = false
+	item.top_level = true
+	item.z_index = 100
+	item.force_follow_mouse()
+
+
+func stop_follow_mouse(item : Item) -> void:
+	item.top_level = false
+	item.z_index = 0
+	item.force_stop_follow_mouse()
 
 
 func get_selected_pos() -> Vector2i:
@@ -509,6 +514,24 @@ func get_selected_pos() -> Vector2i:
 	else:
 		selected_pos = Vector2i.MIN
 	return selected_pos
+
+
+func has_item(item_name : String) -> bool:
+	if not item_name:
+		push_error("There is no item_name to check with ",self.name,".has_item()")
+	
+	return count(item_name) != 0
+
+
+func count(item_name : String) -> int:
+	if not item_name:
+		push_error("There is no item_name to check with ",self.name,".has_item()")
+	
+	var result : int = 0
+	for cell: InventoryCell in grid.get_children():
+		if cell.item and item_name == cell.item.item_name:
+			result += 1
+	return result
 
 
 func get_cell(pos: Vector2i) -> InventoryCell:
