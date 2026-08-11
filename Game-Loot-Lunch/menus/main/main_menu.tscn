@@ -5,6 +5,7 @@
 [ext_resource type="AudioStream" uid="uid://doyfcod6s5ptl" path="res://assets/sfx/menus/abs-confirm-2.mp3" id="2_jq7ry"]
 [ext_resource type="Texture2D" uid="uid://cxvyy81yierb8" path="res://assets/art/ui/LootLunch_KeyArt_Assinatura_edited.png" id="4_j2kye"]
 [ext_resource type="Theme" uid="uid://blqubia4djs1d" path="res://resources/themes/ui/button.tres" id="5_j2kye"]
+[ext_resource type="AudioStream" uid="uid://cevfky7ppxnro" path="res://assets/music/foggysunrise-glass-gardens-loop-371924.mp3" id="7_5eahs"]
 [ext_resource type="Texture2D" uid="uid://gifwqc5tx67i" path="res://assets/art/ui/LootLunch_Logo_Principal_Transparente.png" id="7_wruj6"]
 
 [node name="MainMenu" type="Control" unique_id=31903151]
@@ -105,6 +106,10 @@ text = "Quit"
 [node name="HoverAudio" type="AudioStreamPlayer" parent="." unique_id=2098288693]
 
 [node name="PressAudio" type="AudioStreamPlayer" parent="." unique_id=2146552209]
+
+[node name="MainMenuMusic" type="AudioStreamPlayer" parent="." unique_id=1428495210]
+stream = ExtResource("7_5eahs")
+autoplay = true
 
 [connection signal="mouse_entered" from="Content/Buttons/GridContainer3/NewGameButton" to="." method="_on_button_mouse_entered"]
 [connection signal="pressed" from="Content/Buttons/GridContainer3/NewGameButton" to="." method="_on_new_game_button_pressed"]
