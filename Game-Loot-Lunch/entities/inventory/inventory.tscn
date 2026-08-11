@@ -65,3 +65,5 @@ offset_right = 31.0
 offset_bottom = 63.0
 inventory = NodePath("..")
 recipes = Array[ExtResource("3_1kjwn")]([ExtResource("4_1kjwn"), ExtResource("5_kk267"), ExtResource("6_b8606"), ExtResource("7_g0cdr"), ExtResource("8_pul5f"), ExtResource("9_m0vy4"), ExtResource("10_ww4qh"), ExtResource("11_gpbhv"), ExtResource("12_ja2xr"), ExtResource("13_sb8y3")])
+
+[node name="Node" type="Node" parent="." unique_id=1036084935]

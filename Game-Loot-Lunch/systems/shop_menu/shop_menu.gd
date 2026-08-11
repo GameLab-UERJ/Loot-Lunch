@@ -527,7 +527,7 @@ func set_item_price_text(
 
 	for cell: InventoryCell in inventory.grid.get_children():
 		if cell.item == item:
-			cell.set_price_text(str(price), color)
+			cell.price_manager.set_price_text(str(price), color)
 			return
 
 func count_items(inventory: Inventory) -> int:

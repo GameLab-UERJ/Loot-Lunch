@@ -2,7 +2,6 @@ extends PanelContainer
 class_name InventoryCell
 
 
-signal selected(cell : InventoryCell)
 signal wants_item_removed(cell : InventoryCell)
 signal left_clicked(cell : InventoryCell)
 signal split_stack(cell : InventoryCell, half : int)
@@ -20,8 +19,6 @@ signal item_picked(cell : InventoryCell)  ## Novo: quando um item é retirado de
 @export var can_remove_items : bool = true
 
 
-var is_selected : bool = false:
-	set = set_is_selected
 var count : int = 0:
 	set = set_count
 
@@ -31,21 +28,15 @@ var _was_stackable: bool = false
 @onready var item_place: TextureRect = $Panel/ItemPlace
 @onready var price_label: Label = $Panel/PriceLabel
 @onready var stack_label: Label = $Panel/StackCount
+@onready var price_manager: PriceManager = %PriceManager
 
 
 func _ready() -> void:
 	item = item
 	add_theme_stylebox_override("panel", StyleBoxFlat.new())
 	_change_bg_color(background_color)
-	set_price_text("")
+	price_manager.set_price_text("")
 	_update_stack_label()
-
-
-func _process(_delta: float) -> void:
-	if is_selected and _get_bg_color() == background_color:
-		_change_bg_color(selected_color)
-	if not is_selected and _get_bg_color() == selected_color:
-		_change_bg_color(background_color)
 
 
 func _gui_input(event: InputEvent) -> void:
@@ -63,24 +54,6 @@ func _gui_input(event: InputEvent) -> void:
 		else:
 			wants_item_removed.emit(self)
 		accept_event()
-
-
-## Drag & Drop - esta célula pode receber itens?
-func _can_drop_data(_pos: Vector2, data) -> bool:
-	if not can_receive_items:
-		return false
-	if item:
-		return false  # Já tem item
-	return data is Item
-
-
-## Drag & Drop - recebeu um item
-func _drop_data(_pos: Vector2, data) -> void:
-	if not data is Item:
-		return
-	
-	item_dropped.emit(self, data)
-	# Não chamamos set_item aqui, o CraftingGrid que gerencia
 
 
 ## Remove o Item Node da célula e limpa o visual
@@ -121,19 +94,13 @@ func _is_stackable() -> bool:
 	return _was_stackable and count > 0
 
 
-func set_is_selected(value : bool) -> void:
-	is_selected = value
-	if is_selected:
-		selected.emit(self)
-
-
 func set_item(value : Item) -> Item:
 	var previous_item : Item = item
 	item = value
 	if not item:
 		_was_stackable = false
 		item_place.texture = null
-		set_price_text("")
+		price_manager.set_price_text("")
 		count = 0
 		return null
 	else:
@@ -173,18 +140,5 @@ func _update_stack_label() -> void:
 		stack_label.hide()
 
 
-func set_price_text(value : String, color : Color = Color.WHITE) -> void:
-	price_label.text = "$ " + value
-	if price_label.label_settings:
-		price_label.label_settings = price_label.label_settings.duplicate()
-		price_label.label_settings.font_color = color
-	price_label.add_theme_color_override("font_color", color)
-	price_label.visible = not value.is_empty()
-
-
 func _change_bg_color(color : Color) -> void:
 	(get_theme_stylebox("panel") as StyleBoxFlat).bg_color = color
-
-
-func _get_bg_color() -> Color:
-	return (get_theme_stylebox("panel") as StyleBoxFlat).bg_color

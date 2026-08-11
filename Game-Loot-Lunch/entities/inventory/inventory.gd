@@ -131,7 +131,6 @@ func _try_merge(source: InventoryCell, target: InventoryCell, src_item: Item, sr
 	if src_count <= 0:
 		if source.count <= 0:
 			source.item = null
-		source.is_selected = false
 		selected_cell = null
 		selected_item = null
 		selected_count = 0
@@ -139,15 +138,13 @@ func _try_merge(source: InventoryCell, target: InventoryCell, src_item: Item, sr
 		return true
 	
 	selected_count = src_count
-	source.is_selected = false
 	return true
 
 
-func _place_on_empty(source: InventoryCell, target: InventoryCell, src_item: Item, src_count: int) -> void:
+func _place_on_empty(_source: InventoryCell, target: InventoryCell, src_item: Item, src_count: int) -> void:
 	target.set_item(src_item)
 	target.count = src_count
 	
-	source.is_selected = false
 	selected_cell = null
 	selected_item = null
 	selected_count = 0
@@ -177,8 +174,6 @@ func _do_swap(source: InventoryCell, target: InventoryCell, src_item: Item, src_
 		tgt_item.z_index = 0
 		tgt_item.position = Vector2.ZERO
 
-	source.is_selected = false
-	target.is_selected = false
 	selected_cell = null
 	selected_item = null
 	selected_count = 0
@@ -211,7 +206,6 @@ func handle_new_selected_cell(cell : InventoryCell) -> void:
 		selected_item = old_item
 		selected_count = old_count
 		selected_cell = cell  # Agora o selected_cell é esta célula
-		selected_cell.is_selected = true
 		
 		# Faz seguir o mouse
 		selected_item.reparent(self)
@@ -225,7 +219,6 @@ func handle_new_selected_cell(cell : InventoryCell) -> void:
 	# Comportamento normal do inventário
 	if not selected_cell:
 		if not cell.item:
-			cell.is_selected = false
 			return
 		set_selected_cell(cell)
 		return
@@ -310,6 +303,8 @@ func handle_wants_item_removed(cell: InventoryCell) -> void:
 	_restore_selected()
 	
 	var item: Item = remove_item_at(get_pos(cell))
+	if not item:
+		return
 	# Reparenta pro mundo antes de setar posição (remove_item usa deferred)
 	item.reparent(get_tree().current_scene)
 	item.global_position = node_to_drop.global_position
@@ -382,7 +377,6 @@ func drop_selected_item() -> void:
 		_restore_selected()
 		return
 	
-	selected_cell.is_selected = false
 	var drop_pos := node_to_drop.global_position
 	
 	if selected_cell.item:
@@ -444,7 +438,6 @@ func _restore_selected() -> void:
 
 func set_selected_cell(value: InventoryCell) -> void:
 	if selected_cell:
-		selected_cell.is_selected = false
 		_restore_selected()
 	
 	# NOVO: Se tem item na mão mas sem selected_cell (veio do CraftingGrid)
