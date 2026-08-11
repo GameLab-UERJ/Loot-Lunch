@@ -162,16 +162,12 @@ func _do_swap(source: InventoryCell, target: InventoryCell, src_item: Item, src_
 	if src_item:
 		src_item.reparent(target)
 		src_item.hide()
-		src_item.force_stop_follow_mouse()
-		src_item.top_level = false
-		src_item.z_index = 0
+		stop_follow_mouse(src_item)
 		src_item.position = Vector2.ZERO
 	if tgt_item:
 		tgt_item.reparent(source)
 		tgt_item.hide()
-		tgt_item.force_stop_follow_mouse()
-		tgt_item.top_level = false
-		tgt_item.z_index = 0
+		stop_follow_mouse(tgt_item)
 		tgt_item.position = Vector2.ZERO
 
 	selected_cell = null
@@ -209,9 +205,7 @@ func handle_new_selected_cell(cell : InventoryCell) -> void:
 		
 		# Faz seguir o mouse
 		selected_item.reparent(self)
-		selected_item.top_level = true
-		selected_item.z_index = 100
-		selected_item.force_follow_mouse()
+		follow_mouse(selected_item)
 		selected_item.show()
 		
 		return
@@ -315,13 +309,14 @@ func handle_wants_item_removed(cell: InventoryCell) -> void:
 func add_item(item: Item) -> void:
 	if not item:
 		return
-		
+	
+	item.interactable_area.enabled = false
 	# Se tem item carregado, restaura antes pra não duplicar
 	_restore_selected()
 	
 	var amount = max(1, item.dropped_count)
 	item.dropped_count = 1  # reseta pro padrão
-	var stack_comp = item.get_node("StackableComponent") if item.has_node("StackableComponent") else null
+	var stack_comp = item.get_node_or_null("StackableComponent")
 	
 	if stack_comp:
 		var stack_size = stack_comp.stack_size
@@ -391,9 +386,7 @@ func drop_selected_item() -> void:
 	
 	selected_item.dropped_count = selected_count
 	
-	selected_item.force_stop_follow_mouse()
-	selected_item.top_level = false
-	selected_item.z_index = 0
+	stop_follow_mouse(selected_item)
 	_disable_pickup_temporarily(selected_item)
 	_cleanup_selection()
 	item_dropped.emit()
@@ -418,6 +411,8 @@ func _disable_pickup_temporarily(item: Item) -> void:
 func _make_dropped_item_pickupable(item: Item) -> void:
 	if is_instance_valid(item) and item.interactable_area:
 		item.interactable_area.monitoring = true
+		item.interactable_area.enabled = true
+
 
 
 ## Restaura o item carregado (se houver) para a célula de origem.
@@ -468,17 +463,13 @@ func set_selected_cell(value: InventoryCell) -> void:
 		selected_item = selected_cell.item.duplicate()
 		add_child(selected_item)
 		selected_item.show()
-		selected_item.top_level = true
-		selected_item.z_index = 100
-		selected_item.force_follow_mouse()
+		follow_mouse(selected_item)
 	else:
 		selected_count = cell_count
 		selected_cell.count = 0
 		selected_item = selected_cell.remove_item(self, true, true)
 		if selected_item:
-			selected_item.top_level = true
-			selected_item.z_index = 100
-			selected_item.force_follow_mouse()
+			follow_mouse(selected_item)
 
 
 func _handle_split_stack(cell: InventoryCell, half: int) -> void:
@@ -502,9 +493,20 @@ func _handle_split_stack(cell: InventoryCell, half: int) -> void:
 	selected_count = half
 	
 	if selected_item:
-		selected_item.top_level = true
-		selected_item.z_index = 100
-		selected_item.force_follow_mouse()
+		follow_mouse(selected_item)
+
+
+func follow_mouse(item : Item) -> void:
+	item.interactable_area.enabled = false
+	item.top_level = true
+	item.z_index = 100
+	item.force_follow_mouse()
+
+
+func stop_follow_mouse(item : Item) -> void:
+	item.top_level = false
+	item.z_index = 0
+	item.force_stop_follow_mouse()
 
 
 func get_selected_pos() -> Vector2i:

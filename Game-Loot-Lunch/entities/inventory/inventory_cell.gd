@@ -5,6 +5,7 @@ class_name InventoryCell
 signal wants_item_removed(cell : InventoryCell)
 signal left_clicked(cell : InventoryCell)
 signal split_stack(cell : InventoryCell, half : int)
+@warning_ignore("unused_signal")
 signal item_dropped(cell : InventoryCell, item : Item)  ## Novo: quando um item é solto nesta célula
 signal item_picked(cell : InventoryCell)  ## Novo: quando um item é retirado desta célula
 
