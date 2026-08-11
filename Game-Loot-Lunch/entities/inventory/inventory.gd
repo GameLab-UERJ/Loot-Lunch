@@ -312,8 +312,7 @@ func add_item(item: Item) -> void:
 	
 	# Se tem item carregado, restaura antes pra não duplicar
 	_restore_selected()
-	if item.interactable_area:
-		item.interactable_area.set_deferred("enabled", false)
+	item.interactable_area.enabled = false
 	var amount = max(1, item.dropped_count)
 	item.dropped_count = 1  # reseta pro padrão
 	var stack_comp = item.get_node_or_null("StackableComponent")

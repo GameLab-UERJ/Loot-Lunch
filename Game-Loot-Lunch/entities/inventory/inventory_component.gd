@@ -57,7 +57,7 @@ func add_item(item: Item) -> void:
 	if not inventory:
 		push_warning("InventoryComponent sem Inventory configurado.")
 		return
-
+	
 	inventory.add_item(item)
 
 

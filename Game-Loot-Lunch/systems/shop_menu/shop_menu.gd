@@ -92,6 +92,7 @@ func fill_shop_inventory() -> void:
 		
 	for item_scene: PackedScene in current_shop.get_item_scenes():
 		var item: Item = current_shop.create_item(item_scene)
+		add_child(item)
 		shop_inventory.add_item(item)
 		set_item_price_text(shop_inventory, item, current_shop.get_price(item_scene), Color.GREEN)
 
