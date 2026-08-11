@@ -92,6 +92,7 @@ func fill_shop_inventory() -> void:
 		
 	for item_scene: PackedScene in current_shop.get_item_scenes():
 		var item: Item = current_shop.create_item(item_scene)
+		add_child(item)
 		shop_inventory.add_item(item)
 		set_item_price_text(shop_inventory, item, current_shop.get_price(item_scene), Color.GREEN)
 
@@ -527,7 +528,7 @@ func set_item_price_text(
 
 	for cell: InventoryCell in inventory.grid.get_children():
 		if cell.item == item:
-			cell.set_price_text(str(price), color)
+			cell.price_manager.set_price_text(str(price), color)
 			return
 
 func count_items(inventory: Inventory) -> int:

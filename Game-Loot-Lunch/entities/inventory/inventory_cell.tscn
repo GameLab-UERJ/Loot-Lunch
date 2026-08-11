@@ -1,9 +1,16 @@
 [gd_scene format=3 uid="uid://b85fxrmr3ribs"]
 
 [ext_resource type="Script" uid="uid://jujvaa432t2v" path="res://entities/inventory/inventory_cell.gd" id="1_rwyhr"]
+[ext_resource type="Script" uid="uid://dj5lc777ac0le" path="res://entities/inventory/price_manager.gd" id="2_atw7w"]
+[ext_resource type="Script" uid="uid://lmwwggbtsw85" path="res://entities/inventory/drag_and_drop_manager.gd" id="3_4fs5j"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_atw7w"]
 bg_color = Color(0.25, 0.25, 0.25, 0.99215686)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.8, 0.8, 0.8, 0)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rwyhr"]
 
@@ -16,7 +23,6 @@ shadow_size = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_72mef"]
 font_size = 8
-font_color = Color(1, 1, 1, 1)
 outline_size = 2
 outline_color = Color(0, 0, 0, 1)
 shadow_size = 0
@@ -27,6 +33,15 @@ offset_right = 32.0
 offset_bottom = 32.0
 mouse_filter = 1
 script = ExtResource("1_rwyhr")
+
+[node name="PriceManager" type="Node" parent="." unique_id=537808640 node_paths=PackedStringArray("price_label")]
+unique_name_in_owner = true
+script = ExtResource("2_atw7w")
+price_label = NodePath("../Panel/PriceLabel")
+
+[node name="DragAndDropManager" type="Node" parent="." unique_id=1909840452]
+unique_name_in_owner = true
+script = ExtResource("3_4fs5j")
 
 [node name="Panel" type="Panel" parent="." unique_id=1546870120]
 custom_minimum_size = Vector2(32, 32)
@@ -73,11 +88,9 @@ horizontal_alignment = 2
 
 [node name="StackCount" type="Label" parent="Panel" unique_id=1314189393]
 layout_mode = 1
-anchors_preset = 0
 offset_left = 1.0
 offset_top = 22.0
 offset_right = 16.0
 offset_bottom = 31.0
 theme_override_font_sizes/font_size = 6
 label_settings = SubResource("LabelSettings_72mef")
-horizontal_alignment = 0

@@ -99,5 +99,6 @@ func auto_progress() -> void:
 		if not current_inventory.has_item(item_name):
 			return
 	print("sartou")
+	@warning_ignore("int_as_enum_without_cast")
 	current_status += 1
 	mission_updated.emit(current_status)
