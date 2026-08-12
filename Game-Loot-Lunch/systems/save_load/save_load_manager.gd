@@ -1,8 +1,10 @@
 extends Node
 
+const AUTOSAVE_POSITION : int = 7
+const AUTOSAVE_NAME : String = "AUTOSAVE"
+
 var save_path: String = "user://Save/"
 var SaveFileData: SaveData
-
 var save_list: PackedStringArray
 var saves_info: Array[Array]
 
@@ -63,14 +65,14 @@ func erase_data(save_position: int) -> void:
 
 # -- Store basic saves info --
 func _get_save_info() -> void:
-	saves_info.resize(6)
+	saves_info.resize(7)
 
 	if !DirAccess.dir_exists_absolute(save_path):
 		DirAccess.make_dir_absolute(save_path)
 
 	save_list = DirAccess.get_files_at(save_path)
 
-	for i in range(6):
+	for i in range(7):
 		saves_info[i].resize(2)
 
 		if i < save_list.size():

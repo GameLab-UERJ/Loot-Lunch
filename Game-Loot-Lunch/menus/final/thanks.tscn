@@ -6,6 +6,8 @@
 [ext_resource type="Theme" uid="uid://blqubia4djs1d" path="res://resources/themes/ui/button.tres" id="4_o7tmn"]
 [ext_resource type="AudioStream" uid="uid://doyfcod6s5ptl" path="res://assets/sfx/menus/abs-confirm-2.mp3" id="5_afglh"]
 [ext_resource type="AudioStream" uid="uid://bkiovum7ll7au" path="res://assets/sfx/menus/abs-pointer-2.mp3" id="6_lh47b"]
+[ext_resource type="Texture2D" uid="uid://gifwqc5tx67i" path="res://assets/art/ui/LootLunch_Logo_Principal_Transparente.png" id="7_dc7ql"]
+[ext_resource type="AudioStream" uid="uid://bkw8ow8ojc37v" path="res://assets/music/monument_music-acoustic-mosaic-187898.mp3" id="7_f0n4s"]
 
 [node name="Thanks" type="Control" unique_id=1118711394]
 layout_mode = 3
@@ -34,21 +36,26 @@ offset_transform_enabled = true
 theme_override_constants/separation = 60
 alignment = 1
 
-[node name="Label" type="Label" parent="VBoxContainer" unique_id=1781233280]
+[node name="ThanksLabel" type="Label" parent="VBoxContainer" unique_id=1781233280]
 layout_mode = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 12
 theme_override_fonts/font = ExtResource("3_f0n4s")
 theme_override_font_sizes/font_size = 57
-text = "Muito Obrigado Por Jogar"
+text = "MUITO OBRIGADO POR JOGAR"
 horizontal_alignment = 1
 vertical_alignment = 1
+visible_characters = 0
+visible_ratio = 0.0
 
 [node name="Button" type="Button" parent="VBoxContainer" unique_id=2015435807]
-custom_minimum_size = Vector2(150, 0)
+modulate = Color(1, 1, 1, 0)
+z_index = 1
+custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_filter = 2
 theme = ExtResource("4_o7tmn")
 text = "Voltar"
 
@@ -62,5 +69,28 @@ volume_db = -6.0
 stream = ExtResource("6_lh47b")
 volume_db = -12.0
 
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="." unique_id=844276742]
+stream = ExtResource("7_f0n4s")
+volume_db = -80.0
+
+[node name="Timer" type="Timer" parent="." unique_id=246982682]
+wait_time = 30.0
+one_shot = true
+autostart = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=408670820]
+
+[node name="Logo" type="TextureRect" parent="CanvasLayer" unique_id=686204467]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("7_dc7ql")
+expand_mode = 3
+
 [connection signal="mouse_entered" from="VBoxContainer/Button" to="." method="_on_button_hovered"]
 [connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_button_pressed"]
+[connection signal="timeout" from="Timer" to="." method="go_to_main_menu"]

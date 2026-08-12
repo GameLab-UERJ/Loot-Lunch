@@ -3,6 +3,7 @@ class_name Player
 
 
 var can_control: bool = true
+var can_attack: bool = true
 
 
 @onready var sword: Node2D = $Sword
@@ -45,6 +46,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 
 	if event.is_action_released("ui_attack") and not sword_animation_player.is_playing():
+		if not can_attack:
+			return
 		sword_animation_player.play("attack")
 		attack_sfx.play()
 
@@ -87,3 +90,8 @@ func _on_dialogue_started(_dialogue : DialogueResource) -> void:
 func _on_dialogue_ended(_dialogue : DialogueResource) -> void:
 	state_machine.active = true
 	collision_shape.disabled = false
+
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	if anim_name == 'dead':
+		EasyTransition.transition_to_path("uid://b2evbancyosmu",1,EasyTransitioner.TransitionAnim.FADE)
