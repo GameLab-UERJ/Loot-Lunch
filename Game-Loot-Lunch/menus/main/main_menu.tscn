@@ -5,7 +5,9 @@
 [ext_resource type="AudioStream" uid="uid://doyfcod6s5ptl" path="res://assets/sfx/menus/abs-confirm-2.mp3" id="2_jq7ry"]
 [ext_resource type="Texture2D" uid="uid://cxvyy81yierb8" path="res://assets/art/ui/LootLunch_KeyArt_Assinatura_edited.png" id="4_j2kye"]
 [ext_resource type="Theme" uid="uid://blqubia4djs1d" path="res://resources/themes/ui/button.tres" id="5_j2kye"]
+[ext_resource type="AudioStream" uid="uid://211jgew84p3" path="res://assets/music/watermelon_beats-medieval-folk-music-505203.mp3" id="7_5eahs"]
 [ext_resource type="Texture2D" uid="uid://gifwqc5tx67i" path="res://assets/art/ui/LootLunch_Logo_Principal_Transparente.png" id="7_wruj6"]
+[ext_resource type="Texture2D" uid="uid://lb6ep3fx5sl7" path="res://assets/art/logo/gamelab_logo.png" id="8_5eahs"]
 
 [node name="MainMenu" type="Control" unique_id=31903151]
 layout_mode = 3
@@ -105,6 +107,28 @@ text = "Quit"
 [node name="HoverAudio" type="AudioStreamPlayer" parent="." unique_id=2098288693]
 
 [node name="PressAudio" type="AudioStreamPlayer" parent="." unique_id=2146552209]
+
+[node name="MainMenuMusic" type="AudioStreamPlayer" parent="." unique_id=1428495210]
+stream = ExtResource("7_5eahs")
+autoplay = true
+
+[node name="IntroLayer" type="CanvasLayer" parent="." unique_id=1030919275]
+visible = false
+follow_viewport_enabled = true
+
+[node name="BlackScreen" type="ColorRect" parent="IntroLayer" unique_id=761779493]
+offset_right = 641.0
+offset_bottom = 362.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="DeveloperLogo" type="TextureRect" parent="IntroLayer" unique_id=1215374324]
+offset_left = 1.0
+offset_right = 640.0
+offset_bottom = 361.0
+texture = ExtResource("8_5eahs")
+expand_mode = 1
+stretch_mode = 5
 
 [connection signal="mouse_entered" from="Content/Buttons/GridContainer3/NewGameButton" to="." method="_on_button_mouse_entered"]
 [connection signal="pressed" from="Content/Buttons/GridContainer3/NewGameButton" to="." method="_on_new_game_button_pressed"]
