@@ -17,10 +17,10 @@ extends Control
 
 const settings_scene = preload("res://menus/settings/settings_menu.tscn")
 
-var is_quitting: bool = false
-
-var save_load_menu: SaveLoadMenu
-var save_load_scene: PackedScene = preload("res://menus/saver_loader/save_load_menu.tscn")
+var is_quitting : bool = false
+var animation_finished : bool = false
+var save_load_menu : SaveLoadMenu
+var save_load_scene : PackedScene = preload("res://menus/saver_loader/save_load_menu.tscn")
 
 @onready var new_game_button: Button = $Content/Buttons/GridContainer3/NewGameButton
 @onready var continue_button: Button = $Content/Buttons/GridContainer/ContinueButton
@@ -57,19 +57,24 @@ func _ready() -> void:
 
 	menu_ready = true
 
+
 func _on_button_mouse_entered() -> void:
-	if hover_audio.stream == null or is_quitting == true:
+	if hover_audio.stream == null or is_quitting == true or not animation_finished:
 		return
 
 	hover_audio.play()
 
 
 func _on_new_game_button_pressed() -> void:
+	if not animation_finished:
+		return
 	_play_press_sound()
 	EasyTransition.transition_to_path("uid://d3ypiu36avnv1",1.0,EasyTransition.TransitionAnim.CURTAIN)
 
 
 func _on_continue_button_pressed() -> void:
+	if not animation_finished:
+		return
 	content.visible = false
 	
 	save_load_menu = save_load_scene.instantiate() as SaveLoadMenu
@@ -86,8 +91,9 @@ func _on_continue_button_pressed() -> void:
 	_on_mouse_pressed()
 
 
-
 func _on_settings_button_pressed() -> void:
+	if not animation_finished:
+		return
 	_on_mouse_pressed()
 	content.visible = false 
 	var settings = settings_scene.instantiate()
@@ -95,6 +101,8 @@ func _on_settings_button_pressed() -> void:
 
 
 func _on_quit_button_pressed() -> void:
+	if not animation_finished:
+		return
 	_play_press_sound_and_quit()
 
 
@@ -248,7 +256,8 @@ func _animate_menu() -> void:
 	await get_tree().create_timer(0.15).timeout
 
 	await _animate_buttons()
-	
+
+
 func _animate_buttons() -> void:
 	for button in menu_buttons:
 		var tween := create_tween()
@@ -264,5 +273,5 @@ func _animate_buttons() -> void:
 		)
 
 		await tween.finished
-
 		await get_tree().create_timer(0.08).timeout
+	animation_finished = true

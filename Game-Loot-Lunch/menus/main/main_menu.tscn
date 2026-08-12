@@ -113,6 +113,7 @@ stream = ExtResource("7_5eahs")
 autoplay = true
 
 [node name="IntroLayer" type="CanvasLayer" parent="." unique_id=1030919275]
+visible = false
 follow_viewport_enabled = true
 
 [node name="BlackScreen" type="ColorRect" parent="IntroLayer" unique_id=761779493]
