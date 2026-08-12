@@ -116,18 +116,15 @@ autoplay = true
 follow_viewport_enabled = true
 
 [node name="BlackScreen" type="ColorRect" parent="IntroLayer" unique_id=761779493]
-offset_right = 641.0
-offset_bottom = 362.0
+offset_right = 71.0
+offset_bottom = 67.0
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
 [node name="DeveloperLogo" type="TextureRect" parent="IntroLayer" unique_id=1215374324]
-offset_left = 1.0
-offset_right = 640.0
-offset_bottom = 361.0
+offset_right = 40.0
+offset_bottom = 40.0
 texture = ExtResource("8_5eahs")
-expand_mode = 1
-stretch_mode = 5
 
 [connection signal="mouse_entered" from="Content/Buttons/GridContainer3/NewGameButton" to="." method="_on_button_mouse_entered"]
 [connection signal="pressed" from="Content/Buttons/GridContainer3/NewGameButton" to="." method="_on_new_game_button_pressed"]
