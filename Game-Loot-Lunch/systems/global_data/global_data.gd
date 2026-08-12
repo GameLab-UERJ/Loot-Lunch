@@ -84,6 +84,7 @@ func restore_if_transitioning() -> void:
 
 func _apply_deferred_transition_restore() -> void:
 	restore_inventory()
+	SaveLoadManager.autosave()
 
 
 func _enter_tree() -> void:

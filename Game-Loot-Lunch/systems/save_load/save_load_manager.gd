@@ -1,6 +1,6 @@
 extends Node
 
-const AUTOSAVE_POSITION : int = 7
+const AUTOSAVE_POSITION : int = 6
 const AUTOSAVE_NAME : String = "AUTOSAVE"
 
 var save_path: String = "user://Save/"
@@ -41,6 +41,10 @@ func save_data(save_position: int, save_name: String) -> void:
 	ResourceSaver.save(SaveFileData, save_path + SaveFileData.save_name + ".tres")
 
 
+func autosave() -> void:
+	save_data(AUTOSAVE_POSITION, AUTOSAVE_NAME)
+
+
 func load_data(file_name: String, apply_state: bool = false) -> void:
 	if FileAccess.file_exists(save_path + file_name):
 		SaveFileData = ResourceLoader.load(save_path + file_name).duplicate(true)
@@ -53,6 +57,10 @@ func load_data(file_name: String, apply_state: bool = false) -> void:
 		GlobalData.quest_status = SaveFileData.quest_status
 		if apply_state:
 			GlobalData.schedule_restore_after_load()
+
+
+func load_autosave() -> void:
+	load_data(AUTOSAVE_NAME + ".tres",true)
 
 
 func erase_data(save_position: int) -> void:
