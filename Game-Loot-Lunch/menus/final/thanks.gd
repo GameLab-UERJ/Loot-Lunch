@@ -36,7 +36,7 @@ func _animate_logo() -> void:
 
 func _animate_thanks() -> void:
 	await create_tween().tween_property(thanks_label,"visible_ratio",1,3).finished
-	await get_tree().create_timer(0.5).timeout
+	await get_tree().create_timer(2).timeout
 	await create_tween().tween_property(button,"modulate",Color.WHITE,2).finished
 
 
