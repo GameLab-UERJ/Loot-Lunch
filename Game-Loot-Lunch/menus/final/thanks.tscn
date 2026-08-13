@@ -49,6 +49,7 @@ visible_characters = 0
 visible_ratio = 0.0
 
 [node name="Button" type="Button" parent="VBoxContainer" unique_id=2015435807]
+visible = false
 modulate = Color(1, 1, 1, 0)
 z_index = 1
 custom_minimum_size = Vector2(80, 0)
@@ -74,7 +75,7 @@ stream = ExtResource("7_f0n4s")
 volume_db = -80.0
 
 [node name="Timer" type="Timer" parent="." unique_id=246982682]
-wait_time = 30.0
+wait_time = 10.0
 one_shot = true
 autostart = true
 

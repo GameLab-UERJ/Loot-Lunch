@@ -30,7 +30,8 @@ func _ready() -> void:
 	credit_text()
 	auto_scroll()
 	music.play(start_music_time)
-	create_tween().tween_property(music,"volume_db",-10,2)
+	if not EnvironmentManager.has_node("MusicPlayer"):
+		create_tween().tween_property(music,"volume_db",-10,2)
 
 
 func _process(_delta: float) -> void:
@@ -59,7 +60,7 @@ func credit_text() -> void:
 func auto_scroll() -> void:
 	tween = create_tween()
 	scroll_amount = ceil(3500)
-	credits_time = 30
+	credits_time = 60
 	tween.tween_property(
 		scroll_container,
 		'scroll_vertical',
@@ -72,4 +73,8 @@ func auto_scroll() -> void:
 
 
 func _credit_finished() -> void:
+	await create_tween().tween_property(music,'volume_db',-80,2).finished
+	var thanks_music_player = EnvironmentManager.get_node_or_null("MusicPlayer")
+	if thanks_music_player:
+		thanks_music_player.queue_free()
 	EasyTransition.transition_to_path("uid://b2evbancyosmu",1.0,EasyTransition.TransitionAnim.FADE)

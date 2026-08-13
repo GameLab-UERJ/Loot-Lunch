@@ -18,6 +18,7 @@ class_name ThanksScreen
 func _ready() -> void:
 	if get_tree().root.has_node("PauseMenu"):
 		get_tree().root.get_node("PauseMenu").queue_free()
+	music_player.reparent(EnvironmentManager)
 	music_player.play(42)
 	create_tween().tween_property(music_player,"volume_db",-12,3)
 	await get_tree().create_timer(0.5).timeout
@@ -56,5 +57,4 @@ func _on_music_player_finished() -> void:
 
 
 func go_to_main_menu() -> void:
-	create_tween().tween_property(music_player,"volume_db",-80,1.5)
-	EasyTransition.transition_to_path("uid://b2evbancyosmu",1.5,EasyTransition.TransitionAnim.FADE)
+	EasyTransition.transition_to_path(("uid://dfkqvebrfaodn"),1.5,EasyTransition.TransitionAnim.FADE)
