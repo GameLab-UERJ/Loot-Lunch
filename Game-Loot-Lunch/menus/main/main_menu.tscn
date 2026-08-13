@@ -92,6 +92,14 @@ size_flags_vertical = 4
 theme = ExtResource("5_j2kye")
 text = "Settings"
 
+[node name="CreditsButton" type="Button" parent="Content/Buttons/GridContainer" unique_id=1757913048]
+custom_minimum_size = Vector2(110, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("5_j2kye")
+text = "Credits"
+
 [node name="GridContainer2" type="GridContainer" parent="Content/Buttons" unique_id=249026742]
 layout_mode = 2
 size_flags_horizontal = 4
@@ -136,5 +144,7 @@ stretch_mode = 5
 [connection signal="pressed" from="Content/Buttons/GridContainer/ContinueButton" to="." method="_on_continue_button_pressed"]
 [connection signal="mouse_entered" from="Content/Buttons/GridContainer/SettingsButton" to="." method="_on_button_mouse_entered"]
 [connection signal="pressed" from="Content/Buttons/GridContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="mouse_entered" from="Content/Buttons/GridContainer/CreditsButton" to="." method="_on_button_mouse_entered"]
+[connection signal="pressed" from="Content/Buttons/GridContainer/CreditsButton" to="." method="_on_credits_button_pressed"]
 [connection signal="mouse_entered" from="Content/Buttons/GridContainer2/QuitButton" to="." method="_on_button_mouse_entered"]
 [connection signal="pressed" from="Content/Buttons/GridContainer2/QuitButton" to="." method="_on_quit_button_pressed"]
