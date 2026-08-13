@@ -3,6 +3,7 @@ class_name Credits
 
 
 @export_range (0, 10000, 01) var margin_increment: float = 0
+@export var start_music_time: float = 0.0
 
 var text_box_size: float
 var window_size: float
@@ -14,25 +15,25 @@ var credits_time: float
 @onready var margin: MarginContainer = $ScrollContainer/MarginContainer
 @onready var rich_text_label: RichTextLabel = $ScrollContainer/MarginContainer/RichTextLabel
 @onready var credits_db: CredidsDB = $CreditsDB
-@onready var audio_stream_player_2d: AudioStreamPlayer2D = $AudioStreamPlayer2D
+@onready var music: AudioStreamPlayer = $Music
 
 
 func _ready() -> void:
 	EnvironmentManager.is_outdoor = false
 	
-	text_box_size = rich_text_label.size.y
 	window_size = DisplayServer.window_get_size().y
 	# tela inicial vazia
-	margin.add_theme_constant_override('margin_top', window_size + margin_increment)
+	margin.add_theme_constant_override('margin_top', window_size)
 	# tela final vazia
 	margin.add_theme_constant_override('margin_bottom', window_size + margin_increment)
 	
 	credit_text()
 	auto_scroll()
-	audio_stream_player_2d.play()
+	music.play(start_music_time)
+	create_tween().tween_property(music,"volume_db",-10,3)
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("pause"):
 		_credit_finished()
 
@@ -49,13 +50,15 @@ func credit_text() -> void:
 				rich_text_label.text += '[br]' + j
 	
 	rich_text_label.text += '[/center]'
+	
+	text_box_size = rich_text_label.get_content_height()
+	print("text_box_size: ",text_box_size)
 
 
 func auto_scroll() -> void:
 	tween = create_tween()
-	scroll_amount = ceil(text_box_size + 3/4 + window_size * 2 + margin_increment)
-	credits_time = audio_stream_player_2d.stream.get_length() / 20
-	
+	scroll_amount = ceil(1000)
+	credits_time = music.stream.get_length()
 	tween.tween_property(
 		scroll_container,
 		'scroll_vertical',

@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://uhbwf5d4k26i" path="res://menus/credits/credits_db.gd" id="2_32j7k"]
 [ext_resource type="Texture2D" uid="uid://cxvyy81yierb8" path="res://assets/art/ui/LootLunch_KeyArt_Assinatura_edited.png" id="3_rl7hp"]
 [ext_resource type="FontFile" uid="uid://cnqv72au01vlv" path="res://assets/fonts/ui/Sta.Toasty_font (1).ttf" id="3_v68ex"]
-[ext_resource type="AudioStream" uid="uid://211jgew84p3" path="res://assets/music/watermelon_beats-medieval-folk-music-505203.mp3" id="5_de1vr"]
+[ext_resource type="AudioStream" uid="uid://2w8vdf8atg76" path="res://assets/sfx/chest_sound.mp3" id="5_de1vr"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_v68ex"]
 texture = ExtResource("3_rl7hp")
@@ -45,5 +45,6 @@ theme_override_fonts/bold_font = ExtResource("3_v68ex")
 bbcode_enabled = true
 fit_content = true
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=612536083]
+[node name="Music" type="AudioStreamPlayer" parent="." unique_id=1411994854]
 stream = ExtResource("5_de1vr")
+volume_db = -80.0
