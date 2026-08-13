@@ -1,11 +1,12 @@
 ~ start
 
 if QuestManager.current_status == QuestManager.QuestStatus.ENTREGAR_A_JULIETA and GlobalData._find_inventory().has_item("Farofa de Tanajura com Carne"):
+	do GlobalData.find_player().become_invulnerable()
 	Julieta: Ohhh... é o que eu estou pensando?
 	Julieta: Nham nham...
 	Julieta: Uau, isso estava simplesmente divino!
 	Julieta: Você...[wait=1] Por acaso...[wait=1] não teria uma sobremesa?
-	do EasyTransition.transition_to_path("res://menus/final/thanks.tscn",1.5,EasyTransition.TransitionAnim.FADE)
+	do EasyTransition.transition_to_path("res://menus/final/thanks.tscn",3,EasyTransition.TransitionAnim.FADE)
 else:
 	Julieta: Eu gosto de masmorras...
 	Julieta: Quando sair, tranca a cela por gentileza.

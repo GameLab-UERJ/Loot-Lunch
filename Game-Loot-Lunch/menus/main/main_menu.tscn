@@ -68,6 +68,7 @@ custom_minimum_size = Vector2(110, 20)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_filter = 2
 theme = ExtResource("5_j2kye")
 text = "New Game"
 
@@ -81,6 +82,7 @@ custom_minimum_size = Vector2(110, 20)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_filter = 2
 theme = ExtResource("5_j2kye")
 text = "Continue"
 
@@ -89,6 +91,7 @@ custom_minimum_size = Vector2(110, 20)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_filter = 2
 theme = ExtResource("5_j2kye")
 text = "Settings"
 
@@ -109,6 +112,7 @@ custom_minimum_size = Vector2(110, 20)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_filter = 2
 theme = ExtResource("5_j2kye")
 text = "Quit"
 
