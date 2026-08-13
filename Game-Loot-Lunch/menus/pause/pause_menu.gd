@@ -74,6 +74,13 @@ func _on_main_menu_button_pressed() -> void:
 	await _on_button_mouse_pressed()
 	# Goes to MainMenu
 	EasyTransition.transition_to_path("uid://b2evbancyosmu",1.0,EasyTransition.TransitionAnim.BLUR)
+	close()
+
+
+func close() -> void:
+	visible = false
+	get_tree().paused = false
+	queue_free()
 
 
 func _on_quit_button_pressed() -> void:
