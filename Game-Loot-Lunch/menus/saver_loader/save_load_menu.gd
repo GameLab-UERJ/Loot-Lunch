@@ -53,7 +53,7 @@ func _on_load_button_pressed() -> void:
 		return
 
 	if get_parent() and get_parent() is PauseMenu:
-		get_tree().paused = false
+		get_parent().close()
 
 	EasyTransition.transition_to_path(scene_path, 1.5, EasyTransition.TransitionAnim.FADE)
 
