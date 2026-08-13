@@ -118,6 +118,7 @@ text = "Quit"
 
 [node name="MainMenuMusic" type="AudioStreamPlayer" parent="." unique_id=1428495210]
 stream = ExtResource("7_5eahs")
+volume_db = -12.0
 autoplay = true
 
 [node name="IntroLayer" type="CanvasLayer" parent="." unique_id=1030919275]

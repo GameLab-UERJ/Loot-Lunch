@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://uhbwf5d4k26i" path="res://menus/credits/credits_db.gd" id="2_32j7k"]
 [ext_resource type="Texture2D" uid="uid://cxvyy81yierb8" path="res://assets/art/ui/LootLunch_KeyArt_Assinatura_edited.png" id="3_rl7hp"]
 [ext_resource type="FontFile" uid="uid://cnqv72au01vlv" path="res://assets/fonts/ui/Sta.Toasty_font (1).ttf" id="3_v68ex"]
-[ext_resource type="AudioStream" uid="uid://2w8vdf8atg76" path="res://assets/sfx/chest_sound.mp3" id="5_de1vr"]
+[ext_resource type="AudioStream" uid="uid://0ujg1pxllara" path="res://assets/music/musicviktor11-hopeful-harp-music-428444.mp3" id="5_de1vr"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_v68ex"]
 texture = ExtResource("3_rl7hp")

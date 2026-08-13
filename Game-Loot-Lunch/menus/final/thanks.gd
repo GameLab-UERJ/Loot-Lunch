@@ -10,7 +10,7 @@ class_name ThanksScreen
 func _on_button_pressed() -> void:
 	press_audio.play()
 	await press_audio.finished
-	EasyTransition.transition_to_path("uid://b2evbancyosmu",1.5,EasyTransition.TransitionAnim.FADE)
+	EasyTransition.transition_to_path("uid://dfkqvebrfaodn",1.5,EasyTransition.TransitionAnim.FADE)
 
 
 func _on_button_hovered() -> void:

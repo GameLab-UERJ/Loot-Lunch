@@ -23,19 +23,20 @@ func _ready() -> void:
 	
 	window_size = DisplayServer.window_get_size().y
 	# tela inicial vazia
-	margin.add_theme_constant_override('margin_top', window_size)
+	margin.add_theme_constant_override('margin_top', window_size/2)
 	# tela final vazia
 	margin.add_theme_constant_override('margin_bottom', window_size + margin_increment)
 	
 	credit_text()
 	auto_scroll()
 	music.play(start_music_time)
-	create_tween().tween_property(music,"volume_db",-10,3)
+	create_tween().tween_property(music,"volume_db",-10,2)
 
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("pause"):
 		_credit_finished()
+	print(scroll_container.scroll_vertical)
 
 
 func credit_text() -> void:
@@ -51,14 +52,14 @@ func credit_text() -> void:
 	
 	rich_text_label.text += '[/center]'
 	
-	text_box_size = rich_text_label.get_content_height()
-	print("text_box_size: ",text_box_size)
+	text_box_size = rich_text_label.get_visible_content_rect().size.y
+	print("text_box_size: ",rich_text_label.get_visible_content_rect())
 
 
 func auto_scroll() -> void:
 	tween = create_tween()
-	scroll_amount = ceil(1000)
-	credits_time = music.stream.get_length()
+	scroll_amount = ceil(3500)
+	credits_time = 30
 	tween.tween_property(
 		scroll_container,
 		'scroll_vertical',
