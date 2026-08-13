@@ -22,6 +22,7 @@ var animation_finished : bool = false
 var save_load_menu : SaveLoadMenu
 var save_load_scene : PackedScene = preload("res://menus/saver_loader/save_load_menu.tscn")
 
+@onready var credits_button: Button = $Content/Buttons/GridContainer/CreditsButton
 @onready var new_game_button: Button = $Content/Buttons/GridContainer3/NewGameButton
 @onready var continue_button: Button = $Content/Buttons/GridContainer/ContinueButton
 @onready var settings_button: Button = $Content/Buttons/GridContainer/SettingsButton
@@ -41,6 +42,7 @@ var save_load_scene : PackedScene = preload("res://menus/saver_loader/save_load_
 	$Content/Buttons/GridContainer3/NewGameButton,
 	$Content/Buttons/GridContainer/ContinueButton,
 	$Content/Buttons/GridContainer/SettingsButton,
+	$Content/Buttons/GridContainer/CreditsButton,
 	$Content/Buttons/GridContainer2/QuitButton
 ]
 
@@ -100,6 +102,13 @@ func _on_settings_button_pressed() -> void:
 	add_child(settings)
 
 
+func _on_credits_button_pressed() -> void:
+	if not animation_finished:
+		return
+	_play_press_sound()
+	EasyTransition.transition_to_path("uid://dfkqvebrfaodn",1.0,EasyTransition.TransitionAnim.CURTAIN)
+
+
 func _on_quit_button_pressed() -> void:
 	if not animation_finished:
 		return
@@ -108,6 +117,7 @@ func _on_quit_button_pressed() -> void:
 
 func _disable_buttons() -> void:
 	new_game_button.disabled = true
+	credits_button.disabled = true
 	continue_button.disabled = true
 	settings_button.disabled = true
 	quit_button.disabled = true

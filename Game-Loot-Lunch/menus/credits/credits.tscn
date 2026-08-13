@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://dfkqvebrfaodn"]
+
+[ext_resource type="Script" uid="uid://du1i3edrrnsga" path="res://menus/credits/credits.gd" id="1_v1kn4"]
+[ext_resource type="Script" uid="uid://uhbwf5d4k26i" path="res://menus/credits/credits_db.gd" id="2_32j7k"]
+[ext_resource type="Texture2D" uid="uid://cxvyy81yierb8" path="res://assets/art/ui/LootLunch_KeyArt_Assinatura_edited.png" id="3_rl7hp"]
+[ext_resource type="FontFile" uid="uid://cnqv72au01vlv" path="res://assets/fonts/ui/Sta.Toasty_font (1).ttf" id="3_v68ex"]
+[ext_resource type="AudioStream" uid="uid://0ujg1pxllara" path="res://assets/music/musicviktor11-hopeful-harp-music-428444.mp3" id="5_de1vr"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_v68ex"]
+texture = ExtResource("3_rl7hp")
+
+[node name="Credits" type="Control" unique_id=2042595084]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_v1kn4")
+
+[node name="CreditsDB" type="Node" parent="." unique_id=341122559]
+script = ExtResource("2_32j7k")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=34817195]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_v68ex")
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer" unique_id=112590958]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="ScrollContainer/MarginContainer" unique_id=1758398860]
+layout_mode = 2
+theme_override_constants/line_separation = 8
+theme_override_fonts/normal_font = ExtResource("3_v68ex")
+theme_override_fonts/bold_font = ExtResource("3_v68ex")
+bbcode_enabled = true
+fit_content = true
+
+[node name="Music" type="AudioStreamPlayer" parent="." unique_id=1411994854]
+stream = ExtResource("5_de1vr")
+volume_db = -80.0
