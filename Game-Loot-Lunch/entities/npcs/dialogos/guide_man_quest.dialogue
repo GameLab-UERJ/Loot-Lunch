@@ -32,22 +32,23 @@ elif QuestManager.current_status == QuestManager.QuestStatus.MATAR_TANAJURA:
 		
 elif QuestManager.current_status == QuestManager.QuestStatus.CORTAR_TANAJURA:
 	if GlobalData._find_inventory().has_item("Tanajura Preparada"):
-		Carlos - O Guia: Só falta misturar com a Farinha!
+		Carlos - O Guia: Só falta misturar a Tanajura com a Farinha!
 		do QuestManager.advance_mission(QuestManager.QuestStatus.FAZER_FAROFA)
 	else:
-		Carlos - O Guia: Donde esta la trasera?
+		Carlos - O Guia: Bom que conseguiu o corpo. 
+		Carlos - O Guia: Agora,[wait=1] Donde esta la trasera?
 		
 elif QuestManager.current_status == QuestManager.QuestStatus.FAZER_FAROFA:
 	if GlobalData._find_inventory().has_item("Farofa de Tanajura"):
 		Carlos - O Guia: Nossa, mas isso está cheirando muito bem!
 		Carlos - O Guia: Meus parabéns, você é um ótimo misturador de coisas!
 		Carlos - O Guia: Mas a farofa é só um acompanhamento. Para deixar as coisas mais crocantes...
-		Carlos - O Guia: Vamos agora atrás do principal, a PROTEÍNA.
+		Carlos - O Guia: Vamos agora atrás do principal,[wait=1] a PROTEÍNA.
 		Carlos - O Guia: À Oeste da região da Loja você encontrará alguns [wave amp=25 freq=5]Monstros Bovinos[/wave]. A Carne deles é simplesmente deliciosa.
 		Carlos - O Guia: Uma Carne será suficiente.
 		do QuestManager.advance_mission(QuestManager.QuestStatus.MATAR_BOVINO)
 	else:
-		Carlos - O Guia: Ainda falta misturar com a Farinha!
+		Carlos - O Guia: Ainda falta misturar a Tanajura com a Farinha!
 elif QuestManager.current_status == QuestManager.QuestStatus.MATAR_BOVINO:
 	if GlobalData._find_inventory().has_item("Carne"):
 		Carlos - O Guia: A Carne desses Monstros Bovinos realmente parece muito boa!

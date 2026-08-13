@@ -30,7 +30,7 @@ func _collect_scene() -> void:
 
 
 func _collect_player_position() -> void:
-	var player: Player = _find_player()
+	var player: Player = find_player()
 	if player:
 		player_position = player.global_position
 
@@ -84,6 +84,7 @@ func restore_if_transitioning() -> void:
 
 func _apply_deferred_transition_restore() -> void:
 	restore_inventory()
+	SaveLoadManager.autosave()
 
 
 func _enter_tree() -> void:
@@ -134,23 +135,23 @@ func restore_inventory() -> void:
 
 
 func restore_player_position() -> void:
-	var player: Player = _find_player()
+	var player: Player = find_player()
 	if player:
 		player.global_position = player_position
 
 
-func _find_player() -> Player:
+func find_player() -> Player:
 	var players: Array[Node] = get_tree().get_nodes_in_group("Player")
 	if players.size() > 0:
 		return players[0] as Player
-	return _find_player_recursive(get_tree().current_scene)
+	return find_player_recursive(get_tree().current_scene)
 
 
-func _find_player_recursive(node: Node) -> Player:
+func find_player_recursive(node: Node) -> Player:
 	if node is Player:
 		return node as Player
 	for child: Node in node.get_children():
-		var result: Player = _find_player_recursive(child)
+		var result: Player = find_player_recursive(child)
 		if result:
 			return result
 	return null

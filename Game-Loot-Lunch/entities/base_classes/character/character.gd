@@ -17,6 +17,7 @@ signal died
 
 
 var is_invincible: bool = false
+var is_invulnerable: bool = false
 var mov_direction: Vector2 = Vector2.ZERO
 
 
@@ -30,7 +31,7 @@ func _physics_process(_delta: float) -> void:
 
 
 func take_damage(damage: int, direction: Vector2, force: int) -> void:
-	if is_invincible:
+	if is_invincible or is_invulnerable:
 		return
 	
 	start_invincibility()
@@ -49,3 +50,7 @@ func start_invincibility() -> void:
 	is_invincible = true
 	await get_tree().create_timer(invencibility_time).timeout
 	is_invincible = false
+
+
+func become_invulnerable() -> void:
+	is_invulnerable = true

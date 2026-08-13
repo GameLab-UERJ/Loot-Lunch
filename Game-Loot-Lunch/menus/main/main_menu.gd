@@ -275,3 +275,5 @@ func _animate_buttons() -> void:
 		await tween.finished
 		await get_tree().create_timer(0.08).timeout
 	animation_finished = true
+	for button in menu_buttons:
+		button.mouse_filter = Control.MOUSE_FILTER_STOP
