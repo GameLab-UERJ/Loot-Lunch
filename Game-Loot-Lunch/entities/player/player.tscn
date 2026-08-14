@@ -506,8 +506,6 @@ offset_top = -130.0
 offset_right = 241.0
 offset_bottom = 140.0
 node_to_drop = NodePath("../../Marker2D")
-can_move_items = null
-can_drop_items = null
 
 [node name="FiniteStateMachine" parent="." index="1" unique_id=394854071]
 unique_name_in_owner = true

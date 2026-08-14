@@ -33,7 +33,6 @@ var selected_pos : Vector2i:
 
 @onready var container: PanelContainer = $Container
 @onready var grid: GridContainer = $Container/Grid
-@onready var recipes_button: Button = $Button
 @onready var crafting_grid: CraftingGrid = $CraftingGrid
 
 
@@ -42,14 +41,15 @@ func _ready() -> void:
 	dimensions = dimensions
 	crafting_grid.inventory = self
 	crafting_grid.visible = false
-	recipes_button.pressed.connect(_toggle_crafting_grid)
 
-
-func _toggle_crafting_grid() -> void:
 	crafting_grid.visible = not crafting_grid.visible
 
 
 func _process(_delta: float) -> void:
+	if GlobalData.current_workbench == Workbench.Type.None:
+		crafting_grid.visible = false
+	else:
+		crafting_grid.visible = true
 	if not can_drop_items:
 		return
 	if not Input.is_action_just_released("right_click"):

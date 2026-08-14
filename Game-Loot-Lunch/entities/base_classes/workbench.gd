@@ -17,7 +17,9 @@ signal close_inventory
 
 
 func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed("interact"):
+	if GlobalData.current_workbench != type:
+		return
+	if Input.is_action_just_released("interact"):
 		open_inventory.emit()
 
 

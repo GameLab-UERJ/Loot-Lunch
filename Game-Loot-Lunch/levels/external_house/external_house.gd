@@ -18,6 +18,8 @@ signal stop_player_can_enter_combat_area
 @onready var seagulls_sfx: AudioStreamPlayer2D = $SeagullsSfx
 
 
+var was_already_opened : bool = false
+
 func _ready() -> void:
 	
 	EnvironmentManager.is_outdoor = is_outdoor
@@ -65,8 +67,13 @@ func _on_seagulls_sfx_finished() -> void:
 
 
 func _on_open_inventory() -> void:
-	player.inventory_component.open_inventory()
+	if not player.inventory_component.open_inventory():
+		was_already_opened = true
+	else:
+		was_already_opened = false
+	print(was_already_opened)
 
 
 func _on_close_inventory() -> void:
-	player.inventory_component.close_inventory()
+	if not was_already_opened:
+		player.inventory_component.close_inventory()

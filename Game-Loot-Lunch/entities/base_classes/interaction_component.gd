@@ -5,7 +5,6 @@ class_name InteractionComponent
 @export var outlined_node : Node2D:
 	set(value):
 		outlined_node = value
-		print(outlined_node)
 		if outlined_node:
 			outlined_node.material = load("res://resources/shaders/outline_material.tres").duplicate_deep()
 			outlined_node.material.set("shader_parameter/outline_color",Color.WHITE)
