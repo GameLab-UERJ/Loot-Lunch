@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://dskfd1pd6dspe" path="res://assets/art/entities/gabriel-meat_rack.png" id="3_hyxsb"]
 [ext_resource type="PackedScene" uid="uid://cbs8q2hki4fym" path="res://systems/interaction/interactable_area.tscn" id="4_k3coa"]
 [ext_resource type="Texture2D" uid="uid://b43fyhe45hakj" path="res://assets/art/entities/shadow_single.png" id="4_uvwyg"]
+[ext_resource type="Script" uid="uid://buqd0oigfu3ej" path="res://entities/base_classes/interaction_component.gd" id="6_lg048"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_06gsy"]
 shader = ExtResource("2_uvwyg")
@@ -47,6 +48,13 @@ shape = SubResource("RectangleShape2D_hyxsb")
 show_behind_parent = true
 position = Vector2(-28, 0)
 shape = SubResource("RectangleShape2D_elsjk")
+
+[node name="InteractionComponent" type="Label" parent="." unique_id=241619459]
+unique_name_in_owner = true
+offset_right = 40.0
+offset_bottom = 23.0
+script = ExtResource("6_lg048")
+metadata/_custom_type_script = "uid://buqd0oigfu3ej"
 
 [connection signal="interact_with_player" from="InteractableArea" to="." method="_on_interactable_area_interact_with_player"]
 [connection signal="stop_interact_with_player" from="InteractableArea" to="." method="_on_interactable_area_stop_interact_with_player"]

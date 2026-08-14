@@ -45,8 +45,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if event.is_action_released(toggle_action):
 		toggle_inventory()
-		if inventory:
-			inventory.get_node("Button").visible = inventory.visible
 
 
 func has_inventory() -> bool:
@@ -59,6 +57,20 @@ func add_item(item: Item) -> void:
 		return
 	
 	inventory.add_item(item)
+
+
+func open_inventory() -> bool:
+	if not inventory.visible:
+		toggle_inventory()
+		return true
+	return false
+
+
+func close_inventory() -> bool:
+	if inventory.visible:
+		toggle_inventory()
+		return true
+	return false
 
 
 func toggle_inventory() -> void:
