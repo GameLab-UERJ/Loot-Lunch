@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://t65p0mkiox2j" path="res://assets/art/ui/UI_orange_buttons_3.png" id="4_fe67s"]
 [ext_resource type="Texture2D" uid="uid://dq4d11yxraycl" path="res://assets/art/ui/UI_orange_buttons_pressed_3.png" id="5_io2nh"]
 [ext_resource type="FontFile" uid="uid://cnqv72au01vlv" path="res://assets/fonts/ui/Sta.Toasty_font (1).ttf" id="6_axjvm"]
+[ext_resource type="AudioStream" uid="uid://di1j0865v2o33" path="res://assets/sfx/gabriel-hud_button_click.ogg" id="7_1gkwb"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bg"]
 atlas = ExtResource("2_uihq7")
@@ -52,10 +53,10 @@ layer = 10
 script = ExtResource("1_8d54y")
 
 [node name="LifeBar" type="TextureProgressBar" parent="." unique_id=1536512486]
-offset_left = 16.0
-offset_top = 32.0
-offset_right = 156.0
-offset_bottom = 42.0
+offset_left = 11.0
+offset_top = 9.0
+offset_right = 151.0
+offset_bottom = 19.0
 max_value = 2.0
 value = 2.0
 nine_patch_stretch = true
@@ -68,10 +69,10 @@ texture_over = SubResource("AtlasTexture_border")
 texture_progress = SubResource("AtlasTexture_fill")
 
 [node name="GoldBox" type="HBoxContainer" parent="." unique_id=2023858234]
-offset_left = 15.0
-offset_top = 61.0
-offset_right = 173.0
-offset_bottom = 93.0
+offset_left = 12.0
+offset_top = 26.0
+offset_right = 170.0
+offset_bottom = 58.0
 theme_override_constants/separation = 8
 
 [node name="CoinIcon" type="TextureRect" parent="GoldBox" unique_id=466366402]
@@ -97,10 +98,10 @@ vertical_alignment = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -168.0
-offset_top = 32.0
-offset_right = -16.0
-offset_bottom = 68.0
+offset_left = -154.0
+offset_top = 7.0
+offset_right = -2.0
+offset_bottom = 43.0
 grow_horizontal = 0
 theme_override_constants/separation = 8
 alignment = 1
@@ -109,6 +110,7 @@ alignment = 1
 custom_minimum_size = Vector2(36, 36)
 layout_mode = 2
 tooltip_text = "Missão"
+focus_mode = 0
 theme_override_styles/normal = SubResource("StyleBoxTexture_mission_normal")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_mission_pressed")
 theme_override_styles/hover = SubResource("StyleBoxTexture_mission_normal")
@@ -117,9 +119,16 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_mission_normal")
 custom_minimum_size = Vector2(36, 36)
 layout_mode = 2
 tooltip_text = "Inventário"
+focus_mode = 0
 theme_override_styles/normal = SubResource("StyleBoxTexture_inventory_normal")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_inventory_pressed")
 theme_override_styles/hover = SubResource("StyleBoxTexture_inventory_normal")
+
+[node name="ButtonClick" type="AudioStreamPlayer" parent="." unique_id=1980121283]
+process_mode = 3
+stream = ExtResource("7_1gkwb")
+volume_db = -10.0
+pitch_scale = 0.5
 
 [connection signal="pressed" from="ButtonsBox/MissionButton" to="." method="_on_mission_button_pressed"]
 [connection signal="pressed" from="ButtonsBox/InventoryButton" to="." method="_on_inventory_button_pressed"]

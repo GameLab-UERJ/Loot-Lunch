@@ -10,6 +10,7 @@ class_name Hud
 @onready var gold_label: Label = $GoldBox/GoldLabel
 @onready var mission_button: Button = $ButtonsBox/MissionButton
 @onready var inventory_button: Button = $ButtonsBox/InventoryButton
+@onready var button_click: AudioStreamPlayer = $ButtonClick
 
 
 var _player: Player
@@ -104,6 +105,7 @@ func _on_player_took_damage() -> void:
 
 
 func _on_mission_button_pressed() -> void:
+	button_click.play(0.13)
 	var pause_menu := get_tree().root.get_node_or_null("PauseMenu") as PauseMenu
 	if pause_menu:
 		pause_menu.pause()
@@ -119,6 +121,7 @@ func _on_mission_button_pressed() -> void:
 
 
 func _on_inventory_button_pressed() -> void:
+	button_click.play(0.13)
 	var player := get_parent() as Player
 	if player == null:
 		return
@@ -128,4 +131,3 @@ func _on_inventory_button_pressed() -> void:
 		return
 
 	inventory_component.toggle_inventory()
-	inventory_component.inventory.get_node_or_null("Button").visible = inventory_component.inventory.visible
