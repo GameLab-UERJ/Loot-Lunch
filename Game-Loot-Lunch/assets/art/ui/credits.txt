@@ -1,2 +1,5 @@
 Buttons.png -> https://free-game-assets.itch.io/free-basic-pixel-art-ui-for-rpg
 LootLunch_Logo_Principal_Transparente.png -> Marcos Rodigues
+Ui-template -> https://maticecat.itch.io/pixel-ui-template
+Gold Coins -> https://maks-gogol.itch.io/gold-coin-icon-32x32
+Orange buttons -> https://totuslotus.itch.io/pixel-ui-buttons

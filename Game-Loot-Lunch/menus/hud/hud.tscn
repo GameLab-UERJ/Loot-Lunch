@@ -1,0 +1,134 @@
+[gd_scene format=3 uid="uid://c3x2p7ssqhudb"]
+
+[ext_resource type="Script" uid="uid://co6hueax8p2fa" path="res://menus/hud/hud.gd" id="1_8d54y"]
+[ext_resource type="Texture2D" uid="uid://c17mx3lrv28sm" path="res://assets/art/ui/ui-template.png" id="2_uihq7"]
+[ext_resource type="Texture2D" uid="uid://5173wmqvxy45" path="res://assets/art/ui/Gold Coin Final.png" id="3_6fh13"]
+[ext_resource type="Texture2D" uid="uid://t65p0mkiox2j" path="res://assets/art/ui/UI_orange_buttons_3.png" id="4_fe67s"]
+[ext_resource type="Texture2D" uid="uid://dq4d11yxraycl" path="res://assets/art/ui/UI_orange_buttons_pressed_3.png" id="5_io2nh"]
+[ext_resource type="FontFile" uid="uid://cnqv72au01vlv" path="res://assets/fonts/ui/Sta.Toasty_font (1).ttf" id="6_axjvm"]
+[ext_resource type="AudioStream" uid="uid://di1j0865v2o33" path="res://assets/sfx/gabriel-hud_button_click.ogg" id="7_1gkwb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bg"]
+atlas = ExtResource("2_uihq7")
+region = Rect2(8, 43, 68, 5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_border"]
+atlas = ExtResource("2_uihq7")
+region = Rect2(7, 33, 70, 7)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fill"]
+atlas = ExtResource("2_uihq7")
+region = Rect2(8, 51, 68, 5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mission_normal"]
+atlas = ExtResource("4_fe67s")
+region = Rect2(64, 16, 16, 16)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mission_normal"]
+texture = SubResource("AtlasTexture_mission_normal")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mission_pressed"]
+atlas = ExtResource("5_io2nh")
+region = Rect2(64, 16, 16, 16)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mission_pressed"]
+texture = SubResource("AtlasTexture_mission_pressed")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_inventory_normal"]
+atlas = ExtResource("4_fe67s")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_inventory_normal"]
+texture = SubResource("AtlasTexture_inventory_normal")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_inventory_pressed"]
+atlas = ExtResource("5_io2nh")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_inventory_pressed"]
+texture = SubResource("AtlasTexture_inventory_pressed")
+
+[node name="Hud" type="CanvasLayer" unique_id=1666235633]
+layer = 10
+script = ExtResource("1_8d54y")
+
+[node name="LifeBar" type="TextureProgressBar" parent="." unique_id=1536512486]
+offset_left = 11.0
+offset_top = 9.0
+offset_right = 151.0
+offset_bottom = 19.0
+max_value = 2.0
+value = 2.0
+nine_patch_stretch = true
+stretch_margin_left = 6
+stretch_margin_top = 2
+stretch_margin_right = 6
+stretch_margin_bottom = 2
+texture_under = SubResource("AtlasTexture_bg")
+texture_over = SubResource("AtlasTexture_border")
+texture_progress = SubResource("AtlasTexture_fill")
+
+[node name="GoldBox" type="HBoxContainer" parent="." unique_id=2023858234]
+offset_left = 12.0
+offset_top = 26.0
+offset_right = 170.0
+offset_bottom = 58.0
+theme_override_constants/separation = 8
+
+[node name="CoinIcon" type="TextureRect" parent="GoldBox" unique_id=466366402]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("3_6fh13")
+expand_mode = 1
+
+[node name="GoldLabel" type="Label" parent="GoldBox" unique_id=353323942]
+custom_minimum_size = Vector2(80, 32)
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("6_axjvm")
+theme_override_font_sizes/font_size = 20
+text = "0"
+vertical_alignment = 1
+
+[node name="ButtonsBox" type="HBoxContainer" parent="." unique_id=1685776975]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -154.0
+offset_top = 7.0
+offset_right = -2.0
+offset_bottom = 43.0
+grow_horizontal = 0
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="MissionButton" type="Button" parent="ButtonsBox" unique_id=707102275]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+tooltip_text = "Missão"
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_mission_normal")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_mission_pressed")
+theme_override_styles/hover = SubResource("StyleBoxTexture_mission_normal")
+
+[node name="InventoryButton" type="Button" parent="ButtonsBox" unique_id=1546187851]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+tooltip_text = "Inventário"
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_inventory_normal")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_inventory_pressed")
+theme_override_styles/hover = SubResource("StyleBoxTexture_inventory_normal")
+
+[node name="ButtonClick" type="AudioStreamPlayer" parent="." unique_id=1980121283]
+process_mode = 3
+stream = ExtResource("7_1gkwb")
+volume_db = -10.0
+pitch_scale = 0.5
+
+[connection signal="pressed" from="ButtonsBox/MissionButton" to="." method="_on_mission_button_pressed"]
+[connection signal="pressed" from="ButtonsBox/InventoryButton" to="." method="_on_inventory_button_pressed"]

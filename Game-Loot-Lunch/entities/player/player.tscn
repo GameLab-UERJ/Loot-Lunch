@@ -17,6 +17,7 @@
 [ext_resource type="AudioStream" uid="uid://ik7r1ahndsgv" path="res://assets/sfx/player/player_hurt.wav" id="13_j3ovn"]
 [ext_resource type="AudioStream" uid="uid://jvkqdxkfgfa6" path="res://assets/sfx/player/swing.wav" id="14_afbqv"]
 [ext_resource type="Script" uid="uid://6cli41lsm0il" path="res://entities/inventory/inventory_component.gd" id="15_7thud"]
+[ext_resource type="PackedScene" uid="uid://c3x2p7ssqhudb" path="res://menus/hud/hud.tscn" id="16_hud"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wvtmh"]
 atlas = ExtResource("4_bectd")
@@ -583,6 +584,8 @@ stream = ExtResource("14_afbqv")
 
 [node name="Marker2D" type="Marker2D" parent="." index="13" unique_id=254863332]
 position = Vector2(0, 20)
+
+[node name="Hud" parent="." index="14" instance=ExtResource("16_hud")]
 
 [connection signal="died" from="." to="." method="_on_died"]
 [connection signal="got_hurt" from="." to="." method="_on_got_hurt"]
