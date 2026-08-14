@@ -4,6 +4,7 @@
 [ext_resource type="Shader" uid="uid://i8xl186i1o18" path="res://resources/shaders/outline.tres" id="2_1myob"]
 [ext_resource type="Texture2D" uid="uid://bcjsdj346wct0" path="res://assets/art/tilesets/interior/Interior.png" id="3_5nfi3"]
 [ext_resource type="PackedScene" uid="uid://cbs8q2hki4fym" path="res://systems/interaction/interactable_area.tscn" id="4_pbqwa"]
+[ext_resource type="Script" uid="uid://buqd0oigfu3ej" path="res://entities/base_classes/interaction_component.gd" id="5_1myob"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_06gsy"]
 shader = ExtResource("2_1myob")
@@ -47,6 +48,13 @@ scale = Vector2(1.5, 1.6)
 show_behind_parent = true
 position = Vector2(0, 1.5)
 shape = SubResource("RectangleShape2D_elsjk")
+
+[node name="InteractionComponent" type="Label" parent="." unique_id=616647751]
+unique_name_in_owner = true
+offset_right = 40.0
+offset_bottom = 23.0
+script = ExtResource("5_1myob")
+metadata/_custom_type_script = "uid://buqd0oigfu3ej"
 
 [connection signal="interact_with_player" from="InteractableArea" to="." method="_on_interactable_area_interact_with_player"]
 [connection signal="stop_interact_with_player" from="InteractableArea" to="." method="_on_interactable_area_stop_interact_with_player"]

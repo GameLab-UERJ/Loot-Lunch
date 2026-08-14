@@ -48,15 +48,6 @@ size_flags_vertical = 4
 theme_override_constants/h_separation = 0
 theme_override_constants/v_separation = 0
 
-[node name="Button" type="Button" parent="." unique_id=1597024711]
-visible = false
-layout_mode = 0
-offset_left = 186.0
-offset_top = 35.0
-offset_right = 263.0
-offset_bottom = 66.0
-text = "Recepies"
-
 [node name="CraftingGrid" parent="." unique_id=631059723 node_paths=PackedStringArray("inventory") instance=ExtResource("2_q0t3s")]
 layout_mode = 0
 offset_left = 31.0

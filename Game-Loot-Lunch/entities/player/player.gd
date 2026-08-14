@@ -7,6 +7,7 @@ var can_attack: bool = true
 
 
 @onready var sword: Node2D = $Sword
+@onready var inventory_component: InventoryComponent = %InventoryComponent
 @onready var sword_hitbox: HitboxComponent = $Sword/Node2D/Sword/HitboxComponent
 @onready var sword_animation_player: AnimationPlayer = $Sword/SwordAnimationPlayer
 @onready var movement_component: MovementComponent = $MovementComponent
