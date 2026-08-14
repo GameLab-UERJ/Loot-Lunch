@@ -62,3 +62,11 @@ func _on_seagulls_sfx_finished() -> void:
 	await get_tree().create_timer(randi_range(5,15)).timeout
 	if TimeCycle.is_day():
 		seagulls_sfx.play()
+
+
+func _on_open_inventory() -> void:
+	player.inventory_component.open_inventory()
+
+
+func _on_close_inventory() -> void:
+	player.inventory_component.close_inventory()

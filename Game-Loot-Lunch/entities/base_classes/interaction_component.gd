@@ -10,6 +10,7 @@ class_name InteractionComponent
 			outlined_node.material = load("res://resources/shaders/outline_material.tres").duplicate_deep()
 			outlined_node.material.set("shader_parameter/outline_color",Color.WHITE)
 			outlined_node.material.set("shader_parameter/width",0)
+@export var outline_width : int = 1
 
 
 func _ready() -> void:
@@ -62,7 +63,7 @@ func show_interaction() -> void:
 	if not outlined_node:
 		find_outlined_node()
 	if outlined_node:
-		outlined_node.material.set("shader_parameter/width",1)
+		outlined_node.material.set("shader_parameter/width",outline_width)
 	show()
 
 

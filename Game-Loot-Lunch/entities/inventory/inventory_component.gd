@@ -61,6 +61,16 @@ func add_item(item: Item) -> void:
 	inventory.add_item(item)
 
 
+func open_inventory() -> void:
+	if not inventory.visible:
+		toggle_inventory()
+
+
+func close_inventory() -> void:
+	if inventory.visible:
+		toggle_inventory()
+
+
 func toggle_inventory() -> void:
 	if not inventory:
 		push_warning("InventoryComponent sem Inventory configurado.")
