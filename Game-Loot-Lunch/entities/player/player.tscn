@@ -506,20 +506,21 @@ offset_top = -130.0
 offset_right = 241.0
 offset_bottom = 140.0
 node_to_drop = NodePath("../../Marker2D")
-can_move_items = null
-can_drop_items = null
 
 [node name="FiniteStateMachine" parent="." index="1" unique_id=394854071]
 unique_name_in_owner = true
 script = ExtResource("3_xf5fp")
 
 [node name="InputComponent" type="Node" parent="." index="2" unique_id=357670435]
+unique_name_in_owner = true
 script = ExtResource("5_3wlsy")
 
 [node name="MovementComponent" type="Node" parent="." index="3" unique_id=1947189978]
+unique_name_in_owner = true
 script = ExtResource("4_wvtmh")
 
 [node name="InventoryComponent" type="Node" parent="." index="4" unique_id=379562273 node_paths=PackedStringArray("inventory")]
+unique_name_in_owner = true
 script = ExtResource("15_7thud")
 inventory = NodePath("../InventoryLayer/Inventory")
 

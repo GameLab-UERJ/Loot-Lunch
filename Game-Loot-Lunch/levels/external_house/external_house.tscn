@@ -1014,5 +1014,13 @@ position = Vector2(511.27875, 125.32413)
 [connection signal="stop_interact_with_player" from="CombatArea" to="." method="_on_combat_area_exited"]
 [connection signal="finished" from="RoosterSfx" to="." method="_on_rooster_sfx_finished"]
 [connection signal="finished" from="SeagullsSfx" to="." method="_on_seagulls_sfx_finished"]
+[connection signal="close_inventory" from="CookingWorkbench" to="." method="_on_close_inventory"]
+[connection signal="open_inventory" from="CookingWorkbench" to="." method="_on_open_inventory"]
+[connection signal="close_inventory" from="DryingWorkbench" to="." method="_on_close_inventory"]
+[connection signal="open_inventory" from="DryingWorkbench" to="." method="_on_open_inventory"]
+[connection signal="close_inventory" from="CuttingWorkbench" to="." method="_on_close_inventory"]
+[connection signal="open_inventory" from="CuttingWorkbench" to="." method="_on_open_inventory"]
+[connection signal="close_inventory" from="CommonWorkbench" to="." method="_on_close_inventory"]
+[connection signal="open_inventory" from="CommonWorkbench" to="." method="_on_open_inventory"]
 
 [editable path="DialogueNpc"]
