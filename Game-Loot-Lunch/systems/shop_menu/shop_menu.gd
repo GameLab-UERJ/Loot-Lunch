@@ -154,21 +154,15 @@ func confirm_buy() -> void:
 
 	for cell: InventoryCell in transfer_inventory.grid.get_children():
 		if cell.item:
-			var item: Item = cell.item
 			var count: int = cell.count
+			var item_scene = find_item_scene_by_item(cell.item)
 			
-			# Verifica se é stackável
-			if item.has_node("StackableComponent"):
-				# Para itens stackáveis, cria UMA instância com a quantidade total
-				var new_item = item.duplicate()
-				new_item.dropped_count = count  # Define quantidade total
-				add_child(new_item)
-				real_player_inventory.add_item(new_item)
-			else:
-				# Para itens não stackáveis, adiciona um por um
-				for i in count:
-					var new_item = item.duplicate()
-					new_item.dropped_count = 1
+			if item_scene:
+				# Cria um novo item a partir da cena (não usa duplicate)
+				var new_item = current_shop.create_item(item_scene)
+				if new_item:
+					add_child(new_item)
+					new_item.dropped_count = count
 					real_player_inventory.add_item(new_item)
 			
 			# Limpa o item da transferência

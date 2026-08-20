@@ -313,8 +313,12 @@ func add_item(item: Item) -> void:
 	# Se tem item carregado, restaura antes pra não duplicar
 	_restore_selected()
 	
-	# Verifica se interactable_area existe antes de desabilitar
-	item.interactable_area.enabled = false
+	# CORRIGIDO: Verifica se interactable_area existe antes de desabilitar
+	if item.get("interactable_area") != null:
+		item.interactable_area.enabled = false
+	# OU use:
+	# if item.has_node("InteractableArea"):
+	#     item.interactable_area.enabled = false
 	
 	# Usa dropped_count como quantidade total
 	var amount = max(1, item.dropped_count)
@@ -507,7 +511,8 @@ func _handle_split_stack(cell: InventoryCell, half: int) -> void:
 
 
 func follow_mouse(item : Item) -> void:
-	item.interactable_area.enabled = false
+	if item.get("interactable_area") != null:
+		item.interactable_area.enabled = false
 	item.top_level = true
 	item.z_index = 100
 	item.force_follow_mouse()
