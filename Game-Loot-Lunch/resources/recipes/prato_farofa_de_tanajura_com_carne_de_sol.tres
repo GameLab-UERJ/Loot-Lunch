@@ -5,11 +5,12 @@
 [ext_resource type="PackedScene" uid="uid://com7qtbfdltey" path="res://entities/items/carne_pronta.tscn" id="2_54ivy"]
 [ext_resource type="PackedScene" uid="uid://1fdob43gb34q" path="res://entities/items/vinagrete.tscn" id="3_54ivy"]
 [ext_resource type="PackedScene" uid="uid://sm0m75xbj0yn" path="res://entities/items/farofa_de_tanajura_com_carne_de_sol.tscn" id="3_kd01x"]
+[ext_resource type="PackedScene" uid="uid://p31r4t0456z9qz" path="res://entities/items/prato.tscn" id="4_pr4t"]
 
 [resource]
 script = ExtResource("1_grih6")
 workbench = 1
 recipe_name = "Prato Final"
-ingredients = Array[PackedScene]([ExtResource("1_6r62t"), ExtResource("2_54ivy"), ExtResource("3_54ivy")])
+ingredients = Array[PackedScene]([ExtResource("1_6r62t"), ExtResource("2_54ivy"), ExtResource("3_54ivy"), ExtResource("4_pr4t")])
 result_scene = ExtResource("3_kd01x")
 metadata/_custom_type_script = "uid://csymt6cnu6pf"
