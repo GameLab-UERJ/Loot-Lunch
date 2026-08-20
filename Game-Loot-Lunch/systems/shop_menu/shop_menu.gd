@@ -158,6 +158,7 @@ func confirm_buy() -> void:
 			var count: int = cell.count
 			for i in count:
 				var unit: Item = item if i == 0 else item.duplicate()
+				add_child(unit)
 				real_player_inventory.add_item(unit)
 			cell.item = null
 			cell.count = 0
