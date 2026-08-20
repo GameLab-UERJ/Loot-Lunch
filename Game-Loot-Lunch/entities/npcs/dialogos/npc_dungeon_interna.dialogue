@@ -1,21 +1,33 @@
 ~ start
 
 Aventureiro: Então você realmente entrou... ainda dá tempo de voltar.
-
-- Tenho uma Missão aqui dentro
-	Aventureiro: Uma entrega para a Julieta? Cada louco que aparece...
-	Aventureiro: Ela vive na última cela da Masmorra... Por opção.
-if QuestManager.current_status == QuestManager.QuestStatus.ENTREGAR_A_JULIETA:
-	- Gosto de explorar!
-		Aventureiro: Vejo que você é, como eu, um aventureiro.
-		Aventureiro: Aqui há tesouros por todo o lado.
-- Você está certo, melhor voltar mesmo...
-	Aventureiro: Muito sábio de sua parte.
-	=> END
-	
+if QuestManager.current_status != QuestManager.QuestStatus.ENTREGAR_A_JULIETA:
+	=>< normal_questions
+else:
+	=>< last_mission_questions
 Aventureiro: Aqui também existem monstros e armadilhas perigosas.
 Aventureiro: As portas estão trancadas, e cada uma precisa de uma quantidade desconhecida de chaves para abrir.
 Aventureiro: Elas se abrem assim que você coletar chaves o suficiente.
 Aventureiro: Boa sorte.
 
+=> END
+
+~ normal_questions
+- Gosto de explorar!
+	Aventureiro: Vejo que você é, como eu, um aventureiro.
+	Aventureiro: Aqui há tesouros por todo o lado.
+- Você está certo, melhor voltar mesmo...
+	Aventureiro: Muito sábio de sua parte.
+	=> END!
+=> END
+
+~ last_mission_questions
+- Tenho uma Missão aqui dentro
+	Aventureiro: Uma entrega para a Julieta? Cada louco que aparece...
+	Aventureiro: Ela vive na última cela da Masmorra... Por opção.
+- Gosto de explorar!
+	Aventureiro: Vejo que você é, como eu, um aventureiro.
+	Aventureiro: Aqui há tesouros por todo o lado.
+- Você está certo, melhor voltar mesmo...
+	Aventureiro: Muito sábio de sua parte.
 => END
