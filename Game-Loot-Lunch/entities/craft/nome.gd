@@ -14,8 +14,8 @@ func _ready() -> void:
 		if not interactable_area.body_exited.is_connected(_on_interactable_area_body_exited):
 			interactable_area.body_exited.connect(_on_interactable_area_body_exited)
 
-func _on_interactable_area_body_entered(body: Node2D) -> void:
+func _on_interactable_area_body_entered(_body: Node2D) -> void:
 	visible = true
 
-func _on_interactable_area_body_exited(body: Node2D) -> void:
+func _on_interactable_area_body_exited(_body: Node2D) -> void:
 	visible = false

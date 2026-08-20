@@ -314,8 +314,7 @@ func add_item(item: Item) -> void:
 	_restore_selected()
 	
 	# Verifica se interactable_area existe antes de desabilitar
-	if item.interactable_area:
-		item.interactable_area.enabled = false
+	item.interactable_area.enabled = false
 	
 	# Usa dropped_count como quantidade total
 	var amount = max(1, item.dropped_count)

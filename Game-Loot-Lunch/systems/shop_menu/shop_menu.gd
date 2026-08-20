@@ -162,6 +162,7 @@ func confirm_buy() -> void:
 				# Para itens stackáveis, cria UMA instância com a quantidade total
 				var new_item = item.duplicate()
 				new_item.dropped_count = count  # Define quantidade total
+				add_child(new_item)
 				real_player_inventory.add_item(new_item)
 			else:
 				# Para itens não stackáveis, adiciona um por um
