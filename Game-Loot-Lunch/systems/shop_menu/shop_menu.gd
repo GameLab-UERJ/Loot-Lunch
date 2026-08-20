@@ -93,7 +93,7 @@ func fill_shop_inventory() -> void:
 	for item_scene: PackedScene in current_shop.get_item_scenes():
 		var item: Item = current_shop.create_item(item_scene)
 		add_child(item)
-		shop_inventory.add_item(item)
+		shop_inventory.add_item(item, Inventory.ItemAddSource.NONE)
 		set_item_price_text(shop_inventory, item, current_shop.get_price(item_scene), Color.GREEN)
 
 
@@ -158,8 +158,9 @@ func confirm_buy() -> void:
 			var count: int = cell.count
 			for i in count:
 				var unit: Item = item if i == 0 else item.duplicate()
-				add_child(unit)
-				real_player_inventory.add_item(unit)
+				if not unit.is_inside_tree():
+					add_child(unit)
+				real_player_inventory.add_item(unit, Inventory.ItemAddSource.SHOP)
 			cell.item = null
 			cell.count = 0
 
@@ -272,7 +273,7 @@ func add_shop_item_to_transfer(item: Item) -> void:
 				break
 
 	if not stacked_in_transfer:
-		transfer_inventory.add_item(new_item)
+		transfer_inventory.add_item(new_item, Inventory.ItemAddSource.NONE)
 		transfer_item_prices[new_item] = price
 		set_item_price_text(transfer_inventory, new_item, price, Color.GREEN)
 	else:
