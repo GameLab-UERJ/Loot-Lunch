@@ -1,13 +1,12 @@
 # Art Bible — Loot & Lunch
 
-# Art Bible — Loot & Lunch
 
 > Documento que define a direção artística e as principais regras para criação dos elementos visuais do jogo.
 > 
 
-**Versão:** 1.0
+**Versão:** 1.0 (Versão Com Seções a preencher)
 
-**Responsável pela Direção de Arte:** (Nome)
+**Responsável pela Direção de Arte:** João Coutinho
 
 ---
 
@@ -71,8 +70,6 @@ Um Rio de Janeiro familiar, monumental, belo e mágico, mas estranhamente vazio.
     - **Mistério:** sugerir elementos além do que o jogador consegue ver.
 
 ### 1.3 Referências
-
-Liste as principais referências utilizadas para definir o estilo visual.
 
 - **1.3.1 Regiões do Rio de Janeiro**
 Ambientes:
