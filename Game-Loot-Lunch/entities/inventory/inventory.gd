@@ -312,13 +312,20 @@ func add_item(item: Item) -> void:
 	
 	# Se tem item carregado, restaura antes pra não duplicar
 	_restore_selected()
-	item.interactable_area.enabled = false
+	
+	# Verifica se interactable_area existe antes de desabilitar
+	if item.interactable_area:
+		item.interactable_area.enabled = false
+	
+	# Usa dropped_count como quantidade total
 	var amount = max(1, item.dropped_count)
 	item.dropped_count = 1  # reseta pro padrão
+	
 	var stack_comp = item.get_node_or_null("StackableComponent")
 	
 	if stack_comp:
 		var stack_size = stack_comp.stack_size
+		
 		# Empilha em células existentes do mesmo tipo
 		for cell: InventoryCell in grid.get_children():
 			if not cell.item or cell.item.item_name != item.item_name:
@@ -329,9 +336,13 @@ func add_item(item: Item) -> void:
 			var move = min(amount, space)
 			cell.count += move
 			amount -= move
+			
 			if amount <= 0:
+				# Item totalmente empilhado
 				item.queue_free()
+				item_added.emit(item)
 				return
+		
 		# Coloca o resto em célula vazia
 		if amount > 0:
 			var empty = find_empty_cells(true)
@@ -343,16 +354,17 @@ func add_item(item: Item) -> void:
 			cell.set_item(item)
 			cell.count = amount
 	else:
-		# Não stackável
+		# Não stackável - adiciona apenas 1 unidade
 		var empty = find_empty_cells(true)
 		if empty.is_empty():
 			push_warning("Inventory is full!")
+			item.queue_free()
 			return
 		var cell = empty[0]
 		cell.set_item(item)
 		cell.count = 1
+	
 	item_added.emit(item)
-
 
 func cancel_selected_item() -> void:
 	if selected_cell:

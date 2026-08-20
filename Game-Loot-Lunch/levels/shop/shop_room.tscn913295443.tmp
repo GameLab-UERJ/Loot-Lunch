@@ -1,0 +1,594 @@
+[gd_scene format=4 uid="uid://cjd7jorsb02sh"]
+
+[ext_resource type="Script" uid="uid://c4wyndv0xsqoy" path="res://levels/shop/shop_room.gd" id="1_4m7o5"]
+[ext_resource type="PackedScene" uid="uid://cbs8q2hki4fym" path="res://systems/interaction/interactable_area.tscn" id="2_2xyn3"]
+[ext_resource type="Texture2D" uid="uid://can6jqu7o5b5l" path="res://assets/art/levels/test_room/test_room_tilemap.png" id="2_8nrlq"]
+[ext_resource type="PackedScene" uid="uid://c6wv6ecrc6cff" path="res://entities/npcs/shop_npc/shop_npc.tscn" id="2_obpsm"]
+[ext_resource type="PackedScene" uid="uid://3cgeew2m05mn" path="res://entities/player/player.tscn" id="5_2xyn3"]
+[ext_resource type="Texture2D" uid="uid://bogwm2rcwxg1g" path="res://assets/art/entities/npcs/random/Felipe-Castro-Skeletons-Sheet.png" id="5_m1bl1"]
+[ext_resource type="Script" uid="uid://dr3t723hbciuk" path="res://systems/shop/shop_component.gd" id="5_q0dw4"]
+[ext_resource type="PackedScene" uid="uid://cexct4fg71pc5" path="res://entities/items/carne.tscn" id="6_7cgwe"]
+[ext_resource type="PackedScene" uid="uid://dd8vbsbs33ii4" path="res://entities/items/farinha.tscn" id="7_xe2u5"]
+[ext_resource type="PackedScene" uid="uid://dwlepdjd5lv8x" path="res://entities/items/tomate.tscn" id="8_m1bl1"]
+[ext_resource type="PackedScene" uid="uid://dnw8w6uoo6qef" path="res://systems/shop_menu/shop_menu.tscn" id="10_xe2u5"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dt7fw"]
+texture = ExtResource("2_8nrlq")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+8:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+8:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+6:3/0 = 0
+8:3/0 = 0
+3:4/0 = 0
+4:4/0 = 0
+6:4/0 = 0
+7:4/0 = 0
+8:4/0 = 0
+3:5/0 = 0
+4:5/0 = 0
+6:5/0 = 0
+7:5/0 = 0
+8:5/0 = 0
+1:6/0 = 0
+2:6/0 = 0
+3:6/0 = 0
+4:6/0 = 0
+5:6/0 = 0
+7:6/0 = 0
+8:6/0 = 0
+1:7/0 = 0
+2:7/0 = 0
+5:7/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_lora1"]
+sources/3 = SubResource("TileSetAtlasSource_dt7fw")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1mui8"]
+texture = ExtResource("2_8nrlq")
+0:0/0 = 0
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6.334983, -8, 5.535694, -8, 5.140003, 6.101528, -6.23606, 6.101528)
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+8:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+8:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+6:3/0 = 0
+8:3/0 = 0
+3:4/0 = 0
+4:4/0 = 0
+6:4/0 = 0
+6:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -0.09892273, -8, -0.09892273)
+7:4/0 = 0
+7:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -0.09892273, -8, -0.09892273)
+8:4/0 = 0
+8:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -0.09892273, -8, -0.09892273)
+3:5/0 = 0
+4:5/0 = 0
+6:5/0 = 0
+6:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -0.09892273, -8, -0.09892273)
+7:5/0 = 0
+7:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -0.09892273, -8, -0.09892273)
+8:5/0 = 0
+8:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -0.09892273, -8, -0.09892273)
+1:6/0 = 0
+2:6/0 = 0
+3:6/0 = 0
+4:6/0 = 0
+5:6/0 = 0
+7:6/0 = 0
+8:6/0 = 0
+1:7/0 = 0
+2:7/0 = 0
+5:7/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_dt7fw"]
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_1mui8")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8yefc"]
+atlas = ExtResource("5_m1bl1")
+region = Rect2(0, 512, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q2ger"]
+atlas = ExtResource("5_m1bl1")
+region = Rect2(64, 512, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xs6eg"]
+atlas = ExtResource("5_m1bl1")
+region = Rect2(128, 512, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eaqon"]
+atlas = ExtResource("5_m1bl1")
+region = Rect2(192, 512, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_k2kxr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8yefc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q2ger")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xs6eg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eaqon")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xs6eg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q2ger")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8nrlq"]
+texture = ExtResource("2_8nrlq")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 3.1657457, -8, 3.0630732)
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+8:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+8:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+6:3/0 = 0
+8:3/0 = 0
+3:4/0 = 0
+4:4/0 = 0
+6:4/0 = 0
+7:4/0 = 0
+8:4/0 = 0
+3:5/0 = 0
+4:5/0 = 0
+6:5/0 = 0
+7:5/0 = 0
+8:5/0 = 0
+1:6/0 = 0
+2:6/0 = 0
+3:6/0 = 0
+4:6/0 = 0
+5:6/0 = 0
+7:6/0 = 0
+8:6/0 = 0
+1:7/0 = 0
+2:7/0 = 0
+5:7/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_obpsm"]
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_8nrlq")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_obpsm"]
+texture = ExtResource("2_8nrlq")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+8:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+8:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+6:3/0 = 0
+8:3/0 = 0
+3:4/0 = 0
+3:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 2.9688597, -6.6277943, 3.956892, -6.8853703, 8, -8, 8)
+4:4/0 = 0
+4:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+6:4/0 = 0
+7:4/0 = 0
+8:4/0 = 0
+3:5/0 = 0
+3:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, -5.7374935, -8, -5.7374935, 8, -8, 8)
+4:5/0 = 0
+4:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(3.9539948, -8, 8, -8, 8, 8, 4.0775566, 8)
+6:5/0 = 0
+7:5/0 = 0
+8:5/0 = 0
+1:6/0 = 0
+1:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+2:6/0 = 0
+2:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 4.352581, 9.100851, 4.1547356, 8, 8, -8, 8)
+3:6/0 = 0
+3:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, -5.8364153, -8, -5.935338, 5.242882, -8, 8)
+4:6/0 = 0
+4:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+5:6/0 = 0
+5:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+7:6/0 = 0
+8:6/0 = 0
+1:7/0 = 0
+1:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, -6.6831903, -8, -5.693967, 5.0569077, 8, 4.957987, 8, 8, -8, 8)
+2:7/0 = 0
+2:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 4.5504246, 8, 4.2536583, 8, 8, -8, 8)
+5:7/0 = 0
+5:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 3.7590466, 5.935337, 3.4622803, 5.935337, -8, 8, -8, 8, 8, -8, 8)
+
+[sub_resource type="TileSet" id="TileSet_pig53"]
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_obpsm")
+
+[node name="ShopRoom" type="Node2D" unique_id=141259000 node_paths=PackedStringArray("shop_menu", "shop_component", "player_inventory_component")]
+script = ExtResource("1_4m7o5")
+shop_menu = NodePath("CanvasLayer/ShopMenu")
+shop_component = NodePath("ShopNpc/ShopComponent")
+player_inventory_component = NodePath("Player/InventoryComponent")
+
+[node name="LeaveArea" parent="." unique_id=1323691504 instance=ExtResource("2_2xyn3")]
+z_index = 2
+position = Vector2(-62.392, 15.525)
+
+[node name="chao" type="TileMapLayer" parent="." unique_id=2026569415]
+tile_map_data = PackedByteArray("AAAAAAAAAwAFAAIAAAAAAAEAAwAFAAIAAAAAAAIAAwAFAAMAAAAAAAMAAwAFAAMAAAAAAAQAAwAFAAMAAAAAAAUAAwAFAAMAAAABAAAAAwAFAAMAAAABAAEAAwAFAAIAAAABAAIAAwAFAAMAAAABAAMAAwAFAAMAAAABAAQAAwAFAAIAAAABAAUAAwAFAAIAAAACAAAAAwAFAAIAAAACAAEAAwAFAAMAAAACAAIAAwAFAAIAAAACAAMAAwAFAAMAAAACAAQAAwAFAAIAAAACAAUAAwAFAAMAAAADAAAAAwAFAAIAAAADAAEAAwAFAAIAAAADAAIAAwAFAAIAAAADAAMAAwAFAAMAAAADAAQAAwAFAAMAAAADAAUAAwAFAAMAAAAEAAAAAwAFAAMAAAAEAAEAAwAFAAIAAAAEAAIAAwAFAAMAAAAEAAMAAwAFAAMAAAAEAAQAAwAFAAMAAAAEAAUAAwAFAAIAAAAFAAAAAwAFAAIAAAAFAAEAAwAFAAIAAAAFAAIAAwAFAAIAAAAFAAMAAwAFAAMAAAAFAAQAAwAFAAIAAAAFAAUAAwAFAAIAAAAGAAAAAwAFAAIAAAAGAAEAAwAFAAMAAAAGAAIAAwAFAAIAAAAGAAMAAwAFAAIAAAAGAAQAAwAFAAMAAAAGAAUAAwAFAAIAAAAHAAAAAwAFAAMAAAAHAAEAAwAFAAMAAAAHAAIAAwAFAAMAAAAHAAMAAwAFAAMAAAAHAAQAAwAFAAIAAAAHAAUAAwAFAAIAAAAIAAAAAwAFAAMAAAAIAAEAAwAFAAIAAAAIAAIAAwAFAAIAAAAIAAMAAwAFAAMAAAAIAAQAAwAFAAIAAAAIAAUAAwAFAAMAAAAJAAAAAwAFAAMAAAAJAAEAAwAFAAMAAAAJAAIAAwAFAAIAAAAJAAMAAwAFAAIAAAAJAAQAAwAFAAMAAAAJAAUAAwAFAAIAAAAKAAAAAwAFAAIAAAAKAAEAAwAFAAIAAAAKAAIAAwAFAAIAAAAKAAMAAwAFAAMAAAAKAAQAAwAFAAIAAAAKAAUAAwAFAAIAAAALAAAAAwAFAAMAAAALAAEAAwAFAAMAAAALAAIAAwAFAAMAAAALAAMAAwAFAAMAAAALAAQAAwAFAAMAAAALAAUAAwAFAAMAAAAMAAAAAwAFAAIAAAAMAAEAAwAFAAMAAAAMAAIAAwAFAAIAAAAMAAMAAwAFAAMAAAAMAAQAAwAFAAMAAAAMAAUAAwAFAAMAAAANAAAAAwAFAAMAAAANAAEAAwAFAAMAAAANAAIAAwAFAAMAAAANAAMAAwAFAAIAAAANAAQAAwAFAAIAAAANAAUAAwAFAAMAAAD//wEAAwAFAAIAAAD//wAAAwAFAAIAAAD9/wEAAwAFAAIAAAD9/wAAAwAFAAIAAAD+/wAAAwAFAAIAAAD+/wEAAwAFAAIAAAA=")
+tile_set = SubResource("TileSet_lora1")
+
+[node name="paredes2" type="TileMapLayer" parent="." unique_id=610951973]
+tile_map_data = PackedByteArray("AAAAAP7/AAACAAYAAAABAP7/AAACAAYAAAACAP7/AAACAAYAAAADAP7/AAACAAYAAAAEAP7/AAACAAYAAAAFAP7/AAACAAYAAAAGAP7/AAACAAYAAAAHAP7/AAACAAYAAAAIAP7/AAACAAYAAAAJAP7/AAACAAYAAAAKAP7/AAACAAYAAAALAP7/AAACAAYAAAAMAP7/AAACAAYAAAAAAP//AAAGAAQAAAABAP//AAAGAAUAAAACAP//AAAHAAUAAAADAP//AAAIAAUAAAAEAP//AAAGAAQAAAAFAP//AAAGAAQAAAAGAP//AAAGAAQAAAAHAP//AAAGAAQAAAAIAP//AAAGAAQAAAAJAP//AAAGAAQAAAAKAP//AAAGAAUAAAALAP//AAAHAAUAAAAMAP//AAAIAAUAAAD9////AAAGAAQAAAD+////AAAGAAQAAAD/////AAAGAAQAAAANAP7/AAAFAAYAAAANAP//AAAGAAQAAAA=")
+tile_set = SubResource("TileSet_dt7fw")
+
+[node name="deco_parede" type="TileMapLayer" parent="." unique_id=324363823]
+tile_map_data = PackedByteArray("AAACAP//AAAEAAAAAAALAP//AAAEAAAAAAA=")
+tile_set = SubResource("TileSet_dt7fw")
+
+[node name="deco_chao5" type="TileMapLayer" parent="." unique_id=292427912]
+z_index = 4
+y_sort_enabled = true
+position = Vector2(-62.790733, -15.484604)
+tile_map_data = PackedByteArray("AAAEAAMAAAABAAAAAAA=")
+tile_set = SubResource("TileSet_dt7fw")
+y_sort_origin = 1
+
+[node name="deco_chao6" type="TileMapLayer" parent="." unique_id=316134904]
+z_index = 4
+y_sort_enabled = true
+position = Vector2(-52.790733, -10.484604)
+tile_map_data = PackedByteArray("AAAEAAMAAAABAAAAAAA=")
+tile_set = SubResource("TileSet_dt7fw")
+y_sort_origin = 1
+
+[node name="deco_chao7" type="TileMapLayer" parent="." unique_id=1829607747]
+z_index = 4
+y_sort_enabled = true
+position = Vector2(-42.790733, -7.484604)
+tile_map_data = PackedByteArray("AAAEAAMAAAABAAAAAAA=")
+tile_set = SubResource("TileSet_dt7fw")
+y_sort_origin = 1
+
+[node name="deco_chao8" type="TileMapLayer" parent="." unique_id=741340658]
+z_index = 4
+y_sort_enabled = true
+position = Vector2(-33.790733, -0.48460388)
+tile_map_data = PackedByteArray("AAAEAAMAAAABAAAAAAA=")
+tile_set = SubResource("TileSet_dt7fw")
+y_sort_origin = 1
+
+[node name="deco_chao9" type="TileMapLayer" parent="." unique_id=920977047]
+z_index = 4
+y_sort_enabled = true
+position = Vector2(-23.790733, 1.5153961)
+tile_map_data = PackedByteArray("AAAEAAMAAAABAAAAAAA=")
+tile_set = SubResource("TileSet_dt7fw")
+y_sort_origin = 1
+
+[node name="deco_chao24" type="TileMapLayer" parent="." unique_id=1643733084]
+z_index = 4
+y_sort_enabled = true
+position = Vector2(-23.790733, 1.5153961)
+tile_map_data = PackedByteArray("AAAEAAMAAAABAAAAAAA=")
+tile_set = SubResource("TileSet_dt7fw")
+y_sort_origin = 1
+
+[node name="deco_chao10" type="TileMapLayer" parent="." unique_id=231871396]
+z_index = 4
+y_sort_enabled = true
+position = Vector2(-13.790733, 5.515396)
+tile_map_data = PackedByteArray("AAAEAAMAAAABAAAAAAA=")
+tile_set = SubResource("TileSet_dt7fw")
+y_sort_origin = 1
+
+[node name="deco_chao11" type="TileMapLayer" parent="." unique_id=518576687]
+z_index = 4
+y_sort_enabled = true
+position = Vector2(-8.790733, 12.515396)
+tile_map_data = PackedByteArray("AAAEAAMAAAABAAAAAAA=")
+tile_set = SubResource("TileSet_dt7fw")
+y_sort_origin = 1
+
+[node name="deco_chao12" type="TileMapLayer" parent="." unique_id=1057478994]
+z_index = 4
+y_sort_enabled = true
+position = Vector2(-4.7907333, 22.515396)
+tile_map_data = PackedByteArray("AAAEAAMAAAABAAAAAAA=")
+tile_set = SubResource("TileSet_dt7fw")
+y_sort_origin = 1
+
+[node name="deco_chao13" type="TileMapLayer" parent="." unique_id=1904508765]
+z_index = 4
+y_sort_enabled = true
+position = Vector2(-7.7907333, 29.515396)
+tile_map_data = PackedByteArray("AAAEAAMAAAABAAAAAAA=")
+tile_set = SubResource("TileSet_dt7fw")
+y_sort_origin = 1
+
+[node name="deco_chao31" type="TileMapLayer" parent="." unique_id=1809785871]
+z_index = 4
+y_sort_enabled = true
+position = Vector2(-22, 15)
+tile_map_data = PackedByteArray("AAAEAAMAAAABAAAAAAA=")
+tile_set = SubResource("TileSet_dt7fw")
+y_sort_origin = 1
+
+[node name="deco_chao26" type="TileMapLayer" parent="." unique_id=255499496]
+z_index = 4
+y_sort_enabled = true
+position = Vector2(-51.790733, 26.515396)
+tile_map_data = PackedByteArray("AAAEAAMAAAABAAAAAAA=")
+tile_set = SubResource("TileSet_dt7fw")
+y_sort_origin = 1
+
+[node name="deco_chao27" type="TileMapLayer" parent="." unique_id=155052077]
+z_index = 4
+y_sort_enabled = true
+position = Vector2(-61.790733, -6.484604)
+tile_map_data = PackedByteArray("AAAEAAMAAAABAAAAAAA=")
+tile_set = SubResource("TileSet_dt7fw")
+y_sort_origin = 1
+
+[node name="deco_chao28" type="TileMapLayer" parent="." unique_id=1897036552]
+z_index = 4
+y_sort_enabled = true
+position = Vector2(-52.790733, -0.48460388)
+tile_map_data = PackedByteArray("AAAEAAMAAAABAAAAAAA=")
+tile_set = SubResource("TileSet_dt7fw")
+y_sort_origin = 1
+
+[node name="deco_chao29" type="TileMapLayer" parent="." unique_id=1033139905]
+z_index = 4
+y_sort_enabled = true
+position = Vector2(-42.790733, 3.515396)
+tile_map_data = PackedByteArray("AAAEAAMAAAABAAAAAAA=")
+tile_set = SubResource("TileSet_dt7fw")
+y_sort_origin = 1
+
+[node name="deco_chao30" type="TileMapLayer" parent="." unique_id=1138119618]
+z_index = 4
+y_sort_enabled = true
+position = Vector2(-33, 12)
+tile_map_data = PackedByteArray("AAAEAAMAAAABAAAAAAA=")
+tile_set = SubResource("TileSet_dt7fw")
+y_sort_origin = 1
+
+[node name="deco_chao32" type="TileMapLayer" parent="." unique_id=296577428]
+z_index = 4
+y_sort_enabled = true
+position = Vector2(-16, 22)
+tile_map_data = PackedByteArray("AAAEAAMAAAABAAAAAAA=")
+tile_set = SubResource("TileSet_dt7fw")
+y_sort_origin = 1
+
+[node name="deco_chao33" type="TileMapLayer" parent="." unique_id=1540863251]
+z_index = 4
+y_sort_enabled = true
+position = Vector2(-28, 24)
+tile_map_data = PackedByteArray("AAAEAAMAAAABAAAAAAA=")
+tile_set = SubResource("TileSet_dt7fw")
+y_sort_origin = 1
+
+[node name="deco_chao34" type="TileMapLayer" parent="." unique_id=1799243223]
+z_index = 4
+y_sort_enabled = true
+position = Vector2(-62, 7)
+tile_map_data = PackedByteArray("AAAEAAMAAAABAAAAAAA=")
+tile_set = SubResource("TileSet_dt7fw")
+y_sort_origin = 1
+
+[node name="deco_chao35" type="TileMapLayer" parent="." unique_id=1125860737]
+z_index = 4
+y_sort_enabled = true
+position = Vector2(-51, 12)
+tile_map_data = PackedByteArray("AAAEAAMAAAABAAAAAAA=")
+tile_set = SubResource("TileSet_dt7fw")
+y_sort_origin = 1
+
+[node name="deco_chao36" type="TileMapLayer" parent="." unique_id=2129287245]
+z_index = 4
+y_sort_enabled = true
+position = Vector2(-42, 18)
+tile_map_data = PackedByteArray("AAAEAAMAAAABAAAAAAA=")
+tile_set = SubResource("TileSet_dt7fw")
+y_sort_origin = 1
+
+[node name="deco_chao25" type="TileMapLayer" parent="." unique_id=209889554]
+z_index = 4
+y_sort_enabled = true
+position = Vector2(-40.790733, 28.515396)
+tile_map_data = PackedByteArray("AAAEAAMAAAABAAAAAAA=")
+tile_set = SubResource("TileSet_dt7fw")
+y_sort_origin = 1
+
+[node name="deco_chao23" type="TileMapLayer" parent="." unique_id=1877138705]
+z_index = 4
+y_sort_enabled = true
+position = Vector2(-60.790733, 19.515396)
+tile_map_data = PackedByteArray("AAAEAAMAAAABAAAAAAA=")
+tile_set = SubResource("TileSet_dt7fw")
+y_sort_origin = 1
+
+[node name="deco_chao22" type="TileMapLayer" parent="." unique_id=197136422]
+z_index = 4
+y_sort_enabled = true
+position = Vector2(-60.790733, 31.515396)
+tile_map_data = PackedByteArray("AAAEAAMAAAABAAAAAAA=")
+tile_set = SubResource("TileSet_dt7fw")
+y_sort_origin = 1
+
+[node name="mesa" type="TileMapLayer" parent="." unique_id=1762461491]
+position = Vector2(-13, -61)
+tile_map_data = PackedByteArray("AAAMAAUAAAABAAEAAGAMAAYAAAAAAAEAAGA=")
+tile_set = SubResource("TileSet_dt7fw")
+
+[node name="ShopNpc" parent="." unique_id=1279799556 instance=ExtResource("2_obpsm")]
+y_sort_enabled = true
+position = Vector2(205.32132, 32.124733)
+
+[node name="AnimatedSprite2D" parent="ShopNpc" index="1" unique_id=799428324]
+sprite_frames = SubResource("SpriteFrames_k2kxr")
+frame_progress = 0.0
+
+[node name="ShopComponent" type="Node" parent="ShopNpc" unique_id=2082865285]
+script = ExtResource("5_q0dw4")
+items_prices = Dictionary[PackedScene, int]({
+ExtResource("6_7cgwe"): 20,
+ExtResource("8_m1bl1"): 5,
+ExtResource("7_xe2u5"): 10
+})
+metadata/_custom_type_script = "uid://dr3t723hbciuk"
+
+[node name="mesa2" type="TileMapLayer" parent="." unique_id=866060475]
+position = Vector2(-17, -64)
+tile_map_data = PackedByteArray("AAAMAAYAAAAAAAAAAGA=")
+tile_set = SubResource("TileSet_dt7fw")
+
+[node name="estantes" type="TileMapLayer" parent="." unique_id=704029208]
+position = Vector2(0, 6)
+tile_map_data = PackedByteArray("AAAEAP//AAACAAAAAAAFAP//AAACAAAAAAAGAP//AAACAAAAAAAHAP//AAACAAAAAAAIAP//AAACAAAAAAAJAP//AAACAAAAAAA=")
+tile_set = SubResource("TileSet_obpsm")
+
+[node name="paredes" type="TileMapLayer" parent="." unique_id=1459718578]
+z_index = 5
+tile_map_data = PackedByteArray("AAANAAEAAAAEAAUAAAANAAAAAAAEAAUAAAAAAP7/AAACAAYAAAABAP7/AAACAAYAAAACAP7/AAACAAYAAAADAP7/AAACAAYAAAAEAP7/AAACAAYAAAAFAP7/AAACAAYAAAAGAP7/AAACAAYAAAAHAP7/AAACAAYAAAAIAP7/AAACAAYAAAAJAP7/AAACAAYAAAAKAP7/AAACAAYAAAALAP7/AAACAAYAAAAMAP7/AAACAAYAAAANAP7/AAAFAAYAAAANAP//AAAEAAUAAAD//wEAAAACAAcAAAD+/wEAAAACAAcAAAD9//7/AAABAAYAAAD+//7/AAACAAYAAAD///7/AAACAAYAAAD9/wIAAAAGAAUAAAD+/wIAAAAHAAUAAAD//wIAAAAIAAUAAAAAAAIAAAADAAUAAAANAAIAAAAEAAUAAAAAAAMAAAADAAUAAAAAAAQAAAABAAcAAAAAAAUAAAAGAAQAAAANAAMAAAAEAAUAAAANAAQAAAAFAAcAAAANAAUAAAAIAAQAAAABAAQAAAACAAcAAAABAAUAAAAIAAUAAAACAAQAAAACAAcAAAACAAUAAAAHAAUAAAADAAQAAAACAAcAAAADAAUAAAAGAAUAAAAEAAQAAAACAAcAAAAEAAUAAAAIAAUAAAAFAAQAAAACAAcAAAAFAAUAAAAIAAQAAAAGAAQAAAACAAcAAAAGAAUAAAAGAAQAAAAHAAQAAAACAAcAAAAHAAUAAAAGAAUAAAAIAAQAAAACAAcAAAAIAAUAAAAGAAUAAAAJAAQAAAACAAcAAAAJAAUAAAAGAAQAAAAKAAQAAAACAAcAAAAKAAUAAAAHAAQAAAALAAQAAAACAAcAAAALAAUAAAAHAAUAAAAMAAQAAAACAAcAAAAMAAUAAAAGAAUAAAAAAAEAAAADAAQAAAD9/wEAAAACAAcAAAA=")
+tile_set = SubResource("TileSet_pig53")
+
+[node name="Player" parent="." unique_id=1328809556 instance=ExtResource("5_2xyn3")]
+position = Vector2(-35.955917, 12.976204)
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=40453212]
+position = Vector2(37.955917, -12.976204)
+zoom = Vector2(3, 3)
+limit_left = -47
+limit_top = -32
+limit_right = 224
+limit_bottom = 100
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=306904476]
+
+[node name="ShopMenu" parent="CanvasLayer" unique_id=1060735759 instance=ExtResource("10_xe2u5")]
+visible = false
+
+[connection signal="interact_with_player" from="LeaveArea" to="." method="_on_leave_area_entered"]
+[connection signal="stop_interact_with_player" from="LeaveArea" to="." method="_on_leave_area_exited"]
+[connection signal="interact_with_player" from="ShopNpc/InteractableArea" to="." method="_on_shop_npc_interactable_area_interact_with_player"]
+
+[editable path="ShopNpc"]
+[editable path="Player"]
