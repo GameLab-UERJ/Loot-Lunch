@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://cbs8q2hki4fym" path="res://systems/interaction/interactable_area.tscn" id="4_k3coa"]
 [ext_resource type="Texture2D" uid="uid://b43fyhe45hakj" path="res://assets/art/entities/shadow_single.png" id="4_uvwyg"]
 [ext_resource type="Script" uid="uid://buqd0oigfu3ej" path="res://entities/base_classes/interaction_component.gd" id="6_lg048"]
+[ext_resource type="Script" uid="uid://487g5j5tx5fy" path="res://entities/craft/nome.gd" id="7_vl8ib"]
+[ext_resource type="FontFile" uid="uid://cvuth304y1byc" path="res://assets/fonts/tinypixel.ttf" id="8_od8qi"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_06gsy"]
 shader = ExtResource("2_uvwyg")
@@ -17,6 +19,22 @@ size = Vector2(9.5, 5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_elsjk"]
 size = Vector2(9.5, 5)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p17a2"]
+bg_color = Color(0, 0.6627451, 0.827451, 0.5019608)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+expand_margin_left = 1.0
+expand_margin_top = 1.0
+expand_margin_right = 1.0
+shadow_size = 1
 
 [node name="DryingWorkbench" type="StaticBody2D" unique_id=1861521828]
 script = ExtResource("1_hyxsb")
@@ -55,6 +73,42 @@ offset_right = 40.0
 offset_bottom = 23.0
 script = ExtResource("6_lg048")
 metadata/_custom_type_script = "uid://buqd0oigfu3ej"
+
+[node name="Nome" type="Control" parent="." unique_id=1511432418 node_paths=PackedStringArray("interactable_area", "label")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("7_vl8ib")
+interaction_name = "Drying Workbench"
+interactable_area = NodePath("../InteractableArea")
+label = NodePath("VBoxContainer/ColorRect/Label")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Nome" unique_id=1124340373]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 0
+offset_left = -34.000004
+offset_top = -75.0
+offset_right = 15.999996
+offset_bottom = -65.0
+scale = Vector2(1.3808863, 1.6211816)
+
+[node name="ColorRect" type="Panel" parent="Nome/VBoxContainer" unique_id=904671020]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_p17a2")
+
+[node name="Label" type="Label" parent="Nome/VBoxContainer/ColorRect" unique_id=603036728]
+layout_mode = 0
+offset_left = 2.1725175
+offset_top = 2.4673367
+offset_right = 56.172516
+offset_bottom = 7.4673367
+scale = Vector2(0.88033766, 1.0995921)
+theme_override_fonts/font = ExtResource("8_od8qi")
+theme_override_font_sizes/font_size = 5
+text = "Varal"
+horizontal_alignment = 1
 
 [connection signal="interact_with_player" from="InteractableArea" to="." method="_on_interactable_area_interact_with_player"]
 [connection signal="stop_interact_with_player" from="InteractableArea" to="." method="_on_interactable_area_stop_interact_with_player"]

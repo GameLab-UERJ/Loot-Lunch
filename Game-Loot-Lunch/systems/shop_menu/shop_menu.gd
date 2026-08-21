@@ -154,18 +154,25 @@ func confirm_buy() -> void:
 
 	for cell: InventoryCell in transfer_inventory.grid.get_children():
 		if cell.item:
-			var item: Item = cell.item
 			var count: int = cell.count
-			for i in count:
-				var unit: Item = item if i == 0 else item.duplicate()
-				if not unit.is_inside_tree():
-					add_child(unit)
-				real_player_inventory.add_item(unit, Inventory.ItemAddSource.SHOP)
+			var item_scene = find_item_scene_by_item(cell.item)
+			
+			if item_scene:
+				# Cria um novo item a partir da cena (não usa duplicate)
+				var new_item = current_shop.create_item(item_scene)
+				if new_item:
+					add_child(new_item)
+					new_item.dropped_count = count
+					real_player_inventory.add_item(new_item,Inventory.ItemAddSource.SHOP)
+			
+			# Limpa o item da transferência
+			cell.item.queue_free()
 			cell.item = null
 			cell.count = 0
 
 	clear_transfer()
 	fill_player_inventory()
+	update_gold_label(PlayerWallet.gold)
 
 
 func confirm_sell() -> void:
@@ -257,27 +264,33 @@ func add_shop_item_to_transfer(item: Item) -> void:
 		message_label.text = "Transferência cheia"
 		return
 
+	# Verifica se já existe stack do mesmo item na transferência
+	var stack_comp = item.get_node_or_null("StackableComponent")
+	if stack_comp:
+		for cell: InventoryCell in transfer_inventory.grid.get_children():
+			if cell.item and cell.item.item_name == item.item_name:
+				if cell.count < stack_comp.stack_size:
+					cell.count += 1
+					total_price += price
+					set_item_price_text(transfer_inventory, cell.item, price * cell.count, Color.GREEN)
+					update_total_message()
+					return
+
+	# Se não empilhou, cria novo item
 	var new_item: Item = current_shop.create_item(item_scene)
 	add_child(new_item)
-
-	var is_stackable = new_item.has_node("StackableComponent")
-	var stacked_in_transfer = false
-
-	if is_stackable:
-		var stack_comp = new_item.get_node("StackableComponent") as StackableComponent
-		for cell: InventoryCell in transfer_inventory.grid.get_children():
-			if cell.item and cell.item.item_name == new_item.item_name and cell.count < stack_comp.stack_size:
-				cell.count += 1
-				stacked_in_transfer = true
-				set_item_price_text(transfer_inventory, cell.item, price * cell.count, Color.GREEN)
-				break
-
-	if not stacked_in_transfer:
-		transfer_inventory.add_item(new_item, Inventory.ItemAddSource.NONE)
-		transfer_item_prices[new_item] = price
-		set_item_price_text(transfer_inventory, new_item, price, Color.GREEN)
-	else:
+	new_item.dropped_count = 1
+	
+	var empty = transfer_inventory.find_empty_cells(true)
+	if empty.is_empty():
 		new_item.queue_free()
+		message_label.text = "Transferência cheia"
+		return
+	
+	empty[0].set_item(new_item)
+	empty[0].count = 1
+	transfer_item_prices[new_item] = price
+	set_item_price_text(transfer_inventory, new_item, price, Color.GREEN)
 
 	total_price += price
 	update_total_message()
