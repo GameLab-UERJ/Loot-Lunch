@@ -5,6 +5,9 @@ class_name Inventory
 const INVENTORY_CELL = preload("uid://b85fxrmr3ribs")
 
 
+enum ItemAddSource {PICK_UP, SAVE_LOAD, SHOP, CRAFT, NONE}
+
+
 signal cell_left_clicked(cell : InventoryCell)
 signal item_added(item : Item)
 signal item_dropped(item : Item)
@@ -14,9 +17,7 @@ signal item_dropped(item : Item)
 ## quantidade de colunas e y a quantidade de linhas
 @export var dimensions : Vector2i = Vector2i.ONE:
 	set = set_dimensions
-	
 @export var node_to_drop : Node2D
-
 @export var can_move_items : bool = true
 @export var can_drop_items : bool = true
 
@@ -29,20 +30,21 @@ var selected_item : Item
 var selected_count : int = 0
 var selected_pos : Vector2i:
 	get = get_selected_pos
+var current_item_added_source : ItemAddSource = ItemAddSource.NONE
 
 
 @onready var container: PanelContainer = $Container
 @onready var grid: GridContainer = $Container/Grid
 @onready var crafting_grid: CraftingGrid = $CraftingGrid
-
+@onready var item_added_sfx: AudioStreamPlayer = $ItemAddedSfx
 
 
 func _ready() -> void:
 	dimensions = dimensions
 	crafting_grid.inventory = self
 	crafting_grid.visible = false
-
 	crafting_grid.visible = not crafting_grid.visible
+	item_added.connect(_play_added_item_sfx)
 
 
 func _process(_delta: float) -> void:
@@ -248,12 +250,13 @@ func handle_new_selected_cell(cell : InventoryCell) -> void:
 		return
 	
 	_do_swap(source, cell, src_item, src_count)
-	
+
 
 ## Coloca item em célula vazia quando NÃO tem source (item veio do CraftingGrid)
 func _place_on_empty_no_source(target: InventoryCell, src_item: Item, src_count: int) -> void:
 	target.set_item(src_item)
 	target.count = src_count
+
 
 ## Returns an array with the references of all empty cells.
 ## if 'first' is true, returns as soon as it finds one.
@@ -306,10 +309,12 @@ func handle_wants_item_removed(cell: InventoryCell) -> void:
 	_disable_pickup_temporarily(item)
 
 
-func add_item(item: Item) -> void:
+func add_item(item: Item, source : ItemAddSource = ItemAddSource.PICK_UP) -> void:
+	print(ItemAddSource.find_key(source))
 	if not item:
 		return
 	
+	current_item_added_source = source
 	# Se tem item carregado, restaura antes pra não duplicar
 	_restore_selected()
 	
@@ -368,6 +373,13 @@ func add_item(item: Item) -> void:
 		cell.count = 1
 	
 	item_added.emit(item)
+
+
+func _play_added_item_sfx(_item : Item) -> void:
+	match current_item_added_source:
+		ItemAddSource.PICK_UP, ItemAddSource.CRAFT:
+			item_added_sfx.play()
+
 
 func cancel_selected_item() -> void:
 	if selected_cell:

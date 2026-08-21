@@ -77,8 +77,9 @@ metadata/_custom_type_script = "uid://buqd0oigfu3ej"
 [node name="Nome" type="Control" parent="." unique_id=820823389 node_paths=PackedStringArray("interactable_area", "label")]
 layout_mode = 3
 anchors_preset = 0
+offset_top = -5.0
 offset_right = 40.0
-offset_bottom = 40.0
+offset_bottom = 35.0
 script = ExtResource("6_pbqwa")
 interaction_name = "CuttingWorkbench"
 interactable_area = NodePath("../InteractableArea")
@@ -106,8 +107,9 @@ offset_right = 56.172516
 offset_bottom = 7.4673367
 scale = Vector2(0.88033766, 1.0995921)
 theme_override_fonts/font = ExtResource("7_g3uf8")
-theme_override_font_sizes/font_size = 4
-text = "CuttingWorkbench"
+theme_override_font_sizes/font_size = 5
+text = "MESA DE CORTE"
+horizontal_alignment = 1
 
 [connection signal="interact_with_player" from="InteractableArea" to="." method="_on_interactable_area_interact_with_player"]
 [connection signal="stop_interact_with_player" from="InteractableArea" to="." method="_on_interactable_area_stop_interact_with_player"]

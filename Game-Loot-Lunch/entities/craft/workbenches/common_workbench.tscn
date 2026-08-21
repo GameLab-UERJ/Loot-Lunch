@@ -63,8 +63,9 @@ metadata/_custom_type_script = "uid://buqd0oigfu3ej"
 [node name="Nome" type="Control" parent="." unique_id=1105957898 node_paths=PackedStringArray("interactable_area", "label")]
 layout_mode = 3
 anchors_preset = 0
+offset_top = -5.0
 offset_right = 40.0
-offset_bottom = 40.0
+offset_bottom = 35.0
 script = ExtResource("6_gh4fj")
 interaction_name = "Common Workbench"
 interactable_area = NodePath("../InteractableArea")
@@ -92,8 +93,10 @@ offset_right = 56.172516
 offset_bottom = 7.4673367
 scale = Vector2(0.88033766, 1.0995921)
 theme_override_fonts/font = ExtResource("7_gh4fj")
-theme_override_font_sizes/font_size = 4
-text = "Common Workbench"
+theme_override_font_sizes/font_size = 5
+text = "MESA SIMPLES"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="body_entered" from="InteractableArea" to="Nome" method="_on_interactable_area_body_entered"]
 [connection signal="body_exited" from="InteractableArea" to="Nome" method="_on_interactable_area_body_exited"]

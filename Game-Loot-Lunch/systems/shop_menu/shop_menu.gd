@@ -93,7 +93,7 @@ func fill_shop_inventory() -> void:
 	for item_scene: PackedScene in current_shop.get_item_scenes():
 		var item: Item = current_shop.create_item(item_scene)
 		add_child(item)
-		shop_inventory.add_item(item)
+		shop_inventory.add_item(item, Inventory.ItemAddSource.NONE)
 		set_item_price_text(shop_inventory, item, current_shop.get_price(item_scene), Color.GREEN)
 
 
@@ -163,7 +163,7 @@ func confirm_buy() -> void:
 				if new_item:
 					add_child(new_item)
 					new_item.dropped_count = count
-					real_player_inventory.add_item(new_item)
+					real_player_inventory.add_item(new_item,Inventory.ItemAddSource.SHOP)
 			
 			# Limpa o item da transferência
 			cell.item.queue_free()
