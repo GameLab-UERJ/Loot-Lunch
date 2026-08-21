@@ -17,6 +17,7 @@ var _player: Player
 var _player_max_hp: int = 1
 var _life_bar_tween: Tween
 var _flash_tween: Tween
+var _notification_tweens: Dictionary = {}
 
 
 func _ready() -> void:
@@ -28,6 +29,9 @@ func _ready() -> void:
 	if PlayerWallet.gold_changed.is_connected(_on_gold_changed) == false:
 		PlayerWallet.gold_changed.connect(_on_gold_changed)
 	_update_gold(PlayerWallet.gold)
+
+	if not QuestManager.mission_updated.is_connected(_on_mission_updated):
+		QuestManager.mission_updated.connect(_on_mission_updated)
 
 	var player := get_parent() as Player
 	if player:
@@ -60,6 +64,11 @@ func _bind_player(player: Player) -> void:
 
 	if not player.took_damage.is_connected(_on_player_took_damage):
 		player.took_damage.connect(_on_player_took_damage)
+
+	var inventory_component := player.get_node_or_null("InventoryComponent") as InventoryComponent
+	if inventory_component and inventory_component.inventory \
+			and not inventory_component.inventory.item_added.is_connected(_on_item_added):
+		inventory_component.inventory.item_added.connect(_on_item_added)
 
 
 func _animate_life_bar() -> void:
@@ -104,8 +113,41 @@ func _on_player_took_damage() -> void:
 	_animate_life_bar()
 
 
+func _on_mission_updated(_new_stage: int) -> void:
+	_start_notification_blink(mission_button)
+
+
+func _on_item_added(_item: Item) -> void:
+	var inventory_component : InventoryComponent = _player.get_node_or_null("InventoryComponent") as InventoryComponent
+	if (inventory_component and 
+		inventory_component.inventory.current_item_added_source == 
+		Inventory.ItemAddSource.PICK_UP):
+			_start_notification_blink(inventory_button)
+	print("blink attempt: ",Inventory.ItemAddSource.find_key(inventory_component.inventory.current_item_added_source))
+
+
+func _start_notification_blink(button: Button) -> void:
+	_stop_notification_blink(button)
+	var tween := create_tween()
+	tween.set_loops()
+	tween.tween_property(button, "modulate:a", 0.15, 0.3) \
+		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	tween.tween_property(button, "modulate:a", 1.0, 0.3) \
+		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	_notification_tweens[button] = tween
+
+
+func _stop_notification_blink(button: Button) -> void:
+	var tween: Tween = _notification_tweens.get(button) as Tween
+	if tween != null:
+		tween.kill()
+	_notification_tweens.erase(button)
+	button.modulate = Color.WHITE
+
+
 func _on_mission_button_pressed() -> void:
 	button_click.play(0.13)
+	_stop_notification_blink(mission_button)
 	var pause_menu := get_tree().root.get_node_or_null("PauseMenu") as PauseMenu
 	if pause_menu:
 		pause_menu.pause()
@@ -122,6 +164,7 @@ func _on_mission_button_pressed() -> void:
 
 func _on_inventory_button_pressed() -> void:
 	button_click.play(0.13)
+	_stop_notification_blink(inventory_button)
 	var player := get_parent() as Player
 	if player == null:
 		return

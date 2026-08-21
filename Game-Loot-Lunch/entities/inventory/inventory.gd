@@ -364,7 +364,6 @@ func _play_added_item_sfx(_item : Item) -> void:
 	match current_item_added_source:
 		ItemAddSource.PICK_UP, ItemAddSource.CRAFT:
 			item_added_sfx.play()
-	current_item_added_source = ItemAddSource.NONE
 
 
 func cancel_selected_item() -> void:
