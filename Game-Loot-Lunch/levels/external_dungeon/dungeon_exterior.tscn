@@ -1507,7 +1507,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s8fh2"]
-size = Vector2(716, 120)
+size = Vector2(716, 103)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bg1yv"]
 size = Vector2(223, 406)
@@ -1624,7 +1624,7 @@ spawn_limit = 4.0
 [node name="SpawnArea" type="Area2D" parent="Creatures/Retangle_spawn" unique_id=396360193]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Creatures/Retangle_spawn/SpawnArea" unique_id=621490343]
-position = Vector2(-431, -418)
+position = Vector2(-431, -417.5)
 shape = SubResource("RectangleShape2D_s8fh2")
 
 [node name="Retangle_spawn2" parent="Creatures" unique_id=1443712425 node_paths=PackedStringArray("chased_node") instance=ExtResource("20_bg1yv")]

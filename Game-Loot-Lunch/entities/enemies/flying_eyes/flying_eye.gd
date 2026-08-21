@@ -69,7 +69,10 @@ func _on_territory_body_entered(_body: Node2D) -> void:
 
 func _on_territory_body_exited(_body: Node2D) -> void:
 	alert = false
-	states_timer.start(5)
+	if states_timer.is_inside_tree():
+		states_timer.start(5)
+	else:
+		states_timer.autostart = true
 
 
 func idle_state() -> void:

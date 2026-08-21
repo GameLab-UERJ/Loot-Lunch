@@ -15,7 +15,7 @@ func _ready() -> void:
 	
 	
 func _state_logic(_delta: float) -> void:
-	print(states.find_key(state))
+	pass
 
 
 func _get_transition() -> int:
