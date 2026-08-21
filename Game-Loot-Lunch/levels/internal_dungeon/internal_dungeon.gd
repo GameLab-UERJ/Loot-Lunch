@@ -8,7 +8,6 @@ class_name InternalDungeon
 signal player_can_leave_dungeon
 
 
-@onready var enemies: Node2D = $Enemies
 @onready var player: Player = $Player
 
 
