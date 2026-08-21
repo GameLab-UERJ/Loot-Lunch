@@ -62,7 +62,7 @@ func get_mission_text(quest : QuestStatus) -> String:
 		QuestManager.QuestStatus.FAZER_VINAGRETE:
 			mission_text = "Objetivo: Na Mesa Simples, misture o Tomate, a Cebola e o Pimentao para fazer o Vinagrete"
 		QuestManager.QuestStatus.FAZER_REFEICAO_FINAL:
-			mission_text = "Objetivo: Na Mesa Simples, misture os 3 pratos em um."
+			mission_text = "Objetivo: Pegue o Prato na Casa e misture a Farofa, a Carne de Sol e o Vinagrete nele na Mesa Simples."
 		QuestManager.QuestStatus.ENTREGAR_A_JULIETA:
 			mission_text = "Objetivo: Leve a Carne de Sol com Farofa de Tanajura e Vinagrete para Julieta na Masmorra."
 		_:
