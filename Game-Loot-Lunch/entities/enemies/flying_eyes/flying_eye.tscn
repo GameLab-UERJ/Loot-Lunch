@@ -13,9 +13,13 @@
 [ext_resource type="AudioStream" uid="uid://bur053evb1ael" path="res://assets/sfx/bat_wing_flap.wav" id="8_5845t"]
 [ext_resource type="PackedScene" uid="uid://cex8lco80xebi" path="res://entities/items/sal.tscn" id="8_kwgsu"]
 [ext_resource type="Texture2D" uid="uid://b43fyhe45hakj" path="res://assets/art/entities/shadow_single.png" id="9_ed664"]
+[ext_resource type="Script" uid="uid://bi685ndl8udct" path="res://entities/base_classes/components/patrol_component.gd" id="9_kwgsu"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5ah01"]
 radius = 4.12311
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rvhic"]
+radius = 64.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5ah01"]
 atlas = ExtResource("3_0u44y")
@@ -285,8 +289,10 @@ _data = {
 }
 
 [node name="FlyingEye" unique_id=1346698654 instance=ExtResource("1_scurg")]
+z_index = 2
 collision_mask = 5
 script = ExtResource("2_0oiyv")
+idle_time = 5.0
 max_speed = 50
 
 [node name="FiniteStateMachine" parent="." index="0" unique_id=394854071]
@@ -297,6 +303,7 @@ script = ExtResource("4_k1upe")
 
 [node name="ChaseComponent" type="Node" parent="." index="2" unique_id=1206515480]
 script = ExtResource("4_eqxgk")
+enabled = false
 
 [node name="MovementComponent" type="Node" parent="." index="3" unique_id=1873778066]
 script = ExtResource("4_usvun")
@@ -309,7 +316,11 @@ fixed_amount = 1
 drop_chance = 0.6
 metadata/_custom_type_script = "uid://bp37504prfie7"
 
-[node name="HitboxComponent" type="Area2D" parent="." index="5" unique_id=753196878]
+[node name="PatrolComponent" type="Node" parent="." index="5" unique_id=1433586925]
+script = ExtResource("9_kwgsu")
+metadata/_custom_type_script = "uid://bi685ndl8udct"
+
+[node name="HitboxComponent" type="Area2D" parent="." index="6" unique_id=753196878]
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("5_5ah01")
@@ -319,21 +330,28 @@ metadata/_custom_type_script = "uid://bi7fdvl4vpp7o"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" index="0" unique_id=1306141943]
 shape = SubResource("CircleShape2D_5ah01")
 
-[node name="AnimatedSprite2D" parent="." index="6" unique_id=552654717]
+[node name="Territory" type="Area2D" parent="." index="7" unique_id=152555292]
+collision_layer = 0
+collision_mask = 2
+
+[node name="Territory2D" type="CollisionShape2D" parent="Territory" index="0" unique_id=644051161]
+shape = SubResource("CircleShape2D_rvhic")
+
+[node name="AnimatedSprite2D" parent="." index="8" unique_id=552654717]
 sprite_frames = SubResource("SpriteFrames_scurg")
 animation = &"fly"
 
-[node name="CollisionShape2D" parent="." index="7" unique_id=398117634]
+[node name="CollisionShape2D" parent="." index="9" unique_id=398117634]
 shape = SubResource("CircleShape2D_5g253")
 
-[node name="AnimationPlayer" parent="." index="8" unique_id=2113090391]
+[node name="AnimationPlayer" parent="." index="10" unique_id=2113090391]
 libraries/ = SubResource("AnimationLibrary_0u44y")
 
-[node name="WingFlapSfx" type="AudioStreamPlayer2D" parent="." index="9" unique_id=345390706]
+[node name="WingFlapSfx" type="AudioStreamPlayer2D" parent="." index="11" unique_id=345390706]
 stream = ExtResource("8_5845t")
 max_distance = 200.0
 
-[node name="Shadow" type="Sprite2D" parent="." index="10" unique_id=1621882509]
+[node name="Shadow" type="Sprite2D" parent="." index="12" unique_id=1621882509]
 position = Vector2(1, 0)
 texture = ExtResource("9_ed664")
 
@@ -342,4 +360,7 @@ texture = ExtResource("9_ed664")
 [connection signal="took_damage" from="." to="." method="_on_took_damage"]
 [connection signal="next_chase_point_set" from="ChaseComponent" to="." method="_on_chase_component_next_chase_point_set"]
 [connection signal="there_is_no_player" from="ChaseComponent" to="." method="_on_chase_component_there_is_no_player"]
+[connection signal="next_target_point_set" from="PatrolComponent" to="." method="_on_patrol_component_next_target_point_set"]
+[connection signal="body_entered" from="Territory" to="." method="_on_territory_body_entered"]
+[connection signal="body_exited" from="Territory" to="." method="_on_territory_body_exited"]
 [connection signal="frame_changed" from="AnimatedSprite2D" to="." method="_on_wing_flap"]

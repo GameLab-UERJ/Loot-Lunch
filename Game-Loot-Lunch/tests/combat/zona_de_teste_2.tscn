@@ -3,7 +3,11 @@
 [ext_resource type="PackedScene" uid="uid://c58rbxt3e1aij" path="res://levels/test_floor.tscn" id="1_evmeg"]
 [ext_resource type="PackedScene" uid="uid://3cgeew2m05mn" path="res://entities/player/player.tscn" id="2_suj83"]
 [ext_resource type="AudioStream" uid="uid://huj0511vq4kh" path="res://assets/music/montogoronto-ominousdark-medievalfantasy-song-309510.mp3" id="3_5yqos"]
-[ext_resource type="PackedScene" uid="uid://dtgxgfm27ko5o" path="res://entities/enemies/tanajura/formigueiro.tscn" id="6_nkc6o"]
+[ext_resource type="PackedScene" uid="uid://ba74yflgg7877" path="res://entities/enemies/flying_eyes/flying_eye.tscn" id="3_w2l0g"]
+[ext_resource type="Script" uid="uid://bxw8o2xka126p" path="res://systems/spawn/retangle_spawn.gd" id="4_5o4wo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_evmeg"]
+size = Vector2(271, 197)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q6nrs"]
 size = Vector2(20, 305)
@@ -20,11 +24,18 @@ stream = ExtResource("3_5yqos")
 volume_db = -15.0
 autoplay = true
 
-[node name="Formigueiro" parent="." unique_id=352992596 node_paths=PackedStringArray("chased_node") instance=ExtResource("6_nkc6o")]
-position = Vector2(291, 122)
+[node name="RetangleSpawn" type="Node2D" parent="." unique_id=625505894 node_paths=PackedStringArray("chased_node")]
+position = Vector2(227, 120)
+script = ExtResource("4_5o4wo")
 chased_node = NodePath("../Player")
-spawn_time = 5.0
-spawn_limit = 3.0
+creature_scene = ExtResource("3_w2l0g")
+metadata/_custom_type_script = "uid://bxw8o2xka126p"
+
+[node name="SpawnArea" type="Area2D" parent="RetangleSpawn" unique_id=395882612]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RetangleSpawn/SpawnArea" unique_id=869267530]
+position = Vector2(53, 3)
+shape = SubResource("RectangleShape2D_evmeg")
 
 [node name="Player" parent="." unique_id=1426255313 instance=ExtResource("2_suj83")]
 position = Vector2(126.34001, 98.884056)
@@ -38,6 +49,7 @@ limit_right = 480
 limit_bottom = 270
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=605697778]
+collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=2061008445]
 position = Vector2(-11, 146.5)
@@ -54,3 +66,5 @@ shape = SubResource("RectangleShape2D_q6nrs")
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D" unique_id=383870480]
 position = Vector2(241, -14)
 shape = SubResource("RectangleShape2D_qa4b1")
+
+[connection signal="spawned" from="RetangleSpawn" to="RetangleSpawn" method="_on_spawned"]
