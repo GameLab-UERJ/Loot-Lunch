@@ -118,7 +118,12 @@ func _on_mission_updated(_new_stage: int) -> void:
 
 
 func _on_item_added(_item: Item) -> void:
-	_start_notification_blink(inventory_button)
+	var inventory_component : InventoryComponent = _player.get_node_or_null("InventoryComponent") as InventoryComponent
+	if (inventory_component and 
+		inventory_component.inventory.current_item_added_source == 
+		Inventory.ItemAddSource.PICK_UP):
+			_start_notification_blink(inventory_button)
+	print("blink attempt: ",Inventory.ItemAddSource.find_key(inventory_component.inventory.current_item_added_source))
 
 
 func _start_notification_blink(button: Button) -> void:
