@@ -46,4 +46,4 @@ func open_chest() -> void:
 	collision.set_deferred("disabled", true)
 	chest_opened.emit(gold_value)
 	
-	print("🎁 Baú ", chest_id, " aberto! +", gold_value, " gold")
+	#print("🎁 Baú ", chest_id, " aberto! +", gold_value, " gold")

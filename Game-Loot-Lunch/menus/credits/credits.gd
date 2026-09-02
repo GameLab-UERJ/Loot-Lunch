@@ -37,7 +37,7 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("pause"):
 		_credit_finished()
-	print(scroll_container.scroll_vertical)
+	#print(scroll_container.scroll_vertical)
 
 
 func credit_text() -> void:
@@ -54,7 +54,7 @@ func credit_text() -> void:
 	rich_text_label.text += '[/center]'
 	
 	text_box_size = rich_text_label.get_visible_content_rect().size.y
-	print("text_box_size: ",rich_text_label.get_visible_content_rect())
+	#print("text_box_size: ",rich_text_label.get_visible_content_rect())
 
 
 func auto_scroll() -> void:
