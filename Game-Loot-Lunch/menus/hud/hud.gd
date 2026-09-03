@@ -123,7 +123,7 @@ func _on_item_added(_item: Item) -> void:
 		inventory_component.inventory.current_item_added_source == 
 		Inventory.ItemAddSource.PICK_UP):
 			_start_notification_blink(inventory_button)
-	print("blink attempt: ",Inventory.ItemAddSource.find_key(inventory_component.inventory.current_item_added_source))
+	#print("blink attempt: ",Inventory.ItemAddSource.find_key(inventory_component.inventory.current_item_added_source))
 
 
 func _start_notification_blink(button: Button) -> void:

@@ -71,7 +71,7 @@ func _on_open_inventory() -> void:
 		was_already_opened = true
 	else:
 		was_already_opened = false
-	print(was_already_opened)
+	#print(was_already_opened)
 
 
 func _on_close_inventory() -> void:

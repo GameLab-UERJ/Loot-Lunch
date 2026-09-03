@@ -134,23 +134,23 @@ func _validate_recipe() -> void:
 		current_items.append(cell.item)
 	
 	# Debug: mostra o que tem no grid
-	print("=== Validando receita ===")
-	for i in range(9):
-		if grid_cells[i].item:
-			print("  Slot ", i, ": ", grid_cells[i].item.item_name)
-		else:
-			print("  Slot ", i, ": vazio")
+	#print("=== Validando receita ===")
+	#for i in range(9):
+	#	if grid_cells[i].item:
+	#		print("  Slot ", i, ": ", grid_cells[i].item.item_name)
+	#	else:
+	#		print("  Slot ", i, ": vazio")
 	
-	print("  Recipes disponíveis: ", recipes.size())
+	#print("  Recipes disponíveis: ", recipes.size())
 	
 	for recipe in recipes:
-		print("  Testando receita: ", recipe.recipe_name)
+		#print("  Testando receita: ", recipe.recipe_name)
 		if recipe.matches(current_items):
 			current_recipe = recipe
 			var result_item := recipe.result_scene.instantiate() as Item
 			result_slot.set_item(result_item)
 			result_slot.count = recipe.result_count
-			print("  >>> RECEITA ENCONTRADA: ", recipe.recipe_name)
+			#print("  >>> RECEITA ENCONTRADA: ", recipe.recipe_name)
 			return
 	
-	print("  >>> Nenhuma receita encontrada")
+	#print("  >>> Nenhuma receita encontrada")

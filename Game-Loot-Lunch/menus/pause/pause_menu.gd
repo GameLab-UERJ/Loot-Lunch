@@ -61,7 +61,7 @@ func _on_settings_button_pressed() -> void:
 	add_child(settings_instance)
 	await settings_instance.tree_exited
 	panel.visible = true
-	print("settings")
+	#print("settings")
 	await _on_button_mouse_pressed()
 
 
