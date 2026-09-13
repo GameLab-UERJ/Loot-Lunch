@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://ba3rb7hpasand"]
+
+[ext_resource type="PackedScene" uid="uid://cq1r2s3t4u5v6" path="res://restaurante/clientes/componentes/queue_manager.tscn" id="1_queue"]
+[ext_resource type="PackedScene" uid="uid://bbac8d7e6f5g4" path="res://restaurante/clientes/spawner/customer_spawner.tscn" id="2_spawner"]
+
+[node name="RestauranteTesteSpawner" type="Node2D" unique_id=1561739214]
+
+[node name="QueueManager" parent="." unique_id=533202711 instance=ExtResource("1_queue")]
+position = Vector2(500, 300)
+
+[node name="CustomerSpawner" parent="." unique_id=42903761 instance=ExtResource("2_spawner")]
+position = Vector2(50, 300)
+queue_manager_path = NodePath("../QueueManager")
