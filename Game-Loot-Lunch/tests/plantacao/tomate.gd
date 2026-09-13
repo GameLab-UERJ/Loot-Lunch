@@ -10,4 +10,4 @@ func _process(delta: float) -> void:
 		var distancia = global_position.distance_to(player.global_position)
 		if distancia < raio_coleta:
 			queue_free()
-			print("Essa desgraça funcionouuuu ( diferente do area_entered, por isso tive q por assim )")
+			#print("Essa desgraça funcionouuuu ( diferente do area_entered, por isso tive q por assim )")

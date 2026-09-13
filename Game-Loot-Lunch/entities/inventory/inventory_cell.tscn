@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://jujvaa432t2v" path="res://entities/inventory/inventory_cell.gd" id="1_rwyhr"]
 [ext_resource type="Script" uid="uid://dj5lc777ac0le" path="res://entities/inventory/price_manager.gd" id="2_atw7w"]
 [ext_resource type="Script" uid="uid://lmwwggbtsw85" path="res://entities/inventory/drag_and_drop_manager.gd" id="3_4fs5j"]
+[ext_resource type="Texture2D" uid="uid://xnfegqg2xfdc" path="res://assets/art/entities/items/farming_fishing.png" id="4_oxpg5"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_atw7w"]
 bg_color = Color(0.25, 0.25, 0.25, 0.99215686)
@@ -12,7 +13,9 @@ border_width_right = 1
 border_width_bottom = 1
 border_color = Color(0.8, 0.8, 0.8, 0)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_rwyhr"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_oxpg5"]
+atlas = ExtResource("4_oxpg5")
+region = Rect2(0, 276, 32, 32)
 
 [sub_resource type="LabelSettings" id="LabelSettings_rwyhr"]
 font_size = 8
@@ -66,9 +69,7 @@ offset_bottom = 16.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-texture = SubResource("AtlasTexture_rwyhr")
-expand_mode = 3
-stretch_mode = 1
+texture = SubResource("AtlasTexture_oxpg5")
 
 [node name="PriceLabel" type="Label" parent="Panel" unique_id=1095353102]
 layout_mode = 1

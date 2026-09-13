@@ -310,7 +310,7 @@ func handle_wants_item_removed(cell: InventoryCell) -> void:
 
 
 func add_item(item: Item, source : ItemAddSource = ItemAddSource.PICK_UP) -> void:
-	print(ItemAddSource.find_key(source))
+	#print(ItemAddSource.find_key(source))
 	if not item:
 		return
 	

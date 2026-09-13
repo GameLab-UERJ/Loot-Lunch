@@ -17,11 +17,11 @@ func _on_body_entered(_body: Node2D) -> void:
 	collect_gold()
 
 func collect_gold() -> void:
-	print("💰 Gold antes: ", PlayerWallet.gold)
+	#print("💰 Gold antes: ", PlayerWallet.gold)
 	
 	PlayerWallet.add_gold(gold_value)
 	
-	print("💰 +", gold_value, " | Gold depois: ", PlayerWallet.gold)
+	#print("💰 +", gold_value, " | Gold depois: ", PlayerWallet.gold)
 	
 	if audio_stream and audio_stream.stream:
 		audio_stream.pitch_scale = randf_range(0.9, 1.1)

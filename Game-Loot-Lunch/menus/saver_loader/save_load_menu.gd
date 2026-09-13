@@ -97,7 +97,7 @@ func _on_save_slot_toggled(toggled_on: bool, slot_path: NodePath, save_position:
 		action_buttons_state()
 		_on_mouse_pressed()
 		
-		print(SaveLoadManager.saves_info[save_position][0])
+		#print(SaveLoadManager.saves_info[save_position][0])
 
 
 # -- Effect when mouse enters any element --
