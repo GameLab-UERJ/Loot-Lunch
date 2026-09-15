@@ -44,7 +44,7 @@ A descrição deve ser usada sempre que o resumo não deixe claro o que o commit
 
 ### Boas práticas
 
-**TODO **
+**TODO**
 
 ### Nomenclatura da branch
 
