@@ -1,0 +1,456 @@
+[gd_scene format=3 uid="uid://v3reii6seu4c"]
+
+[ext_resource type="PackedScene" uid="uid://cjbcmlsay3d5k" path="res://entities/base_classes/character/character.tscn" id="1_6xdwp"]
+[ext_resource type="Texture2D" uid="uid://drd67wc3juh68" path="res://assets/art/entities/player/skeleton/idle/skeleton_idle_spritesheet.png" id="2_j341n"]
+[ext_resource type="Texture2D" uid="uid://caiej7y8h4g5f" path="res://assets/art/entities/player/skeleton/run/skeleton_run_spritesheet.png" id="3_cue0d"]
+[ext_resource type="Texture2D" uid="uid://cic1n8jgv11hx" path="res://assets/art/entities/enemies/flying_eye/enemy_afterdead_explosion_anim_spritesheet.png" id="4_bectd"]
+[ext_resource type="Script" uid="uid://bt5jjpnkd7ps" path="res://entities/base_classes/components/movement_component.gd" id="4_wvtmh"]
+[ext_resource type="Script" uid="uid://dduk8xg34emb7" path="res://entities/base_classes/components/input_component.gd" id="5_3wlsy"]
+[ext_resource type="AudioStream" uid="uid://d3hu113fackea" path="res://assets/sfx/player/footsteps.wav" id="11_7thud"]
+[ext_resource type="AudioStream" uid="uid://ik7r1ahndsgv" path="res://assets/sfx/player/player_hurt.wav" id="13_j3ovn"]
+[ext_resource type="Script" uid="uid://cifu2ruquuyyi" path="res://restaurante/personagens/chef/fsm/chef_fsm.gd" id="chef_fsm"]
+[ext_resource type="Script" uid="uid://ddfhlpnhpfw14" path="res://restaurante/personagens/chef/chef.gd" id="chef_script"]
+[ext_resource type="Script" uid="uid://cbf4xjfruk57k" path="res://restaurante/componentes/dash_component.gd" id="dash"]
+[ext_resource type="Script" uid="uid://cy2jfk1gpcfbq" path="res://restaurante/componentes/hand_component.gd" id="hand"]
+[ext_resource type="Script" uid="uid://bj06n43jwh3ar" path="res://restaurante/componentes/interactor_component.gd" id="interactor"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wvtmh"]
+atlas = ExtResource("4_bectd")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7thud"]
+atlas = ExtResource("4_bectd")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a1qjk"]
+atlas = ExtResource("4_bectd")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j3ovn"]
+atlas = ExtResource("4_bectd")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cue0d"]
+atlas = ExtResource("2_j341n")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bqsbk"]
+atlas = ExtResource("2_j341n")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xf5fp"]
+atlas = ExtResource("2_j341n")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_osktb"]
+atlas = ExtResource("2_j341n")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7vev3"]
+atlas = ExtResource("2_j341n")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_klx3t"]
+atlas = ExtResource("2_j341n")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r5ew0"]
+atlas = ExtResource("2_j341n")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yhol4"]
+atlas = ExtResource("2_j341n")
+region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_va6lm"]
+atlas = ExtResource("3_cue0d")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u2wkb"]
+atlas = ExtResource("3_cue0d")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b71o8"]
+atlas = ExtResource("3_cue0d")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x58m1"]
+atlas = ExtResource("3_cue0d")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b6jp0"]
+atlas = ExtResource("3_cue0d")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8k5s7"]
+atlas = ExtResource("3_cue0d")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_va6lm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wvtmh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7thud")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a1qjk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j3ovn")
+}],
+"loop": 1,
+"name": &"dead",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cue0d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bqsbk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xf5fp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_osktb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7vev3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_klx3t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r5ew0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yhol4")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_va6lm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u2wkb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b71o8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x58m1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b6jp0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8k5s7")
+}],
+"loop": 1,
+"name": &"move",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7vev3"]
+radius = 7.0
+
+[sub_resource type="Animation" id="Animation_bectd"]
+length = 0.36666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"move"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_dash"]
+resource_name = "dash"
+length = 0.18
+loop_mode = 1
+step = 0.03
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"move"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.03, 0.06, 0.09, 0.12, 0.15),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_afbqv"]
+resource_name = "dead"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [&"idle", &"dead"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.6, 0.7, 0.8, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [7, 0, 1, 2, 3]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [false, true, false, true]
+}
+
+[sub_resource type="Animation" id="Animation_j3ovn"]
+resource_name = "hurt"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"idle"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [7]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [false, true, false, true]
+}
+
+[sub_resource type="Animation" id="Animation_wvtmh"]
+resource_name = "idle"
+length = 0.8
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"idle"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
+}
+
+[sub_resource type="Animation" id="Animation_26q78"]
+resource_name = "move"
+length = 0.6
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"move"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_chef"]
+_data = {
+&"RESET": SubResource("Animation_bectd"),
+&"dash": SubResource("Animation_dash"),
+&"dead": SubResource("Animation_afbqv"),
+&"hurt": SubResource("Animation_j3ovn"),
+&"idle": SubResource("Animation_wvtmh"),
+&"move": SubResource("Animation_26q78")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_interactor"]
+radius = 12.0
+
+[node name="Chef" unique_id=1719304412 instance=ExtResource("1_6xdwp")]
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("chef_script")
+interact_action = &"chef_interact"
+pick_drop_action = &"chef_pick_drop"
+dash_action = &"chef_dash"
+drop_distance = 20.0
+dash_sprite_alpha = 0.55
+hp = 5
+invencibility_time = 1.0
+
+[node name="FiniteStateMachine" parent="." index="0" unique_id=394854071]
+unique_name_in_owner = true
+script = ExtResource("chef_fsm")
+
+[node name="AnimatedSprite2D" parent="." index="1" unique_id=552654717]
+sprite_frames = SubResource("SpriteFrames_va6lm")
+animation = &"move"
+
+[node name="CollisionShape2D" parent="." index="2" unique_id=398117634]
+position = Vector2(-1, 0)
+shape = SubResource("CircleShape2D_7vev3")
+
+[node name="AnimationPlayer" parent="." index="3" unique_id=2113090391]
+libraries/ = SubResource("AnimationLibrary_chef")
+
+[node name="InputComponent" type="Node" parent="." index="4" unique_id=1283746501]
+unique_name_in_owner = true
+script = ExtResource("5_3wlsy")
+
+[node name="MovementComponent" type="Node" parent="." index="5" unique_id=1283746502]
+unique_name_in_owner = true
+script = ExtResource("4_wvtmh")
+
+[node name="DashComponent" type="Node" parent="." index="6" unique_id=1283746503]
+unique_name_in_owner = true
+script = ExtResource("dash")
+
+[node name="InteractorComponent" type="Area2D" parent="." index="7" unique_id=1283746504]
+unique_name_in_owner = true
+position = Vector2(16, 0)
+collision_layer = 0
+collision_mask = 24
+monitorable = false
+script = ExtResource("interactor")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractorComponent" index="0" unique_id=1283746505]
+shape = SubResource("CircleShape2D_interactor")
+
+[node name="HandComponent" type="Node2D" parent="." index="8" unique_id=1283746506]
+unique_name_in_owner = true
+position = Vector2(14, 6)
+script = ExtResource("hand")
+
+[node name="FootstepsSfx" type="AudioStreamPlayer2D" parent="." index="9" unique_id=1283746507]
+stream = ExtResource("11_7thud")
+volume_db = -5.0
+
+[node name="HurtSfx" type="AudioStreamPlayer2D" parent="." index="10" unique_id=1283746508]
+stream = ExtResource("13_j3ovn")
+
+[node name="DashSfx" type="AudioStreamPlayer2D" parent="." index="11" unique_id=1283746509]
+
+[connection signal="died" from="." to="." method="_on_died"]
+[connection signal="got_hurt" from="." to="." method="_on_got_hurt"]
+[connection signal="took_damage" from="." to="." method="_on_took_damage"]
+[connection signal="frame_changed" from="AnimatedSprite2D" to="." method="_on_frame_changed"]
+[connection signal="direction_changed" from="InputComponent" to="." method="_on_input_component_direction_changed"]
+[connection signal="dash_finished" from="DashComponent" to="." method="_on_dash_component_dash_finished"]
+[connection signal="dash_started" from="DashComponent" to="." method="_on_dash_component_dash_started"]
