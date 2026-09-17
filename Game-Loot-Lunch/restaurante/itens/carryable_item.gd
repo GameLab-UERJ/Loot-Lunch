@@ -59,6 +59,7 @@ func notify_released() -> void:
 func _apply_data() -> void:
 	if sprite:
 		sprite.texture = data.texture if data else null
+		sprite.scale = data.sprite_scale if data else Vector2.ONE
 	queue_redraw()
 
 

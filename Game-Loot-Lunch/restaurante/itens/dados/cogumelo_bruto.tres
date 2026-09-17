@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" uid="uid://bcs1jmkunt5rx" path="res://restaurante/itens/item_data.gd" id="1_data"]
+[ext_resource type="Texture2D" path="res://restaurante/comidas/espetinhos/base/cogumelo/CogumeloBruto64.png" id="2_tex"]
+
+[resource]
+script = ExtResource("1_data")
+id = &"cogumelo_bruto"
+display_name = "Cogumelo Bruto"
+texture = ExtResource("2_tex")
+hold_offset = Vector2(0, -2)
+sprite_scale = Vector2(0.5, 0.5)
+placeholder_color = Color(0.55, 0.3, 0.7, 1)
