@@ -22,6 +22,14 @@ enum QuestStatus {
 
 var current_status: QuestStatus = QuestStatus.NAO_INICIADA
 var current_inventory : Inventory
+var mission_updated_sfx : AudioStreamPlayer
+
+
+func _ready() -> void:
+	mission_updated_sfx = AudioStreamPlayer.new()
+	mission_updated_sfx.stream = load("res://assets/sfx/gabriel-quest-soynoviembre-digital-success-chime-futuristic-ui-notification-sfx-562086.ogg")
+	add_child(mission_updated_sfx)
+	mission_updated.connect(_play_mission_updated_sfx)
 
 
 func get_mission_text(quest : QuestStatus) -> String:
@@ -54,7 +62,7 @@ func get_mission_text(quest : QuestStatus) -> String:
 		QuestManager.QuestStatus.FAZER_VINAGRETE:
 			mission_text = "Objetivo: Na Mesa Simples, misture o Tomate, a Cebola e o Pimentao para fazer o Vinagrete"
 		QuestManager.QuestStatus.FAZER_REFEICAO_FINAL:
-			mission_text = "Objetivo: Na Mesa Simples, misture os 3 pratos em um."
+			mission_text = "Objetivo: Pegue o Prato na Casa e misture a Farofa, a Carne de Sol e o Vinagrete nele na Mesa Simples."
 		QuestManager.QuestStatus.ENTREGAR_A_JULIETA:
 			mission_text = "Objetivo: Leve a Carne de Sol com Farofa de Tanajura e Vinagrete para Julieta na Masmorra."
 		_:
@@ -98,7 +106,10 @@ func auto_progress() -> void:
 	for item_name : String in waited_item_name:
 		if not current_inventory.has_item(item_name):
 			return
-	print("sartou")
 	@warning_ignore("int_as_enum_without_cast")
 	current_status += 1
 	mission_updated.emit(current_status)
+
+
+func _play_mission_updated_sfx(_new_stage: QuestStatus) -> void:
+	mission_updated_sfx.play()

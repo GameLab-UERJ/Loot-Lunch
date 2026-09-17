@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cyqsq4jf4isch" path="res://entities/npcs/guide_man/guide_man.tscn" id="7_4ru3j"]
 [ext_resource type="Texture2D" uid="uid://bogwm2rcwxg1g" path="res://assets/art/entities/npcs/random/Felipe-Castro-Skeletons-Sheet.png" id="8_86747"]
 [ext_resource type="FontFile" uid="uid://fjcmb5r6tkvp" path="res://assets/fonts/Silver.ttf" id="9_vyeqd"]
+[ext_resource type="PackedScene" uid="uid://bs25t6d5owmfp" path="res://entities/items/prato.tscn" id="10_pr4t"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4r4wk"]
 texture = ExtResource("1_d1boo")
@@ -543,6 +544,11 @@ limit_top = -43
 limit_right = 395
 limit_bottom = 274
 
+[node name="Prato" parent="." unique_id=1336999301 instance=ExtResource("10_pr4t")]
+z_index = 3
+position = Vector2(63, 63)
+scale = Vector2(0.5, 0.5)
+
 [node name="GuideMan" parent="." unique_id=1191334286 instance=ExtResource("7_4ru3j")]
 position = Vector2(227, 85)
 
@@ -551,7 +557,7 @@ sprite_frames = SubResource("SpriteFrames_pvpfn")
 frame = 5
 frame_progress = 1.0
 
-[node name="InteractionLabel" parent="GuideMan" index="3" unique_id=1187989923]
+[node name="InteractionLabel" parent="GuideMan" index="3" unique_id=541255394]
 theme_override_constants/outline_size = 15
 theme_override_fonts/font = ExtResource("9_vyeqd")
 theme_override_font_sizes/font_size = 42

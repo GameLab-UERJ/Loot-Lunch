@@ -2,6 +2,9 @@ extends PanelContainer
 class_name InventoryCell
 
 
+const CELL_DIMENSIONS : Vector2 = Vector2(32,32)
+
+
 signal wants_item_removed(cell : InventoryCell)
 signal left_clicked(cell : InventoryCell)
 signal split_stack(cell : InventoryCell, half : int)
@@ -101,18 +104,14 @@ func set_item(value : Item) -> Item:
 	if not item:
 		_was_stackable = false
 		item_place.texture = null
+		item_place.position = Vector2.ZERO
+		item_place.scale = Vector2.ONE
 		price_manager.set_price_text("")
 		count = 0
 		return null
 	else:
 		_was_stackable = item.has_node("StackableComponent")
-		if not item.region_enabled:
-			item_place.texture = item.texture
-		else:
-			var atlas : AtlasTexture = AtlasTexture.new()
-			atlas.atlas = item.texture
-			atlas.region = item.region_rect
-			item_place.texture = atlas
+		set_and_centralize(item)
 	value.hide()
 	value.force_stop_follow_mouse()
 	value.top_level = false
@@ -129,6 +128,23 @@ func set_item(value : Item) -> Item:
 func set_count(value : int) -> void:
 	count = max(0, value)
 	_update_stack_label()
+
+
+func set_and_centralize(item : Item) -> void:
+	var atlas : AtlasTexture = AtlasTexture.new()
+	atlas.atlas = item.texture
+	atlas.region = item.region_rect
+	item_place.position = Vector2.ZERO
+	item_place.scale = Vector2.ONE
+	item_place.texture = atlas
+	item_place.size = item.region_rect.size
+	var biggest : float = max(item_place.size.x,item_place.size.y)
+	if item_place.size.y == biggest:
+		item_place.scale = Vector2.ONE*(CELL_DIMENSIONS.y/biggest)
+		item_place.position.x += (CELL_DIMENSIONS.x -item_place.size.x*(CELL_DIMENSIONS.y/biggest))/2
+	else:
+		item_place.scale = Vector2.ONE*(CELL_DIMENSIONS.x/biggest)
+		item_place.position.y += (CELL_DIMENSIONS.y -item_place.size.y*(CELL_DIMENSIONS.x/biggest))/2
 
 
 func _update_stack_label() -> void:

@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://cq1r2s3t4u5v6"]
+
+[ext_resource type="Script" uid="uid://br3r1crs3yqst" path="res://restaurante/clientes/componentes/queue_manager.gd" id="1_j7s2q"]
+
+[node name="QueueManager" type="Node2D" unique_id=833620968]
+script = ExtResource("1_j7s2q")
+
+[node name="EntryPoint" type="Marker2D" parent="." unique_id=455412160]

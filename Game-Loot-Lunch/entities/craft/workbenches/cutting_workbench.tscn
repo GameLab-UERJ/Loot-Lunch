@@ -5,6 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://bcjsdj346wct0" path="res://assets/art/tilesets/interior/Interior.png" id="3_5nfi3"]
 [ext_resource type="PackedScene" uid="uid://cbs8q2hki4fym" path="res://systems/interaction/interactable_area.tscn" id="4_pbqwa"]
 [ext_resource type="Script" uid="uid://buqd0oigfu3ej" path="res://entities/base_classes/interaction_component.gd" id="5_1myob"]
+[ext_resource type="Script" uid="uid://487g5j5tx5fy" path="res://entities/craft/nome.gd" id="6_pbqwa"]
+[ext_resource type="FontFile" uid="uid://cvuth304y1byc" path="res://assets/fonts/tinypixel.ttf" id="7_g3uf8"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_06gsy"]
 shader = ExtResource("2_1myob")
@@ -13,6 +15,22 @@ shader_parameter/width = 0.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_elsjk"]
 size = Vector2(34, 29)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t1l37"]
+bg_color = Color(0, 0.6627451, 0.827451, 0.5019608)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+expand_margin_left = 1.0
+expand_margin_top = 1.0
+expand_margin_right = 1.0
+shadow_size = 1
 
 [node name="CuttingWorkbench" type="StaticBody2D" unique_id=1861521828]
 script = ExtResource("1_cxmeh")
@@ -55,6 +73,43 @@ offset_right = 40.0
 offset_bottom = 23.0
 script = ExtResource("5_1myob")
 metadata/_custom_type_script = "uid://buqd0oigfu3ej"
+
+[node name="Nome" type="Control" parent="." unique_id=820823389 node_paths=PackedStringArray("interactable_area", "label")]
+layout_mode = 3
+anchors_preset = 0
+offset_top = -5.0
+offset_right = 40.0
+offset_bottom = 35.0
+script = ExtResource("6_pbqwa")
+interaction_name = "CuttingWorkbench"
+interactable_area = NodePath("../InteractableArea")
+label = NodePath("VBoxContainer/ColorRect/Label")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Nome" unique_id=1422029823]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 0
+offset_left = -34.0
+offset_top = -39.0
+offset_right = 16.0
+offset_bottom = -29.0
+scale = Vector2(1.3808863, 1.6211816)
+
+[node name="ColorRect" type="Panel" parent="Nome/VBoxContainer" unique_id=1329350303]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_t1l37")
+
+[node name="Label" type="Label" parent="Nome/VBoxContainer/ColorRect" unique_id=1824582034]
+layout_mode = 0
+offset_left = 2.1725175
+offset_top = 2.4673367
+offset_right = 56.172516
+offset_bottom = 7.4673367
+scale = Vector2(0.88033766, 1.0995921)
+theme_override_fonts/font = ExtResource("7_g3uf8")
+theme_override_font_sizes/font_size = 5
+text = "MESA DE CORTE"
+horizontal_alignment = 1
 
 [connection signal="interact_with_player" from="InteractableArea" to="." method="_on_interactable_area_interact_with_player"]
 [connection signal="stop_interact_with_player" from="InteractableArea" to="." method="_on_interactable_area_stop_interact_with_player"]

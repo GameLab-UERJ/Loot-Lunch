@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://bbac8d7e6f5g4"]
+
+[ext_resource type="Script" uid="uid://d4denatpcmbsr" path="res://restaurante/clientes/spawner/customer_spawner.gd" id="1_fo3cm"]
+[ext_resource type="PackedScene" uid="uid://bgo4w13b3kinp" path="res://restaurante/clientes/johnny/johnny.tscn" id="2_johnny"]
+[ext_resource type="PackedScene" uid="uid://briwrsm8pafpo" path="res://restaurante/clientes/mandy/mandy.tscn" id="3_mandy"]
+[ext_resource type="PackedScene" uid="uid://osm0g2omoc0t" path="res://restaurante/clientes/patolino/patolino.tscn" id="4_patolino"]
+
+[node name="CustomerSpawner" type="Node2D" unique_id=594982273]
+script = ExtResource("1_fo3cm")
+customer_scenes = Array[PackedScene]([ExtResource("2_johnny"), ExtResource("3_mandy"), ExtResource("4_patolino")])
+
+[node name="SpawnTimer" type="Timer" parent="." unique_id=775057145]
+
+[node name="SpawnPoint" type="Marker2D" parent="." unique_id=1142867972]

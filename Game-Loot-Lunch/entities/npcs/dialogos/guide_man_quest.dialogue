@@ -109,7 +109,8 @@ elif QuestManager.current_status == QuestManager.QuestStatus.FAZER_VINAGRETE:
 	if GlobalData._find_inventory().has_item("Vinagrete"):
 		Carlos - O Guia: Que saudades de comer um Vinagrete. Está sensacional.
 		Carlos - O Guia: Cada um dos pratos está perfeito... A Carne de Sol, a Farofa e o Vinagrete.
-		Carlos - O Guia: Poderia, por gentileza, colocar em um prato uma porção de cada para que eu possa saborear de verdade?
+		Carlos - O Guia: Para eu saborear de verdade, preciso de um [wave amp=25 freq=5]Prato[/wave] para montar a refeição.
+		Carlos - O Guia: Tem um guardado aqui na casa, na mesa ao lado da cozinha. Pegue ele antes de montar tudo!
 		do QuestManager.advance_mission(QuestManager.QuestStatus.FAZER_REFEICAO_FINAL)
 	else:
 		Carlos - O Guia: Mistura tudo na Mesa Simples!
@@ -125,7 +126,7 @@ elif QuestManager.current_status == QuestManager.QuestStatus.FAZER_REFEICAO_FINA
 		Carlos - O Guia: ... Muito Obrigado... De verdade... 
 		do QuestManager.advance_mission(QuestManager.QuestStatus.ENTREGAR_A_JULIETA)
 	else:
-		Carlos - O Guia: Só colocar em um prato na Mesa Simples.[wait=1] Por favor...
+		Carlos - O Guia: Pegue o Prato na mesa da cozinha e coloque as porções nele na Mesa Simples.[wait=1] Por favor...
 
 elif QuestManager.current_status == QuestManager.QuestStatus.ENTREGAR_A_JULIETA:
 	Carlos - O Guia: As masmorras ficam depois dos Olhos Voadores.

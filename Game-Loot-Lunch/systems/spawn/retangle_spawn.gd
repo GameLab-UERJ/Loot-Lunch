@@ -29,11 +29,12 @@ func _on_spawned(spawned_creature: Character) -> void:
 		if spawned_creature.has_node('ChaseComponent'):
 			spawned_creature.chase_component.chased_node = chased_node
 	
+	spawned_creature.global_position = get_valid_point()
 
-	spawned_creature.global_position = Vector2(
+
+# Returns a valid point inside retangle
+func get_valid_point() -> Vector2:
+	return Vector2(
 		randf_range(limit_left, limit_right), 
 		randf_range(limit_down, limit_up)
 		)
-	
-	
-	

@@ -58,7 +58,7 @@ func _on_grid_cell_gui_input(event: InputEvent, index: int) -> void:
 			var old_count = cell.count
 			cell.set_item(null)
 			old_item.dropped_count = old_count
-			inventory.add_item(old_item)
+			inventory.add_item(old_item, Inventory.ItemAddSource.NONE)
 		
 		cell.set_item(inventory.selected_item)
 		cell.count = inventory.selected_count
@@ -108,7 +108,7 @@ func _on_result_gui_input(event: InputEvent) -> void:
 	
 	# Adiciona ao inventário
 	result_item.dropped_count = current_recipe.result_count
-	inventory.add_item(result_item)
+	inventory.add_item(result_item,Inventory.ItemAddSource.CRAFT)
 	
 	craft_completed.emit(result_item)
 	current_recipe = null
@@ -116,7 +116,7 @@ func _on_result_gui_input(event: InputEvent) -> void:
 
 func _on_item_removed(cell: InventoryCell, _index: int) -> void:
 	if cell.item:
-		inventory.add_item(cell.item)
+		inventory.add_item(cell.item, Inventory.ItemAddSource.NONE)
 		cell.set_item(null)
 	_validate_recipe()
 
@@ -134,23 +134,23 @@ func _validate_recipe() -> void:
 		current_items.append(cell.item)
 	
 	# Debug: mostra o que tem no grid
-	print("=== Validando receita ===")
-	for i in range(9):
-		if grid_cells[i].item:
-			print("  Slot ", i, ": ", grid_cells[i].item.item_name)
-		else:
-			print("  Slot ", i, ": vazio")
+	#print("=== Validando receita ===")
+	#for i in range(9):
+	#	if grid_cells[i].item:
+	#		print("  Slot ", i, ": ", grid_cells[i].item.item_name)
+	#	else:
+	#		print("  Slot ", i, ": vazio")
 	
-	print("  Recipes disponíveis: ", recipes.size())
+	#print("  Recipes disponíveis: ", recipes.size())
 	
 	for recipe in recipes:
-		print("  Testando receita: ", recipe.recipe_name)
+		#print("  Testando receita: ", recipe.recipe_name)
 		if recipe.matches(current_items):
 			current_recipe = recipe
 			var result_item := recipe.result_scene.instantiate() as Item
 			result_slot.set_item(result_item)
 			result_slot.count = recipe.result_count
-			print("  >>> RECEITA ENCONTRADA: ", recipe.recipe_name)
+			#print("  >>> RECEITA ENCONTRADA: ", recipe.recipe_name)
 			return
 	
-	print("  >>> Nenhuma receita encontrada")
+	#print("  >>> Nenhuma receita encontrada")

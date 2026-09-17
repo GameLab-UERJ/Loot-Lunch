@@ -211,7 +211,6 @@ autoplay = &"progress"
 
 [node name="ResponsesMenu" type="VBoxContainer" parent="Balloon" unique_id=966297223 node_paths=PackedStringArray("response_template")]
 unique_name_in_owner = true
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -233,7 +232,7 @@ response_template = NodePath("ResponseExample")
 [node name="ResponseExample" type="Button" parent="Balloon/ResponsesMenu" unique_id=914537232]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_cdq5n")
-theme_override_font_sizes/font_size = 32
+theme_override_font_sizes/font_size = 24
 text = "Response example"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1116280512]

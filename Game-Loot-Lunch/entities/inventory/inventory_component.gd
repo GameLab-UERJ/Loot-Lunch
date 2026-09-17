@@ -51,12 +51,12 @@ func has_inventory() -> bool:
 	return inventory != null
 
 
-func add_item(item: Item) -> void:
+func add_item(item: Item, source : Inventory.ItemAddSource = Inventory.ItemAddSource.PICK_UP) -> void:
 	if not inventory:
 		push_warning("InventoryComponent sem Inventory configurado.")
 		return
 	
-	inventory.add_item(item)
+	inventory.add_item(item, source)
 
 
 func open_inventory() -> bool:

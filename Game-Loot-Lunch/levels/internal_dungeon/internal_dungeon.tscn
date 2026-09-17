@@ -1665,7 +1665,10 @@ animations = [{
 size = Vector2(282, 260)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y5j7s"]
-size = Vector2(259, 178)
+size = Vector2(231, 159)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dvx6b"]
+size = Vector2(267, 169)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_laeui"]
 atlas = ExtResource("3_7cswg")
@@ -1873,35 +1876,6 @@ position = Vector2(272, 231)
 zoom = Vector2(2, 2)
 limit_bottom = 270
 
-[node name="Enemies" type="Node2D" parent="." unique_id=1371703629]
-
-[node name="FlyingEye" parent="Enemies" unique_id=1346698654 instance=ExtResource("7_lfow4")]
-position = Vector2(735, -229)
-
-[node name="FlyingEye2" parent="Enemies" unique_id=1305559673 instance=ExtResource("7_lfow4")]
-position = Vector2(701, -267)
-
-[node name="FlyingEye3" parent="Enemies" unique_id=1537323674 instance=ExtResource("7_lfow4")]
-position = Vector2(767, -269)
-
-[node name="FlyingEye4" parent="Enemies" unique_id=1453620143 instance=ExtResource("7_lfow4")]
-position = Vector2(-329, -347)
-
-[node name="FlyingEye5" parent="Enemies" unique_id=1488516365 instance=ExtResource("7_lfow4")]
-position = Vector2(-222, -335)
-
-[node name="FlyingEye6" parent="Enemies" unique_id=83876441 instance=ExtResource("7_lfow4")]
-position = Vector2(-347, -288)
-
-[node name="FlyingEye7" parent="Enemies" unique_id=534445690 instance=ExtResource("7_lfow4")]
-position = Vector2(-159, -215)
-
-[node name="FlyingEye8" parent="Enemies" unique_id=234580501 instance=ExtResource("7_lfow4")]
-position = Vector2(-303, -181)
-
-[node name="FlyingEye9" parent="Enemies" unique_id=961549564 instance=ExtResource("7_lfow4")]
-position = Vector2(-236, -251)
-
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=750057481]
 stream = ExtResource("10_6wgr6")
 autoplay = true
@@ -1948,8 +1922,22 @@ spawn_limit = 3.0
 [node name="SpawnArea" type="Area2D" parent="Creatures/Retangle_spawn2" unique_id=1419018944]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Creatures/Retangle_spawn2/SpawnArea" unique_id=728017872]
-position = Vector2(744.5, -764)
+position = Vector2(758.5, -761.5)
 shape = SubResource("RectangleShape2D_y5j7s")
+
+[node name="Retangle_spawn3" parent="Creatures" unique_id=1459224838 node_paths=PackedStringArray("chased_node") instance=ExtResource("15_nhqbk")]
+position = Vector2(-15, 556)
+chased_node = NodePath("../../Player")
+looping = false
+creature_scene = ExtResource("7_lfow4")
+spawn_time = 1.0
+spawn_limit = 3.0
+
+[node name="SpawnArea" type="Area2D" parent="Creatures/Retangle_spawn3" unique_id=1418677408]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Creatures/Retangle_spawn3/SpawnArea" unique_id=1980790879]
+position = Vector2(296.5, -769.5)
+shape = SubResource("RectangleShape2D_dvx6b")
 
 [node name="Doors" type="Node2D" parent="." unique_id=1681145801]
 

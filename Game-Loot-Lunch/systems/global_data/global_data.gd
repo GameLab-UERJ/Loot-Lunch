@@ -131,7 +131,7 @@ func restore_inventory() -> void:
 				var item: Item = item_scene.instantiate()
 				item.dropped_count = item_data["count"]
 				add_child(item)
-				inventory.add_item(item)
+				inventory.add_item(item, Inventory.ItemAddSource.SAVE_LOAD)
 
 
 func restore_player_position() -> void:

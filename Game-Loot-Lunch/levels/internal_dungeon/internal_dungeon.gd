@@ -8,8 +8,12 @@ class_name InternalDungeon
 signal player_can_leave_dungeon
 
 
+@onready var player: Player = $Player
+
+
 func _on_external_house_interact_with_player() -> void:
 	player_can_leave_dungeon.emit()
+
 
 func _ready() -> void:
 	EnvironmentManager.is_outdoor = is_outdoor
