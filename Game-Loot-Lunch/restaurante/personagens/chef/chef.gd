@@ -12,6 +12,8 @@ class_name Chef
 @export var interact_action: StringName = &"chef_interact"   # B
 @export var pick_drop_action: StringName = &"chef_pick_drop" # R
 @export var dash_action: StringName = &"chef_dash"           # Space
+## Ação secundária das estações: descartar/limpar (raiz de espeto, lixeira...).
+@export var trash_action: StringName = &"chef_trash"         # T
 
 @export_group("Itens")
 ## Distância à frente do chef onde o item cai ao ser largado.
@@ -60,6 +62,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		interact()
 	elif event.is_action_pressed(pick_drop_action):
 		pick_or_drop()
+	elif event.is_action_pressed(trash_action):
+		trash()
 	else:
 		return
 	get_viewport().set_input_as_handled()
@@ -99,6 +103,16 @@ func pick_or_drop() -> bool:
 		return drop_item() != null
 	var item: CarryableItem = interactor_component.get_nearest_carryable()
 	return item != null and hand_component.hold(item)
+
+
+## Tecla T: ação secundária da estação à frente (limpar a raiz de espeto, lixeira...).
+func trash() -> bool:
+	if not can_act():
+		return false
+	var target: InteractableComponent = interactor_component.get_nearest_interactable()
+	if target == null:
+		return false
+	return target.alt_interact(self)
 
 
 func drop_item() -> CarryableItem:

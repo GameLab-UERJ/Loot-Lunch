@@ -8,6 +8,8 @@ class_name InteractableComponent
 
 
 signal interacted(actor: Node)
+## Ação SECUNDÁRIA (tecla T): descartar/limpar. Quem não usa simplesmente ignora.
+signal alt_interacted(actor: Node)
 signal focus_changed(is_focused: bool)
 
 
@@ -34,6 +36,14 @@ func interact(actor: Node) -> bool:
 	if not can_interact(actor):
 		return false
 	interacted.emit(actor)
+	return true
+
+
+## Ação secundária (tecla T). Mesma regra de `interact`, outro sinal.
+func alt_interact(actor: Node) -> bool:
+	if not can_interact(actor):
+		return false
+	alt_interacted.emit(actor)
 	return true
 
 

@@ -1,0 +1,95 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://restaurante/cozinha/estacoes/assembly_station.gd" id="1_station"]
+[ext_resource type="Script" path="res://restaurante/componentes/interactable_component.gd" id="2_interactable"]
+[ext_resource type="Script" path="res://restaurante/componentes/hand_component.gd" id="3_hand"]
+[ext_resource type="Script" path="res://restaurante/componentes/cooldown_component.gd" id="4_cooldown"]
+[ext_resource type="Script" path="res://restaurante/componentes/progress_bar_component.gd" id="5_bar"]
+[ext_resource type="Script" path="res://restaurante/componentes/sprite_sheet_effect.gd" id="6_effect"]
+[ext_resource type="PackedScene" path="res://restaurante/itens/carryable_item.tscn" id="7_item"]
+[ext_resource type="Texture2D" uid="uid://c8ltnje51xnr8" path="res://restaurante/comidas/espetinhos/base/espeto/RaizEspeto128.png" id="8_espeto"]
+[ext_resource type="Texture2D" uid="uid://cgqbrmknjg0qu" path="res://restaurante/comidas/espetinhos/base/espeto/1361.png" id="9_fogo"]
+[ext_resource type="Texture2D" path="res://restaurante/comidas/espetinhos/base/espeto/925.png" id="10_brilho"]
+[ext_resource type="Resource" path="res://restaurante/itens/dados/receitas/espeto_carne.tres" id="11_carne"]
+[ext_resource type="Resource" path="res://restaurante/itens/dados/receitas/espeto_cogumelo.tres" id="12_cogumelo"]
+[ext_resource type="Resource" path="res://restaurante/itens/dados/receitas/espeto_misto.tres" id="13_misto"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
+size = Vector2(14, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_area"]
+size = Vector2(34, 40)
+
+[node name="RaizEspeto" type="StaticBody2D"]
+collision_layer = 1
+collision_mask = 0
+script = ExtResource("1_station")
+recipes = Array[Resource]([ExtResource("11_carne"), ExtResource("12_cogumelo"), ExtResource("13_misto")])
+item_scene = ExtResource("7_item")
+collect_cooldown = 3.0
+reset_cooldown = 3.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("8_espeto")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 10)
+shape = SubResource("RectangleShape2D_body")
+
+[node name="InteractableComponent" type="Area2D" parent="." node_paths=PackedStringArray("highlight_target")]
+collision_layer = 8
+collision_mask = 0
+monitoring = false
+script = ExtResource("2_interactable")
+highlight_target = NodePath("../Sprite2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableComponent"]
+shape = SubResource("RectangleShape2D_area")
+
+[node name="Slots" type="Node2D" parent="."]
+
+[node name="SlotBaixo" type="Node2D" parent="Slots"]
+position = Vector2(0, 4)
+scale = Vector2(0.4, 0.4)
+script = ExtResource("3_hand")
+flip_with_facing = false
+
+[node name="SlotTopo" type="Node2D" parent="Slots"]
+position = Vector2(0, -4)
+scale = Vector2(0.4, 0.4)
+script = ExtResource("3_hand")
+flip_with_facing = false
+
+[node name="CooldownComponent" type="Node" parent="."]
+script = ExtResource("4_cooldown")
+duration = 3.0
+
+[node name="BarraProgresso" type="Node2D" parent="."]
+z_index = 3
+position = Vector2(0, -22)
+script = ExtResource("5_bar")
+size = Vector2(26, 4)
+fill_color = Color(0.72, 0.4, 0.95, 1)
+
+[node name="EfeitoReset" type="AnimatedSprite2D" parent="."]
+z_index = 4
+position = Vector2(0, -2)
+scale = Vector2(0.55, 0.55)
+script = ExtResource("6_effect")
+sheet = ExtResource("9_fogo")
+row = 2
+columns = 12
+frame_size = Vector2i(64, 64)
+fps = 20.0
+
+[node name="EfeitoPronto" type="AnimatedSprite2D" parent="."]
+z_index = 4
+position = Vector2(0, -2)
+scale = Vector2(0.5, 0.5)
+script = ExtResource("6_effect")
+sheet = ExtResource("10_brilho")
+row = 2
+columns = 12
+frame_size = Vector2i(64, 64)
+fps = 20.0
