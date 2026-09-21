@@ -1,0 +1,35 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" uid="uid://v3reii6seu4c" path="res://restaurante/personagens/chef/chef.tscn" id="1_chef"]
+[ext_resource type="PackedScene" path="res://restaurante/cozinha/estacoes/caixa_carne.tscn" id="2_caixa"]
+[ext_resource type="PackedScene" path="res://restaurante/cozinha/estacoes/pe_cogumelo.tscn" id="3_pe"]
+[ext_resource type="PackedScene" path="res://restaurante/cozinha/estacoes/tabua_corte.tscn" id="4_tabua"]
+[ext_resource type="PackedScene" path="res://restaurante/cozinha/estacoes/raiz_espeto.tscn" id="5_espeto"]
+[ext_resource type="PackedScene" path="res://restaurante/cozinha/estacoes/churrasqueira.tscn" id="6_churras"]
+
+[node name="TesteChurrasqueira" type="Node2D"]
+
+[node name="Chao" type="Polygon2D" parent="."]
+color = Color(0.17, 0.16, 0.2, 1)
+polygon = PackedVector2Array(110, 60, 610, 60, 610, 390, 110, 390)
+
+[node name="ItensNoChao" type="Node2D" parent="."]
+
+[node name="CaixaCarne" parent="." instance=ExtResource("2_caixa")]
+position = Vector2(190, 120)
+
+[node name="PeCogumelo" parent="." instance=ExtResource("3_pe")]
+position = Vector2(400, 120)
+
+[node name="TabuaCorte" parent="." instance=ExtResource("4_tabua")]
+position = Vector2(200, 290)
+
+[node name="RaizEspeto" parent="." instance=ExtResource("5_espeto")]
+position = Vector2(310, 290)
+
+[node name="Churrasqueira" parent="." instance=ExtResource("6_churras")]
+position = Vector2(480, 275)
+
+[node name="Chef" parent="." node_paths=PackedStringArray("items_container") instance=ExtResource("1_chef")]
+position = Vector2(300, 190)
+items_container = NodePath("../ItensNoChao")

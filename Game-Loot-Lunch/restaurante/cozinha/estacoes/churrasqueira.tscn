@@ -1,0 +1,118 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://restaurante/cozinha/estacoes/cooking_station.gd" id="1_station"]
+[ext_resource type="Script" path="res://restaurante/componentes/interactable_component.gd" id="2_interactable"]
+[ext_resource type="Script" path="res://restaurante/componentes/cooking_slot.gd" id="3_slot"]
+[ext_resource type="Script" path="res://restaurante/componentes/hand_component.gd" id="4_hand"]
+[ext_resource type="Script" path="res://restaurante/componentes/progress_bar_component.gd" id="5_bar"]
+[ext_resource type="Script" path="res://restaurante/componentes/sprite_sheet_effect.gd" id="6_effect"]
+[ext_resource type="Texture2D" uid="uid://bvobvq2hlpoyq" path="res://restaurante/comidas/utensilios/Churrasqueira.png" id="7_churras"]
+[ext_resource type="Texture2D" path="res://restaurante/comidas/espetinhos/base/espeto/EspetoToco32.png" id="8_toco"]
+[ext_resource type="Texture2D" uid="uid://cgqbrmknjg0qu" path="res://restaurante/comidas/espetinhos/base/espeto/1361.png" id="9_fogo"]
+[ext_resource type="Resource" path="res://restaurante/itens/dados/receitas/assar_carne.tres" id="10_carne"]
+[ext_resource type="Resource" path="res://restaurante/itens/dados/receitas/assar_cogumelo.tres" id="11_cogumelo"]
+[ext_resource type="Resource" path="res://restaurante/itens/dados/receitas/assar_misto.tres" id="12_misto"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
+size = Vector2(82, 22)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_area"]
+size = Vector2(92, 88)
+
+[node name="Churrasqueira" type="StaticBody2D"]
+collision_layer = 1
+collision_mask = 0
+script = ExtResource("1_station")
+recipes = Array[Resource]([ExtResource("10_carne"), ExtResource("11_cogumelo"), ExtResource("12_misto")])
+perfect_time = 10.0
+burnt_time = 20.0
+vanish_time = 25.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.45, 0.45)
+texture = ExtResource("7_churras")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 34)
+shape = SubResource("RectangleShape2D_body")
+
+[node name="InteractableComponent" type="Area2D" parent="." node_paths=PackedStringArray("highlight_target")]
+collision_layer = 8
+collision_mask = 0
+monitoring = false
+script = ExtResource("2_interactable")
+highlight_target = NodePath("../Sprite2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableComponent"]
+position = Vector2(0, 4)
+shape = SubResource("RectangleShape2D_area")
+
+[node name="Bocas" type="Node2D" parent="."]
+
+[node name="BocaDireita" type="Node2D" parent="Bocas"]
+position = Vector2(15, 25)
+script = ExtResource("3_slot")
+
+[node name="Toco" type="Sprite2D" parent="Bocas/BocaDireita"]
+z_index = 1
+position = Vector2(0, 7)
+scale = Vector2(0.45, 0.45)
+texture = ExtResource("8_toco")
+
+[node name="Mao" type="Node2D" parent="Bocas/BocaDireita"]
+z_index = 2
+scale = Vector2(0.55, 0.55)
+script = ExtResource("4_hand")
+flip_with_facing = false
+
+[node name="Barra" type="Node2D" parent="Bocas/BocaDireita"]
+z_index = 6
+position = Vector2(7, -79)
+script = ExtResource("5_bar")
+size = Vector2(34, 5)
+fill_color = Color(0.95, 0.72, 0.25, 1)
+
+[node name="Efeito" type="AnimatedSprite2D" parent="Bocas/BocaDireita"]
+z_index = 5
+position = Vector2(0, -4)
+scale = Vector2(0.5, 0.5)
+script = ExtResource("6_effect")
+sheet = ExtResource("9_fogo")
+row = 1
+columns = 12
+frame_size = Vector2i(64, 64)
+fps = 20.0
+
+[node name="BocaEsquerda" type="Node2D" parent="Bocas"]
+position = Vector2(-15, 25)
+script = ExtResource("3_slot")
+
+[node name="Toco" type="Sprite2D" parent="Bocas/BocaEsquerda"]
+z_index = 1
+position = Vector2(0, 7)
+scale = Vector2(0.45, 0.45)
+texture = ExtResource("8_toco")
+
+[node name="Mao" type="Node2D" parent="Bocas/BocaEsquerda"]
+z_index = 2
+scale = Vector2(0.55, 0.55)
+script = ExtResource("4_hand")
+flip_with_facing = false
+
+[node name="Barra" type="Node2D" parent="Bocas/BocaEsquerda"]
+z_index = 6
+position = Vector2(-7, -79)
+script = ExtResource("5_bar")
+size = Vector2(34, 5)
+fill_color = Color(0.95, 0.72, 0.25, 1)
+
+[node name="Efeito" type="AnimatedSprite2D" parent="Bocas/BocaEsquerda"]
+z_index = 5
+position = Vector2(0, -4)
+scale = Vector2(0.5, 0.5)
+script = ExtResource("6_effect")
+sheet = ExtResource("9_fogo")
+row = 1
+columns = 12
+frame_size = Vector2i(64, 64)
+fps = 20.0
