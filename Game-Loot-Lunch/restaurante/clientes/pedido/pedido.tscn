@@ -1,0 +1,53 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://restaurante/clientes/pedido/order_component.gd" id="1_order"]
+[ext_resource type="Resource" path="res://restaurante/clientes/pedido/dados/pedido_carne.tres" id="2_carne"]
+[ext_resource type="Resource" path="res://restaurante/clientes/pedido/dados/pedido_cogumelo.tres" id="3_cogumelo"]
+[ext_resource type="Resource" path="res://restaurante/clientes/pedido/dados/pedido_misto.tres" id="4_misto"]
+[ext_resource type="Script" path="res://restaurante/componentes/proximity_component.gd" id="5_proximity"]
+[ext_resource type="Script" path="res://restaurante/componentes/thought_bubble_component.gd" id="6_bubble"]
+[ext_resource type="Shader" path="res://restaurante/componentes/aura_outline.gdshader" id="7_aura"]
+[ext_resource type="Texture2D" uid="uid://dharnakmvehk3" path="res://restaurante/clientes/pedido/pedido_png/balaopensamento.png" id="8_balao"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_perto"]
+radius = 48.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_aura"]
+shader = ExtResource("7_aura")
+shader_parameter/thickness = 3.0
+shader_parameter/softness = 0.55
+shader_parameter/pulse_speed = 4.0
+shader_parameter/pulse_amount = 0.45
+
+[node name="Pedido" type="Node2D"]
+script = ExtResource("1_order")
+options = Array[Resource]([ExtResource("2_carne"), ExtResource("3_cogumelo"), ExtResource("4_misto")])
+
+[node name="Proximity" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+script = ExtResource("5_proximity")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Proximity"]
+shape = SubResource("CircleShape2D_perto")
+
+[node name="ThoughtBubble" type="Node2D" parent="."]
+z_index = 20
+position = Vector2(6, -14)
+scale = Vector2(0.6, 0.6)
+script = ExtResource("6_bubble")
+
+[node name="Conteudo" type="Node2D" parent="ThoughtBubble"]
+
+[node name="Aura" type="Sprite2D" parent="ThoughtBubble/Conteudo"]
+material = SubResource("ShaderMaterial_aura")
+position = Vector2(27, -26)
+texture = ExtResource("8_balao")
+
+[node name="Balao" type="Sprite2D" parent="ThoughtBubble/Conteudo"]
+position = Vector2(27, -26)
+texture = ExtResource("8_balao")
+
+[node name="Icones" type="Node2D" parent="ThoughtBubble/Conteudo"]
+position = Vector2(27, -31)
