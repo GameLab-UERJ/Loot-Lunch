@@ -15,6 +15,9 @@ signal dropped
 
 
 var current_hand: HandComponent = null
+## Dono da ÚLTIMA mão que segurou este item (ex.: o Chef que largou/arremessou).
+## Usado pela entrega para saber quem recebe o pagamento.
+var last_carrier: Node = null
 
 
 @onready var sprite: Sprite2D = get_node_or_null("Sprite2D")
@@ -51,6 +54,8 @@ func notify_held(hand: HandComponent) -> void:
 
 ## Chamado pelo HandComponent. Não chame diretamente.
 func notify_released() -> void:
+	if current_hand:
+		last_carrier = current_hand.get_parent()
 	current_hand = null
 	set_deferred("monitorable", true)
 	dropped.emit()

@@ -13,6 +13,8 @@
 [ext_resource type="Script" uid="uid://cbf4xjfruk57k" path="res://restaurante/componentes/dash_component.gd" id="dash"]
 [ext_resource type="Script" uid="uid://cy2jfk1gpcfbq" path="res://restaurante/componentes/hand_component.gd" id="hand"]
 [ext_resource type="Script" uid="uid://bj06n43jwh3ar" path="res://restaurante/componentes/interactor_component.gd" id="interactor"]
+[ext_resource type="Script" path="res://restaurante/componentes/wallet_component.gd" id="wallet"]
+[ext_resource type="PackedScene" path="res://restaurante/UI/hud_chef.tscn" id="hud_chef"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wvtmh"]
 atlas = ExtResource("4_bectd")
@@ -392,7 +394,8 @@ pick_drop_action = &"chef_pick_drop"
 dash_action = &"chef_dash"
 drop_distance = 20.0
 dash_sprite_alpha = 0.55
-hp = 5
+max_hp = 6
+hp = 6
 invencibility_time = 1.0
 
 [node name="FiniteStateMachine" parent="." index="0" unique_id=394854071]
@@ -446,6 +449,11 @@ volume_db = -5.0
 stream = ExtResource("13_j3ovn")
 
 [node name="DashSfx" type="AudioStreamPlayer2D" parent="." index="11" unique_id=1283746509]
+
+[node name="WalletComponent" type="Node" parent="." index="12" unique_id=1283746510]
+script = ExtResource("wallet")
+
+[node name="HudChef" parent="." index="13" unique_id=1283746511 instance=ExtResource("hud_chef")]
 
 [connection signal="died" from="." to="." method="_on_died"]
 [connection signal="got_hurt" from="." to="." method="_on_got_hurt"]

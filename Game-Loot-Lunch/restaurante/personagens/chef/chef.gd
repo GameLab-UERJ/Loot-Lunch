@@ -5,6 +5,15 @@ class_name Chef
 ##   - HandComponent (maoUm): carrega 1 item visível na mão
 ##   - InteractorComponent: detecta bancadas/itens à frente
 ##   - DashComponent: dash com cooldown e invulnerabilidade
+##   - WalletComponent: carteira (dinheiro dos pedidos)
+##   - HudChef: caveiras de vida + dinheiro no canto superior esquerdo
+##
+## VIDA: usa o `hp` do Character (conta em MEIAS caveiras). `max_hp` = 6 -> 3 caveiras.
+## Cada ponto de dano tira meia caveira. Quem mostra é o HUD, ouvindo `health_changed`.
+
+
+## Vida mudou (dano, cura, reviver). O HUD escuta este sinal.
+signal health_changed(current: int, maximum: int)
 
 
 @export_group("Input")
@@ -20,6 +29,10 @@ class_name Chef
 @export var drop_distance: float = 20.0
 ## Onde os itens largados ficam na árvore. Se vazio, usa o pai do chef (a fase).
 @export var items_container: Node
+
+@export_group("Vida")
+## Vida máxima em pontos (2 pontos = 1 caveira). 6 = 3 caveiras, 10 = 5 caveiras.
+@export var max_hp: int = 6
 
 @export_group("Dash")
 @export var dash_sprite_alpha: float = 0.55
@@ -40,6 +53,12 @@ var facing_direction: Vector2 = Vector2.RIGHT
 @onready var footsteps_sfx: AudioStreamPlayer2D = $FootstepsSfx
 @onready var hurt_sfx: AudioStreamPlayer2D = $HurtSfx
 @onready var dash_sfx: AudioStreamPlayer2D = $DashSfx
+@onready var wallet: WalletComponent = get_node_or_null("WalletComponent")
+
+
+func _ready() -> void:
+	hp = clampi(hp, 0, max_hp)
+	health_changed.emit(hp, max_hp)
 
 
 func _process(_delta: float) -> void:
@@ -115,6 +134,33 @@ func trash() -> bool:
 	return target.alt_interact(self)
 
 
+# --- Vida ---
+
+func is_dead() -> bool:
+	return hp <= 0
+
+
+## Recupera vida (em pontos: 1 = meia caveira). Se estava morto, revive.
+func heal(amount: int) -> void:
+	if amount <= 0 or hp >= max_hp:
+		return
+	var was_dead: bool = is_dead()
+	hp = mini(hp + amount, max_hp)
+	health_changed.emit(hp, max_hp)
+	if was_dead:
+		_revive()
+
+
+func heal_full() -> void:
+	heal(max_hp - hp)
+
+
+func _revive() -> void:
+	animated_sprite.visible = true
+	interactor_component.update_focus = true
+	state_machine.set_state(state_machine.states.idle)
+
+
 func drop_item() -> CarryableItem:
 	var drop_position: Vector2 = global_position + facing_direction * drop_distance
 	return hand_component.drop_to(_get_items_container(), drop_position)
@@ -151,6 +197,8 @@ func _on_dash_component_dash_finished() -> void:
 
 
 func _on_took_damage() -> void:
+	hp = maxi(hp, 0)
+	health_changed.emit(hp, max_hp)
 	hurt_sfx.play()
 
 
