@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PriceTable" format=3]
+
+[ext_resource type="Script" path="res://restaurante/clientes/pedido/price_table.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+default_price = 10
+prices = {
+&"pedido_carne": 10,
+&"pedido_cogumelo": 10,
+&"pedido_misto": 10
+}
+wrong_delivery_ratio = 0.25
