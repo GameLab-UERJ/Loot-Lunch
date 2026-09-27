@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://d1bs2nuwabkda" path="res://restaurante/clientes/customer.gd" id="1_lbyvg"]
 [ext_resource type="Script" uid="uid://cyixqdwijqx54" path="res://restaurante/clientes/customer_finite_state_machine.gd" id="2_yrwsu"]
 [ext_resource type="Texture2D" uid="uid://cary7s6yma4po" path="res://restaurante/clientes/johnny/Skeletons-Johnny.png" id="3_yrwsu"]
+[ext_resource type="PackedScene" path="res://restaurante/clientes/componentes/customer_patience_bar.tscn" id="4_patience"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_iw42i"]
 atlas = ExtResource("3_yrwsu")
@@ -117,3 +118,6 @@ animation = &"idle"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2113090391]
 libraries/ = SubResource("AnimationLibrary_hlfh5")
+
+[node name="CustomerPatienceBar" parent="." instance=ExtResource("4_patience")]
+position = Vector2(-48, -82)
