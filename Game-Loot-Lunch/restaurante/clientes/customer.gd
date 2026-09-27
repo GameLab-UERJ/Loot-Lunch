@@ -20,6 +20,7 @@ signal customer_gave_up
 
 var _queue_mover: QueueMovementComponent
 var _patience: PatienceComponent
+var _patience_bar: CustomerPatienceBar
 
 
 ## Chamado pelo QueueManager para mandar o cliente andar até um slot da
@@ -55,9 +56,12 @@ func _ensure_patience() -> void:
 		add_child(_patience)
 
 	_patience.patience_time = patience_time
+	_patience_bar = get_node_or_null("CustomerPatienceBar")
 
 	if not _patience.patience_expired.is_connected(_on_patience_expired):
 		_patience.patience_expired.connect(_on_patience_expired)
+	if _patience_bar != null and not _patience.patience_changed.is_connected(_on_patience_changed):
+		_patience.patience_changed.connect(_on_patience_changed)
 
 
 func _on_queue_mover_arrived(_target_position: Vector2) -> void:
@@ -65,6 +69,13 @@ func _on_queue_mover_arrived(_target_position: Vector2) -> void:
 	_ensure_patience()
 	if not _patience.is_running():
 		_patience.start()
+	if _patience_bar != null:
+		_patience_bar.set_patience(_patience.get_ratio() * 100.0)
+
+
+func _on_patience_changed(ratio: float) -> void:
+	if _patience_bar != null:
+		_patience_bar.set_patience(ratio * 100.0)
 
 
 func _on_patience_expired() -> void:
