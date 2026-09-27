@@ -63,7 +63,8 @@ func _ensure_patience() -> void:
 func _on_queue_mover_arrived(_target_position: Vector2) -> void:
 	fsm.set_state(fsm.states.waiting_in_queue)
 	_ensure_patience()
-	_patience.start()
+	if not _patience.is_running():
+		_patience.start()
 
 
 func _on_patience_expired() -> void:
