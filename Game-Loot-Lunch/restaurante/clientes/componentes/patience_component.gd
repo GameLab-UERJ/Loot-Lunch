@@ -101,6 +101,10 @@ func is_running() -> bool:
 	return _is_running
 
 
+func has_started() -> bool:
+	return _has_started
+
+
 func _get_fill_color(ratio: float) -> Color:
 	if ratio > warning_threshold:
 		return color_safe
