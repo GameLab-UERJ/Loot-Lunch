@@ -23,6 +23,10 @@ class_name Chef
 signal health_changed(current: int, maximum: int)
 
 
+## Grupo de todos os chefs. Clientes (magias) e summons procuram o alvo por aqui.
+const GROUP: StringName = &"chefs"
+
+
 @export_group("Input")
 ## Nomes das ações do Input Map. Exportados para permitir um 2º jogador com outras teclas.
 @export var interact_action: StringName = &"chef_interact"   # B
@@ -72,6 +76,7 @@ var facing_direction: Vector2 = Vector2.RIGHT
 
 
 func _ready() -> void:
+	add_to_group(GROUP)
 	hp = clampi(hp, 0, max_hp)
 	health_changed.emit(hp, max_hp)
 
@@ -229,6 +234,7 @@ func heal_full() -> void:
 
 
 func _revive() -> void:
+	visible = true  # pode ter sido escondido (ex.: arrastado para o inferno pela Mandy)
 	animated_sprite.visible = true
 	interactor_component.update_focus = true
 	state_machine.set_state(state_machine.states.idle)

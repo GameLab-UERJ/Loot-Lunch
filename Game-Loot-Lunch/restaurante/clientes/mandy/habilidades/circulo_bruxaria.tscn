@@ -1,0 +1,253 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://restaurante/componentes/status_aura.gd" id="1_aura"]
+[ext_resource type="Texture2D" path="res://restaurante/clientes/mandy/habilidade_art/circulo_spawn_7f.png" id="t_spawn"]
+[ext_resource type="Texture2D" path="res://restaurante/clientes/mandy/habilidade_art/circulo_loop_chao_8f.png" id="t_chao"]
+[ext_resource type="Texture2D" path="res://restaurante/clientes/mandy/habilidade_art/circulo_loop_frente_8f.png" id="t_frente"]
+[ext_resource type="Texture2D" path="res://restaurante/clientes/mandy/habilidade_art/circulo_fim_6f.png" id="t_fim"]
+
+[sub_resource type="AtlasTexture" id="Atlas_chao_surgir_0"]
+atlas = ExtResource("t_spawn")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_chao_surgir_1"]
+atlas = ExtResource("t_spawn")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_chao_surgir_2"]
+atlas = ExtResource("t_spawn")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_chao_surgir_3"]
+atlas = ExtResource("t_spawn")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_chao_surgir_4"]
+atlas = ExtResource("t_spawn")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_chao_surgir_5"]
+atlas = ExtResource("t_spawn")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_chao_surgir_6"]
+atlas = ExtResource("t_spawn")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_chao_loop_0"]
+atlas = ExtResource("t_chao")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_chao_loop_1"]
+atlas = ExtResource("t_chao")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_chao_loop_2"]
+atlas = ExtResource("t_chao")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_chao_loop_3"]
+atlas = ExtResource("t_chao")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_chao_loop_4"]
+atlas = ExtResource("t_chao")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_chao_loop_5"]
+atlas = ExtResource("t_chao")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_chao_loop_6"]
+atlas = ExtResource("t_chao")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_chao_loop_7"]
+atlas = ExtResource("t_chao")
+region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_chao_fim_0"]
+atlas = ExtResource("t_fim")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_chao_fim_1"]
+atlas = ExtResource("t_fim")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_chao_fim_2"]
+atlas = ExtResource("t_fim")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_chao_fim_3"]
+atlas = ExtResource("t_fim")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_chao_fim_4"]
+atlas = ExtResource("t_fim")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_chao_fim_5"]
+atlas = ExtResource("t_fim")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_chao"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_chao_surgir_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_chao_surgir_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_chao_surgir_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_chao_surgir_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_chao_surgir_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_chao_surgir_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_chao_surgir_6")
+}],
+"loop": false,
+"name": &"surgir",
+"speed": 14.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_chao_loop_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_chao_loop_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_chao_loop_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_chao_loop_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_chao_loop_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_chao_loop_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_chao_loop_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_chao_loop_7")
+}],
+"loop": true,
+"name": &"loop",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_chao_fim_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_chao_fim_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_chao_fim_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_chao_fim_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_chao_fim_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_chao_fim_5")
+}],
+"loop": false,
+"name": &"fim",
+"speed": 12.0
+}]
+
+[sub_resource type="AtlasTexture" id="Atlas_frente_loop_0"]
+atlas = ExtResource("t_frente")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_frente_loop_1"]
+atlas = ExtResource("t_frente")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_frente_loop_2"]
+atlas = ExtResource("t_frente")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_frente_loop_3"]
+atlas = ExtResource("t_frente")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_frente_loop_4"]
+atlas = ExtResource("t_frente")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_frente_loop_5"]
+atlas = ExtResource("t_frente")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_frente_loop_6"]
+atlas = ExtResource("t_frente")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_frente_loop_7"]
+atlas = ExtResource("t_frente")
+region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_frente"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_frente_loop_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_frente_loop_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_frente_loop_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_frente_loop_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_frente_loop_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_frente_loop_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_frente_loop_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_frente_loop_7")
+}],
+"loop": true,
+"name": &"loop",
+"speed": 10.0
+}]
+
+[node name="CirculoBruxaria" type="Node2D"]
+script = ExtResource("1_aura")
+duration = 4.0
+slow_percent = 0.2
+slow_tint = Color(0.85, 0.7, 1, 1)
+offset = Vector2(0, 2)
+
+[node name="Chao" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_chao")
+animation = &"surgir"
+
+[node name="Frente" type="AnimatedSprite2D" parent="."]
+visible = false
+z_index = 1
+sprite_frames = SubResource("SpriteFrames_frente")
+animation = &"loop"

@@ -1,0 +1,316 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://restaurante/clientes/patolino/habilidades/pato_devorador.gd" id="1_pato"]
+[ext_resource type="Script" path="res://restaurante/componentes/capture_component.gd" id="2_barriga"]
+[ext_resource type="Script" path="res://restaurante/componentes/progress_bar_component.gd" id="3_barra"]
+[ext_resource type="Texture2D" path="res://restaurante/clientes/patolino/habilidade_arte/jscoutinho_idle_PATO.png" id="t_idle"]
+[ext_resource type="Texture2D" path="res://restaurante/clientes/patolino/habilidade_arte/pato_devorar_1_bote_e_engolida.png" id="t_d1"]
+[ext_resource type="Texture2D" path="res://restaurante/clientes/patolino/habilidade_arte/pato_devorar_2_pato_cheio_loop.png" id="t_d2"]
+[ext_resource type="Texture2D" path="res://restaurante/clientes/patolino/habilidade_arte/pato_devorar_3_super_cheio_e_sumico.png" id="t_d3"]
+[ext_resource type="Texture2D" path="res://restaurante/clientes/patolino/habilidade_arte/jscoutinho_danca_PATO.png" id="t_danca"]
+
+[sub_resource type="AtlasTexture" id="Atlas_andar_0"]
+atlas = ExtResource("t_idle")
+region = Rect2(0, 0, 32, 32)
+margin = Rect2(8, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="Atlas_andar_1"]
+atlas = ExtResource("t_idle")
+region = Rect2(32, 0, 32, 32)
+margin = Rect2(8, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="Atlas_andar_2"]
+atlas = ExtResource("t_idle")
+region = Rect2(64, 0, 32, 32)
+margin = Rect2(8, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="Atlas_andar_3"]
+atlas = ExtResource("t_idle")
+region = Rect2(96, 0, 32, 32)
+margin = Rect2(8, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="Atlas_devorar_0"]
+atlas = ExtResource("t_d1")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="Atlas_devorar_1"]
+atlas = ExtResource("t_d1")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="Atlas_devorar_2"]
+atlas = ExtResource("t_d1")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="Atlas_devorar_3"]
+atlas = ExtResource("t_d1")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="Atlas_devorar_4"]
+atlas = ExtResource("t_d1")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="Atlas_devorar_5"]
+atlas = ExtResource("t_d1")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="Atlas_cheio_0"]
+atlas = ExtResource("t_d2")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="Atlas_cheio_1"]
+atlas = ExtResource("t_d2")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="Atlas_cheio_2"]
+atlas = ExtResource("t_d2")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="Atlas_cheio_3"]
+atlas = ExtResource("t_d2")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="Atlas_finalizar_0"]
+atlas = ExtResource("t_d3")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="Atlas_finalizar_1"]
+atlas = ExtResource("t_d3")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="Atlas_finalizar_2"]
+atlas = ExtResource("t_d3")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="Atlas_finalizar_3"]
+atlas = ExtResource("t_d3")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="Atlas_finalizar_4"]
+atlas = ExtResource("t_d3")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="Atlas_finalizar_5"]
+atlas = ExtResource("t_d3")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="Atlas_finalizar_6"]
+atlas = ExtResource("t_d3")
+region = Rect2(288, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="Atlas_sumir_3"]
+atlas = ExtResource("t_d3")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="Atlas_sumir_4"]
+atlas = ExtResource("t_d3")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="Atlas_sumir_5"]
+atlas = ExtResource("t_d3")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="Atlas_sumir_6"]
+atlas = ExtResource("t_d3")
+region = Rect2(288, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="Atlas_comemorar_0"]
+atlas = ExtResource("t_danca")
+region = Rect2(0, 0, 32, 32)
+margin = Rect2(8, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="Atlas_comemorar_1"]
+atlas = ExtResource("t_danca")
+region = Rect2(32, 0, 32, 32)
+margin = Rect2(8, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="Atlas_comemorar_2"]
+atlas = ExtResource("t_danca")
+region = Rect2(64, 0, 32, 32)
+margin = Rect2(8, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="Atlas_comemorar_3"]
+atlas = ExtResource("t_danca")
+region = Rect2(96, 0, 32, 32)
+margin = Rect2(8, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="Atlas_comemorar_4"]
+atlas = ExtResource("t_danca")
+region = Rect2(128, 0, 32, 32)
+margin = Rect2(8, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="Atlas_comemorar_5"]
+atlas = ExtResource("t_danca")
+region = Rect2(160, 0, 32, 32)
+margin = Rect2(8, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="Atlas_comemorar_6"]
+atlas = ExtResource("t_danca")
+region = Rect2(192, 0, 32, 32)
+margin = Rect2(8, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="Atlas_comemorar_7"]
+atlas = ExtResource("t_danca")
+region = Rect2(224, 0, 32, 32)
+margin = Rect2(8, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pato"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_comemorar_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_comemorar_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_comemorar_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_comemorar_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_comemorar_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_comemorar_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_comemorar_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_comemorar_7")
+}],
+"loop": true,
+"name": &"comemorar",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_andar_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_andar_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_andar_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_andar_3")
+}],
+"loop": true,
+"name": &"andar",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_devorar_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_devorar_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_devorar_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_devorar_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_devorar_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_devorar_5")
+}],
+"loop": false,
+"name": &"devorar",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_cheio_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_cheio_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_cheio_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_cheio_3")
+}],
+"loop": true,
+"name": &"cheio",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_finalizar_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_finalizar_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_finalizar_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_finalizar_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_finalizar_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_finalizar_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_finalizar_6")
+}],
+"loop": false,
+"name": &"finalizar",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_sumir_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_sumir_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_sumir_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_sumir_6")
+}],
+"loop": false,
+"name": &"sumir",
+"speed": 10.0
+}]
+
+[sub_resource type="CircleShape2D" id="Circle_corpo"]
+radius = 6.0
+
+[node name="PatoDevorador" type="CharacterBody2D"]
+z_index = 2
+collision_layer = 0
+collision_mask = 1
+motion_mode = 1
+script = ExtResource("1_pato")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -11)
+sprite_frames = SubResource("SpriteFrames_pato")
+animation = &"andar"
+autoplay = "andar"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("Circle_corpo")
+
+[node name="Barriga" type="Node2D" parent="."]
+position = Vector2(0, -4)
+script = ExtResource("2_barriga")
+
+[node name="BarraFuga" type="Node2D" parent="Barriga"]
+z_index = 30
+position = Vector2(0, -22)
+script = ExtResource("3_barra")
+size = Vector2(26, 4)
+fill_color = Color(1, 0.85, 0.2, 1)
