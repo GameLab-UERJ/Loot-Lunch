@@ -11,7 +11,9 @@ class_name ProjectileData
 ## `*_frame_count = 0` desliga aquela parte (ex.: projétil sem sombra).
 ##
 ## Se a arte vier em ARQUIVOS SEPARADOS (um para o voo, outro para o impacto...), preencha
-## `fly_sheet`, `impact_sheet`, `spawn_sheet`: vazio = usa a `sheet` principal.
+## `fly_sheet`, `impact_sheet`, `spawn_sheet`, `expire_sheet`: vazio = usa a `sheet` principal.
+## Arquivos com quadros de outro tamanho (ex.: impacto 64x64 e voo 32x32): preencha o
+## `*_frame_size` daquela parte (0 = usa `frame_size`).
 ##
 ## Novo projétil: FileSystem > botão direito > New Resource > ProjectileData.
 
@@ -34,6 +36,8 @@ class_name ProjectileData
 @export var flip_with_direction: bool = false
 ## Arte do voo em arquivo separado. Vazio = `sheet`.
 @export var fly_sheet: Texture2D
+## Deslocamento do desenho (voo, surgir, sumir) em relação ao ponto que colide.
+@export var sprite_offset: Vector2 = Vector2.ZERO
 
 @export_group("Surgir")
 ## Animação que toca PARADA na mão de quem atira, antes de sair voando. 0 quadros = sem.
@@ -42,6 +46,8 @@ class_name ProjectileData
 @export_range(1, 128) var spawn_first_column: int = 1
 @export_range(0, 128) var spawn_frame_count: int = 0
 @export var spawn_fps: float = 12.0
+## Tamanho do quadro do "surgir". (0, 0) = `frame_size`.
+@export var spawn_frame_size: Vector2i = Vector2i.ZERO
 ## Depois de surgir, mira de novo no alvo (onde ele está AGORA).
 @export var reaim_after_spawn: bool = true
 
@@ -61,6 +67,25 @@ class_name ProjectileData
 @export var impact_fps: float = 14.0
 ## Arte do impacto em arquivo separado. Vazio = `sheet`.
 @export var impact_sheet: Texture2D
+## Tamanho do quadro do impacto. (0, 0) = `frame_size`.
+@export var impact_frame_size: Vector2i = Vector2i.ZERO
+
+@export_group("Sumir")
+## Toca quando o projétil chega ao fim do alcance SEM acertar ninguém (some no ar).
+## 0 quadros = usa o "impacto".
+@export var expire_sheet: Texture2D
+@export_range(1, 64) var expire_row: int = 1
+@export_range(1, 128) var expire_first_column: int = 1
+@export_range(0, 128) var expire_frame_count: int = 0
+@export var expire_fps: float = 12.0
+## Tamanho do quadro do "sumir". (0, 0) = `frame_size`.
+@export var expire_frame_size: Vector2i = Vector2i.ZERO
+
+@export_group("Rastro")
+## Arte que fica para trás enquanto voa (faíscas, fumaça...). Vazio = sem rastro.
+@export var trail: SheetAnimation
+## Segundos entre um pedaço de rastro e outro.
+@export var trail_interval: float = 0.08
 
 @export_group("Movimento")
 @export var speed: float = 170.0
@@ -93,6 +118,12 @@ class_name ProjectileData
 @export var slow_duration: float = 2.0
 @export var slow_tint: Color = Color(0.85, 0.7, 1.0)
 
+@export_group("Atordoar ao acertar")
+## Segundos ATORDOADO (parado, sem agir) para quem for atingido. 0 = não atordoa.
+@export var stun_duration: float = 0.0
+## Arte que fica em cima de quem foi atordoado.
+@export var stun_visual: SheetAnimation
+
 
 ## Monta as animações "voo", "sombra" e "impacto" a partir da spritesheet.
 func build_frames() -> SpriteFrames:
@@ -104,9 +135,11 @@ func build_frames() -> SpriteFrames:
 	_add_animation(frames, &"sombra", sheet, shadow_row, shadow_first_column,
 			shadow_frame_count, 1.0, false)
 	_add_animation(frames, &"impacto", _sheet_for(impact_sheet), impact_row, impact_first_column,
-			impact_frame_count, impact_fps, false)
+			impact_frame_count, impact_fps, false, impact_frame_size)
 	_add_animation(frames, &"surgir", _sheet_for(spawn_sheet), spawn_row, spawn_first_column,
-			spawn_frame_count, spawn_fps, false)
+			spawn_frame_count, spawn_fps, false, spawn_frame_size)
+	_add_animation(frames, &"sumir", _sheet_for(expire_sheet), expire_row, expire_first_column,
+			expire_frame_count, expire_fps, false, expire_frame_size)
 	return frames
 
 
@@ -120,6 +153,8 @@ func has_part(animation: StringName) -> bool:
 			return impact_frame_count > 0 and _sheet_for(impact_sheet) != null
 		&"surgir":
 			return spawn_frame_count > 0 and _sheet_for(spawn_sheet) != null
+		&"sumir":
+			return expire_frame_count > 0 and _sheet_for(expire_sheet) != null
 	return false
 
 
@@ -128,7 +163,9 @@ func _sheet_for(part_sheet: Texture2D) -> Texture2D:
 
 
 func _add_animation(frames: SpriteFrames, animation: StringName, texture: Texture2D, row: int,
-		first_column: int, count: int, fps: float, loop: bool) -> void:
+		first_column: int, count: int, fps: float, loop: bool,
+		part_size: Vector2i = Vector2i.ZERO) -> void:
+	var size: Vector2i = part_size if part_size.x > 0 and part_size.y > 0 else frame_size
 	frames.add_animation(animation)
 	frames.set_animation_loop(animation, loop)
 	frames.set_animation_speed(animation, fps)
@@ -138,9 +175,9 @@ func _add_animation(frames: SpriteFrames, animation: StringName, texture: Textur
 		var atlas := AtlasTexture.new()
 		atlas.atlas = texture
 		atlas.region = Rect2(
-			(first_column - 1 + i) * frame_size.x,
-			(row - 1) * frame_size.y,
-			frame_size.x,
-			frame_size.y
+			(first_column - 1 + i) * size.x,
+			(row - 1) * size.y,
+			size.x,
+			size.y
 		)
 		frames.add_frame(animation, atlas)

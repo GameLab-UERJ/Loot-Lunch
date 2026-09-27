@@ -25,7 +25,7 @@ signal fused(chef: Node2D)
 signal chef_finalized(chef: Node2D)
 
 
-enum State { SPAWNING, FLYING, GRABBING, ATTACHED, DYING, FUSING }
+enum DemonState { SPAWNING, FLYING, GRABBING, ATTACHED, DYING, FUSING }
 
 
 @export_group("Grudar")
@@ -48,8 +48,9 @@ enum State { SPAWNING, FLYING, GRABBING, ATTACHED, DYING, FUSING }
 @export var hunt_animation_speed: float = 1.6
 
 @export_group("Arrastar para o inferno")
-## Cena do buraco (SinkHole).
-@export var hole_scene: PackedScene = preload("res://restaurante/clientes/mandy/habilidades/buraco_inferno.tscn")
+## Cena do buraco (SinkHole). Já vem preenchida em demoninho.tscn (buraco_inferno.tscn).
+## Sem preload no script: assim ele compila mesmo antes das imagens serem importadas.
+@export var hole_scene: PackedScene
 ## Segundos segurando o chef antes de rir.
 @export var grab_time: float = 0.8
 ## Quantas vezes toca a risada.
@@ -70,7 +71,7 @@ enum State { SPAWNING, FLYING, GRABBING, ATTACHED, DYING, FUSING }
 @export var drag_animation: StringName = &"arrastar"
 
 
-var state: State = State.SPAWNING
+var state: DemonState = DemonState.SPAWNING
 ## O chef em que está grudado (ou agarrando, na fusão).
 var victim: Node2D = null
 
@@ -86,11 +87,11 @@ func _ready() -> void:
 		busy = true
 		play_animation(spawn_animation)
 		await animated_sprite.animation_finished
-		if not is_inside_tree() or state != State.SPAWNING:
+		if not is_inside_tree() or state != DemonState.SPAWNING:
 			return
 		busy = false
 		play_animation(walk_animation)
-	state = State.FLYING
+	state = DemonState.FLYING
 
 
 func _exit_tree() -> void:
@@ -99,13 +100,13 @@ func _exit_tree() -> void:
 
 func _physics_process(delta: float) -> void:
 	match state:
-		State.ATTACHED:
+		DemonState.ATTACHED:
 			_process_attached(delta)
 			return
-		State.GRABBING:
+		DemonState.GRABBING:
 			_follow_victim()
 			return
-		State.FUSING, State.DYING, State.SPAWNING:
+		DemonState.FUSING, DemonState.DYING, DemonState.SPAWNING:
 			return
 	super._physics_process(delta)
 	if animated_sprite and not busy and not despawning and not celebrating:
@@ -114,7 +115,7 @@ func _physics_process(delta: float) -> void:
 
 ## Está grudado num chef agora?
 func is_attached() -> bool:
-	return state == State.ATTACHED or state == State.GRABBING
+	return state == DemonState.ATTACHED or state == DemonState.GRABBING
 
 
 # --- Summon ---------------------------------------------------------------------
@@ -154,7 +155,7 @@ func _can_grab(chef: Node2D) -> bool:
 
 
 func _attach_to(chef: Node2D) -> void:
-	state = State.GRABBING
+	state = DemonState.GRABBING
 	busy = true
 	victim = chef
 	z_index = 1
@@ -167,10 +168,10 @@ func _attach_to(chef: Node2D) -> void:
 	if has_animation(grab_animation):
 		play_animation(grab_animation)
 		await animated_sprite.animation_finished
-		if not is_inside_tree() or state != State.GRABBING:
+		if not is_inside_tree() or state != DemonState.GRABBING:
 			return
 
-	state = State.ATTACHED
+	state = DemonState.ATTACHED
 	_attached_left = attached_time
 	play_animation(attached_animation)
 	attached.emit(chef)
@@ -196,10 +197,10 @@ func _follow_victim() -> void:
 
 ## Solta o chef, cai e derrete ("morrer").
 func _die() -> void:
-	if state == State.DYING:
+	if state == DemonState.DYING:
 		return
 	var old_victim: Node2D = victim
-	state = State.DYING
+	state = DemonState.DYING
 	_clear_effects()
 	victim = null
 	if animated_sprite:
@@ -212,7 +213,7 @@ func _die() -> void:
 # --- Fusão + buraco do inferno -----------------------------------------------------
 
 func _fuse_with(partner: LittleDemon, chef: Node2D) -> void:
-	state = State.FUSING
+	state = DemonState.FUSING
 	busy = true
 	victim = chef
 	z_index = 1
@@ -226,7 +227,7 @@ func _fuse_with(partner: LittleDemon, chef: Node2D) -> void:
 	global_position = chef.global_position + attach_offset
 	animated_sprite.flip_h = false
 	if not grab.capture(chef, false):
-		state = State.FLYING
+		state = DemonState.FLYING
 		busy = false
 		Summon.release_dance(self)
 		return
@@ -275,7 +276,7 @@ func _fuse_with(partner: LittleDemon, chef: Node2D) -> void:
 
 ## Este demoninho foi engolido pela fusão com outro.
 func absorb() -> void:
-	state = State.FUSING
+	state = DemonState.FUSING
 	busy = true
 	_clear_effects()
 	victim = null
@@ -316,8 +317,8 @@ func _play_once(animation: StringName) -> void:
 func _is_hunting() -> bool:
 	for node in get_tree().get_nodes_in_group(GROUP):
 		var other := node as LittleDemon
-		if other and other != self and other.state != State.DYING and not other.despawning \
-				and other.state != State.FUSING:
+		if other and other != self and other.state != DemonState.DYING and not other.despawning \
+				and other.state != DemonState.FUSING:
 			return true
 	return false
 

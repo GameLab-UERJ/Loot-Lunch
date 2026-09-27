@@ -14,6 +14,11 @@ class_name Chef
 ## VIDA: usa o `hp` do Character (conta em MEIAS caveiras). `max_hp` = 10 -> 5 caveiras.
 ## Cada ponto de dano tira meia caveira. Quem mostra é o HUD, ouvindo `health_changed`.
 ##
+## STATUS (componentes injetados por quem aplica, o chef só consulta):
+##   - ATORDOADO (StunComponent): não anda nem age, mas continua podendo levar dano;
+##   - CONFUSO (ConfusionComponent): as setas ficam invertidas;
+##   - LENTO (SlowComponent): mexe sozinho no max_speed.
+##
 ## HABILIDADES: o chef só REPASSA as teclas para os filhos AbilityComponent
 ## (press ao apertar, release ao soltar, interrupt ao levar dano). Nova habilidade =
 ## novo nó filho; nada muda aqui.
@@ -115,9 +120,15 @@ func _unhandled_input(event: InputEvent) -> void:
 # --- Ações (públicas para poderem ser chamadas por IA, testes, tutorial...) ---
 
 ## Pode interagir/pegar/dar dash/usar habilidade?
-## (falso durante dash, hurt, dead, com controle bloqueado ou carregando uma habilidade)
+## (falso durante dash, hurt, dead, atordoado, com controle bloqueado ou carregando uma habilidade)
 func can_act() -> bool:
-	return can_control and state_machine.is_free() and not is_using_ability()
+	return can_control and state_machine.is_free() and not is_using_ability() \
+		and not is_stunned()
+
+
+## Atordoado (choque do Johnny...)? Parado e sem agir, mas pode levar dano.
+func is_stunned() -> bool:
+	return StunComponent.is_active_on(self)
 
 
 # --- Habilidades ---
@@ -252,6 +263,8 @@ func _get_items_container() -> Node:
 # --- Sinais ---
 
 func _on_input_component_direction_changed(new_movement_direction: Vector2) -> void:
+	# Confuso: as setas invertem (esquerda vira direita, cima vira baixo).
+	new_movement_direction = ConfusionComponent.transform_direction(self, new_movement_direction)
 	movement_component.move(new_movement_direction)
 	# Mirando com o mouse (segurando Q), quem decide para onde o chef olha é a mira.
 	if new_movement_direction != Vector2.ZERO and not is_facing_locked():

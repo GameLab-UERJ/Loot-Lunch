@@ -11,6 +11,9 @@ class_name Projectile
 ##   - Se o dado tiver "surgir", ele primeiro aparece PARADO (sem acertar ninguém) e só
 ##     depois sai voando (mirando de novo no alvo, se `reaim_after_spawn`).
 ##   - Se o dado tiver `slow_percent`, quem for atingido fica lento (SlowComponent).
+##   - Se o dado tiver `stun_duration`, quem for atingido fica ATORDOADO (StunComponent).
+##   - Chegou ao fim do alcance sem acertar: toca "sumir" (se o dado tiver) em vez do impacto.
+##   - Se o dado tiver `trail`, deixa um rastro enquanto voa.
 ##
 ## Quem está invulnerável (ex.: no meio do dash) é ATRAVESSADO: dá para desviar com dash.
 ##
@@ -46,6 +49,7 @@ var _traveled: float = 0.0
 var _finished: bool = false
 ## Tocando "surgir": parado e sem acertar ninguém.
 var _spawning: bool = false
+var _trail_time: float = 0.0
 
 
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
@@ -93,6 +97,7 @@ func _ready() -> void:
 	for animated in [sprite, shadow, impact]:
 		animated.sprite_frames = frames
 		animated.scale = data.sprite_scale
+	sprite.position = data.sprite_offset
 
 	sprite.visible = data.has_part(&"voo")
 	if data.has_part(&"surgir"):
@@ -119,6 +124,7 @@ func _physics_process(delta: float) -> void:
 		return
 
 	_steer(delta)
+	_drop_trail(delta)
 	var step: float = data.speed * delta
 	global_position += direction * step
 	_traveled += step
@@ -137,7 +143,7 @@ func _physics_process(delta: float) -> void:
 			return
 
 	if _traveled >= data.max_distance:
-		_finish()
+		_finish(true)
 
 
 ## Estoura agora (onde estiver). Público para quem quiser cancelar o projétil.
@@ -196,6 +202,10 @@ func _hit_body(body: Node2D) -> void:
 	if data.slow_percent > 0.0 and data.slow_duration > 0.0:
 		# A fonte é o DADO: duas caveiras seguidas renovam a lentidão, não empilham.
 		SlowComponent.apply(body, data, data.slow_percent, data.slow_duration, data.slow_tint)
+	if data.stun_duration > 0.0:
+		# Mesma regra: a fonte é o dado (renova, não empilha). Atordoado continua podendo
+		# levar dano de outras magias.
+		StunComponent.apply(body, data, data.stun_duration, data.stun_visual)
 	hit.emit(body)
 	_finish()
 
@@ -214,15 +224,37 @@ func _on_spawn_finished() -> void:
 	_update_visual()
 
 
-func _finish() -> void:
+## Deixa um pedaço de rastro no mundo de tempos em tempos.
+func _drop_trail(delta: float) -> void:
+	if data.trail == null or get_parent() == null:
+		return
+	_trail_time -= delta
+	if _trail_time > 0.0:
+		return
+	_trail_time = maxf(data.trail_interval, 0.01)
+	var piece: AnimatedSprite2D = SheetAnimation.spawn_once(data.trail, get_parent(),
+			global_position + data.sprite_offset)
+	if piece:
+		piece.z_index = z_index - 1
+
+
+## `expired` = acabou o alcance sem acertar nada (toca "sumir", se existir).
+func _finish(expired: bool = false) -> void:
 	if _finished:
 		return
 	_finished = true
 	set_deferred(&"monitoring", false)
-	visual.visible = false
 	shadow.visible = false
 	finished.emit(global_position)
 
+	if expired and data.has_part(&"sumir"):
+		# Some no ar, onde está (o desenho do voo dá lugar ao "sumir").
+		sprite.visible = true
+		sprite.play(&"sumir")
+		sprite.animation_finished.connect(queue_free, CONNECT_ONE_SHOT)
+		return
+
+	visual.visible = false
 	if data.has_part(&"impacto"):
 		impact.visible = true
 		impact.play(&"impacto")
