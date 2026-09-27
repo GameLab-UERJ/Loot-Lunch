@@ -120,4 +120,5 @@ animation = &"idle"
 libraries/ = SubResource("AnimationLibrary_igk60")
 
 [node name="CustomerPatienceBar" parent="." instance=ExtResource("4_patience")]
-position = Vector2(-48, -82)
+position = Vector2(-24, -40)
+scale = Vector2(0.5, 0.5)

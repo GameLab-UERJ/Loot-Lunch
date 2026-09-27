@@ -45,10 +45,8 @@ func _ensure_queue_mover() -> void:
 
 
 func _ensure_patience() -> void:
-	if _patience != null:
-		return
-
-	_patience = get_node_or_null("PatienceComponent")
+	if _patience == null:
+		_patience = get_node_or_null("PatienceComponent")
 	if _patience == null:
 		_patience = PatienceComponent.new()
 		_patience.name = "PatienceComponent"
@@ -70,6 +68,7 @@ func _on_queue_mover_arrived(_target_position: Vector2) -> void:
 	if not _patience.is_running():
 		_patience.start()
 	if _patience_bar != null:
+		_patience_bar.visible = true
 		_patience_bar.set_patience(_patience.get_ratio() * 100.0)
 
 
