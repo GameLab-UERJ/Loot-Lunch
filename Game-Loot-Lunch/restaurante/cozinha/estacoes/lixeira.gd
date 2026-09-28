@@ -21,6 +21,6 @@ func _on_interacted(actor: Node) -> void:
 	var hand: HandComponent = HandComponent.find_in(actor)
 	if hand == null or hand.is_empty():
 		return
-	var item: CarryableItem = await hand.consume_item_with_effect(vanish_effect)
+	var item: CarryableItem = hand.consume_item_with_effect(vanish_effect)
 	if item:
 		item_discarded.emit(item)

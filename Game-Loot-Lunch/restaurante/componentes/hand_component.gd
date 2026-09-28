@@ -91,21 +91,18 @@ func consume_item() -> void:
 		item.queue_free()
 
 
-## Remove o item, toca um SpriteSheetEffect e o destrói ao fim da animação.
+## Remove o item e toca um SpriteSheetEffect na posição onde ele estava.
 func consume_item_with_effect(effect: SpriteSheetEffect) -> CarryableItem:
 	var item: CarryableItem = _detach()
 	if item == null:
 		return null
 
-	item.reparent(get_tree().current_scene, true)
+	var item_position: Vector2 = item.global_position
+	item.queue_free()
 	if effect == null:
-		item.queue_free()
 		return item
-	effect.global_position = item.global_position
+	effect.global_position = item_position
 	effect.play_once()
-	await effect.effect_finished
-	if is_instance_valid(item):
-		item.queue_free()
 	return item
 
 
