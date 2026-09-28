@@ -110,16 +110,27 @@ func _run() -> void:
 
 ## Quem está dentro do círculo agora (sem contar quem está invulnerável).
 func get_bodies_in_area() -> Array:
+	return GroundStrike.bodies_in_ellipse(get_tree(), target_group, global_position,
+			hit_radius, vertical_ratio)
+
+
+## Quem do grupo `group` está dentro da elipse (chão visto de cima) em `center`, sem contar
+## quem está invulnerável (dash) nem engolido/morto. Serve para tudo que CAI NO CHÃO
+## (raio, ovo do pato...).
+static func bodies_in_ellipse(tree: SceneTree, group: StringName, center: Vector2,
+		radius: float, ratio: float = 0.7) -> Array:
 	var found: Array = []
-	for node in get_tree().get_nodes_in_group(target_group):
+	if tree == null:
+		return found
+	for node in tree.get_nodes_in_group(group):
 		var body := node as Node2D
 		if body == null or not CaptureComponent.is_available_target(body):
 			continue
 		if body.get(&"is_invulnerable") == true:
 			continue  # dash: desviou
-		var delta: Vector2 = body.global_position - global_position
-		delta.y /= maxf(vertical_ratio, 0.01)
-		if delta.length() <= hit_radius:
+		var delta: Vector2 = body.global_position - center
+		delta.y /= maxf(ratio, 0.01)
+		if delta.length() <= radius:
 			found.append(body)
 	return found
 

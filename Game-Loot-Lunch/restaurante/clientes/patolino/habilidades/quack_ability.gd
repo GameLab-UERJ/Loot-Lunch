@@ -74,13 +74,26 @@ func _perform(_target: Node2D) -> void:
 
 ## Todos os chefs no alcance derrubam o que estão segurando.
 func _scare_everyone() -> void:
+	var center: Vector2 = caster.global_position if caster else Vector2.ZERO
+	var count: int = QuackAbility.scare(get_tree(), target_group, center,
+			radius if caster else 0.0, drop_hop_height)
+	items_dropped.emit(count)
+
+
+## O SUSTO do quack: todo mundo do grupo a até `scare_radius` de `center` (0 = qualquer
+## distância) derruba o item com um pulinho. Retorna quantos derrubaram.
+## Usado pelo quack gigante e pelas rachaduras do ovo do pato devorador.
+static func scare(tree: SceneTree, group: StringName, center: Vector2,
+		scare_radius: float = 0.0, hop_height: float = 10.0) -> int:
 	var count: int = 0
-	for node in get_tree().get_nodes_in_group(target_group):
+	if tree == null:
+		return count
+	for node in tree.get_nodes_in_group(group):
 		var chef := node as Node2D
 		if chef == null or not CaptureComponent.is_available_target(chef):
 			continue
-		if radius > 0.0 and caster and caster.global_position.distance_to(chef.global_position) > radius:
+		if scare_radius > 0.0 and center.distance_to(chef.global_position) > scare_radius:
 			continue
-		if HandComponent.force_drop(chef, drop_hop_height):
+		if HandComponent.force_drop(chef, hop_height):
 			count += 1
-	items_dropped.emit(count)
+	return count

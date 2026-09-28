@@ -70,6 +70,9 @@ var target: Node2D = null
 var busy: bool = false
 var celebrating: bool = false
 var despawning: bool = false
+## Toca a entrada própria ao nascer ("pop", "invocar"...). Quem traz o summon com uma
+## entrada que já mostra ele chegando (SummonEntrance) desliga antes de pôr na fase.
+var play_intro: bool = true
 
 var _life_left: float = 0.0
 
@@ -81,7 +84,7 @@ func _ready() -> void:
 	add_to_group(GROUP)
 	_life_left = lifetime
 	play_animation(walk_animation)
-	if spawn_pop and animated_sprite:
+	if spawn_pop and play_intro and animated_sprite:
 		var base: Vector2 = animated_sprite.scale
 		animated_sprite.scale = base * 0.2
 		var tween: Tween = create_tween()

@@ -79,6 +79,26 @@ static func spawn(scene: PackedScene, container: Node, projectile_data: Projecti
 	return projectile
 
 
+## Solta `count` projéteis EM VOLTA de `center`, em todas as direções (8 = N NE L SE S SO O NO).
+## `angle_offset_deg` gira o leque (0 = o primeiro vai para a direita). `start_radius` faz
+## cada um nascer um pouco afastado do centro (para não nascerem todos empilhados).
+## Usado pelo raio supremo do Johnny e pelo demoninho saindo do buraco da Mandy.
+static func spawn_burst(scene: PackedScene, container: Node, projectile_data: ProjectileData,
+		center: Vector2, count: int, who: Node = null, angle_offset_deg: float = 0.0,
+		start_radius: float = 0.0) -> Array:
+	var fired: Array = []
+	if projectile_data == null or count <= 0:
+		return fired
+	for i in count:
+		var direction_i: Vector2 = Vector2.RIGHT.rotated(
+				deg_to_rad(angle_offset_deg) + TAU * i / float(count))
+		var projectile: Projectile = spawn(scene, container, projectile_data,
+				center + direction_i * start_radius, direction_i, who, null)
+		if projectile:
+			fired.append(projectile)
+	return fired
+
+
 func _ready() -> void:
 	if data == null:
 		push_warning("Projectile '%s' sem ProjectileData." % name)

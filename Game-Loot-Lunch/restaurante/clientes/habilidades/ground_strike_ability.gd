@@ -95,14 +95,8 @@ func _on_struck(at: Vector2, _hit: Array, strike: GroundStrike) -> void:
 func _fire_burst(at: Vector2) -> void:
 	if burst_data == null or burst_count <= 0:
 		return
-	var fired: Array = []
-	for i in burst_count:
-		var direction: Vector2 = Vector2.RIGHT.rotated(
-				deg_to_rad(burst_angle_offset) + TAU * i / float(burst_count))
-		var projectile: Projectile = Projectile.spawn(projectile_scene, get_world(), burst_data,
-				at, direction, caster, null)
-		if projectile:
-			fired.append(projectile)
+	var fired: Array = Projectile.spawn_burst(projectile_scene, get_world(), burst_data,
+			at, burst_count, caster, burst_angle_offset)
 	burst_fired.emit(fired)
 
 

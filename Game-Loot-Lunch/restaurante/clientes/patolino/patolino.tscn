@@ -10,6 +10,7 @@
 [ext_resource type="Resource" path="res://restaurante/clientes/patolino/habilidades/ovo.tres" id="hab_ovo"]
 [ext_resource type="Script" path="res://restaurante/clientes/habilidades/summon_ability.gd" id="hab_summon"]
 [ext_resource type="PackedScene" path="res://restaurante/clientes/patolino/habilidades/pato_devorador.tscn" id="hab_pato"]
+[ext_resource type="PackedScene" path="res://restaurante/clientes/patolino/habilidades/ovo_chocando.tscn" id="hab_ovo_chocando"]
 [sub_resource type="AtlasTexture" id="AtlasTexture_sy6tq"]
 atlas = ExtResource("3_ydncc")
 region = Rect2(0, 0, 64, 64)
@@ -138,3 +139,7 @@ data = ExtResource("hab_ovo")
 [node name="PatoDevorador" type="Node" parent="Habilidades"]
 script = ExtResource("hab_summon")
 summon_scene = ExtResource("hab_pato")
+spawn_near_target = true
+near_offset_min = 0.0
+near_offset_max = 20.0
+entrance_scene = ExtResource("hab_ovo_chocando")

@@ -8,6 +8,12 @@ class_name SinkHole
 ##   await buraco.sink()                 # as cópias descem `sink_depth` px
 ##   await buraco.close()                # "fechar" e some
 ##
+## Também serve AO CONTRÁRIO, para coisas que SAEM do buraco (demoninho da Mandy):
+##   await buraco.open()
+##   buraco.add_ghost_frames(frames, &"voo", onde)   # desenho novo, a partir de um SpriteFrames
+##   await buraco.rise()                             # sobe `rise_depth` px até o lugar
+##   buraco.clear_ghosts()                           # quem saiu assume dali
+##
 ## O corte é feito com uma MÁSCARA (imagem): branco = aparece, preto = escondido.
 ## Ela precisa ter o mesmo tamanho dos quadros do buraco e ficar alinhada com eles.
 ##
@@ -21,6 +27,7 @@ class_name SinkHole
 
 signal opened
 signal sunk
+signal risen
 signal closed
 
 
@@ -35,6 +42,12 @@ signal closed
 @export var sink_time: float = 1.2
 ## Tremidinha para os lados enquanto afunda (pixels). 0 = sem.
 @export var sink_shake: float = 1.0
+
+@export_group("Subir (sair do buraco)")
+## De quantos pixels abaixo as coisas começam a subir.
+@export var rise_depth: float = 40.0
+## Segundos subindo.
+@export var rise_time: float = 0.9
 
 @export_group("Animações")
 @export var open_animation: StringName = &"abrir"
@@ -111,6 +124,41 @@ func add_ghost(source: CanvasItem, animation: StringName = &"") -> Node2D:
 	ghost.global_scale = (source as Node2D).global_scale
 	source.visible = false
 	return ghost
+
+
+## Põe um desenho NOVO no buraco (feito de `frames`, tocando `animation`), em `at`
+## (posição global). Para o que vai SAIR do buraco e ainda não existe na fase.
+func add_ghost_frames(frames: SpriteFrames, animation: StringName, at: Vector2,
+		flip_h: bool = false, sprite_offset: Vector2 = Vector2.ZERO) -> AnimatedSprite2D:
+	if frames == null:
+		return null
+	var ghost := AnimatedSprite2D.new()
+	ghost.sprite_frames = frames
+	ghost.flip_h = flip_h
+	ghost.offset = sprite_offset
+	if animation != &"" and frames.has_animation(animation):
+		ghost.play(animation)
+	sinking.add_child(ghost)
+	ghost.global_position = at
+	return ghost
+
+
+## Faz tudo que está no buraco SUBIR: começa `rise_depth` px para baixo (escondido pela
+## máscara) e sobe até o lugar. O contrário do `sink()`.
+func rise() -> void:
+	var end: Vector2 = sinking.position
+	sinking.position = end + Vector2(0, rise_depth)
+	var tween: Tween = create_tween()
+	tween.tween_property(sinking, "position", end, rise_time) \
+		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	await tween.finished
+	risen.emit()
+
+
+## Apaga as cópias que estão no buraco.
+func clear_ghosts() -> void:
+	for child in sinking.get_children():
+		child.queue_free()
 
 
 ## Afunda tudo que estiver no buraco.

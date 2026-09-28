@@ -2,7 +2,9 @@ extends Summon
 class_name LittleDemon
 ## MANDY — MAGIA 3 (ULTIMATE): DEMONINHO (summon).
 ##
-## 1. Nasce na frente da Mandy ("invocar") e VOA atrás do chef livre mais perto ("voo").
+## 1. SAI DE UM BURACO DO INFERNO perto do chef (entrada `buraco_invocacao.tscn`, na
+##    SummonAbility da Mandy) soltando caveiras nas 8 direções, e VOA atrás do chef livre
+##    mais perto ("voo"). Sem entrada, nasce na frente da Mandy com "invocar".
 ## 2. Encostou -> "grudar" -> fica GRUDADO no chef ("grudado", em loop), andando junto.
 ##    O chef continua andando, mas com `attached_slow` (90%) de lentidão.
 ##    Enquanto ele está grudado, os OUTROS summons (pato do Patolino...) param e DANÇAM.
@@ -83,7 +85,7 @@ var _attached_left: float = 0.0
 
 func _ready() -> void:
 	super._ready()
-	if has_animation(spawn_animation):
+	if play_intro and has_animation(spawn_animation):
 		busy = true
 		play_animation(spawn_animation)
 		await animated_sprite.animation_finished

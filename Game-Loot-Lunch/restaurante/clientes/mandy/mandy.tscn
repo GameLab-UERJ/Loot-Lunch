@@ -10,6 +10,7 @@
 [ext_resource type="Resource" path="res://restaurante/clientes/mandy/habilidades/caveira.tres" id="hab_caveira"]
 [ext_resource type="Script" path="res://restaurante/clientes/habilidades/summon_ability.gd" id="hab_summon"]
 [ext_resource type="PackedScene" path="res://restaurante/clientes/mandy/habilidades/demoninho.tscn" id="hab_demoninho"]
+[ext_resource type="PackedScene" path="res://restaurante/clientes/mandy/habilidades/buraco_invocacao.tscn" id="hab_buraco_invocacao"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nctpg"]
 atlas = ExtResource("3_pi2u6")
@@ -143,4 +144,11 @@ spawn_offset = Vector2(10, -4)
 [node name="Demoninho" type="Node" parent="Habilidades"]
 script = ExtResource("hab_summon")
 summon_scene = ExtResource("hab_demoninho")
+spawn_near_target = true
+near_offset_min = 24.0
+near_offset_max = 40.0
+entrance_scene = ExtResource("hab_buraco_invocacao")
+burst_data = ExtResource("hab_caveira")
+burst_count = 8
+burst_start_radius = 12.0
 max_alive = 2
