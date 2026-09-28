@@ -13,6 +13,7 @@ signal died
 @export var hp: int = 2
 @export var acceleration: int = 40
 @export var max_speed: int = 100
+@export_range(0.1, 1.0, 0.05) var movement_multiplier: float = 1.0
 @export var invencibility_time: float = 0.5
 
 
@@ -54,3 +55,7 @@ func start_invincibility() -> void:
 
 func become_invulnerable() -> void:
 	is_invulnerable = true
+
+
+func set_movement_multiplier(multiplier: float) -> void:
+	movement_multiplier = clampf(multiplier, 0.1, 1.0)

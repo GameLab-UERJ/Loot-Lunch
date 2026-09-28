@@ -1,17 +1,18 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://bjro7lgu7ejd8"]
 
-[ext_resource type="Script" path="res://restaurante/cozinha/estacoes/cooking_station.gd" id="1_station"]
-[ext_resource type="Script" path="res://restaurante/componentes/interactable_component.gd" id="2_interactable"]
-[ext_resource type="Script" path="res://restaurante/componentes/cooking_slot.gd" id="3_slot"]
-[ext_resource type="Script" path="res://restaurante/componentes/hand_component.gd" id="4_hand"]
-[ext_resource type="Script" path="res://restaurante/componentes/progress_bar_component.gd" id="5_bar"]
-[ext_resource type="Script" path="res://restaurante/componentes/sprite_sheet_effect.gd" id="6_effect"]
+[ext_resource type="Script" uid="uid://dy7no28k7ibk2" path="res://restaurante/cozinha/estacoes/cooking_station.gd" id="1_station"]
+[ext_resource type="Script" uid="uid://cxnej3t4p010g" path="res://restaurante/componentes/interactable_component.gd" id="2_interactable"]
+[ext_resource type="Script" uid="uid://d1af6vp4bkt5a" path="res://restaurante/componentes/cooking_slot.gd" id="3_slot"]
+[ext_resource type="Script" uid="uid://cy2jfk1gpcfbq" path="res://restaurante/componentes/hand_component.gd" id="4_hand"]
+[ext_resource type="Script" uid="uid://bmc4kx06hgu2u" path="res://restaurante/componentes/progress_bar_component.gd" id="5_bar"]
+[ext_resource type="Script" uid="uid://cyht2nhhpfgyx" path="res://restaurante/componentes/sprite_sheet_effect.gd" id="6_effect"]
 [ext_resource type="Texture2D" uid="uid://bvobvq2hlpoyq" path="res://restaurante/comidas/utensilios/Churrasqueira.png" id="7_churras"]
-[ext_resource type="Texture2D" path="res://restaurante/comidas/espetinhos/base/espeto/EspetoToco32.png" id="8_toco"]
+[ext_resource type="Texture2D" uid="uid://mafudmpwlult" path="res://restaurante/comidas/espetinhos/base/espeto/EspetoToco32.png" id="8_toco"]
 [ext_resource type="Texture2D" uid="uid://cgqbrmknjg0qu" path="res://restaurante/comidas/espetinhos/base/espeto/1361.png" id="9_fogo"]
 [ext_resource type="Resource" path="res://restaurante/itens/dados/receitas/assar_carne.tres" id="10_carne"]
 [ext_resource type="Resource" path="res://restaurante/itens/dados/receitas/assar_cogumelo.tres" id="11_cogumelo"]
 [ext_resource type="Resource" path="res://restaurante/itens/dados/receitas/assar_misto.tres" id="12_misto"]
+[ext_resource type="PackedScene" path="res://restaurante/armadilhas/flame_random_event.tscn" id="13_traps"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
 size = Vector2(82, 22)
@@ -19,100 +20,92 @@ size = Vector2(82, 22)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_area"]
 size = Vector2(92, 88)
 
-[node name="Churrasqueira" type="StaticBody2D"]
-collision_layer = 1
+[node name="Churrasqueira" type="StaticBody2D" unique_id=626052970]
 collision_mask = 0
 script = ExtResource("1_station")
 recipes = Array[Resource]([ExtResource("10_carne"), ExtResource("11_cogumelo"), ExtResource("12_misto")])
-perfect_time = 10.0
-burnt_time = 20.0
-vanish_time = 25.0
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2029626547]
 scale = Vector2(0.45, 0.45)
 texture = ExtResource("7_churras")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1029264301]
 position = Vector2(0, 34)
 shape = SubResource("RectangleShape2D_body")
 
-[node name="InteractableComponent" type="Area2D" parent="." node_paths=PackedStringArray("highlight_target")]
+[node name="InteractableComponent" type="Area2D" parent="." unique_id=1543703471 node_paths=PackedStringArray("highlight_target")]
 collision_layer = 8
 collision_mask = 0
 monitoring = false
 script = ExtResource("2_interactable")
 highlight_target = NodePath("../Sprite2D")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableComponent"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableComponent" unique_id=1076887618]
 position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_area")
 
-[node name="Bocas" type="Node2D" parent="."]
+[node name="Bocas" type="Node2D" parent="." unique_id=665485104]
 
-[node name="BocaDireita" type="Node2D" parent="Bocas"]
+[node name="BocaDireita" type="Node2D" parent="Bocas" unique_id=241411248]
 position = Vector2(15, 25)
 script = ExtResource("3_slot")
 
-[node name="Toco" type="Sprite2D" parent="Bocas/BocaDireita"]
+[node name="Toco" type="Sprite2D" parent="Bocas/BocaDireita" unique_id=182473823]
 z_index = 1
 position = Vector2(0, 7)
 scale = Vector2(0.45, 0.45)
 texture = ExtResource("8_toco")
 
-[node name="Mao" type="Node2D" parent="Bocas/BocaDireita"]
+[node name="Mao" type="Node2D" parent="Bocas/BocaDireita" unique_id=1057170590]
 z_index = 2
 scale = Vector2(0.55, 0.55)
 script = ExtResource("4_hand")
 flip_with_facing = false
 
-[node name="Barra" type="Node2D" parent="Bocas/BocaDireita"]
+[node name="Barra" type="Node2D" parent="Bocas/BocaDireita" unique_id=135684463]
 z_index = 6
 position = Vector2(7, -79)
 script = ExtResource("5_bar")
 size = Vector2(34, 5)
-fill_color = Color(0.95, 0.72, 0.25, 1)
 
-[node name="Efeito" type="AnimatedSprite2D" parent="Bocas/BocaDireita"]
+[node name="Efeito" type="AnimatedSprite2D" parent="Bocas/BocaDireita" unique_id=2124286103]
 z_index = 5
 position = Vector2(0, -4)
 scale = Vector2(0.5, 0.5)
 script = ExtResource("6_effect")
 sheet = ExtResource("9_fogo")
-row = 1
-columns = 12
-frame_size = Vector2i(64, 64)
-fps = 20.0
 
-[node name="BocaEsquerda" type="Node2D" parent="Bocas"]
+[node name="BocaEsquerda" type="Node2D" parent="Bocas" unique_id=1556320635]
 position = Vector2(-15, 25)
 script = ExtResource("3_slot")
 
-[node name="Toco" type="Sprite2D" parent="Bocas/BocaEsquerda"]
+[node name="Toco" type="Sprite2D" parent="Bocas/BocaEsquerda" unique_id=1362005364]
 z_index = 1
 position = Vector2(0, 7)
 scale = Vector2(0.45, 0.45)
 texture = ExtResource("8_toco")
 
-[node name="Mao" type="Node2D" parent="Bocas/BocaEsquerda"]
+[node name="Mao" type="Node2D" parent="Bocas/BocaEsquerda" unique_id=544371612]
 z_index = 2
 scale = Vector2(0.55, 0.55)
 script = ExtResource("4_hand")
 flip_with_facing = false
 
-[node name="Barra" type="Node2D" parent="Bocas/BocaEsquerda"]
+[node name="Barra" type="Node2D" parent="Bocas/BocaEsquerda" unique_id=932688699]
 z_index = 6
 position = Vector2(-7, -79)
 script = ExtResource("5_bar")
 size = Vector2(34, 5)
-fill_color = Color(0.95, 0.72, 0.25, 1)
 
-[node name="Efeito" type="AnimatedSprite2D" parent="Bocas/BocaEsquerda"]
+[node name="Efeito" type="AnimatedSprite2D" parent="Bocas/BocaEsquerda" unique_id=1053271728]
 z_index = 5
 position = Vector2(0, -4)
 scale = Vector2(0.5, 0.5)
 script = ExtResource("6_effect")
 sheet = ExtResource("9_fogo")
-row = 1
-columns = 12
-frame_size = Vector2i(64, 64)
-fps = 20.0
+
+[node name="FlameRandomEvent" parent="." unique_id=491813727 instance=ExtResource("13_traps")]
+position = Vector2(0, 30)
+event_source_path = NodePath("..")
+event_interval = 7.0
+first_event_delay = 2.0

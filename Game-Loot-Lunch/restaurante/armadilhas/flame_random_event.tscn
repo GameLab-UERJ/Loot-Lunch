@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://restaurante/armadilhas/flame_random_event.gd" id="1_event"]
+[ext_resource type="PackedScene" path="res://restaurante/armadilhas/flame_trap.tscn" id="2_flame"]
+
+[node name="FlameRandomEvent" type="Node2D"]
+script = ExtResource("1_event")
+flame_scene = ExtResource("2_flame")

@@ -1,0 +1,75 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://restaurante/armadilhas/flame_trap.gd" id="1_flame"]
+[ext_resource type="Texture2D" path="res://restaurante/armadilhas/arte/flame_trap.png" id="2_flame"]
+[ext_resource type="Texture2D" path="res://restaurante/armadilhas/arte/trap_warning.png" id="3_warning"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_flame"]
+radius = 22.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_flame_0"]
+atlas = ExtResource("2_flame")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_flame_1"]
+atlas = ExtResource("2_flame")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_flame_2"]
+atlas = ExtResource("2_flame")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_flame_3"]
+atlas = ExtResource("2_flame")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_flame"]
+animations = [{
+"frames": [
+{"duration": 1.0, "texture": SubResource("AtlasTexture_flame_0")},
+{"duration": 1.0, "texture": SubResource("AtlasTexture_flame_1")},
+{"duration": 1.0, "texture": SubResource("AtlasTexture_flame_2")},
+{"duration": 1.0, "texture": SubResource("AtlasTexture_flame_3")}
+],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_warning"]
+animations = [{
+"frames": [{"duration": 1.0, "texture": ExtResource("3_warning")}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="FlameTrap" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+z_index = 10
+script = ExtResource("1_flame")
+active_duration = 2.0
+
+[node name="WarningSprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_warning")
+animation = &"default"
+autoplay = "default"
+centered = true
+z_index = 10
+position = Vector2(0, -24)
+scale = Vector2(0.45, 0.45)
+
+[node name="FlameSprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_flame")
+animation = &"default"
+autoplay = "default"
+z_index = 10
+position = Vector2(0, -18)
+scale = Vector2(0.7, 0.7)
+
+[node name="Hitbox" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_flame")
+position = Vector2(0, -12)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
