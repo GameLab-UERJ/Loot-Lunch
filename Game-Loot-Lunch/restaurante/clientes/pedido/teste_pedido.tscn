@@ -1,0 +1,49 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://restaurante/clientes/pedido/teste_pedido.gd" id="1_teste"]
+[ext_resource type="PackedScene" uid="uid://v3reii6seu4c" path="res://restaurante/personagens/chef/chef.tscn" id="2_chef"]
+[ext_resource type="PackedScene" uid="uid://bgo4w13b3kinp" path="res://restaurante/clientes/johnny/johnny.tscn" id="3_johnny"]
+[ext_resource type="PackedScene" uid="uid://briwrsm8pafpo" path="res://restaurante/clientes/mandy/mandy.tscn" id="4_mandy"]
+[ext_resource type="PackedScene" uid="uid://osm0g2omoc0t" path="res://restaurante/clientes/patolino/patolino.tscn" id="5_patolino"]
+[ext_resource type="PackedScene" path="res://restaurante/clientes/pedido/pedido.tscn" id="6_pedido"]
+
+[node name="TestePedido" type="Node2D"]
+script = ExtResource("1_teste")
+
+[node name="Chao" type="Polygon2D" parent="."]
+color = Color(0.17, 0.16, 0.2, 1)
+polygon = PackedVector2Array(80, 50, 560, 50, 560, 330, 80, 330)
+
+[node name="Balcao" type="Polygon2D" parent="."]
+color = Color(0.42, 0.29, 0.18, 1)
+polygon = PackedVector2Array(120, 178, 520, 178, 520, 188, 120, 188)
+
+[node name="Instrucoes" type="Label" parent="."]
+offset_left = 88.0
+offset_top = 300.0
+offset_right = 552.0
+offset_bottom = 326.0
+theme_override_font_sizes/font_size = 10
+text = "Chegue perto de um cliente para ver o pedido  |  verde = no ponto, vermelho = torrado  |  N = novos pedidos"
+horizontal_alignment = 1
+
+[node name="Johnny" parent="." instance=ExtResource("3_johnny")]
+position = Vector2(200, 160)
+
+[node name="Pedido" parent="Johnny" instance=ExtResource("6_pedido")]
+debug_print = true
+
+[node name="Mandy" parent="." instance=ExtResource("4_mandy")]
+position = Vector2(320, 160)
+
+[node name="Pedido" parent="Mandy" instance=ExtResource("6_pedido")]
+debug_print = true
+
+[node name="Patolino" parent="." instance=ExtResource("5_patolino")]
+position = Vector2(440, 160)
+
+[node name="Pedido" parent="Patolino" instance=ExtResource("6_pedido")]
+debug_print = true
+
+[node name="Chef" parent="." instance=ExtResource("2_chef")]
+position = Vector2(320, 250)

@@ -1,0 +1,38 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://restaurante/cozinha/estacoes/counter_station.gd" id="1_station"]
+[ext_resource type="Script" path="res://restaurante/componentes/interactable_component.gd" id="2_interactable"]
+[ext_resource type="Script" path="res://restaurante/componentes/hand_component.gd" id="3_hand"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
+size = Vector2(64, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_area"]
+size = Vector2(64, 64)
+
+[node name="CounterStation" type="StaticBody2D"]
+collision_layer = 1
+collision_mask = 0
+script = ExtResource("1_station")
+
+[node name="Visual" type="Polygon2D" parent="."]
+color = Color(0.55, 0.38, 0.22, 1)
+polygon = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_body")
+
+[node name="InteractableComponent" type="Area2D" parent="." node_paths=PackedStringArray("highlight_target")]
+collision_layer = 8
+collision_mask = 0
+monitoring = false
+script = ExtResource("2_interactable")
+highlight_target = NodePath("../Visual")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableComponent"]
+shape = SubResource("RectangleShape2D_area")
+
+[node name="ItemSlot" type="Node2D" parent="."]
+position = Vector2(0, -4)
+script = ExtResource("3_hand")
+flip_with_facing = false

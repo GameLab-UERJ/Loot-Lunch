@@ -1,0 +1,19 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" uid="uid://v3reii6seu4c" path="res://restaurante/personagens/chef/chef.tscn" id="1_chef"]
+[ext_resource type="PackedScene" path="res://restaurante/cozinha/estacoes/pe_cogumelo.tscn" id="2_pe"]
+[ext_resource type="PackedScene" path="res://restaurante/cozinha/estacoes/caixa_carne.tscn" id="3_caixa"]
+
+[node name="TestePeCogumelo" type="Node2D"]
+
+[node name="ItensNoChao" type="Node2D" parent="."]
+
+[node name="PeCogumelo" parent="." instance=ExtResource("2_pe")]
+position = Vector2(360, 180)
+
+[node name="CaixaCarne" parent="." instance=ExtResource("3_caixa")]
+position = Vector2(240, 180)
+
+[node name="Chef" parent="." node_paths=PackedStringArray("items_container") instance=ExtResource("1_chef")]
+position = Vector2(300, 180)
+items_container = NodePath("../ItensNoChao")

@@ -1,0 +1,51 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://restaurante/UI/chef_hud.gd" id="1_hud"]
+[ext_resource type="Script" path="res://restaurante/UI/skull_health_bar.gd" id="2_vida"]
+[ext_resource type="Texture2D" uid="uid://drjqdg1xvumxi" path="res://restaurante/UI/arte/jscoutinho_ui_vida.png" id="3_vida_png"]
+[ext_resource type="Script" path="res://restaurante/UI/money_counter.gd" id="4_dinheiro"]
+[ext_resource type="Texture2D" uid="uid://crvxud2dm5uf1" path="res://restaurante/UI/arte/jscoutinho_ui_dinheiro.png" id="5_dinheiro_png"]
+
+[node name="HudChef" type="CanvasLayer"]
+layer = 10
+script = ExtResource("1_hud")
+
+[node name="Coluna" type="VBoxContainer" parent="."]
+offset_left = 6.0
+offset_top = 4.0
+offset_right = 110.0
+offset_bottom = 58.0
+mouse_filter = 2
+theme_override_constants/separation = 2
+
+[node name="Vida" type="HBoxContainer" parent="Coluna"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 1
+script = ExtResource("2_vida")
+sheet = ExtResource("3_vida_png")
+
+[node name="Dinheiro" type="HBoxContainer" parent="Coluna"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 3
+script = ExtResource("4_dinheiro")
+
+[node name="Icone" type="TextureRect" parent="Coluna/Dinheiro"]
+custom_minimum_size = Vector2(22, 22)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("5_dinheiro_png")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Valor" type="Label" parent="Coluna/Dinheiro"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.92, 0.85, 1)
+theme_override_colors/font_outline_color = Color(0.1, 0.05, 0.12, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 14
+text = "0"
+vertical_alignment = 1

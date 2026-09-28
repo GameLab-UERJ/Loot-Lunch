@@ -1,0 +1,56 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://restaurante/cozinha/estacoes/ingredient_plant.gd" id="1_plant"]
+[ext_resource type="Script" path="res://restaurante/componentes/interactable_component.gd" id="2_interactable"]
+[ext_resource type="Script" path="res://restaurante/componentes/cooldown_component.gd" id="3_cooldown"]
+[ext_resource type="Script" path="res://restaurante/componentes/sprite_sheet_effect.gd" id="4_effect"]
+[ext_resource type="PackedScene" path="res://restaurante/itens/carryable_item.tscn" id="5_item"]
+[ext_resource type="Resource" path="res://restaurante/itens/dados/cogumelo_bruto.tres" id="6_cogumelo"]
+[ext_resource type="Texture2D" path="res://restaurante/comidas/espetinhos/base/cogumelo/CogumeloPe128.png" id="7_pe"]
+[ext_resource type="Texture2D" path="res://restaurante/comidas/espetinhos/base/espeto/925.png" id="8_fx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
+size = Vector2(16, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_area"]
+size = Vector2(32, 32)
+
+[node name="PeCogumelo" type="StaticBody2D"]
+collision_layer = 1
+collision_mask = 0
+script = ExtResource("1_plant")
+item_scene = ExtResource("5_item")
+item_data = ExtResource("6_cogumelo")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("7_pe")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 6)
+shape = SubResource("RectangleShape2D_body")
+
+[node name="InteractableComponent" type="Area2D" parent="." node_paths=PackedStringArray("highlight_target")]
+collision_layer = 8
+collision_mask = 0
+monitoring = false
+script = ExtResource("2_interactable")
+highlight_target = NodePath("../Sprite2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableComponent"]
+shape = SubResource("RectangleShape2D_area")
+
+[node name="CooldownComponent" type="Node" parent="."]
+script = ExtResource("3_cooldown")
+duration = 5.0
+
+[node name="EfeitoRegenerou" type="AnimatedSprite2D" parent="."]
+z_index = 1
+position = Vector2(0, -4)
+scale = Vector2(0.5, 0.5)
+script = ExtResource("4_effect")
+sheet = ExtResource("8_fx")
+row = 2
+columns = 12
+frame_size = Vector2i(64, 64)
+fps = 20.0

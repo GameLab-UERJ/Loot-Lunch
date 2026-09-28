@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="CookingRecipe" format=3]
+
+[ext_resource type="Script" path="res://restaurante/itens/cooking_recipe.gd" id="1_recipe"]
+[ext_resource type="Resource" path="res://restaurante/itens/dados/espetinho_cogumelo_cru.tres" id="2_cru"]
+[ext_resource type="Resource" path="res://restaurante/itens/dados/espetinho_cogumelo_perfeito.tres" id="3_perfeito"]
+[ext_resource type="Resource" path="res://restaurante/itens/dados/espetinho_cogumelo_torrado.tres" id="4_torrado"]
+
+[resource]
+script = ExtResource("1_recipe")
+input_data = ExtResource("2_cru")
+perfect_data = ExtResource("3_perfeito")
+burnt_data = ExtResource("4_torrado")
+perfect_time = -1.0
+burnt_time = -1.0
+vanish_time = -1.0
