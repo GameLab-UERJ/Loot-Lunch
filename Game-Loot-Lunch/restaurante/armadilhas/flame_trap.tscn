@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3]
 
-[ext_resource type="Script" path="res://entities/traps/flame_trap.gd" id="1_flame"]
+[ext_resource type="Script" path="res://restaurante/armadilhas/flame_trap.gd" id="1_flame"]
 [ext_resource type="Texture2D" path="res://assets/art/entities/traps/flame_trap.png" id="2_flame"]
 [ext_resource type="Texture2D" path="res://assets/art/entities/traps/trap_warning.png" id="3_warning"]
 

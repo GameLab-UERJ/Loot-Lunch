@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://tests/levels/test_dynamic_traps.gd" id="1_test"]
 [ext_resource type="PackedScene" path="res://entities/player/player.tscn" id="2_player"]
-[ext_resource type="PackedScene" path="res://entities/traps/flame_random_event.tscn" id="3_flame_event"]
-[ext_resource type="PackedScene" path="res://entities/traps/grease_random_event.tscn" id="5_grease_event"]
+[ext_resource type="PackedScene" path="res://restaurante/armadilhas/flame_random_event.tscn" id="3_flame_event"]
+[ext_resource type="PackedScene" path="res://restaurante/armadilhas/grease_random_event.tscn" id="5_grease_event"]
 [ext_resource type="FontFile" path="res://assets/fonts/tinypixel.ttf" id="4_font"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_top"]

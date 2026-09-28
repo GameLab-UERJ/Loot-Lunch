@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://restaurante/componentes/hand_component.gd" id="4_hand"]
 [ext_resource type="Script" path="res://restaurante/componentes/progress_bar_component.gd" id="5_bar"]
 [ext_resource type="Script" path="res://restaurante/componentes/sprite_sheet_effect.gd" id="6_effect"]
-[ext_resource type="PackedScene" path="res://entities/traps/flame_random_event.tscn" id="13_traps"]
+[ext_resource type="PackedScene" path="res://restaurante/armadilhas/flame_random_event.tscn" id="13_traps"]
 [ext_resource type="Texture2D" uid="uid://bvobvq2hlpoyq" path="res://restaurante/comidas/utensilios/Churrasqueira.png" id="7_churras"]
 [ext_resource type="Texture2D" path="res://restaurante/comidas/espetinhos/base/espeto/EspetoToco32.png" id="8_toco"]
 [ext_resource type="Texture2D" uid="uid://cgqbrmknjg0qu" path="res://restaurante/comidas/espetinhos/base/espeto/1361.png" id="9_fogo"]
