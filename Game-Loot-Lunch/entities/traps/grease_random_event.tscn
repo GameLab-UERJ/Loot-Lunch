@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://entities/traps/grease_random_event.gd" id="1_event"]
+[ext_resource type="PackedScene" path="res://entities/traps/grease_trap.tscn" id="2_grease"]
+
+[node name="GreaseRandomEvent" type="Node2D"]
+script = ExtResource("1_event")
+grease_scene = ExtResource("2_grease")

@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://restaurante/componentes/hand_component.gd" id="4_hand"]
 [ext_resource type="Script" path="res://restaurante/componentes/progress_bar_component.gd" id="5_bar"]
 [ext_resource type="Script" path="res://restaurante/componentes/sprite_sheet_effect.gd" id="6_effect"]
-[ext_resource type="PackedScene" path="res://entities/traps/random_event_manager.tscn" id="13_traps"]
+[ext_resource type="PackedScene" path="res://entities/traps/flame_random_event.tscn" id="13_traps"]
 [ext_resource type="Texture2D" uid="uid://bvobvq2hlpoyq" path="res://restaurante/comidas/utensilios/Churrasqueira.png" id="7_churras"]
 [ext_resource type="Texture2D" path="res://restaurante/comidas/espetinhos/base/espeto/EspetoToco32.png" id="8_toco"]
 [ext_resource type="Texture2D" uid="uid://cgqbrmknjg0qu" path="res://restaurante/comidas/espetinhos/base/espeto/1361.png" id="9_fogo"]
@@ -48,14 +48,12 @@ highlight_target = NodePath("../Sprite2D")
 position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_area")
 
-[node name="Bocas" type="Node2D" parent="."]
-
-[node name="RandomEventManager" parent="." instance=ExtResource("13_traps")]
+[node name="FlameRandomEvent" parent="." instance=ExtResource("13_traps")]
 event_interval = 7.0
 first_event_delay = 2.0
-grease_spawn_area = Rect2(-110, 42, 220, 110)
-grease_lifetime = 7.0
 event_source_path = NodePath("..")
+
+[node name="Bocas" type="Node2D" parent="."]
 
 [node name="BocaDireita" type="Node2D" parent="Bocas"]
 position = Vector2(15, 25)
