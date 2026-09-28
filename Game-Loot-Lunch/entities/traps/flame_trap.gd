@@ -18,7 +18,7 @@ var _is_on_cooldown: bool = false
 var _warning_tween: Tween
 
 @onready var warning_sprite: AnimatedSprite2D = $WarningSprite
-@onready var flame_sprite: Sprite2D = $FlameSprite
+@onready var flame_sprite: AnimatedSprite2D = $FlameSprite
 @onready var hitbox: CollisionShape2D = $Hitbox
 
 

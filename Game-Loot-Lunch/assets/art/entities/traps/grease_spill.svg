@@ -1,13 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
-  <defs>
-    <radialGradient id="spill" cx="45%" cy="42%" r="60%">
-      <stop stop-color="#d89b39" stop-opacity=".78"/>
-      <stop offset=".55" stop-color="#9b6428" stop-opacity=".7"/>
-      <stop offset="1" stop-color="#4b3525" stop-opacity=".5"/>
-    </radialGradient>
-  </defs>
-  <path d="M7 35c2-12 17-19 31-18 12 1 21 7 19 16-2 10-14 17-29 18C14 52 5 46 7 35z" fill="url(#spill)" stroke="#684522" stroke-width="2"/>
-  <path d="M19 29c7-5 18-6 27-2M14 39c8 4 18 4 28 0" fill="none" stroke="#f4c45f" stroke-width="2" stroke-linecap="round" opacity=".7"/>
-  <circle cx="37" cy="27" r="3" fill="#ffe08a" opacity=".8"/>
-  <circle cx="27" cy="43" r="2" fill="#f4c45f" opacity=".65"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" shape-rendering="crispEdges">
+  <path d="M8 32h4V24h8v-4h28v4h8v8h4v12h-8v8H16v-4H8z" fill="#4b3525"/>
+  <path d="M12 32h8v-8h28v4h8v12h-8v8H16v-4h-4z" fill="#9b6428"/>
+  <path d="M20 28h20v4h8v4H28v-4H20zM16 40h16v4H16z" fill="#e0a43f"/>
+  <path d="M36 28h8v4h-8zM24 44h8v4h-8z" fill="#ffe08a"/>
 </svg>

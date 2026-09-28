@@ -1,12 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
-  <defs>
-    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
-      <feGaussianBlur stdDeviation="3" result="blur"/>
-      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-  </defs>
-  <circle cx="32" cy="32" r="23" fill="#ffcf4a" opacity=".2" filter="url(#glow)"/>
-  <path d="M32 7 56 52H8z" fill="#f2a52b" stroke="#542f22" stroke-width="3" stroke-linejoin="round"/>
-  <path d="M32 20v17" stroke="#fff1ae" stroke-width="5" stroke-linecap="round"/>
-  <circle cx="32" cy="44" r="3" fill="#fff1ae"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" shape-rendering="crispEdges">
+  <path d="M28 8h8v4h8v8h4v8h4v8h4v8h4v8H4v-8h4v-8h4v-8h4v-8h4v-8h8z" fill="#3b2525"/>
+  <path d="M28 12h8v4h8v8h4v8h4v8h4v4H12v-4h4v-8h4v-8h4v-8h4z" fill="#d7442e"/>
+  <path d="M30 20h4v16h-4zM30 40h4v4h-4z" fill="#ffe18a"/>
 </svg>
