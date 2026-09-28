@@ -117,6 +117,8 @@ func get_time_left() -> float:
 func get_progress() -> float:
 	if is_empty() or _vanish_time <= 0.0:
 		return 0.0
+	if _stage == Stage.BURNT:
+		return 1.0
 	return clampf(_elapsed / _vanish_time, 0.0, 1.0)
 
 
