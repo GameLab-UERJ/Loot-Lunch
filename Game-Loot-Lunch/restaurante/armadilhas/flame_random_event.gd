@@ -8,6 +8,13 @@ class_name FlameRandomEvent
 @export var require_source_activity: bool = true
 
 
+func _ready() -> void:
+	super()
+	var source: Node = get_node_or_null(event_source_path)
+	if source and source.has_signal("item_placed"):
+		source.item_placed.connect(_on_item_placed)
+
+
 func _can_trigger_event() -> bool:
 	if not require_source_activity:
 		return true
@@ -30,3 +37,7 @@ func _activate_event() -> void:
 		flame.activated.connect(Callable(source, "burn_items"))
 	flame.deactivated.connect(flame.queue_free)
 	flame.trigger()
+
+
+func _on_item_placed(_slot: CookingSlot, _item: CarryableItem) -> void:
+	trigger_random_event()
