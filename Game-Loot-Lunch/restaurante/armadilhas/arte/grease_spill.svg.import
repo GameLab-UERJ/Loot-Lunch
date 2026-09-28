@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b1ntlrwmya4l7"
-path="res://.godot/imported/flame_trap.png-2bd21b27d96d29c7eea109655a11fa1b.ctex"
+uid="uid://csy8n4gyahkbp"
+path="res://.godot/imported/grease_spill.svg-0807824c43de8d37cc9eb5d19529b788.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/entities/traps/flame_trap.png"
-dest_files=["res://.godot/imported/flame_trap.png-2bd21b27d96d29c7eea109655a11fa1b.ctex"]
+source_file="res://restaurante/armadilhas/arte/grease_spill.svg"
+dest_files=["res://.godot/imported/grease_spill.svg-0807824c43de8d37cc9eb5d19529b788.ctex"]
 
 [params]
 
@@ -38,3 +38,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
+svg/scale=1.0
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false

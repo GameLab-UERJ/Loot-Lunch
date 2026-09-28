@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cdtcst0k8lcu"
-path="res://.godot/imported/trap_warning.png-d8e960a9b38bf66f6fd9636f2e15d229.ctex"
+uid="uid://6d7vfxd45wit"
+path="res://.godot/imported/grease_spill.png-d88f1498a2129581b201ec21f34d407b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/entities/traps/trap_warning.png"
-dest_files=["res://.godot/imported/trap_warning.png-d8e960a9b38bf66f6fd9636f2e15d229.ctex"]
+source_file="res://restaurante/armadilhas/arte/grease_spill.png"
+dest_files=["res://.godot/imported/grease_spill.png-d88f1498a2129581b201ec21f34d407b.ctex"]
 
 [params]
 
