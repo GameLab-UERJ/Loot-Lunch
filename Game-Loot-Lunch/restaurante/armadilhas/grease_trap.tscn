@@ -4,12 +4,13 @@
 [ext_resource type="Texture2D" path="res://restaurante/armadilhas/arte/grease_spill.png" id="2_grease"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_grease"]
-radius = 25.0
+radius = 18.0
 
 [node name="GreaseTrap" type="Area2D"]
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("1_grease")
+hitbox_radius = 18.0
 
 [node name="GreaseSprite" type="Sprite2D" parent="."]
 texture = ExtResource("2_grease")

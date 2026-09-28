@@ -5,9 +5,12 @@ class_name FlameRandomEvent
 @export var flame_scene: PackedScene
 @export var event_source_path: NodePath
 @export var warning_duration: float = 1.5
+@export var require_source_activity: bool = true
 
 
 func _can_trigger_event() -> bool:
+	if not require_source_activity:
+		return true
 	if event_source_path.is_empty():
 		return true
 	var source: Node = get_node_or_null(event_source_path)
