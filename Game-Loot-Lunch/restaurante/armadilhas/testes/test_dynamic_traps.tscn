@@ -42,8 +42,6 @@ shape = SubResource("RectangleShape2D_side")
 position = Vector2(320, 160)
 FlameRandomEvent/event_interval = 5.0
 FlameRandomEvent/first_event_delay = 2.0
-FlameRandomEvent/event_source_path = NodePath("")
-FlameRandomEvent/require_source_activity = false
 
 [node name="GreaseRandomEvent" parent="." instance=ExtResource("5_grease_event")]
 position = Vector2(320, 160)

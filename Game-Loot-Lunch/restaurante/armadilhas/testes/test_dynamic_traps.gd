@@ -1,18 +1,32 @@
 extends Node2D
 
 
+const CARRYABLE_ITEM_SCENE: PackedScene = preload("res://restaurante/itens/carryable_item.tscn")
+const RAW_SKEWER_DATA: ItemData = preload("res://restaurante/itens/dados/espetinho_carne_cru.tres")
+
+
 @onready var flame_event: FlameRandomEvent = $Churrasqueira/FlameRandomEvent
 @onready var grease_event: GreaseRandomEvent = $GreaseRandomEvent
+@onready var chef: Chef = $Chef
+@onready var churrasqueira: CookingStation = $Churrasqueira
 
 
 func _ready() -> void:
 	queue_redraw()
+	call_deferred("_seed_test_skewer")
 
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept"):
-		flame_event.trigger_random_event(true)
+		flame_event.trigger_random_event()
 		grease_event.trigger_random_event(true)
+
+
+func _seed_test_skewer() -> void:
+	var skewer: CarryableItem = CARRYABLE_ITEM_SCENE.instantiate()
+	skewer.data = RAW_SKEWER_DATA
+	if chef.hand_component.hold(skewer):
+		churrasqueira.place_item(chef.hand_component)
 
 
 func _draw() -> void:
