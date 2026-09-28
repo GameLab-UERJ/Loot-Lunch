@@ -5,11 +5,15 @@ class_name RandomEvent
 @export var event_interval: float = 8.0
 @export var first_event_delay: float = 3.0
 @export var automatic_events: bool = true
+@export_group("Probabilidade")
+@export_range(0.0, 1.0, 0.05) var activation_probability: float = 1.0
 
 var _event_timer: Timer
+var _random := RandomNumberGenerator.new()
 
 
 func _ready() -> void:
+	_random.randomize()
 	_event_timer = Timer.new()
 	_event_timer.wait_time = first_event_delay
 	_event_timer.one_shot = true
@@ -19,8 +23,8 @@ func _ready() -> void:
 		_event_timer.start()
 
 
-func trigger_random_event() -> void:
-	if _can_trigger_event():
+func trigger_random_event(force: bool = false) -> void:
+	if _can_trigger_event() and (force or _random.randf() <= activation_probability):
 		_activate_event()
 
 
