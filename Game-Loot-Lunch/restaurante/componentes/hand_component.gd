@@ -91,18 +91,21 @@ func consume_item() -> void:
 		item.queue_free()
 
 
-## Remove o item e toca uma animação curta antes de destruí-lo.
-func consume_item_with_effect(duration: float = 0.2) -> CarryableItem:
+## Remove o item, toca um SpriteSheetEffect e o destrói ao fim da animação.
+func consume_item_with_effect(effect: SpriteSheetEffect) -> CarryableItem:
 	var item: CarryableItem = _detach()
 	if item == null:
 		return null
 
 	item.reparent(get_tree().current_scene, true)
-	var tween: Tween = item.create_tween()
-	tween.set_parallel(true)
-	tween.tween_property(item, "scale", Vector2.ZERO, duration)
-	tween.tween_property(item, "modulate:a", 0.0, duration)
-	tween.chain().tween_callback(item.queue_free)
+	if effect == null:
+		item.queue_free()
+		return item
+	effect.global_position = item.global_position
+	effect.play_once()
+	await effect.effect_finished
+	if is_instance_valid(item):
+		item.queue_free()
 	return item
 
 

@@ -6,9 +6,9 @@ signal item_discarded(item: CarryableItem)
 
 
 @export var accepts_items: bool = true
-@export var discard_animation_duration: float = 0.2
 
 @onready var interactable: InteractableComponent = $InteractableComponent
+@onready var vanish_effect: SpriteSheetEffect = $VanishEffect
 
 
 func _ready() -> void:
@@ -21,6 +21,6 @@ func _on_interacted(actor: Node) -> void:
 	var hand: HandComponent = HandComponent.find_in(actor)
 	if hand == null or hand.is_empty():
 		return
-	var item: CarryableItem = hand.consume_item_with_effect(discard_animation_duration)
+	var item: CarryableItem = await hand.consume_item_with_effect(vanish_effect)
 	if item:
 		item_discarded.emit(item)
