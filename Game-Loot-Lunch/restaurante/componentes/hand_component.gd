@@ -91,6 +91,21 @@ func consume_item() -> void:
 		item.queue_free()
 
 
+## Remove o item e toca uma animação curta antes de destruí-lo.
+func consume_item_with_effect(duration: float = 0.2) -> CarryableItem:
+	var item: CarryableItem = _detach()
+	if item == null:
+		return null
+
+	item.reparent(get_tree().current_scene, true)
+	var tween: Tween = item.create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(item, "scale", Vector2.ZERO, duration)
+	tween.tween_property(item, "modulate:a", 0.0, duration)
+	tween.chain().tween_callback(item.queue_free)
+	return item
+
+
 func set_facing(direction: Vector2) -> void:
 	if not flip_with_facing or is_zero_approx(direction.x):
 		return
