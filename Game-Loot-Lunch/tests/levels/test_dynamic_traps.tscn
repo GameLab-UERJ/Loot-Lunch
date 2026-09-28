@@ -1,0 +1,85 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://tests/levels/test_dynamic_traps.gd" id="1_test"]
+[ext_resource type="PackedScene" path="res://entities/player/player.tscn" id="2_player"]
+[ext_resource type="PackedScene" path="res://entities/traps/random_event_manager.tscn" id="3_manager"]
+[ext_resource type="FontFile" path="res://assets/fonts/tinypixel.ttf" id="4_font"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_top"]
+size = Vector2(576, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bottom"]
+size = Vector2(576, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_side"]
+size = Vector2(8, 280)
+
+[node name="TestDynamicTraps" type="Node2D"]
+script = ExtResource("1_test")
+
+[node name="ArenaBounds" type="StaticBody2D" parent="."]
+collision_layer = 1
+collision_mask = 0
+
+[node name="Top" type="CollisionShape2D" parent="ArenaBounds"]
+position = Vector2(320, 44)
+shape = SubResource("RectangleShape2D_top")
+
+[node name="Bottom" type="CollisionShape2D" parent="ArenaBounds"]
+position = Vector2(320, 316)
+shape = SubResource("RectangleShape2D_bottom")
+
+[node name="Left" type="CollisionShape2D" parent="ArenaBounds"]
+position = Vector2(36, 180)
+shape = SubResource("RectangleShape2D_side")
+
+[node name="Right" type="CollisionShape2D" parent="ArenaBounds"]
+position = Vector2(604, 180)
+shape = SubResource("RectangleShape2D_side")
+
+[node name="RandomEventManager" parent="." instance=ExtResource("3_manager")]
+position = Vector2(320, 160)
+event_interval = 5.0
+first_event_delay = 2.0
+grease_spawn_area = Rect2(-180, 45, 360, 100)
+grease_lifetime = 5.0
+automatic_events = true
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+position = Vector2(320, 270)
+
+[node name="Title" type="Label" parent="."]
+offset_left = 48.0
+offset_top = 52.0
+offset_right = 360.0
+offset_bottom = 72.0
+theme_override_colors/font_color = Color(1, 0.882353, 0.541176, 1)
+theme_override_colors/font_outline_color = Color(0.0901961, 0.0901961, 0.105882, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("4_font")
+theme_override_font_sizes/font_size = 12
+text = "TESTE DE ARMADILHAS"
+
+[node name="Instructions" type="Label" parent="."]
+offset_left = 48.0
+offset_top = 292.0
+offset_right = 560.0
+offset_bottom = 310.0
+theme_override_colors/font_color = Color(0.960784, 0.843137, 0.576471, 1)
+theme_override_colors/font_outline_color = Color(0.0901961, 0.0901961, 0.105882, 1)
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = ExtResource("4_font")
+theme_override_font_sizes/font_size = 8
+text = "SETAS: mover  |  ESPACO: disparar evento  |  AREA VERMELHA: SPAWN DE OLEO"
+
+[node name="ForgeLabel" type="Label" parent="."]
+offset_left = 282.0
+offset_top = 113.0
+offset_right = 370.0
+offset_bottom = 130.0
+theme_override_colors/font_color = Color(1, 0.882353, 0.541176, 1)
+theme_override_colors/font_outline_color = Color(0.0901961, 0.0901961, 0.105882, 1)
+theme_override_constants/outline_size = 2
+theme_override_fonts/font = ExtResource("4_font")
+theme_override_font_sizes/font_size = 8
+text = "FORNALHA"
