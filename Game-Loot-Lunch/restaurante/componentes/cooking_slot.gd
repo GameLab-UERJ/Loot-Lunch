@@ -185,6 +185,15 @@ func discard() -> bool:
 	return true
 
 
+## Força o item atual a assumir o estado torrado sem removê-lo da boca.
+func burn() -> bool:
+	if is_empty():
+		return false
+	_set_stage(Stage.BURNT)
+	_refresh_bar()
+	return true
+
+
 # --- Interno ---
 
 func _set_stage(stage: Stage) -> void:

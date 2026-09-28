@@ -47,6 +47,7 @@ animations = [{
 [node name="FlameTrap" type="Area2D"]
 collision_layer = 0
 collision_mask = 2
+z_index = 10
 script = ExtResource("1_flame")
 active_duration = 2.0
 

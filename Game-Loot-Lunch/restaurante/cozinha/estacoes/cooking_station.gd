@@ -77,6 +77,13 @@ func get_slots() -> Array[CookingSlot]:
 	return _slots
 
 
+## Marca todos os espetinhos atuais como queimados por um evento externo.
+func burn_items() -> void:
+	for slot in _slots:
+		if slot.is_occupied():
+			slot.burn()
+
+
 ## Receita deste item, ou null se a churrasqueira não aceita ele.
 func find_recipe(data: ItemData) -> CookingRecipe:
 	for entry in recipes:
