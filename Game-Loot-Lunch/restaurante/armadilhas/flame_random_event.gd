@@ -12,7 +12,7 @@ func _ready() -> void:
 	super()
 	var source: Node = get_node_or_null(event_source_path)
 	if source and source.has_signal("item_placed"):
-		source.item_placed.connect(_on_item_placed)
+		source.connect("item_placed", _on_item_placed)
 
 
 func _can_trigger_event() -> bool:
