@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ProcessingRecipe" format=3]
+
+[ext_resource type="Script" path="res://restaurante/itens/processing_recipe.gd" id="1_recipe"]
+[ext_resource type="Resource" path="res://restaurante/itens/dados/carne_bruta.tres" id="2_in"]
+[ext_resource type="Resource" path="res://restaurante/itens/dados/carne_cortada.tres" id="3_out"]
+
+[resource]
+script = ExtResource("1_recipe")
+input_data = ExtResource("2_in")
+output_data = ExtResource("3_out")
+required_steps = 5

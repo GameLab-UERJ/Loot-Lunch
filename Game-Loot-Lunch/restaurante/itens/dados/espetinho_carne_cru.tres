@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" uid="uid://bcs1jmkunt5rx" path="res://restaurante/itens/item_data.gd" id="1_data"]
+[ext_resource type="Texture2D" uid="uid://bcwn54ble1esc" path="res://restaurante/comidas/espetinhos/cru/CarneCru128.png" id="2_tex"]
+
+[resource]
+script = ExtResource("1_data")
+id = &"espetinho_carne_cru"
+display_name = "Espetinho de Carne Cru"
+texture = ExtResource("2_tex")
+hold_offset = Vector2(0, -2)
+sprite_scale = Vector2(0.25, 0.25)
+placeholder_color = Color(0.9, 0.35, 0.35, 1)

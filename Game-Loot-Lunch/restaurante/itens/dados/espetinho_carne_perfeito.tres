@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" uid="uid://bcs1jmkunt5rx" path="res://restaurante/itens/item_data.gd" id="1_data"]
+[ext_resource type="Texture2D" uid="uid://bjduy4y4omriy" path="res://restaurante/comidas/espetinhos/perfeito/CarnePerfeito128.png" id="2_tex"]
+
+[resource]
+script = ExtResource("1_data")
+id = &"espetinho_carne_perfeito"
+display_name = "Espetinho de Carne no Ponto"
+texture = ExtResource("2_tex")
+hold_offset = Vector2(0, -2)
+sprite_scale = Vector2(0.25, 0.25)
+placeholder_color = Color(0.85, 0.45, 0.2, 1)

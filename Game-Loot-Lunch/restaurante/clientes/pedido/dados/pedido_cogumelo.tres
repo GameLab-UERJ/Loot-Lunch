@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="OrderOption" format=3]
+
+[ext_resource type="Script" path="res://restaurante/clientes/pedido/order_option.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://cbviylmioqpnu" path="res://restaurante/clientes/pedido/pedido_png/churrasco/carnepensamento.png" id="2_carne"]
+[ext_resource type="Texture2D" uid="uid://cwgvl66fc0ugx" path="res://restaurante/clientes/pedido/pedido_png/churrasco/cogumelopensamento.png" id="3_cogumelo"]
+[ext_resource type="Resource" path="res://restaurante/itens/dados/espetinho_cogumelo_perfeito.tres" id="4_perfeito"]
+[ext_resource type="Resource" path="res://restaurante/itens/dados/espetinho_cogumelo_torrado.tres" id="5_torrado"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"pedido_cogumelo"
+display_name = "Dois cogumelos"
+icons = Array[Texture2D]([ExtResource("3_cogumelo"), ExtResource("3_cogumelo")])
+weight = 30.0
+perfect_item = ExtResource("4_perfeito")
+burnt_item = ExtResource("5_torrado")

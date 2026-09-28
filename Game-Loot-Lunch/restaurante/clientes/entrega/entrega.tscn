@@ -1,0 +1,31 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://restaurante/clientes/entrega/order_payment_component.gd" id="1_payment"]
+[ext_resource type="Resource" path="res://restaurante/clientes/pedido/dados/tabela_precos.tres" id="2_precos"]
+[ext_resource type="Script" path="res://restaurante/componentes/delivery_receiver_component.gd" id="3_receiver"]
+[ext_resource type="Resource" path="res://restaurante/itens/dados/espetinho_carne_cru.tres" id="4_carne_cru"]
+[ext_resource type="Resource" path="res://restaurante/itens/dados/espetinho_carne_perfeito.tres" id="5_carne_perfeito"]
+[ext_resource type="Resource" path="res://restaurante/itens/dados/espetinho_carne_torrado.tres" id="6_carne_torrado"]
+[ext_resource type="Resource" path="res://restaurante/itens/dados/espetinho_cogumelo_cru.tres" id="7_cogumelo_cru"]
+[ext_resource type="Resource" path="res://restaurante/itens/dados/espetinho_cogumelo_perfeito.tres" id="8_cogumelo_perfeito"]
+[ext_resource type="Resource" path="res://restaurante/itens/dados/espetinho_cogumelo_torrado.tres" id="9_cogumelo_torrado"]
+[ext_resource type="Resource" path="res://restaurante/itens/dados/espetinho_misto_cru.tres" id="10_misto_cru"]
+[ext_resource type="Resource" path="res://restaurante/itens/dados/espetinho_misto_perfeito.tres" id="11_misto_perfeito"]
+[ext_resource type="Resource" path="res://restaurante/itens/dados/espetinho_misto_torrado.tres" id="12_misto_torrado"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_recebedor"]
+radius = 18.0
+
+[node name="Entrega" type="Node2D"]
+script = ExtResource("1_payment")
+price_table = ExtResource("2_precos")
+
+[node name="Recebedor" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 16
+monitorable = true
+script = ExtResource("3_receiver")
+accepted_items = Array[Resource]([ExtResource("4_carne_cru"), ExtResource("5_carne_perfeito"), ExtResource("6_carne_torrado"), ExtResource("7_cogumelo_cru"), ExtResource("8_cogumelo_perfeito"), ExtResource("9_cogumelo_torrado"), ExtResource("10_misto_cru"), ExtResource("11_misto_perfeito"), ExtResource("12_misto_torrado")])
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Recebedor"]
+shape = SubResource("CircleShape2D_recebedor")
