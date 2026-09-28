@@ -11,11 +11,34 @@ script = ExtResource("1_test")
 color = Color(0.17, 0.16, 0.2, 1)
 polygon = PackedVector2Array(80, 60, 560, 60, 560, 300, 80, 300)
 
+[node name="ItensNoChao" type="Node2D" parent="."]
+
 [node name="Lixeira" parent="." instance=ExtResource("3_trash")]
 position = Vector2(440, 170)
 
 [node name="Chef" parent="." instance=ExtResource("2_chef")]
 position = Vector2(220, 170)
+
+[node name="CruLabel" type="Label" parent="."]
+offset_left = 164.0
+offset_top = 112.0
+offset_right = 210.0
+offset_bottom = 130.0
+text = "CRU"
+
+[node name="PerfectLabel" type="Label" parent="."]
+offset_left = 254.0
+offset_top = 112.0
+offset_right = 320.0
+offset_bottom = 130.0
+text = "AO PONTO"
+
+[node name="BurntLabel" type="Label" parent="."]
+offset_left = 354.0
+offset_top = 112.0
+offset_right = 420.0
+offset_bottom = 130.0
+text = "QUEIMADO"
 
 [node name="Instrucoes" type="Label" parent="."]
 offset_left = 112.0
