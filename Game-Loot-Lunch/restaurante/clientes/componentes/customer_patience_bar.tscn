@@ -1,0 +1,62 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://restaurante/clientes/componentes/customer_patience_bar.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/art/ui/customer_patience/patience_frame.png" id="2_frame"]
+[ext_resource type="Texture2D" path="res://assets/art/ui/customer_patience/patience_fill_green.png" id="3_fill"]
+[ext_resource type="Texture2D" path="res://assets/art/ui/customer_patience/customer_irritated.png" id="4_icon"]
+[ext_resource type="Texture2D" path="res://assets/art/ui/customer_patience/patience_track.png" id="5_track"]
+
+[node name="CustomerPatienceBar" type="Control"]
+custom_minimum_size = Vector2(96, 16)
+offset_right = 96.0
+offset_bottom = 16.0
+mouse_filter = 2
+visible = false
+script = ExtResource("1_script")
+
+[node name="Track" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 92.0
+offset_bottom = 12.0
+mouse_filter = 2
+texture_filter = 1
+texture = ExtResource("5_track")
+expand_mode = 1
+stretch_mode = 0
+
+[node name="Progress" type="TextureProgressBar" parent="."]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 92.0
+offset_bottom = 12.0
+mouse_filter = 2
+texture_filter = 1
+texture_progress = ExtResource("3_fill")
+value = 100.0
+show_percentage = false
+
+[node name="Frame" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 96.0
+offset_bottom = 16.0
+mouse_filter = 2
+texture_filter = 1
+texture = ExtResource("2_frame")
+expand_mode = 1
+stretch_mode = 0
+
+[node name="Irritated" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 40.0
+offset_top = -18.0
+offset_right = 56.0
+offset_bottom = -2.0
+mouse_filter = 2
+texture_filter = 1
+texture = ExtResource("4_icon")
+expand_mode = 1
+stretch_mode = 0
+visible = false

@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" path="res://restaurante/clientes/johnny/habilidades/raio_supremo.tscn" id="hab_supremo_cena"]
 [ext_resource type="Resource" path="res://restaurante/clientes/johnny/habilidades/esfera_supremo.tres" id="hab_esfera_supremo"]
 [ext_resource type="PackedScene" path="res://restaurante/clientes/johnny/habilidades/nuvem_tempestade.tscn" id="hab_nuvem"]
+[ext_resource type="PackedScene" path="res://restaurante/clientes/componentes/customer_patience_bar.tscn" id="4_patience"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_iw42i"]
 atlas = ExtResource("3_yrwsu")
@@ -116,7 +117,6 @@ script = ExtResource("1_lbyvg")
 
 [node name="FiniteStateMachine" type="Node" parent="." unique_id=394854071]
 script = ExtResource("2_yrwsu")
-metadata/_custom_type_script = "uid://dkj32xkfr0fsp"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=552654717]
 sprite_frames = SubResource("SpriteFrames_iw42i")
@@ -150,3 +150,6 @@ burst_count = 8
 strike_summon_scene = ExtResource("hab_nuvem")
 summon_max_alive = 2
 fallback_to_map_center = true
+[node name="CustomerPatienceBar" parent="." instance=ExtResource("4_patience")]
+position = Vector2(-24, -33)
+scale = Vector2(0.5, 0.5)
