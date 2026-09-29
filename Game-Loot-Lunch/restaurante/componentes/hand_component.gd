@@ -91,6 +91,21 @@ func consume_item() -> void:
 		item.queue_free()
 
 
+## Remove o item e toca um SpriteSheetEffect na posição onde ele estava.
+func consume_item_with_effect(effect: SpriteSheetEffect) -> CarryableItem:
+	var item: CarryableItem = _detach()
+	if item == null:
+		return null
+
+	var item_position: Vector2 = item.global_position
+	item.queue_free()
+	if effect == null:
+		return item
+	effect.global_position = item_position
+	effect.play_once()
+	return item
+
+
 func set_facing(direction: Vector2) -> void:
 	if not flip_with_facing or is_zero_approx(direction.x):
 		return
