@@ -3,9 +3,9 @@ class_name ManaBar
 ## Barra de MANA em potinhos, logo abaixo das caveiras de vida.
 ## Cada potinho = 1 barra de habilidade.
 ##
-## Duas folhas de arte (quadros de 24x24 lado a lado):
+## Duas folhas de arte (quadros de 24x24 lado a lado; a quantidade de quadros é lida da largura):
 ##   idle_sheet  (jscoutinho_ui_mana_idle.png, 11 quadros) -> potinho cheio, brilho em loop
-##   fade_sheet  (jscoutinho_ui_mana_fade_out.png, 7 quadros) -> potinho esvaziando
+##   fade_sheet  (jscoutinho_ui_mana_fade_out.png, 8 quadros) -> potinho esvaziando
 ##
 ## Gastou  -> toca o fade_out e o potinho fica "apagado" (empty_modulate).
 ## Recuperou -> toca o fade_out AO CONTRÁRIO (enchendo) e volta ao brilho.

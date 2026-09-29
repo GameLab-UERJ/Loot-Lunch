@@ -149,3 +149,4 @@ burst_data = ExtResource("hab_esfera_supremo")
 burst_count = 8
 strike_summon_scene = ExtResource("hab_nuvem")
 summon_max_alive = 2
+fallback_to_map_center = true

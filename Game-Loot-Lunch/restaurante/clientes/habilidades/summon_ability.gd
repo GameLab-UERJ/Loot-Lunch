@@ -7,7 +7,8 @@ class_name SummonAbility
 ## ONDE NASCE:
 ##   - padrão: na frente do cliente (`spawn_offset`);
 ##   - `spawn_near_target`: PERTO DO CHEF, a `near_offset_min..max` px numa direção sorteada
-##     (igual ao raio supremo do Johnny: tem mais cara de ultimate).
+##     (igual ao raio supremo do Johnny: tem mais cara de ultimate). Sem chef livre e com
+##     `fallback_to_map_center`, nasce no MEIO DO MAPA.
 ##
 ## ENTRADA (opcional, `entrance_scene`): um "show" antes do summon aparecer. A cena tem
 ## script que herda SummonEntrance. Ex.: ovo que cai do céu e choca o pato (Patolino),
@@ -118,6 +119,8 @@ func _pick_spawn_position(target: Node2D, index: int) -> Vector2:
 		var high: float = maxf(near_offset_max, near_offset_min)
 		var distance: float = randf_range(near_offset_min, high) if high > 0.0 else 0.0
 		return target.global_position + Vector2.RIGHT.rotated(randf() * TAU) * distance
+	if spawn_near_target and fallback_to_map_center:
+		return get_aim_position(null)  # sem chef livre (engolido...): nasce no meio do mapa
 	var offset: Vector2 = spawn_offset
 	if amount > 1:
 		offset.x += (index - (amount - 1) * 0.5) * spread

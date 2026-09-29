@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bvtj68tlpnr2d"
-path="res://.godot/imported/combo2.png-16e16662af90412aa0419183112ceb76.ctex"
+uid="uid://cnghtgvmwxrrj"
+path="res://.godot/imported/jscoutinho_ui_mana_fade_out_new.png-ea4a743f1cac6aebf2aac55534892fc2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Claude outputs/combo2.png"
-dest_files=["res://.godot/imported/combo2.png-16e16662af90412aa0419183112ceb76.ctex"]
+source_file="res://restaurante/UI/arte/jscoutinho_ui_mana_fade_out_new.png"
+dest_files=["res://.godot/imported/jscoutinho_ui_mana_fade_out_new.png-ea4a743f1cac6aebf2aac55534892fc2.ctex"]
 
 [params]
 

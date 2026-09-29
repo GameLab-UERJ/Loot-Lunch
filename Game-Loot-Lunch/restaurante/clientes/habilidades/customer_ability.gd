@@ -21,6 +21,10 @@ signal cast_started(target: Node2D)
 signal cast_finished(target: Node2D)
 
 
+## Grupo do nó que marca o MEIO DO MAPA (opcional: coloque um Marker2D na fase com este grupo).
+const MAP_CENTER_GROUP: StringName = &"centro_mapa"
+
+
 @export_group("Alvo")
 ## Grupo de quem pode ser alvo. Os chefs entram em "chefs" sozinhos (chef.gd).
 @export var target_group: StringName = &"chefs"
@@ -28,6 +32,10 @@ signal cast_finished(target: Node2D)
 @export var max_range: float = 0.0
 ## Sem alvo disponível a magia não sai.
 @export var requires_target: bool = true
+## Sem alvo (chef engolido pelo pato, morto...), a magia sai MESMO ASSIM, no MEIO DO MAPA.
+## Ligado nas ultimates. O meio do mapa é um nó do grupo "centro_mapa" (ex.: um Marker2D
+## na fase); sem ele, o centro da câmera; sem câmera, o centro da tela.
+@export var fallback_to_map_center: bool = false
 
 @export_group("Tempo")
 ## Segundos "preparando" antes do efeito (o cliente encolhe e estica).
@@ -64,7 +72,7 @@ func cast(target: Node2D = null) -> bool:
 		return false
 	if target == null or not CaptureComponent.is_available_target(target):
 		target = find_target()
-	if target == null and requires_target:
+	if target == null and requires_target and not fallback_to_map_center:
 		return false
 	_run(target)
 	return true
@@ -94,6 +102,28 @@ func find_target() -> Node2D:
 			best_distance = distance
 			best = candidate
 	return best
+
+
+## Para onde mirar: o alvo, se existir; senão o MEIO DO MAPA.
+func get_aim_position(target: Node2D) -> Vector2:
+	if is_instance_valid(target):
+		return target.global_position
+	return CustomerAbility.map_center_of(self)
+
+
+## Meio do mapa, visto de `node`: nó do grupo "centro_mapa" > centro da câmera > centro da tela.
+static func map_center_of(node: Node) -> Vector2:
+	if node == null or not node.is_inside_tree():
+		return Vector2.ZERO
+	var marker := node.get_tree().get_first_node_in_group(MAP_CENTER_GROUP) as Node2D
+	if marker:
+		return marker.global_position
+	var viewport: Viewport = node.get_viewport()
+	var camera: Camera2D = viewport.get_camera_2d()
+	if camera:
+		return camera.get_screen_center_position()
+	var screen_center: Vector2 = viewport.get_visible_rect().size * 0.5
+	return viewport.get_canvas_transform().affine_inverse() * screen_center
 
 
 ## Onde colocar coisas criadas pela magia (projéteis, summons): a fase do cliente.

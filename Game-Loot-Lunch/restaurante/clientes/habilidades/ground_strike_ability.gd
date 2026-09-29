@@ -10,6 +10,7 @@ class_name GroundStrikeAbility
 ##
 ## Raio simples:   offset 0 (cai EM CIMA de onde o chef estava), sem burst, sem summon.
 ## Raio supremo:   offset 24..40 ("perto" do chef), burst de 8 esferas, nuvem.
+## Sem chef livre (engolido pelo pato...) e `fallback_to_map_center`: cai no meio do mapa.
 
 
 signal strike_spawned(strike: GroundStrike)
@@ -56,20 +57,22 @@ func get_alive_summon_count() -> int:
 
 
 func _perform(target: Node2D) -> void:
-	if strike_scene == null or target == null:
+	if strike_scene == null:
 		return
 	var strike := strike_scene.instantiate() as GroundStrike
 	if strike == null:
 		push_error("GroundStrikeAbility '%s': a cena não tem GroundStrike na raiz." % name)
 		return
 
-	var at: Vector2 = target.global_position + _random_offset()
+	# Sem alvo (chef engolido...) e `fallback_to_map_center`: cai no MEIO DO MAPA.
+	var at: Vector2 = target.global_position + _random_offset() if is_instance_valid(target) \
+		else get_aim_position(null)
 	strike.struck.connect(_on_struck.bind(strike), CONNECT_ONE_SHOT)
 	var world: Node = get_world()
 	world.add_child(strike)
 	# Alerta e marca são "chão": ficam logo ANTES do chef na árvore (desenhados embaixo
 	# dele, mas em cima do piso). O raio caindo tem z_index alto e fica na frente.
-	if target.get_parent() == world:
+	if is_instance_valid(target) and target.get_parent() == world:
 		world.move_child(strike, target.get_index())
 	strike.global_position = at
 	strike_spawned.emit(strike)

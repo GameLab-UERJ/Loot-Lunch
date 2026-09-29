@@ -143,3 +143,4 @@ spawn_near_target = true
 near_offset_min = 0.0
 near_offset_max = 20.0
 entrance_scene = ExtResource("hab_ovo_chocando")
+fallback_to_map_center = true

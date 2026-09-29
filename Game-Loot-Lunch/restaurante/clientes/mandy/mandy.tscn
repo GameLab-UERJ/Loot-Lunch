@@ -148,6 +148,7 @@ spawn_near_target = true
 near_offset_min = 24.0
 near_offset_max = 40.0
 entrance_scene = ExtResource("hab_buraco_invocacao")
+fallback_to_map_center = true
 burst_data = ExtResource("hab_caveira")
 burst_count = 8
 burst_start_radius = 12.0
