@@ -3,6 +3,14 @@
 [ext_resource type="Script" uid="uid://d1bs2nuwabkda" path="res://restaurante/clientes/customer.gd" id="1_lbyvg"]
 [ext_resource type="Script" uid="uid://cyixqdwijqx54" path="res://restaurante/clientes/customer_finite_state_machine.gd" id="2_yrwsu"]
 [ext_resource type="Texture2D" uid="uid://cary7s6yma4po" path="res://restaurante/clientes/johnny/Skeletons-Johnny.png" id="3_yrwsu"]
+[ext_resource type="Script" path="res://restaurante/clientes/habilidades/customer_ability_caster.gd" id="hab_caster"]
+[ext_resource type="Script" path="res://restaurante/clientes/habilidades/ground_strike_ability.gd" id="hab_raio"]
+[ext_resource type="PackedScene" path="res://restaurante/clientes/johnny/habilidades/raio.tscn" id="hab_raio_cena"]
+[ext_resource type="Script" path="res://restaurante/clientes/habilidades/projectile_ability.gd" id="hab_projetil"]
+[ext_resource type="Resource" path="res://restaurante/clientes/johnny/habilidades/esfera.tres" id="hab_esfera"]
+[ext_resource type="PackedScene" path="res://restaurante/clientes/johnny/habilidades/raio_supremo.tscn" id="hab_supremo_cena"]
+[ext_resource type="Resource" path="res://restaurante/clientes/johnny/habilidades/esfera_supremo.tres" id="hab_esfera_supremo"]
+[ext_resource type="PackedScene" path="res://restaurante/clientes/johnny/habilidades/nuvem_tempestade.tscn" id="hab_nuvem"]
 [ext_resource type="PackedScene" path="res://restaurante/clientes/componentes/customer_patience_bar.tscn" id="4_patience"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_iw42i"]
@@ -119,6 +127,29 @@ animation = &"idle"
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2113090391]
 libraries/ = SubResource("AnimationLibrary_hlfh5")
 
+[node name="Habilidades" type="Node" parent="."]
+script = ExtResource("hab_caster")
+
+[node name="Raio" type="Node" parent="Habilidades"]
+script = ExtResource("hab_raio")
+strike_scene = ExtResource("hab_raio_cena")
+
+[node name="EsferaRaio" type="Node" parent="Habilidades"]
+script = ExtResource("hab_projetil")
+data = ExtResource("hab_esfera")
+spawn_offset = Vector2(12, -2)
+
+[node name="RaioSupremo" type="Node" parent="Habilidades"]
+script = ExtResource("hab_raio")
+windup_time = 0.5
+strike_scene = ExtResource("hab_supremo_cena")
+offset_min = 24.0
+offset_max = 40.0
+burst_data = ExtResource("hab_esfera_supremo")
+burst_count = 8
+strike_summon_scene = ExtResource("hab_nuvem")
+summon_max_alive = 2
+fallback_to_map_center = true
 [node name="CustomerPatienceBar" parent="." instance=ExtResource("4_patience")]
 position = Vector2(-24, -33)
 scale = Vector2(0.5, 0.5)

@@ -1,0 +1,43 @@
+[gd_resource type="Resource" script_class="ProjectileData" format=3]
+
+[ext_resource type="Script" path="res://restaurante/componentes/projetil/projectile_data.gd" id="1_data"]
+[ext_resource type="Texture2D" path="res://restaurante/clientes/johnny/habilidade_arte/esfera_loop.png" id="2_voo"]
+[ext_resource type="Texture2D" path="res://restaurante/clientes/johnny/habilidade_arte/esfera_surge.png" id="3_surgir"]
+[ext_resource type="Texture2D" path="res://restaurante/clientes/johnny/habilidade_arte/esfera_impacto.png" id="4_impacto"]
+[ext_resource type="Texture2D" path="res://restaurante/clientes/johnny/habilidade_arte/esfera_some.png" id="5_sumir"]
+[ext_resource type="Resource" path="res://restaurante/clientes/johnny/habilidades/choque_stun.tres" id="6_stun"]
+[ext_resource type="Resource" path="res://restaurante/clientes/johnny/habilidades/esfera_rastro.tres" id="7_rastro"]
+
+[resource]
+script = ExtResource("1_data")
+sheet = ExtResource("2_voo")
+frame_size = Vector2i(32, 32)
+fly_row = 1
+fly_first_column = 1
+fly_frame_count = 6
+fly_fps = 12.0
+sprite_offset = Vector2(0, 4)
+spawn_sheet = ExtResource("3_surgir")
+spawn_frame_count = 5
+spawn_fps = 10.0
+reaim_after_spawn = true
+shadow_frame_count = 0
+impact_sheet = ExtResource("4_impacto")
+impact_frame_count = 6
+impact_fps = 14.0
+impact_frame_size = Vector2i(64, 64)
+expire_sheet = ExtResource("5_sumir")
+expire_frame_count = 5
+expire_fps = 10.0
+trail = ExtResource("7_rastro")
+trail_interval = 0.09
+speed = 55.0
+max_distance = 520.0
+arc_height = 0.0
+homing_turn_speed = 150.0
+hit_radius = 7.0
+damage = 4
+knockback = 60
+target_group = &"chefs"
+stun_duration = 5.0
+stun_visual = ExtResource("6_stun")

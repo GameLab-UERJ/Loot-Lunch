@@ -1,0 +1,590 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://restaurante/clientes/mandy/habilidades/demoninho.gd" id="1_demo"]
+[ext_resource type="Script" path="res://restaurante/componentes/capture_component.gd" id="2_agarrar"]
+[ext_resource type="PackedScene" path="res://restaurante/clientes/mandy/habilidades/buraco_inferno.tscn" id="3_buraco"]
+[ext_resource type="Texture2D" path="res://restaurante/clientes/mandy/habilidade_art/demoninho_invocar_5f.png" id="t_invocar"]
+[ext_resource type="Texture2D" path="res://restaurante/clientes/mandy/habilidade_art/demoninho_voo_6f.png" id="t_voo"]
+[ext_resource type="Texture2D" path="res://restaurante/clientes/mandy/habilidade_art/demoninho_grudar_5f.png" id="t_grudar"]
+[ext_resource type="Texture2D" path="res://restaurante/clientes/mandy/habilidade_art/demoninho_grudado_loop_6f.png" id="t_grudado"]
+[ext_resource type="Texture2D" path="res://restaurante/clientes/mandy/habilidade_art/demoninho_danca_8f.png" id="t_danca"]
+[ext_resource type="Texture2D" path="res://restaurante/clientes/mandy/habilidade_art/demoninho_morrer_16f.png" id="t_morrer"]
+[ext_resource type="Texture2D" path="res://restaurante/clientes/mandy/habilidade_art/demonio_fusao_10f.png" id="t_fusao"]
+[ext_resource type="Texture2D" path="res://restaurante/clientes/mandy/habilidade_art/demonio_fundido_agarrado_loop_6f.png" id="t_agarrado"]
+[ext_resource type="Texture2D" path="res://restaurante/clientes/mandy/habilidade_art/demonio_fundido_risada_4f.png" id="t_risada"]
+[ext_resource type="Texture2D" path="res://restaurante/clientes/mandy/habilidade_art/demonio_fundido_arrastar_loop_4f.png" id="t_arrastar"]
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_voo_0"]
+atlas = ExtResource("t_voo")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_voo_1"]
+atlas = ExtResource("t_voo")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_voo_2"]
+atlas = ExtResource("t_voo")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_voo_3"]
+atlas = ExtResource("t_voo")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_voo_4"]
+atlas = ExtResource("t_voo")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_voo_5"]
+atlas = ExtResource("t_voo")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_invocar_0"]
+atlas = ExtResource("t_invocar")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_invocar_1"]
+atlas = ExtResource("t_invocar")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_invocar_2"]
+atlas = ExtResource("t_invocar")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_invocar_3"]
+atlas = ExtResource("t_invocar")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_invocar_4"]
+atlas = ExtResource("t_invocar")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_grudar_0"]
+atlas = ExtResource("t_grudar")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_grudar_1"]
+atlas = ExtResource("t_grudar")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_grudar_2"]
+atlas = ExtResource("t_grudar")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_grudar_3"]
+atlas = ExtResource("t_grudar")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_grudar_4"]
+atlas = ExtResource("t_grudar")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_grudado_0"]
+atlas = ExtResource("t_grudado")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_grudado_1"]
+atlas = ExtResource("t_grudado")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_grudado_2"]
+atlas = ExtResource("t_grudado")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_grudado_3"]
+atlas = ExtResource("t_grudado")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_grudado_4"]
+atlas = ExtResource("t_grudado")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_grudado_5"]
+atlas = ExtResource("t_grudado")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_danca_0"]
+atlas = ExtResource("t_danca")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_danca_1"]
+atlas = ExtResource("t_danca")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_danca_2"]
+atlas = ExtResource("t_danca")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_danca_3"]
+atlas = ExtResource("t_danca")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_danca_4"]
+atlas = ExtResource("t_danca")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_danca_5"]
+atlas = ExtResource("t_danca")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_danca_6"]
+atlas = ExtResource("t_danca")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_danca_7"]
+atlas = ExtResource("t_danca")
+region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_morrer_0"]
+atlas = ExtResource("t_morrer")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_morrer_1"]
+atlas = ExtResource("t_morrer")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_morrer_2"]
+atlas = ExtResource("t_morrer")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_morrer_3"]
+atlas = ExtResource("t_morrer")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_morrer_4"]
+atlas = ExtResource("t_morrer")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_morrer_5"]
+atlas = ExtResource("t_morrer")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_morrer_6"]
+atlas = ExtResource("t_morrer")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_morrer_7"]
+atlas = ExtResource("t_morrer")
+region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_morrer_8"]
+atlas = ExtResource("t_morrer")
+region = Rect2(512, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_morrer_9"]
+atlas = ExtResource("t_morrer")
+region = Rect2(576, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_morrer_10"]
+atlas = ExtResource("t_morrer")
+region = Rect2(640, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_morrer_11"]
+atlas = ExtResource("t_morrer")
+region = Rect2(704, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_morrer_12"]
+atlas = ExtResource("t_morrer")
+region = Rect2(768, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_morrer_13"]
+atlas = ExtResource("t_morrer")
+region = Rect2(832, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_morrer_14"]
+atlas = ExtResource("t_morrer")
+region = Rect2(896, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_morrer_15"]
+atlas = ExtResource("t_morrer")
+region = Rect2(960, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_fusao_0"]
+atlas = ExtResource("t_fusao")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_fusao_1"]
+atlas = ExtResource("t_fusao")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_fusao_2"]
+atlas = ExtResource("t_fusao")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_fusao_3"]
+atlas = ExtResource("t_fusao")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_fusao_4"]
+atlas = ExtResource("t_fusao")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_fusao_5"]
+atlas = ExtResource("t_fusao")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_fusao_6"]
+atlas = ExtResource("t_fusao")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_fusao_7"]
+atlas = ExtResource("t_fusao")
+region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_fusao_8"]
+atlas = ExtResource("t_fusao")
+region = Rect2(512, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_fusao_9"]
+atlas = ExtResource("t_fusao")
+region = Rect2(576, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_agarrado_0"]
+atlas = ExtResource("t_agarrado")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_agarrado_1"]
+atlas = ExtResource("t_agarrado")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_agarrado_2"]
+atlas = ExtResource("t_agarrado")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_agarrado_3"]
+atlas = ExtResource("t_agarrado")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_agarrado_4"]
+atlas = ExtResource("t_agarrado")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_agarrado_5"]
+atlas = ExtResource("t_agarrado")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_risada_0"]
+atlas = ExtResource("t_risada")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_risada_1"]
+atlas = ExtResource("t_risada")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_risada_2"]
+atlas = ExtResource("t_risada")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_risada_3"]
+atlas = ExtResource("t_risada")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_arrastar_0"]
+atlas = ExtResource("t_arrastar")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_arrastar_1"]
+atlas = ExtResource("t_arrastar")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_arrastar_2"]
+atlas = ExtResource("t_arrastar")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_demo_arrastar_3"]
+atlas = ExtResource("t_arrastar")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_demo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_voo_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_voo_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_voo_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_voo_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_voo_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_voo_5")
+}],
+"loop": true,
+"name": &"voo",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_invocar_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_invocar_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_invocar_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_invocar_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_invocar_4")
+}],
+"loop": false,
+"name": &"invocar",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_grudar_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_grudar_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_grudar_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_grudar_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_grudar_4")
+}],
+"loop": false,
+"name": &"grudar",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_grudado_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_grudado_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_grudado_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_grudado_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_grudado_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_grudado_5")
+}],
+"loop": true,
+"name": &"grudado",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_danca_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_danca_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_danca_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_danca_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_danca_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_danca_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_danca_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_danca_7")
+}],
+"loop": true,
+"name": &"danca",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_morrer_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_morrer_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_morrer_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_morrer_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_morrer_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_morrer_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_morrer_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_morrer_7")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_morrer_8")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_morrer_9")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_morrer_10")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_morrer_11")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_morrer_12")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_morrer_13")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_morrer_14")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_morrer_15")
+}],
+"loop": false,
+"name": &"morrer",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_fusao_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_fusao_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_fusao_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_fusao_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_fusao_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_fusao_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_fusao_6")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_fusao_7")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_fusao_8")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_fusao_9")
+}],
+"loop": false,
+"name": &"fusao",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_agarrado_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_agarrado_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_agarrado_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_agarrado_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_agarrado_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_agarrado_5")
+}],
+"loop": true,
+"name": &"agarrado",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_risada_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_risada_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_risada_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_risada_3")
+}],
+"loop": false,
+"name": &"risada",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_arrastar_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_arrastar_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_arrastar_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_demo_arrastar_3")
+}],
+"loop": true,
+"name": &"arrastar",
+"speed": 8.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_demo"]
+radius = 4.0
+
+[node name="Demoninho" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 1
+motion_mode = 1
+script = ExtResource("1_demo")
+move_speed = 55.0
+reach_distance = 12.0
+lifetime = 20.0
+walk_animation = &"voo"
+celebrate_animation = &"danca"
+despawn_animation = &"morrer"
+spawn_pop = false
+obeys_dance_requests = false
+attached_time = 8.0
+attached_slow = 0.9
+hunt_speed_multiplier = 1.8
+hole_scene = ExtResource("3_buraco")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_demo")
+animation = &"invocar"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_demo")
+
+[node name="Agarrar" type="Node2D" parent="."]
+script = ExtResource("2_agarrar")
+escape_enabled = false

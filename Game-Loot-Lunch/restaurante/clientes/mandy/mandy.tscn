@@ -3,6 +3,14 @@
 [ext_resource type="Script" uid="uid://d1bs2nuwabkda" path="res://restaurante/clientes/customer.gd" id="1_jga6b"]
 [ext_resource type="Script" uid="uid://cyixqdwijqx54" path="res://restaurante/clientes/customer_finite_state_machine.gd" id="2_b6lq3"]
 [ext_resource type="Texture2D" uid="uid://bfh3rnjkuun4s" path="res://restaurante/clientes/mandy/Skeletons-Mandy.png" id="3_pi2u6"]
+[ext_resource type="Script" path="res://restaurante/clientes/habilidades/customer_ability_caster.gd" id="hab_caster"]
+[ext_resource type="Script" path="res://restaurante/clientes/habilidades/aura_ability.gd" id="hab_aura"]
+[ext_resource type="PackedScene" path="res://restaurante/clientes/mandy/habilidades/circulo_bruxaria.tscn" id="hab_circulo"]
+[ext_resource type="Script" path="res://restaurante/clientes/habilidades/projectile_ability.gd" id="hab_projetil"]
+[ext_resource type="Resource" path="res://restaurante/clientes/mandy/habilidades/caveira.tres" id="hab_caveira"]
+[ext_resource type="Script" path="res://restaurante/clientes/habilidades/summon_ability.gd" id="hab_summon"]
+[ext_resource type="PackedScene" path="res://restaurante/clientes/mandy/habilidades/demoninho.tscn" id="hab_demoninho"]
+[ext_resource type="PackedScene" path="res://restaurante/clientes/mandy/habilidades/buraco_invocacao.tscn" id="hab_buraco_invocacao"]
 [ext_resource type="PackedScene" path="res://restaurante/clientes/componentes/customer_patience_bar.tscn" id="4_patience"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nctpg"]
@@ -119,6 +127,32 @@ animation = &"idle"
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2113090391]
 libraries/ = SubResource("AnimationLibrary_igk60")
 
+[node name="Habilidades" type="Node" parent="."]
+script = ExtResource("hab_caster")
+
+[node name="CirculoBruxaria" type="Node" parent="Habilidades"]
+script = ExtResource("hab_aura")
+aura_scene = ExtResource("hab_circulo")
+duration = 4.0
+channel = true
+
+[node name="Caveira" type="Node" parent="Habilidades"]
+script = ExtResource("hab_projetil")
+data = ExtResource("hab_caveira")
+spawn_offset = Vector2(10, -4)
+
+[node name="Demoninho" type="Node" parent="Habilidades"]
+script = ExtResource("hab_summon")
+summon_scene = ExtResource("hab_demoninho")
+spawn_near_target = true
+near_offset_min = 24.0
+near_offset_max = 40.0
+entrance_scene = ExtResource("hab_buraco_invocacao")
+fallback_to_map_center = true
+burst_data = ExtResource("hab_caveira")
+burst_count = 8
+burst_start_radius = 12.0
+max_alive = 2
 [node name="CustomerPatienceBar" parent="." instance=ExtResource("4_patience")]
 position = Vector2(-24, -33)
 scale = Vector2(0.5, 0.5)

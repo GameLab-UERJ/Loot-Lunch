@@ -1,0 +1,47 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://restaurante/personagens/chef/habilidades/chef_shadow.gd" id="1_shadow"]
+[ext_resource type="Texture2D" uid="uid://c1wqitccu7e00" path="res://restaurante/personagens/chef/habilidade_art/jscoutinho_idle_L_34F_sombra.png" id="2_sombra_png"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sombra0"]
+atlas = ExtResource("2_sombra_png")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sombra1"]
+atlas = ExtResource("2_sombra_png")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sombra2"]
+atlas = ExtResource("2_sombra_png")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sombra3"]
+atlas = ExtResource("2_sombra_png")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sombra"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sombra0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sombra1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sombra2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sombra3")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="Sombra" type="Node2D"]
+script = ExtResource("1_shadow")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_sombra")
+animation = &"idle"
