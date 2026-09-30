@@ -5,6 +5,13 @@
 [ext_resource type="Texture2D" uid="uid://lphllvr5sxgg" path="res://restaurante/clientes/patolino/Skeletons-Patolino.png" id="3_ydncc"]
 [ext_resource type="PackedScene" path="res://restaurante/clientes/componentes/customer_patience_bar.tscn" id="4_patience"]
 
+[ext_resource type="Script" path="res://restaurante/clientes/habilidades/customer_ability_caster.gd" id="hab_caster"]
+[ext_resource type="Script" path="res://restaurante/clientes/patolino/habilidades/quack_ability.gd" id="hab_quack"]
+[ext_resource type="Script" path="res://restaurante/clientes/habilidades/projectile_ability.gd" id="hab_projetil"]
+[ext_resource type="Resource" path="res://restaurante/clientes/patolino/habilidades/ovo.tres" id="hab_ovo"]
+[ext_resource type="Script" path="res://restaurante/clientes/habilidades/summon_ability.gd" id="hab_summon"]
+[ext_resource type="PackedScene" path="res://restaurante/clientes/patolino/habilidades/pato_devorador.tscn" id="hab_pato"]
+[ext_resource type="PackedScene" path="res://restaurante/clientes/patolino/habilidades/ovo_chocando.tscn" id="hab_ovo_chocando"]
 [sub_resource type="AtlasTexture" id="AtlasTexture_sy6tq"]
 atlas = ExtResource("3_ydncc")
 region = Rect2(0, 0, 64, 64)
@@ -119,6 +126,24 @@ animation = &"idle"
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2113090391]
 libraries/ = SubResource("AnimationLibrary_wu8ci")
 
+[node name="Habilidades" type="Node" parent="."]
+script = ExtResource("hab_caster")
+
+[node name="Quack" type="Node" parent="Habilidades"]
+script = ExtResource("hab_quack")
+
+[node name="Ovo" type="Node" parent="Habilidades"]
+script = ExtResource("hab_projetil")
+data = ExtResource("hab_ovo")
+
+[node name="PatoDevorador" type="Node" parent="Habilidades"]
+script = ExtResource("hab_summon")
+summon_scene = ExtResource("hab_pato")
+spawn_near_target = true
+near_offset_min = 0.0
+near_offset_max = 20.0
+entrance_scene = ExtResource("hab_ovo_chocando")
+fallback_to_map_center = true
 [node name="CustomerPatienceBar" parent="." instance=ExtResource("4_patience")]
 position = Vector2(-24, -33)
 scale = Vector2(0.5, 0.5)

@@ -1,0 +1,15 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://restaurante/clientes/habilidades/rise_from_hole_entrance.gd" id="1_entrada"]
+[ext_resource type="PackedScene" path="res://restaurante/clientes/mandy/habilidades/buraco_inferno.tscn" id="2_buraco"]
+
+[node name="BuracoInvocacao" type="Node2D"]
+script = ExtResource("1_entrada")
+summon_offset = Vector2(0, -4)
+skip_summon_intro = true
+hole_scene = ExtResource("2_buraco")
+wait_before_rise = 0.2
+close_delay = 0.5
+rise_animation = &"voo"
+rise_depth = 40.0
+rise_time = 0.9

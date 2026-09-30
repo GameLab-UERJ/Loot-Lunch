@@ -1,0 +1,254 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://restaurante/clientes/patolino/habilidades/ovo_chocando.gd" id="1_ovo"]
+[ext_resource type="Texture2D" path="res://restaurante/clientes/patolino/habilidade_arte/patolino_ovo_spritesheet.png" id="t_ovo"]
+[ext_resource type="Resource" path="res://restaurante/clientes/patolino/habilidades/quack_mini.tres" id="2_quack"]
+
+[sub_resource type="AtlasTexture" id="At_1"]
+atlas = ExtResource("t_ovo")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="At_2"]
+atlas = ExtResource("t_ovo")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="At_3"]
+atlas = ExtResource("t_ovo")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="At_4"]
+atlas = ExtResource("t_ovo")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="At_5"]
+atlas = ExtResource("t_ovo")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="At_6"]
+atlas = ExtResource("t_ovo")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="At_7"]
+atlas = ExtResource("t_ovo")
+region = Rect2(96, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="At_8"]
+atlas = ExtResource("t_ovo")
+region = Rect2(112, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="At_9"]
+atlas = ExtResource("t_ovo")
+region = Rect2(0, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="At_10"]
+atlas = ExtResource("t_ovo")
+region = Rect2(16, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="At_11"]
+atlas = ExtResource("t_ovo")
+region = Rect2(32, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="At_12"]
+atlas = ExtResource("t_ovo")
+region = Rect2(48, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="At_13"]
+atlas = ExtResource("t_ovo")
+region = Rect2(64, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="At_14"]
+atlas = ExtResource("t_ovo")
+region = Rect2(80, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="At_15"]
+atlas = ExtResource("t_ovo")
+region = Rect2(96, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="At_16"]
+atlas = ExtResource("t_ovo")
+region = Rect2(112, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="At_17"]
+atlas = ExtResource("t_ovo")
+region = Rect2(0, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="At_18"]
+atlas = ExtResource("t_ovo")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="At_19"]
+atlas = ExtResource("t_ovo")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="At_20"]
+atlas = ExtResource("t_ovo")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="At_21"]
+atlas = ExtResource("t_ovo")
+region = Rect2(48, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="At_22"]
+atlas = ExtResource("t_ovo")
+region = Rect2(64, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="At_23"]
+atlas = ExtResource("t_ovo")
+region = Rect2(80, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ovo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("At_1")
+},
+{
+"duration": 1.0,
+"texture": SubResource("At_2")
+},
+{
+"duration": 1.0,
+"texture": SubResource("At_3")
+},
+{
+"duration": 1.0,
+"texture": SubResource("At_4")
+},
+{
+"duration": 1.0,
+"texture": SubResource("At_5")
+},
+{
+"duration": 1.0,
+"texture": SubResource("At_6")
+},
+{
+"duration": 1.0,
+"texture": SubResource("At_7")
+},
+{
+"duration": 1.0,
+"texture": SubResource("At_8")
+}],
+"loop": true,
+"name": &"cair",
+"speed": 16.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("At_9")
+},
+{
+"duration": 1.0,
+"texture": SubResource("At_10")
+},
+{
+"duration": 1.0,
+"texture": SubResource("At_11")
+},
+{
+"duration": 1.0,
+"texture": SubResource("At_12")
+}],
+"loop": true,
+"name": &"parado",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("At_13")
+}],
+"loop": false,
+"name": &"racha_1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("At_14")
+}],
+"loop": false,
+"name": &"racha_2",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("At_15")
+},
+{
+"duration": 1.0,
+"texture": SubResource("At_16")
+}],
+"loop": false,
+"name": &"chocar",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("At_17")
+}],
+"loop": false,
+"name": &"casca",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sombra"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("At_18")
+},
+{
+"duration": 1.0,
+"texture": SubResource("At_19")
+}],
+"loop": false,
+"name": &"sombra",
+"speed": 1.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_impacto"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("At_20")
+},
+{
+"duration": 1.0,
+"texture": SubResource("At_21")
+},
+{
+"duration": 1.0,
+"texture": SubResource("At_22")
+},
+{
+"duration": 1.0,
+"texture": SubResource("At_23")
+}],
+"loop": false,
+"name": &"impacto",
+"speed": 12.0
+}]
+
+[node name="OvoChocando" type="Node2D"]
+script = ExtResource("1_ovo")
+quack_visual = ExtResource("2_quack")
+
+[node name="Sombra" type="AnimatedSprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.8)
+position = Vector2(0, -16)
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_sombra")
+animation = &"sombra"
+
+[node name="Ovo" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -12)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_ovo")
+animation = &"parado"
+
+[node name="Impacto" type="AnimatedSprite2D" parent="."]
+z_index = 5
+position = Vector2(0, -12)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_impacto")
+animation = &"impacto"
