@@ -9,9 +9,9 @@ class_name AssemblyStation
 ## HandComponents dentro do nó `Slots` (ordem da árvore = de baixo para cima).
 ##
 ## Fluxo:
-##   1. B com um ingrediente aceito na mão -> o item é fincado no primeiro slot livre.
+##   1. Clique direito com um ingrediente aceito na mão -> o item é fincado no primeiro slot livre.
 ##   2. Repete até encher os slots.
-##   3. B com a MÃO VAZIA e o conjunto fechando uma receita -> o jogador leva o item pronto
+##   3. Clique direito com a MÃO VAZIA e o conjunto fechando uma receita -> o jogador leva o item pronto
 ##      e a estação entra em cooldown.
 ##   4. T (ação secundária) perto dela -> apaga o que estiver montado, toca o efeito de
 ##      fogo e entra em cooldown.

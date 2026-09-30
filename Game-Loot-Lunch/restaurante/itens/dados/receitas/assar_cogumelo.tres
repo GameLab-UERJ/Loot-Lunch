@@ -10,6 +10,7 @@ script = ExtResource("1_recipe")
 input_data = ExtResource("2_cru")
 perfect_data = ExtResource("3_perfeito")
 burnt_data = ExtResource("4_torrado")
+spin_row = 4
 perfect_time = -1.0
 burnt_time = -1.0
 vanish_time = -1.0

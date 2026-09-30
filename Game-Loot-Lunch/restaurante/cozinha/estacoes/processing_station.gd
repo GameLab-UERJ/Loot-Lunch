@@ -3,14 +3,14 @@ class_name ProcessingStation
 ## Estação que TRANSFORMA um ingrediente em outro por etapas (tábua de corte, e no futuro
 ## fogão, liquidificador, pilão...). Quais itens ela aceita é DADO: a lista `recipes`.
 ##
-## Fluxo (tecla B, `chef_interact`):
-##   1. B com o ingrediente certo na mão  -> o item vai para cima da estação e a tarefa começa.
-##   2. B de novo, N vezes                -> cada toque conta uma etapa e enche a barrinha.
+## Fluxo (clique direito, `chef_interact`):
+##   1. Clique com o ingrediente certo na mão -> o item vai para cima da estação e a tarefa começa.
+##   2. Clique de novo, N vezes              -> cada toque conta uma etapa e enche a barrinha.
 ##   3. na última etapa                   -> o item vira o `output_data` da receita.
-##   4. B com a mão vazia                 -> pega o item pronto de volta.
+##   4. Clique com a mão vazia               -> pega o item pronto de volta.
 ##
 ## REGRA: começou, tem que terminar. Enquanto a tarefa está em andamento a estação só
-## aceita B para avançar o corte — não devolve o item nem aceita outro ingrediente.
+## aceita o clique para avançar o corte — não devolve o item nem aceita outro ingrediente.
 ##
 ## Filhos esperados: Sprite2D, CollisionShape2D, InteractableComponent, ItemSlot (HandComponent),
 ## ProgressComponent e, opcionais, BarraProgresso (ProgressBarComponent) e EfeitoCorte (SpriteSheetEffect).
@@ -70,12 +70,12 @@ func _interact(_actor: Node, actor_hand: HandComponent) -> void:
 	if actor_hand == null:
 		return
 
-	# Tarefa em andamento: B só corta. Não devolve o item até terminar.
+	# Tarefa em andamento: o clique só corta. Não devolve o item até terminar.
 	if is_busy():
 		_do_step()
 		return
 
-	# Item pronto em cima da estação: B com a mão vazia retira.
+	# Item pronto em cima da estação: clique com a mão vazia retira.
 	if slot.has_item():
 		slot.transfer_to(actor_hand)
 		_refresh_bar()

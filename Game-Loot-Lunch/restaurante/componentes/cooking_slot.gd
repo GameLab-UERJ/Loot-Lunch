@@ -13,6 +13,9 @@ class_name CookingSlot
 ##   Mao     -> HandComponent        onde o item aparece em cima da boca
 ##   Barra   -> ProgressBarComponent barrinha do tempo (muda de cor por estágio)
 ##   Toco    -> Sprite2D             cotoco de madeira: "tem espetinho aqui"
+##   Girando -> SheetRowSprite       espetinho GIRANDO no fogo (esconde a arte parada
+##                                   do item enquanto ele está na boca). A linha vem
+##                                   da receita (`CookingRecipe.spin_row`).
 ##   Efeito  -> SpriteSheetEffect    toca quando o item queima e some
 
 
@@ -44,6 +47,7 @@ signal item_vanished(recipe: CookingRecipe)
 var hand: HandComponent = null
 var bar: ProgressBarComponent = null
 var toco: CanvasItem = null
+var spinner: SheetRowSprite = null
 var effect: SpriteSheetEffect = null
 
 var _recipe: CookingRecipe = null
@@ -58,11 +62,15 @@ func _ready() -> void:
 	hand = HandComponent.find_in(self)
 	bar = get_node_or_null("Barra") as ProgressBarComponent
 	toco = get_node_or_null("Toco") as CanvasItem
+	spinner = get_node_or_null("Girando") as SheetRowSprite
 	effect = get_node_or_null("Efeito") as SpriteSheetEffect
 	if hand == null:
 		push_warning("CookingSlot '%s': nenhum HandComponent filho (nó 'Mao')." % name)
 	if toco:
 		toco.visible = false
+	if hand:
+		# Garante que o item volta a aparecer ao sair da boca (pego, descartado...).
+		hand.item_released.connect(_on_hand_item_released)
 	set_process(false)
 	_refresh_bar()
 
@@ -153,6 +161,7 @@ func place(actor_hand: HandComponent, recipe: CookingRecipe, times: Vector3) -> 
 
 	if toco:
 		toco.visible = true
+	_refresh_spinner()
 	set_process(true)
 	_refresh_bar()
 	item_placed.emit(item)
@@ -192,7 +201,8 @@ func _set_stage(stage: Stage) -> void:
 	var data: ItemData = _data_for(stage)
 	if data and hand.has_item():
 		hand.held_item.data = data
-		_punch(hand.held_item)
+		_punch(spinner if _is_spinning() else hand.held_item)
+	_refresh_spinner()
 	stage_changed.emit(stage)
 
 
@@ -225,7 +235,27 @@ func _clear() -> void:
 	set_process(false)
 	if toco:
 		toco.visible = false
+	_refresh_spinner()
 	_refresh_bar()
+
+
+## Espetinho girando: mostra a linha do ponto atual e esconde a arte parada do item.
+func _refresh_spinner() -> void:
+	if spinner == null:
+		return
+	var row: int = _recipe.get_spin_row(_stage) if _recipe and is_occupied() else 0
+	spinner.show_row(row)
+	if is_occupied():
+		hand.held_item.visible = row <= 0
+
+
+func _is_spinning() -> bool:
+	return spinner != null and spinner.visible
+
+
+func _on_hand_item_released(item: CarryableItem) -> void:
+	if is_instance_valid(item):
+		item.visible = true
 
 
 func _refresh_bar() -> void:
@@ -240,8 +270,8 @@ func _refresh_bar() -> void:
 	bar.set_progress(get_progress())
 
 
-func _punch(item: CarryableItem) -> void:
-	if not is_instance_valid(item) or punch_time <= 0.0:
+func _punch(target: Node2D) -> void:
+	if not is_instance_valid(target) or punch_time <= 0.0:
 		return
-	item.scale = punch_scale
-	create_tween().tween_property(item, "scale", Vector2.ONE, punch_time)
+	target.scale = punch_scale
+	create_tween().tween_property(target, "scale", Vector2.ONE, punch_time)

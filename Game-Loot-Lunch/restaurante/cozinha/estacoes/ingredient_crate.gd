@@ -1,6 +1,6 @@
 extends KitchenStation
 class_name IngredientCrate
-## Caixa de ingredientes infinita: B com a mão vazia gera um item novo na mão.
+## Caixa de ingredientes infinita: clique direito com a mão vazia gera um item novo na mão.
 
 
 @export var item_scene: PackedScene

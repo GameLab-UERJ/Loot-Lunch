@@ -18,7 +18,7 @@ signal health_changed(current: int, maximum: int)
 
 @export_group("Input")
 ## Nomes das ações do Input Map. Exportados para permitir um 2º jogador com outras teclas.
-@export var interact_action: StringName = &"chef_interact"   # B
+@export var interact_action: StringName = &"chef_interact"   # Clique direito
 @export var pick_drop_action: StringName = &"chef_pick_drop" # R
 @export var dash_action: StringName = &"chef_dash"           # Space
 ## Ação secundária das estações: descartar/limpar (raiz de espeto, lixeira...).
@@ -104,11 +104,12 @@ func try_dash() -> bool:
 	return false
 
 
-## Tecla B: interage com a bancada/caixa/fogão mais próximo à frente.
+## Clique direito: interage com o objeto embaixo do mouse (se estiver ao alcance)
+## ou, com o mouse no vazio, com a bancada/caixa/fogão mais próximo à frente.
 func interact() -> bool:
 	if not can_act():
 		return false
-	var target: InteractableComponent = interactor_component.get_nearest_interactable()
+	var target: InteractableComponent = interactor_component.get_target()
 	if target == null:
 		return false
 	return target.interact(self)
@@ -128,7 +129,7 @@ func pick_or_drop() -> bool:
 func trash() -> bool:
 	if not can_act():
 		return false
-	var target: InteractableComponent = interactor_component.get_nearest_interactable()
+	var target: InteractableComponent = interactor_component.get_target()
 	if target == null:
 		return false
 	return target.alt_interact(self)

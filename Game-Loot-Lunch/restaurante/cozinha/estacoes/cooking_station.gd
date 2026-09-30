@@ -11,16 +11,19 @@ class_name CookingStation
 ## (ordem da árvore = ordem em que são ocupadas).
 ##
 ## Fluxo:
-##   1. B com um espetinho cru na mão -> vai para a primeira boca livre.
-##   2. Cada boca conta o tempo sozinha e troca a arte: cru -> no ponto -> torrado.
-##   3. B com a MÃO VAZIA -> tira o espetinho da boca mais perto do jogador,
+##   1. Clique direito com um espetinho cru na mão -> vai para a primeira boca livre.
+##   2. Cada boca conta o tempo sozinha e troca a arte: cru -> no ponto -> torrado
+##      (o espetinho aparece GIRANDO no fogo, linha certa da spritesheet).
+##   3. Clique direito com a MÃO VAZIA -> tira o espetinho da boca mais perto do
+##      cursor (ou do jogador, se o mouse não está em cima da estação),
 ##      no ponto em que ele estiver (são 3 resultados possíveis).
 ##   4. Passou do tempo -> o espetinho queima, some e a estação avisa por
 ##      `item_vanished` (gancho para a consequência futura).
 ##   5. T (ação secundária) -> joga fora o espetinho da boca mais perto.
 ##
-## Filhos esperados: Sprite2D, CollisionShape2D, InteractableComponent e
-## `Bocas` (com um `CookingSlot` para cada boca).
+## Filhos esperados: AnimatedSprite2D (ou Sprite2D), CollisionShape2D, InteractableComponent e
+## `Bocas` (com um `CookingSlot` para cada boca). Opcional: `CookingStationFSM`, que troca
+## a animação da estação (vazia / assando / alerta / risada).
 
 
 signal item_placed(slot: CookingSlot, item: CarryableItem)
@@ -162,12 +165,16 @@ func _first_free_slot() -> CookingSlot:
 	return null
 
 
-## Boca ocupada mais perto de `actor`. Empate (ou sem ator): a mais adiantada no fogo.
+## Boca ocupada mais perto do mouse (se ele está em cima da estação) ou de `actor`.
+## Empate (ou sem ator): a mais adiantada no fogo.
 func _nearest_occupied_slot(actor: Node) -> CookingSlot:
 	var origin: Vector2 = Vector2.ZERO
 	var has_origin: bool = false
 	var node2d := actor as Node2D
-	if node2d:
+	if interactable.is_hovered:
+		origin = get_global_mouse_position()
+		has_origin = true
+	elif node2d:
 		origin = node2d.global_position
 		has_origin = true
 

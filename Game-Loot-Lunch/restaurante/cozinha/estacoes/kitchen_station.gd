@@ -1,6 +1,6 @@
 extends StaticBody2D
 class_name KitchenStation
-## Base para tudo da cozinha que reage à interação (tecla B) e, opcionalmente,
+## Base para tudo da cozinha que reage à interação (clique direito) e, opcionalmente,
 ## à ação secundária de descarte (tecla T).
 ## Filhos sobrescrevem `_interact(actor, actor_hand)` e/ou `_alt_interact(actor, actor_hand)`.
 
