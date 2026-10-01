@@ -1,7 +1,7 @@
 extends StaticBody2D
 class_name KitchenStation
-## Base para tudo da cozinha que reage à interação (clique direito) e, opcionalmente,
-## à ação secundária de descarte (tecla T).
+## Base para tudo da cozinha que reage à interação (tecla F ou clique direito) e,
+## opcionalmente, à ação secundária de descarte (tecla R).
 ## Filhos sobrescrevem `_interact(actor, actor_hand)` e/ou `_alt_interact(actor, actor_hand)`.
 
 
@@ -26,6 +26,6 @@ func _interact(_actor: Node, _actor_hand: HandComponent) -> void:
 	pass
 
 
-## Virtual da ação SECUNDÁRIA (tecla T): descartar/limpar. Por padrão não faz nada.
+## Virtual da ação SECUNDÁRIA (tecla R): descartar/limpar. Por padrão não faz nada.
 func _alt_interact(_actor: Node, _actor_hand: HandComponent) -> void:
 	pass

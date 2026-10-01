@@ -17,6 +17,11 @@ class_name CookingSlot
 ##                                   do item enquanto ele está na boca). A linha vem
 ##                                   da receita (`CookingRecipe.spin_row`).
 ##   Efeito  -> SpriteSheetEffect    toca quando o item queima e some
+##   Balao   -> IconBubble           balão com o ícone do que está assando
+##                                   (vem da receita: `CookingRecipe.bubble_icons`)
+##
+## DESTAQUE: `set_targeted(true)` põe uma silhueta no espetinho (girando ou parado)
+## e realça o balão. A estação chama isso na boca que a tecla F vai esvaziar.
 
 
 ## Ponto do cozimento. RAW = ainda cru, PERFECT = no ponto, BURNT = torrado.
@@ -38,6 +43,11 @@ signal item_vanished(recipe: CookingRecipe)
 ## Quando passa do ponto.
 @export var burnt_color: Color = Color(0.88, 0.25, 0.22, 1.0)
 
+@export_group("Destaque (item que vai sair)")
+@export var outline_color: Color = Color.WHITE
+## Largura da silhueta em pixels da tela.
+@export var outline_width: float = 1.0
+
 @export_group("Feedback")
 ## Esticadinha do item quando ele muda de estágio.
 @export var punch_scale: Vector2 = Vector2(1.25, 0.8)
@@ -49,6 +59,7 @@ var bar: ProgressBarComponent = null
 var toco: CanvasItem = null
 var spinner: SheetRowSprite = null
 var effect: SpriteSheetEffect = null
+var bubble: IconBubble = null
 
 var _recipe: CookingRecipe = null
 var _stage: Stage = Stage.RAW
@@ -56,6 +67,9 @@ var _elapsed: float = 0.0
 var _perfect_time: float = 10.0
 var _burnt_time: float = 20.0
 var _vanish_time: float = 25.0
+var _targeted: bool = false
+## Quem está com a silhueta agora (o espetinho girando ou o sprite do item).
+var _outlined: CanvasItem = null
 
 
 func _ready() -> void:
@@ -64,6 +78,7 @@ func _ready() -> void:
 	toco = get_node_or_null("Toco") as CanvasItem
 	spinner = get_node_or_null("Girando") as SheetRowSprite
 	effect = get_node_or_null("Efeito") as SpriteSheetEffect
+	bubble = get_node_or_null("Balao") as IconBubble
 	if hand == null:
 		push_warning("CookingSlot '%s': nenhum HandComponent filho (nó 'Mao')." % name)
 	if toco:
@@ -109,6 +124,11 @@ func get_stage() -> Stage:
 
 func get_recipe() -> CookingRecipe:
 	return _recipe
+
+
+## Esta boca está destacada como a próxima a sair?
+func is_targeted() -> bool:
+	return _targeted
 
 
 ## Segundos que o item já passou no fogo.
@@ -162,6 +182,7 @@ func place(actor_hand: HandComponent, recipe: CookingRecipe, times: Vector3) -> 
 	if toco:
 		toco.visible = true
 	_refresh_spinner()
+	_show_bubble()
 	set_process(true)
 	_refresh_bar()
 	item_placed.emit(item)
@@ -177,6 +198,7 @@ func take(actor_hand: HandComponent) -> bool:
 
 	var item: CarryableItem = hand.held_item
 	var stage: Stage = _stage
+	_set_outlined(null)  # a silhueta não vai junto com o item para a mão
 	if not hand.transfer_to(actor_hand):
 		return false
 
@@ -185,10 +207,11 @@ func take(actor_hand: HandComponent) -> bool:
 	return true
 
 
-## Joga fora o que estiver na boca (tecla T).
+## Joga fora o que estiver na boca (tecla R).
 func discard() -> bool:
 	if is_empty():
 		return false
+	_set_outlined(null)
 	hand.consume_item()
 	_clear()
 	return true
@@ -220,6 +243,7 @@ func _data_for(stage: Stage) -> ItemData:
 
 func _burn_away() -> void:
 	var recipe: CookingRecipe = _recipe
+	_set_outlined(null)
 	if hand:
 		hand.consume_item()
 	if effect:
@@ -237,6 +261,18 @@ func _clear() -> void:
 		toco.visible = false
 	_refresh_spinner()
 	_refresh_bar()
+	if bubble:
+		bubble.disappear()
+	set_targeted(false)
+
+
+## Liga/desliga o destaque: silhueta no espetinho + balão realçado.
+## Boca vazia nunca fica destacada.
+func set_targeted(value: bool) -> void:
+	_targeted = value and is_occupied()
+	_refresh_outline()
+	if bubble:
+		bubble.set_highlighted(_targeted)
 
 
 ## Espetinho girando: mostra a linha do ponto atual e esconde a arte parada do item.
@@ -247,6 +283,43 @@ func _refresh_spinner() -> void:
 	spinner.show_row(row)
 	if is_occupied():
 		hand.held_item.visible = row <= 0
+	_refresh_outline()
+
+
+## Coloca a silhueta em quem está aparecendo: o espetinho girando ou, sem arte
+## girando, o sprite parado do item.
+func _refresh_outline() -> void:
+	var target: CanvasItem = null
+	if _targeted and is_occupied():
+		if _is_spinning():
+			target = spinner
+		elif hand.held_item.sprite:
+			target = hand.held_item.sprite
+	_set_outlined(target)
+
+
+func _set_outlined(target: CanvasItem) -> void:
+	if target == _outlined:
+		if target:
+			SpriteOutline.show_on(target, outline_color, outline_width)
+		return
+	if is_instance_valid(_outlined):
+		SpriteOutline.hide_on(_outlined)
+	_outlined = target
+	if target:
+		SpriteOutline.show_on(target, outline_color, outline_width)
+
+
+func _show_bubble() -> void:
+	if bubble == null:
+		return
+	var icons: Array = _recipe.bubble_icons if _recipe else []
+	if icons.is_empty():
+		bubble.disappear()
+		return
+	bubble.set_icons(icons)
+	bubble.set_highlighted(_targeted)
+	bubble.appear()
 
 
 func _is_spinning() -> bool:

@@ -23,6 +23,12 @@ class_name CookingRecipe
 ## Ex.: carne = 1, cogumelo = 4, misto = 7.
 @export_range(0, 64) var spin_row: int = 0
 
+@export_group("Balão na estação")
+## Ícones do balão que aparece em cima da boca enquanto este item assa.
+## 1 ícone = inteiro; 2 = metade/metade, da esquerda para a direita
+## (ex.: misto = [cogumelo, carne]). Vazio = sem balão.
+@export var bubble_icons: Array[Texture2D] = []
+
 @export_group("Tempos (s)")
 ## Segundos até ficar no ponto. <= 0 usa o tempo da estação.
 @export var perfect_time: float = -1.0

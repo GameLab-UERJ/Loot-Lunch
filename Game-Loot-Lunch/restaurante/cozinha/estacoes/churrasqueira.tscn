@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" path="res://restaurante/comidas/utensilios/churrasqueira/churrasqueira_assando.png" id="16_assando"]
 [ext_resource type="Texture2D" path="res://restaurante/comidas/utensilios/churrasqueira/churrasqueira_alerta.png" id="17_alerta"]
 [ext_resource type="Texture2D" path="res://restaurante/comidas/utensilios/churrasqueira/churrasqueira_risada.png" id="18_risada"]
+[ext_resource type="Script" path="res://restaurante/componentes/icon_bubble.gd" id="19_balao"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
 size = Vector2(72, 20)
@@ -89,6 +90,11 @@ script = ExtResource("5_bar")
 size = Vector2(34, 5)
 fill_color = Color(0.95, 0.72, 0.25, 1)
 
+[node name="Balao" type="Node2D" parent="Bocas/BocaDireita"]
+z_index = 6
+position = Vector2(13, -84)
+script = ExtResource("19_balao")
+
 [node name="Efeito" type="AnimatedSprite2D" parent="Bocas/BocaDireita"]
 z_index = 5
 position = Vector2(0, -4)
@@ -123,6 +129,11 @@ position = Vector2(-12, -79)
 script = ExtResource("5_bar")
 size = Vector2(34, 5)
 fill_color = Color(0.95, 0.72, 0.25, 1)
+
+[node name="Balao" type="Node2D" parent="Bocas/BocaEsquerda"]
+z_index = 6
+position = Vector2(-12, -84)
+script = ExtResource("19_balao")
 
 [node name="Efeito" type="AnimatedSprite2D" parent="Bocas/BocaEsquerda"]
 z_index = 5

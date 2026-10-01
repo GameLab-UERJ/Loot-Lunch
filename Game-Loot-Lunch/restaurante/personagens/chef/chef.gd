@@ -34,11 +34,11 @@ const GROUP: StringName = &"chefs"
 
 @export_group("Input")
 ## Nomes das ações do Input Map. Exportados para permitir um 2º jogador com outras teclas.
-@export var interact_action: StringName = &"chef_interact"   # Clique direito
-@export var pick_drop_action: StringName = &"chef_pick_drop" # R
-@export var dash_action: StringName = &"chef_dash"           # Space
+@export var interact_action: StringName = &"chef_interact"   # F (ou clique direito)
+@export var pick_drop_action: StringName = &"chef_pick_drop" # Espaço
+@export var dash_action: StringName = &"chef_dash"           # Shift
 ## Ação secundária das estações: descartar/limpar (raiz de espeto, lixeira...).
-@export var trash_action: StringName = &"chef_trash"         # T
+@export var trash_action: StringName = &"chef_trash"         # R
 
 @export_group("Itens")
 ## Distância à frente do chef onde o item cai ao ser largado.
@@ -107,11 +107,11 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed(dash_action):
 		try_dash()
 	elif event.is_action_pressed(interact_action):
-		interact()
+		interact(event is InputEventMouseButton)
 	elif event.is_action_pressed(pick_drop_action):
 		pick_or_drop()
 	elif event.is_action_pressed(trash_action):
-		trash()
+		trash(event is InputEventMouseButton)
 	else:
 		return
 	get_viewport().set_input_as_handled()
@@ -193,18 +193,20 @@ func try_dash() -> bool:
 	return false
 
 
-## Clique direito: interage com o objeto embaixo do mouse (se estiver ao alcance)
-## ou, com o mouse no vazio, com a bancada/caixa/fogão mais próximo à frente.
-func interact() -> bool:
+## Tecla F (ou clique direito): interage com o objeto embaixo do mouse (se estiver
+## ao alcance) ou com a bancada/caixa/fogão mais próximo à frente.
+## `from_mouse` = veio do clique: aí clicar num objeto LONGE não faz nada. Pelo
+## teclado, mouse parado em cima de algo longe não atrapalha: vale o que está à frente.
+func interact(from_mouse: bool = false) -> bool:
 	if not can_act():
 		return false
-	var target: InteractableComponent = interactor_component.get_target()
+	var target: InteractableComponent = interactor_component.get_target(not from_mouse)
 	if target == null:
 		return false
 	return target.interact(self)
 
 
-## Tecla R: com item na mão, larga no chão; com a mão vazia, pega o item do chão mais próximo.
+## Espaço: com item na mão, larga no chão; com a mão vazia, pega o item do chão mais próximo.
 func pick_or_drop() -> bool:
 	if not can_act():
 		return false
@@ -214,11 +216,11 @@ func pick_or_drop() -> bool:
 	return item != null and hand_component.hold(item)
 
 
-## Tecla T: ação secundária da estação à frente (limpar a raiz de espeto, lixeira...).
-func trash() -> bool:
+## Tecla R: ação secundária da estação à frente (limpar a raiz de espeto, lixeira...).
+func trash(from_mouse: bool = false) -> bool:
 	if not can_act():
 		return false
-	var target: InteractableComponent = interactor_component.get_target()
+	var target: InteractableComponent = interactor_component.get_target(not from_mouse)
 	if target == null:
 		return false
 	return target.alt_interact(self)

@@ -1,0 +1,107 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://restaurante/clientes/teste_paciencia_magias.gd" id="1_teste"]
+[ext_resource type="PackedScene" uid="uid://v3reii6seu4c" path="res://restaurante/personagens/chef/chef.tscn" id="2_chef"]
+[ext_resource type="PackedScene" uid="uid://bgo4w13b3kinp" path="res://restaurante/clientes/johnny/johnny.tscn" id="3_johnny"]
+[ext_resource type="PackedScene" uid="uid://briwrsm8pafpo" path="res://restaurante/clientes/mandy/mandy.tscn" id="4_mandy"]
+[ext_resource type="PackedScene" uid="uid://osm0g2omoc0t" path="res://restaurante/clientes/patolino/patolino.tscn" id="5_patolino"]
+[ext_resource type="PackedScene" path="res://restaurante/clientes/pedido/pedido.tscn" id="6_pedido"]
+[ext_resource type="PackedScene" path="res://restaurante/clientes/entrega/entrega.tscn" id="7_entrega"]
+[ext_resource type="PackedScene" path="res://restaurante/itens/carryable_item.tscn" id="8_item"]
+[ext_resource type="PackedScene" uid="uid://cq1r2s3t4u5v6" path="res://restaurante/clientes/componentes/queue_manager.tscn" id="9_fila"]
+[ext_resource type="Resource" path="res://restaurante/itens/dados/espetinho_carne_perfeito.tres" id="10_carne_perfeito"]
+[ext_resource type="Resource" path="res://restaurante/itens/dados/espetinho_carne_torrado.tres" id="11_carne_torrado"]
+[ext_resource type="Resource" path="res://restaurante/itens/dados/espetinho_cogumelo_perfeito.tres" id="12_cogumelo_perfeito"]
+[ext_resource type="Resource" path="res://restaurante/itens/dados/espetinho_cogumelo_torrado.tres" id="13_cogumelo_torrado"]
+[ext_resource type="Resource" path="res://restaurante/itens/dados/espetinho_misto_perfeito.tres" id="14_misto_perfeito"]
+[ext_resource type="Resource" path="res://restaurante/itens/dados/espetinho_misto_torrado.tres" id="15_misto_torrado"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_horizontal"]
+size = Vector2(576, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vertical"]
+size = Vector2(16, 306)
+
+[node name="TestePacienciaMagias" type="Node2D"]
+script = ExtResource("1_teste")
+customer_scenes = Array[PackedScene]([ExtResource("3_johnny"), ExtResource("4_mandy"), ExtResource("5_patolino")])
+order_scene = ExtResource("6_pedido")
+delivery_scene = ExtResource("7_entrega")
+item_scene = ExtResource("8_item")
+floor_items = Array[Resource]([ExtResource("10_carne_perfeito"), ExtResource("11_carne_torrado"), ExtResource("12_cogumelo_perfeito"), ExtResource("13_cogumelo_torrado"), ExtResource("14_misto_perfeito"), ExtResource("15_misto_torrado")])
+
+[node name="Chao" type="Polygon2D" parent="."]
+color = Color(0.17, 0.16, 0.2, 1)
+polygon = PackedVector2Array(40, 40, 600, 40, 600, 330, 40, 330)
+
+[node name="FaixaClientes" type="Polygon2D" parent="."]
+color = Color(0.22, 0.18, 0.2, 1)
+polygon = PackedVector2Array(40, 40, 600, 40, 600, 118, 40, 118)
+
+[node name="Balcao" type="Polygon2D" parent="."]
+color = Color(0.42, 0.29, 0.18, 1)
+polygon = PackedVector2Array(40, 118, 600, 118, 600, 124, 40, 124)
+
+[node name="AreaEspetinhos" type="Polygon2D" parent="."]
+color = Color(0.22, 0.2, 0.26, 1)
+polygon = PackedVector2Array(186, 284, 454, 284, 454, 316, 186, 316)
+
+[node name="Paredes" type="StaticBody2D" parent="."]
+collision_layer = 1
+collision_mask = 0
+
+[node name="Cima" type="CollisionShape2D" parent="Paredes"]
+position = Vector2(320, 32)
+shape = SubResource("RectangleShape2D_horizontal")
+
+[node name="Baixo" type="CollisionShape2D" parent="Paredes"]
+position = Vector2(320, 338)
+shape = SubResource("RectangleShape2D_horizontal")
+
+[node name="Esquerda" type="CollisionShape2D" parent="Paredes"]
+position = Vector2(32, 185)
+shape = SubResource("RectangleShape2D_vertical")
+
+[node name="Direita" type="CollisionShape2D" parent="Paredes"]
+position = Vector2(608, 185)
+shape = SubResource("RectangleShape2D_vertical")
+
+[node name="CentroMapa" type="Marker2D" parent="." groups=["centro_mapa"]]
+position = Vector2(320, 220)
+
+[node name="Fila" parent="." instance=ExtResource("9_fila")]
+position = Vector2(500, 92)
+max_queue_size = 3
+slot_spacing = 110.0
+debug_draw = false
+
+[node name="Entrada" type="Marker2D" parent="."]
+position = Vector2(690, 92)
+
+[node name="Fileira" type="Marker2D" parent="."]
+position = Vector2(210, 300)
+
+[node name="ItensNoChao" type="Node2D" parent="."]
+
+[node name="Chef" parent="." node_paths=PackedStringArray("items_container") instance=ExtResource("2_chef")]
+position = Vector2(320, 230)
+items_container = NodePath("../ItensNoChao")
+
+[node name="Painel" type="Label" parent="."]
+offset_left = 440.0
+offset_top = 130.0
+offset_right = 598.0
+offset_bottom = 182.0
+theme_override_colors/font_color = Color(0.85, 0.85, 0.9, 1)
+theme_override_font_sizes/font_size = 7
+text = "(nenhum cliente)"
+
+[node name="Instrucoes" type="Label" parent="."]
+offset_left = 4.0
+offset_top = 334.0
+offset_right = 636.0
+offset_bottom = 360.0
+theme_override_font_sizes/font_size = 7
+text = "Paciência: 90% = magia 1 | 50% = magia 2 | 20% = magia 3 | 0% = vai embora.  Entregue antes: F perto do cliente, ou segure Q, mire com o mouse e solte (arremesso)
+WASD/setas anda | Espaço pega/larga | Shift dash | E sombra | G repõe espetinhos | H cura | M mana cheia | N chama o próximo cliente"
+horizontal_alignment = 1

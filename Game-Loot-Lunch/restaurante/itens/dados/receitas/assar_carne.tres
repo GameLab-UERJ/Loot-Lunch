@@ -4,6 +4,7 @@
 [ext_resource type="Resource" path="res://restaurante/itens/dados/espetinho_carne_cru.tres" id="2_cru"]
 [ext_resource type="Resource" path="res://restaurante/itens/dados/espetinho_carne_perfeito.tres" id="3_perfeito"]
 [ext_resource type="Resource" path="res://restaurante/itens/dados/espetinho_carne_torrado.tres" id="4_torrado"]
+[ext_resource type="Texture2D" uid="uid://cbviylmioqpnu" path="res://restaurante/clientes/pedido/pedido_png/churrasco/carnepensamento.png" id="5_carne_icon"]
 
 [resource]
 script = ExtResource("1_recipe")
@@ -14,3 +15,4 @@ spin_row = 1
 perfect_time = -1.0
 burnt_time = -1.0
 vanish_time = -1.0
+bubble_icons = Array[Texture2D]([ExtResource("5_carne_icon")])
