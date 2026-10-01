@@ -3,17 +3,20 @@ class_name ThrowSkewerAbility
 ## HABILIDADE 1 (tecla Q): ARREMESSAR O ESPETINHO COMO UMA LANÇA.
 ##
 ##   1. Com um espetinho pronto na mão, SEGURE Q -> começa a carregar (elipse nos pés).
-##   2. Depois de `charge_time` (5 s) a elipse fecha, pulsa e o espetinho brilha:
-##      está CARREGADO. A setinha mostra para onde vai.
-##   3. SOLTE Q carregado -> gasta 1 mana e arremessa na direção do MOUSE
+##   2. SOLTE Q -> gasta 1 mana e arremessa na direção do MOUSE
 ##      (ou para onde o chef olha, se `aim_with_mouse` estiver desligado).
+##      A DISTÂNCIA é proporcional à carga:
+##        - de `min_charge_ratio` (20%) até 99%: vai de `min_throw_distance` até
+##          `max_distance * partial_distance_ratio` (metade do máximo);
+##        - carga COMPLETA (`charge_time`, 2.5 s): a elipse fecha, pulsa, o espetinho
+##          brilha e o arremesso vai até `max_distance` — o DOBRO de 99% — e mais rápido.
 ##      Se acertar um cliente com pedido, a entrega é feita (paga igual à entrega na mão).
 ##
 ## MIRA: enquanto segura Q, o chef vira para o mouse e uma linha pontilhada mostra o
 ## caminho do espetinho. Dá para andar e mirar ao mesmo tempo.
 ##
 ## Dá errado (o espetinho CAI NO CHÃO, no pé do chef, e NÃO gasta mana):
-##   - soltou Q antes de carregar;
+##   - soltou Q antes de `min_charge_ratio` da carga (só um toque);
 ##   - levou um golpe enquanto carregava.
 ##
 ## Só funciona com os itens de `throwable_items` (os 9 espetinhos: cru, perfeito, torrado).
@@ -31,8 +34,10 @@ signal dropped(item: CarryableItem)
 
 
 @export_group("Carga")
-## Segundos segurando Q até poder arremessar.
-@export var charge_time: float = 5.0
+## Segundos segurando Q até a carga COMPLETA (arremesso máximo).
+@export var charge_time: float = 2.5
+## Carga mínima (0..1) para arremessar. Soltou antes disso = o espetinho cai no pé.
+@export_range(0.0, 1.0) var min_charge_ratio: float = 0.2
 ## Velocidade do chef enquanto carrega (1 = normal, 0 = parado).
 @export_range(0.0, 1.0) var move_speed_scale: float = 0.5
 ## Elipse de carga (nos pés do chef). Vazio = procura um ChargeRingComponent no chef.
@@ -54,8 +59,15 @@ signal dropped(item: CarryableItem)
 ## (Array[Resource] de propósito, mesmo motivo das listas de receitas.)
 @export var throwable_items: Array[Resource] = []
 @export var projectile_speed: float = 320.0
-## Distância máxima. Se não acertar ninguém até aqui, cai no chão.
+## Distância com a carga COMPLETA. Se não acertar ninguém até aqui, cai no chão.
 @export var max_distance: float = 260.0
+## Distância com a carga mínima (`min_charge_ratio`).
+@export var min_throw_distance: float = 40.0
+## Fração de `max_distance` alcançada com a carga QUASE completa (99%).
+## 0.5 = carregar tudo arremessa o DOBRO de 99%.
+@export_range(0.05, 1.0) var partial_distance_ratio: float = 0.5
+## Velocidade do espetinho com a carga completa (multiplica `projectile_speed`).
+@export var full_charge_speed_scale: float = 1.3
 ## Raio de acerto do espetinho em voo.
 @export var hit_radius: float = 6.0
 ## Giro da arte no voo, para a CARNE ir na frente, como a ponta de uma lança.
@@ -121,6 +133,23 @@ func get_charge_progress() -> float:
 	return clampf(_elapsed / maxf(charge_time, 0.001), 0.0, 1.0)
 
 
+## Já dá para arremessar (passou da carga mínima)?
+func can_release_throw() -> bool:
+	return _is_charged or get_charge_progress() >= min_charge_ratio
+
+
+## Distância do arremesso se soltar AGORA (0 = ainda não arremessa, cai no pé).
+func get_throw_distance() -> float:
+	if _is_charged:
+		return max_distance
+	var progress: float = get_charge_progress()
+	if progress < min_charge_ratio:
+		return 0.0
+	var partial_max: float = max_distance * partial_distance_ratio
+	var t: float = inverse_lerp(min_charge_ratio, 1.0, progress) if min_charge_ratio < 1.0 else 1.0
+	return lerpf(minf(min_throw_distance, partial_max), partial_max, clampf(t, 0.0, 1.0))
+
+
 func can_throw(data: ItemData) -> bool:
 	if data == null:
 		return false
@@ -155,7 +184,7 @@ func _on_press() -> bool:
 func _on_release() -> void:
 	if not _charging:
 		return
-	if _is_charged:
+	if can_release_throw():
 		_throw()
 	else:
 		_fail()
@@ -184,7 +213,8 @@ func _process(delta: float) -> void:
 		user.set(&"facing_direction", aim)
 	if charge_ring:
 		charge_ring.aim_direction = aim
-		charge_ring.aim_length = max_distance if show_aim_line else 0.0
+		# A linha mostra o alcance ATUAL (cresce com a carga e dobra ao completar).
+		charge_ring.aim_length = get_throw_distance() if show_aim_line else 0.0
 		charge_ring.set_progress(get_charge_progress())
 
 	if not _is_charged and _elapsed >= charge_time:
@@ -202,6 +232,8 @@ func _process(delta: float) -> void:
 
 func _throw() -> void:
 	var item: CarryableItem = _item
+	var distance: float = get_throw_distance()
+	var speed: float = projectile_speed * (full_charge_speed_scale if _is_charged else 1.0)
 	_end_charge()
 	if not spend_mana():
 		_drop_at_feet(item)
@@ -211,7 +243,7 @@ func _throw() -> void:
 	var from: Vector2 = _hand.global_position
 	_hand.drop_to(_get_container(), from)  # tira da mão (marca quem arremessou)
 	var projectile := ThrownItemProjectile.launch(_get_container(), item, from, direction,
-		projectile_speed, max_distance, user, deg_to_rad(rotation_offset_degrees),
+		speed, distance, user, deg_to_rad(rotation_offset_degrees),
 		hit_radius, world_mask)
 	if projectile:
 		projectile.arc_height = arc_height

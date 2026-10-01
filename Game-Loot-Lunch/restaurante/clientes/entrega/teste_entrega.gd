@@ -2,7 +2,7 @@ extends Node2D
 ## Cena de teste da ENTREGA + PAGAMENTO + VIDA do chef.
 ##
 ## - R: pega um espetinho do chão (mão vazia) / larga no chão (mão cheia).
-## - B perto do cliente com o espetinho na mão: entrega na mão.
+## - Clique direito no cliente com o espetinho na mão: entrega na mão.
 ## - R (largar) encostado no cliente: entrega por COLISÃO (o mesmo caminho
 ##   que o arremesso vai usar no futuro).
 ## - Certo = preço cheio (10). Errado = 25% do preço (arredondado: 3).

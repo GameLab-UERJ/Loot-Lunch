@@ -3,7 +3,7 @@ class_name OrderPaymentComponent
 ## PAGAMENTO do pedido. Liga três peças que não se conhecem:
 ##
 ##   OrderComponent            (irmão, cena pedido.tscn)  -> o que o cliente quer
-##   DeliveryReceiverComponent (filho "Recebedor")        -> recebeu um item (B ou colisão)
+##   DeliveryReceiverComponent (filho "Recebedor")        -> recebeu um item (clique ou colisão)
 ##   PriceTable                (.tres)                    -> quanto vale
 ##
 ## Quando um item chega: confere com o pedido, calcula o valor, paga na carteira de

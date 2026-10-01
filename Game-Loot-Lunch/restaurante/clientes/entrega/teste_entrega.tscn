@@ -41,7 +41,7 @@ offset_top = 322.0
 offset_right = 596.0
 offset_bottom = 344.0
 theme_override_font_sizes/font_size = 9
-text = "R pega/larga  |  B entrega na mão  |  largar (R) encostado no cliente = entrega por colisão
+text = "R pega/larga  |  clique direito no cliente entrega na mão  |  largar (R) encostado no cliente = entrega por colisão
 G repõe espetinhos  |  K dano  |  H cura  |  N novos pedidos  |  certo = 10, errado = 25%"
 horizontal_alignment = 1
 

@@ -2,7 +2,7 @@ extends InteractableComponent
 class_name DeliveryReceiverComponent
 ## RECEBEDOR de entregas: uma área que aceita itens por DOIS caminhos e avisa quem usa.
 ##
-##   1. Tecla B (interação): o jogador está com o item na mão, mira no dono e aperta B.
+##   1. Clique direito (interação): o jogador está com o item na mão e clica no dono.
 ##   2. Colisão: um item SOLTO (largado com R, ou no futuro ARREMESSADO) encosta na área.
 ##
 ## Os dois caminhos terminam no mesmo lugar: o item é consumido e sai o sinal
@@ -23,7 +23,7 @@ signal item_received(data: ItemData, deliverer: Node)
 @export_group("Entrega")
 ## Recebe itens SOLTOS que encostam na área (R no chão hoje; arremesso no futuro).
 @export var receive_by_collision: bool = true
-## Recebe pela tecla B com o item na mão de quem interage.
+## Recebe pelo clique direito com o item na mão de quem interage.
 @export var receive_by_interaction: bool = true
 ## Só aceita estes ItemData (.tres). Vazio = aceita qualquer item.
 ## (Array[Resource] de propósito, mesmo motivo das listas de receitas.)
@@ -35,7 +35,7 @@ func _ready() -> void:
 	monitoring = true
 
 
-# --- Tecla B ---------------------------------------------------------------
+# --- Clique direito---------------------------------------------------------
 
 ## Só "acende" para o chef se ele estiver com um item aceito na mão.
 func can_interact(actor: Node) -> bool:
@@ -87,7 +87,7 @@ func can_accept(data: ItemData) -> bool:
 	return false
 
 
-## Entrega direta, sem B nem colisão (ex.: o futuro projétil chama isso ao acertar).
+## Entrega direta, sem clique nem colisão (ex.: o futuro projétil chama isso ao acertar).
 func receive(item: CarryableItem, deliverer: Node = null) -> bool:
 	if item == null or item.is_queued_for_deletion() or not can_accept(item.data):
 		return false

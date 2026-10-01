@@ -11,16 +11,24 @@ class_name CookingStation
 ## (ordem da árvore = ordem em que são ocupadas).
 ##
 ## Fluxo:
-##   1. B com um espetinho cru na mão -> vai para a primeira boca livre.
-##   2. Cada boca conta o tempo sozinha e troca a arte: cru -> no ponto -> torrado.
-##   3. B com a MÃO VAZIA -> tira o espetinho da boca mais perto do jogador,
+##   1. F (ou clique direito) com um espetinho cru na mão -> vai para a primeira boca livre.
+##   2. Cada boca conta o tempo sozinha e troca a arte: cru -> no ponto -> torrado
+##      (o espetinho aparece GIRANDO no fogo, linha certa da spritesheet).
+##   3. F com a MÃO VAZIA -> tira o espetinho da boca mais perto do
+##      cursor (ou do jogador, se o mouse não está em cima da estação),
 ##      no ponto em que ele estiver (são 3 resultados possíveis).
+##      Antes de apertar, o espetinho que vai sair já fica com a SILHUETA branca
+##      (e o balão dele realçado), em vez da churrasqueira inteira.
 ##   4. Passou do tempo -> o espetinho queima, some e a estação avisa por
 ##      `item_vanished` (gancho para a consequência futura).
-##   5. T (ação secundária) -> joga fora o espetinho da boca mais perto.
+##   5. R (ação secundária) -> joga fora o espetinho da boca mais perto (o destacado).
 ##
-## Filhos esperados: Sprite2D, CollisionShape2D, InteractableComponent e
-## `Bocas` (com um `CookingSlot` para cada boca).
+## Cada boca mostra um BALÃO com o que está assando (carne, cogumelo ou metade/metade
+## no misto). Os ícones vêm da receita (`CookingRecipe.bubble_icons`).
+##
+## Filhos esperados: AnimatedSprite2D (ou Sprite2D), CollisionShape2D, InteractableComponent e
+## `Bocas` (com um `CookingSlot` para cada boca). Opcional: `CookingStationFSM`, que troca
+## a animação da estação (vazia / assando / alerta / risada).
 
 
 signal item_placed(slot: CookingSlot, item: CarryableItem)
@@ -51,6 +59,14 @@ var _slots: Array[CookingSlot] = []
 func _ready() -> void:
 	super()
 	_collect_slots()
+	interactable.target_changed.connect(_on_target_changed)
+	set_process(false)
+
+
+## Enquanto a churrasqueira é o alvo da tecla F, destaca a boca que vai sair
+## (muda quando o jogador anda, mexe o mouse ou o espetinho sai).
+func _process(_delta: float) -> void:
+	_set_target_slot(get_slot_to_collect(interactable.target_actor))
 
 
 # --- Consultas ---
@@ -86,6 +102,16 @@ func find_recipe(data: ItemData) -> CookingRecipe:
 	return null
 
 
+## Boca que `actor` esvaziaria se apertasse F agora (mão vazia), ou null.
+func get_slot_to_collect(actor: Node) -> CookingSlot:
+	if actor == null:
+		return null
+	var actor_hand: HandComponent = HandComponent.find_in(actor)
+	if actor_hand and actor_hand.has_item():
+		return null  # com algo na mão, F coloca em vez de tirar
+	return _nearest_occupied_slot(actor)
+
+
 ## A churrasqueira aceita este item agora?
 func can_accept(data: ItemData) -> bool:
 	return not is_full() and find_recipe(data) != null
@@ -102,7 +128,7 @@ func _interact(actor: Node, actor_hand: HandComponent) -> void:
 		collect_item(actor, actor_hand)
 
 
-## Ação secundária (tecla T): joga fora o espetinho da boca mais perto.
+## Ação secundária (tecla R): joga fora o espetinho da boca mais perto.
 func _alt_interact(actor: Node, _actor_hand: HandComponent) -> void:
 	var slot: CookingSlot = _nearest_occupied_slot(actor)
 	if slot:
@@ -162,12 +188,16 @@ func _first_free_slot() -> CookingSlot:
 	return null
 
 
-## Boca ocupada mais perto de `actor`. Empate (ou sem ator): a mais adiantada no fogo.
+## Boca ocupada mais perto do mouse (se ele está em cima da estação) ou de `actor`.
+## Empate (ou sem ator): a mais adiantada no fogo.
 func _nearest_occupied_slot(actor: Node) -> CookingSlot:
 	var origin: Vector2 = Vector2.ZERO
 	var has_origin: bool = false
 	var node2d := actor as Node2D
-	if node2d:
+	if interactable.is_hovered:
+		origin = get_global_mouse_position()
+		has_origin = true
+	elif node2d:
 		origin = node2d.global_position
 		has_origin = true
 
@@ -187,6 +217,19 @@ func _nearest_occupied_slot(actor: Node) -> CookingSlot:
 		elif best and absf(distance - best_distance) <= 0.01 and slot.get_elapsed() > best.get_elapsed():
 			best = slot
 	return best
+
+
+func _on_target_changed(is_targeted: bool, _actor: Node) -> void:
+	set_process(is_targeted)
+	if not is_targeted:
+		_set_target_slot(null)
+
+
+func _set_target_slot(target: CookingSlot) -> void:
+	for slot in _slots:
+		slot.set_targeted(slot == target)
+	# Com um espetinho destacado, a silhueta sai da churrasqueira e fica só nele.
+	interactable.set_outline_blocked(target != null)
 
 
 func _on_slot_item_placed(item: CarryableItem, slot: CookingSlot) -> void:

@@ -1,8 +1,8 @@
 extends KitchenStation
 class_name CounterStation
 ## Bancada: guarda 1 item em cima. Reusa o HandComponent como "slot".
-## B com item na mão + bancada vazia  -> coloca o item.
-## B com mão vazia  + bancada com item -> pega o item.
+## Clique direito com item + bancada vazia -> coloca o item.
+## Clique direito sem item + bancada com item -> pega o item.
 
 
 @onready var slot: HandComponent = $ItemSlot
