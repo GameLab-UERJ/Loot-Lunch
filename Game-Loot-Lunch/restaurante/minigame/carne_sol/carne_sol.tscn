@@ -1,0 +1,94 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://restaurante/minigame/carne_sol/carne_sol_minigame.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://restaurante/comidas/utensilios/tabuacorte64.png" id="2_tabua"]
+[ext_resource type="Texture2D" path="res://restaurante/minigame/carne_sol/art/carne_sol_estados.png" id="3_carne"]
+[ext_resource type="Texture2D" path="res://restaurante/clientes/johnny/habilidade_arte/raio_marca_queimada.png" id="4_marca"]
+[ext_resource type="Script" path="res://restaurante/minigame/carne_sol/mini_sol.gd" id="5_sol"]
+[ext_resource type="PackedScene" path="res://restaurante/minigame/carne_sol/fagulha_solar.tscn" id="6_fagulha"]
+[ext_resource type="Script" path="res://restaurante/minigame/comum/sheet_sprite.gd" id="7_sheet"]
+[ext_resource type="Resource" path="res://restaurante/minigame/carne_sol/art/mini_sol_anim.tres" id="8_sol_anim"]
+[ext_resource type="Resource" path="res://restaurante/minigame/comum/anim/chef_idle.tres" id="9_chef_idle"]
+[ext_resource type="Script" path="res://restaurante/minigame/comum/target_meter_component.gd" id="10_meter"]
+[ext_resource type="Resource" path="res://restaurante/minigame/carne_sol/dados/carne_sol_ponto.tres" id="11_ponto"]
+[ext_resource type="Script" path="res://restaurante/minigame/comum/timing_gauge.gd" id="12_gauge"]
+
+[node name="CarneSol" type="Node2D" node_paths=PackedStringArray("meter", "mini_sol", "meat", "burn_marks", "chef_sprite", "beam")]
+texture_filter = 1
+script = ExtResource("1_script")
+meter = NodePath("Medidor")
+mini_sol = NodePath("MiniSol")
+meat = NodePath("Carne")
+burn_marks = NodePath("Carne/Queimaduras")
+burn_mark_texture = ExtResource("4_marca")
+chef_sprite = NodePath("Chef")
+beam = NodePath("Feixe")
+title = "Fase 1 — Conjuração Solar"
+instructions = "Segure [ESPAÇO] para canalizar o Mini-Sol sobre a carne e SOLTE quando a barra verde estiver na faixa dourada.
+
+Enquanto o sol arde, fagulhas saltam dele: CLIQUE nelas antes que caiam na carne!
+
+Cedo demais = Carne Suada. Tarde demais (ou 3 queimaduras) = Carne Carbonizada."
+
+[node name="Chao" type="Polygon2D" parent="."]
+color = Color(0.17, 0.16, 0.2, 1)
+polygon = PackedVector2Array(0, 0, 640, 0, 640, 360, 0, 360)
+
+[node name="Bancada" type="Sprite2D" parent="."]
+position = Vector2(320, 262)
+scale = Vector2(2, 2)
+texture = ExtResource("2_tabua")
+
+[node name="Carne" type="Sprite2D" parent="."]
+position = Vector2(320, 248)
+scale = Vector2(3, 3)
+texture = ExtResource("3_carne")
+hframes = 4
+
+[node name="Queimaduras" type="Node2D" parent="Carne"]
+
+[node name="Chef" type="AnimatedSprite2D" parent="."]
+position = Vector2(196, 246)
+scale = Vector2(2, 2)
+script = ExtResource("7_sheet")
+sheets = Array[Resource]([ExtResource("9_chef_idle")])
+
+[node name="Feixe" type="Line2D" parent="."]
+width = 2.0
+default_color = Color(1, 0.75, 0.3, 0.85)
+
+[node name="MiniSol" type="Node2D" parent="." node_paths=PackedStringArray("target", "sparks_container")]
+position = Vector2(320, 104)
+script = ExtResource("5_sol")
+spark_scene = ExtResource("6_fagulha")
+target = NodePath("../Carne")
+sparks_container = NodePath("../Fagulhas")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="MiniSol"]
+script = ExtResource("7_sheet")
+sheets = Array[Resource]([ExtResource("8_sol_anim")])
+
+[node name="Fagulhas" type="Node2D" parent="."]
+
+[node name="Medidor" type="Node" parent="."]
+script = ExtResource("10_meter")
+profile = ExtResource("11_ponto")
+
+[node name="Barra" type="Node2D" parent="." node_paths=PackedStringArray("meter")]
+position = Vector2(470, 200)
+script = ExtResource("12_gauge")
+meter = NodePath("../Medidor")
+size = Vector2(12, 130)
+caption = "PONTO"
+
+[node name="Dica" type="Label" parent="."]
+offset_left = 120.0
+offset_top = 326.0
+offset_right = 520.0
+offset_bottom = 346.0
+theme_override_colors/font_color = Color(0.8, 0.78, 0.86, 1)
+theme_override_colors/font_outline_color = Color(0.1, 0.05, 0.12, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 9
+text = "[ESPAÇO] segurar = canalizar  •  soltar = tirar a carne  •  [CLIQUE] nas fagulhas"
+horizontal_alignment = 1

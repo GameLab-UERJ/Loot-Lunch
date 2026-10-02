@@ -1,0 +1,20 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://restaurante/minigame/carne_sol/fagulha_solar.gd" id="1_script"]
+[ext_resource type="Script" path="res://restaurante/minigame/comum/sheet_sprite.gd" id="2_sheet"]
+[ext_resource type="Resource" path="res://restaurante/minigame/carne_sol/art/fagulha_anim.tres" id="3_anim"]
+[ext_resource type="Script" path="res://restaurante/minigame/comum/click_target_component.gd" id="4_click"]
+
+[node name="FagulhaSolar" type="Node2D"]
+z_index = 30
+script = ExtResource("1_script")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+scale = Vector2(1.5, 1.5)
+script = ExtResource("2_sheet")
+sheets = Array[Resource]([ExtResource("3_anim")])
+
+[node name="ClickTargetComponent" type="Node2D" parent="."]
+position = Vector2(0, 3)
+script = ExtResource("4_click")
+radius = 13.0

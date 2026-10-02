@@ -1,0 +1,87 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://restaurante/minigame/farofa_tanajura/batalha/chef_battler.gd" id="1_script"]
+[ext_resource type="Script" path="res://restaurante/minigame/comum/sheet_sprite.gd" id="2_sheet"]
+[ext_resource type="Resource" path="res://restaurante/minigame/comum/anim/chef_idle.tres" id="3_idle"]
+[ext_resource type="Resource" path="res://restaurante/minigame/comum/anim/chef_andar.tres" id="4_andar"]
+[ext_resource type="Texture2D" path="res://restaurante/minigame/farofa_tanajura/art/frigideira.png" id="5_frigideira"]
+[ext_resource type="Script" path="res://restaurante/minigame/comum/battle_health_component.gd" id="6_health"]
+[ext_resource type="Script" path="res://restaurante/componentes/mana_component.gd" id="7_mana"]
+[ext_resource type="PackedScene" path="res://restaurante/UI/hud_chef.tscn" id="8_hud"]
+[ext_resource type="Script" path="res://restaurante/minigame/farofa_tanajura/batalha/skills/frigideirada.gd" id="9_frigideirada"]
+[ext_resource type="Script" path="res://restaurante/minigame/farofa_tanajura/batalha/skills/investida_sombria.gd" id="10_investida"]
+[ext_resource type="Script" path="res://restaurante/minigame/farofa_tanajura/batalha/skills/bolo_de_fogo.gd" id="11_bolo"]
+[ext_resource type="Script" path="res://restaurante/minigame/farofa_tanajura/batalha/skills/devorar.gd" id="12_devorar"]
+[ext_resource type="PackedScene" path="res://restaurante/personagens/chef/habilidades/sombra.tscn" id="13_sombra"]
+[ext_resource type="Texture2D" path="res://restaurante/personagens/chef/habilidade_art/idle_sombra.png" id="14_sombra_png"]
+[ext_resource type="Texture2D" path="res://restaurante/minigame/farofa_tanajura/art/bola_fogo.png" id="15_bola_png"]
+[ext_resource type="Resource" path="res://restaurante/minigame/farofa_tanajura/art/anim/bola_fogo_anim.tres" id="16_bola_anim"]
+[ext_resource type="Texture2D" path="res://restaurante/minigame/farofa_tanajura/art/bunda_tanajura.png" id="17_bunda"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sombra"]
+atlas = ExtResource("14_sombra_png")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bola"]
+atlas = ExtResource("15_bola_png")
+region = Rect2(0, 0, 24, 24)
+
+[node name="ChefBattler" type="Node2D" node_paths=PackedStringArray("frying_pan", "qte_anchor")]
+script = ExtResource("1_script")
+frying_pan = NodePath("Frigideira")
+qte_anchor = NodePath("QteAnchor")
+display_name = "Chef"
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+scale = Vector2(2, 2)
+script = ExtResource("2_sheet")
+sheets = Array[Resource]([ExtResource("3_idle"), ExtResource("4_andar")])
+
+[node name="Frigideira" type="Sprite2D" parent="."]
+z_index = 5
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("5_frigideira")
+offset = Vector2(10, -4)
+
+[node name="QteAnchor" type="Node2D" parent="."]
+position = Vector2(0, -4)
+
+[node name="BattleHealthComponent" type="Node" parent="."]
+script = ExtResource("6_health")
+max_hp = 10
+
+[node name="ManaComponent" type="Node" parent="."]
+script = ExtResource("7_mana")
+max_mana = 5
+
+[node name="HudChef" parent="." instance=ExtResource("8_hud")]
+
+[node name="Frigideirada" type="Node" parent="."]
+script = ExtResource("9_frigideirada")
+display_name = "Frigideirada"
+description = "Ataque físico com a frigideira. De graça e recupera 1 de mana."
+icon = ExtResource("5_frigideira")
+mana_gain = 1
+
+[node name="InvestidaSombria" type="Node" parent="."]
+script = ExtResource("10_investida")
+shadow_scene = ExtResource("13_sombra")
+display_name = "Investida Sombria"
+description = "Deixa a sombra no lugar, dá uma trombada na formiga e volta para a sombra."
+icon = SubResource("AtlasTexture_sombra")
+mana_cost = 1
+
+[node name="BoloDeFogo" type="Node" parent="."]
+script = ExtResource("11_bolo")
+fireball = ExtResource("16_bola_anim")
+display_name = "Bolo de Fogo"
+description = "Magia de fogo à distância. Muito dano."
+icon = SubResource("AtlasTexture_bola")
+mana_cost = 2
+
+[node name="Devorar" type="Node" parent="."]
+script = ExtResource("12_devorar")
+display_name = "Devorar"
+description = "Só com a formiga abaixo de 20% de vida: engole a formiga e recupera vida (+1 mana)."
+icon = ExtResource("17_bunda")
+mana_gain = 1

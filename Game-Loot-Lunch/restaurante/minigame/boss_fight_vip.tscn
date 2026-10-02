@@ -1,0 +1,26 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://restaurante/minigame/boss_fight_vip.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://restaurante/minigame/carne_sol/carne_sol.tscn" id="2_carne"]
+[ext_resource type="PackedScene" path="res://restaurante/minigame/macaxeira_manteiga/macaxeira_manteiga.tscn" id="3_macaxeira"]
+[ext_resource type="PackedScene" path="res://restaurante/minigame/farofa_tanajura/farofa_tanajura.tscn" id="4_farofa"]
+[ext_resource type="PackedScene" path="res://restaurante/minigame/farofa_tanajura/entrega_vip/entrega_vip.tscn" id="5_entrega"]
+[ext_resource type="Texture2D" path="res://restaurante/minigame/farofa_tanajura/art/prato_vip_completo.png" id="6_prato"]
+[ext_resource type="Script" path="res://restaurante/minigame/comum/minigame_banner.gd" id="7_banner"]
+
+[node name="BossFightVip" type="Node2D" node_paths=PackedStringArray("stage_holder", "banner")]
+script = ExtResource("1_script")
+stages = Array[PackedScene]([ExtResource("2_carne"), ExtResource("3_macaxeira"), ExtResource("4_farofa")])
+delivery_stage = ExtResource("5_entrega")
+final_dish_texture = ExtResource("6_prato")
+stage_holder = NodePath("Etapas")
+banner = NodePath("Banner")
+
+[node name="Fundo" type="Polygon2D" parent="."]
+color = Color(0.1, 0.05, 0.12, 1)
+polygon = PackedVector2Array(0, 0, 640, 0, 640, 360, 0, 360)
+
+[node name="Etapas" type="Node2D" parent="."]
+
+[node name="Banner" type="CanvasLayer" parent="."]
+script = ExtResource("7_banner")
