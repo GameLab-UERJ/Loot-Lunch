@@ -1,13 +1,16 @@
 extends IngredientCrate
 class_name IngredientPlant
 ## Pé de ingrediente (ex.: pé de cogumelo). Igual à caixa, mas depois de dar um item
-## precisa regenerar: fica escuro, mostra uma barrinha e só volta a dar item quando o
+## precisa regenerar: mostra uma barrinha e só volta a dar item quando o
 ## CooldownComponent termina. Ao regenerar, toca o efeito (SpriteSheetEffect).
 ##
-## Filhos esperados: Sprite2D, CooldownComponent, InteractableComponent e (opcional) EfeitoRegenerou.
+## Visual: se for um RegrowSprite, toca `corte` -> `regenerando` -> `idle`.
+## Se for um Sprite2D comum, só escurece durante a regeneração (comportamento antigo).
+##
+## Filhos esperados: Visual (ou Sprite2D), CooldownComponent, InteractableComponent e (opcional) EfeitoRegenerou.
 
 
-## Cor aplicada ao sprite enquanto o pé está regenerando.
+## Cor aplicada ao sprite enquanto o pé está regenerando (só para Sprite2D sem animação).
 @export var regrowing_modulate: Color = Color(0.45, 0.45, 0.45, 1.0)
 
 @export_group("Barra de progresso")
@@ -18,7 +21,7 @@ class_name IngredientPlant
 
 
 @onready var cooldown: CooldownComponent = $CooldownComponent
-@onready var visual: CanvasItem = get_node_or_null("Sprite2D")
+@onready var visual: CanvasItem = KitchenStation.find_visual(self)
 @onready var regrow_effect: SpriteSheetEffect = get_node_or_null("EfeitoRegenerou")
 
 
@@ -46,7 +49,9 @@ func _interact(_actor: Node, actor_hand: HandComponent) -> void:
 func _start_regrowing() -> void:
 	interactable.enabled = false
 	# self_modulate para não brigar com o highlight, que usa `modulate`.
-	if visual:
+	if visual is RegrowSprite:
+		(visual as RegrowSprite).play_harvest(cooldown.duration)
+	elif visual:
 		visual.self_modulate = regrowing_modulate
 	set_process(show_progress_bar)
 	cooldown.start()
@@ -54,7 +59,9 @@ func _start_regrowing() -> void:
 
 func _on_cooldown_finished() -> void:
 	interactable.enabled = true
-	if visual:
+	if visual is RegrowSprite:
+		(visual as RegrowSprite).play_ready()
+	elif visual:
 		visual.self_modulate = Color.WHITE
 	set_process(false)
 	queue_redraw()

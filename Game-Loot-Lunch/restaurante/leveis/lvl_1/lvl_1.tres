@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="LevelData" format=3]
+
+[ext_resource type="Script" path="res://restaurante/leveis/level_data.gd" id="1_data"]
+[ext_resource type="PackedScene" path="res://restaurante/clientes/johnny/johnny.tscn" id="2_johnny"]
+[ext_resource type="PackedScene" path="res://restaurante/clientes/mandy/mandy.tscn" id="3_mandy"]
+[ext_resource type="PackedScene" path="res://restaurante/clientes/patolino/patolino.tscn" id="4_patolino"]
+
+[resource]
+script = ExtResource("1_data")
+display_name = "Fase 1"
+duration = 180.0
+money_goal = 60
+fail_on_chef_death = true
+customer_scenes = Array[PackedScene]([ExtResource("2_johnny"), ExtResource("3_mandy"), ExtResource("4_patolino")])
+max_customers = 3
+first_spawn_delay = 3.0
+spawn_interval_min = 12.0
+spawn_interval_max = 18.0
+patience_time = 60.0
+ability_thresholds = Array[float]([0.9, 0.5, 0.2])
+order_reveal_distance = 96.0

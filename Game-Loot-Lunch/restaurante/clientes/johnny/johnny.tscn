@@ -151,5 +151,5 @@ strike_summon_scene = ExtResource("hab_nuvem")
 summon_max_alive = 2
 fallback_to_map_center = true
 [node name="CustomerPatienceBar" parent="." instance=ExtResource("4_patience")]
-position = Vector2(-24, -33)
+position = Vector2(-24, 14)
 scale = Vector2(0.5, 0.5)

@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" path="res://restaurante/clientes/patolino/habilidade_arte/pato_devorar_1_bote_e_engolida.png" id="t_d1"]
 [ext_resource type="Texture2D" path="res://restaurante/clientes/patolino/habilidade_arte/pato_devorar_2_pato_cheio_loop.png" id="t_d2"]
 [ext_resource type="Texture2D" path="res://restaurante/clientes/patolino/habilidade_arte/pato_devorar_3_super_cheio_e_sumico.png" id="t_d3"]
-[ext_resource type="Texture2D" path="res://restaurante/clientes/patolino/habilidade_arte/jscoutinho_danca_PATO.png" id="t_danca"]
+[ext_resource type="Texture2D" path="res://restaurante/clientes/patolino/habilidade_arte/danca_PATO.png" id="t_danca"]
 
 [sub_resource type="AtlasTexture" id="Atlas_andar_0"]
 atlas = ExtResource("t_idle")

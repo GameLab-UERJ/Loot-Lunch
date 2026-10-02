@@ -9,7 +9,7 @@ class_name ChefShadow
 ## Fica no grupo `group_name`, então qualquer sistema futuro (inimigo que se distrai,
 ## 2º chef...) acha as sombras com get_tree().get_nodes_in_group(&"sombras_chef").
 ##
-## Cena: sombra.tscn (AnimatedSprite2D com os 4 quadros de jscoutinho_idle_L_34F_sombra.png).
+## Cena: sombra.tscn (AnimatedSprite2D com os 4 quadros de idle_sombra.png).
 
 
 ## A sombra começou a sumir (tempo acabou, foi usada ou substituída).
