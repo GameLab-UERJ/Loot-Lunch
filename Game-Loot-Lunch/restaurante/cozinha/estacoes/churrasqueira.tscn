@@ -12,7 +12,7 @@
 [ext_resource type="Resource" path="res://restaurante/itens/dados/receitas/assar_cogumelo.tres" id="11_cogumelo"]
 [ext_resource type="Resource" path="res://restaurante/itens/dados/receitas/assar_misto.tres" id="12_misto"]
 [ext_resource type="Script" path="res://restaurante/componentes/sheet_row_sprite.gd" id="13_girando"]
-[ext_resource type="Texture2D" path="res://restaurante/comidas/espetinhos/girando/espetinho_girando.png" id="14_girando_png"]
+[ext_resource type="Texture2D" path="res://restaurante/comidas/arte_v2/espetinho_girando.png" id="14_girando_png"]
 [ext_resource type="Texture2D" path="res://restaurante/comidas/utensilios/churrasqueira/churrasqueira_ociosa.png" id="15_vazia"]
 [ext_resource type="Texture2D" path="res://restaurante/comidas/utensilios/churrasqueira/churrasqueira_assando.png" id="16_assando"]
 [ext_resource type="Texture2D" path="res://restaurante/comidas/utensilios/churrasqueira/churrasqueira_alerta.png" id="17_alerta"]
@@ -80,7 +80,7 @@ flip_with_facing = false
 z_index = 2
 script = ExtResource("13_girando")
 sheet = ExtResource("14_girando_png")
-frame_size = Vector2i(16, 16)
+frame_size = Vector2i(22, 22)
 fps = 10.0
 
 [node name="Barra" type="Node2D" parent="Bocas/BocaDireita"]
@@ -120,7 +120,7 @@ flip_with_facing = false
 z_index = 2
 script = ExtResource("13_girando")
 sheet = ExtResource("14_girando_png")
-frame_size = Vector2i(16, 16)
+frame_size = Vector2i(22, 22)
 fps = 10.0
 
 [node name="Barra" type="Node2D" parent="Bocas/BocaEsquerda"]

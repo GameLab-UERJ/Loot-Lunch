@@ -1,0 +1,180 @@
+[gd_resource type="SpriteFrames" load_steps=24 format=3]
+
+[ext_resource type="Texture2D" path="res://restaurante/cozinha/estacoes/arte_v2/raiz_espeto.png" id="1_tex"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_raiz_espeto_1"]
+atlas = ExtResource("1_tex")
+region = Rect2(0, 0, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_raiz_espeto_2"]
+atlas = ExtResource("1_tex")
+region = Rect2(32, 0, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_raiz_espeto_3"]
+atlas = ExtResource("1_tex")
+region = Rect2(64, 0, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_raiz_espeto_4"]
+atlas = ExtResource("1_tex")
+region = Rect2(96, 0, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_raiz_espeto_5"]
+atlas = ExtResource("1_tex")
+region = Rect2(128, 0, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_raiz_espeto_6"]
+atlas = ExtResource("1_tex")
+region = Rect2(160, 0, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_raiz_espeto_7"]
+atlas = ExtResource("1_tex")
+region = Rect2(0, 40, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_raiz_espeto_8"]
+atlas = ExtResource("1_tex")
+region = Rect2(32, 40, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_raiz_espeto_9"]
+atlas = ExtResource("1_tex")
+region = Rect2(64, 40, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_raiz_espeto_10"]
+atlas = ExtResource("1_tex")
+region = Rect2(96, 40, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_raiz_espeto_11"]
+atlas = ExtResource("1_tex")
+region = Rect2(128, 40, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_raiz_espeto_12"]
+atlas = ExtResource("1_tex")
+region = Rect2(160, 40, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_raiz_espeto_13"]
+atlas = ExtResource("1_tex")
+region = Rect2(192, 40, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_raiz_espeto_14"]
+atlas = ExtResource("1_tex")
+region = Rect2(0, 80, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_raiz_espeto_15"]
+atlas = ExtResource("1_tex")
+region = Rect2(32, 80, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_raiz_espeto_16"]
+atlas = ExtResource("1_tex")
+region = Rect2(64, 80, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_raiz_espeto_17"]
+atlas = ExtResource("1_tex")
+region = Rect2(96, 80, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_raiz_espeto_18"]
+atlas = ExtResource("1_tex")
+region = Rect2(128, 80, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_raiz_espeto_19"]
+atlas = ExtResource("1_tex")
+region = Rect2(160, 80, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_raiz_espeto_20"]
+atlas = ExtResource("1_tex")
+region = Rect2(192, 80, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_raiz_espeto_21"]
+atlas = ExtResource("1_tex")
+region = Rect2(224, 80, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_raiz_espeto_22"]
+atlas = ExtResource("1_tex")
+region = Rect2(0, 120, 32, 40)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_raiz_espeto_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_raiz_espeto_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_raiz_espeto_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_raiz_espeto_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_raiz_espeto_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_raiz_espeto_6")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 6
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_raiz_espeto_7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_raiz_espeto_8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_raiz_espeto_9")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_raiz_espeto_10")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_raiz_espeto_11")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_raiz_espeto_12")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_raiz_espeto_13")
+}],
+"loop": false,
+"name": &"corte",
+"speed": 12
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_raiz_espeto_14")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_raiz_espeto_15")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_raiz_espeto_16")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_raiz_espeto_17")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_raiz_espeto_18")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_raiz_espeto_19")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_raiz_espeto_20")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_raiz_espeto_21")
+}],
+"loop": false,
+"name": &"regenerando",
+"speed": 2.67
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_raiz_espeto_22")
+}],
+"loop": false,
+"name": &"vazio",
+"speed": 1
+}]

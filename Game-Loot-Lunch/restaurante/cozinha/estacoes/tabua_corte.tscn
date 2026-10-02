@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://restaurante/componentes/progress_component.gd" id="4_progress"]
 [ext_resource type="Script" path="res://restaurante/componentes/progress_bar_component.gd" id="5_bar"]
 [ext_resource type="Script" path="res://restaurante/componentes/sprite_sheet_effect.gd" id="6_effect"]
-[ext_resource type="Texture2D" uid="uid://hq7tr3h8wfi7" path="res://restaurante/comidas/utensilios/tabuacorte64.png" id="7_tabua"]
+[ext_resource type="Texture2D" path="res://restaurante/cozinha/estacoes/arte_v2/mesa_corte.png" id="7_tabua"]
 [ext_resource type="Texture2D" path="res://restaurante/comidas/espetinhos/base/espeto/925.png" id="8_fx"]
 [ext_resource type="Resource" path="res://restaurante/itens/dados/receitas/corte_carne.tres" id="9_carne"]
 [ext_resource type="Resource" path="res://restaurante/itens/dados/receitas/corte_cogumelo.tres" id="10_cogumelo"]
@@ -24,7 +24,6 @@ script = ExtResource("1_station")
 recipes = Array[Resource]([ExtResource("9_carne"), ExtResource("10_cogumelo")])
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.5, 0.5)
 texture = ExtResource("7_tabua")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -42,8 +41,7 @@ highlight_target = NodePath("../Sprite2D")
 shape = SubResource("RectangleShape2D_area")
 
 [node name="ItemSlot" type="Node2D" parent="."]
-position = Vector2(0, -3)
-scale = Vector2(0.7, 0.7)
+position = Vector2(-3, -4)
 script = ExtResource("3_hand")
 flip_with_facing = false
 
@@ -60,7 +58,7 @@ fill_color = Color(0.95, 0.72, 0.25, 1)
 
 [node name="EfeitoCorte" type="AnimatedSprite2D" parent="."]
 z_index = 1
-position = Vector2(0, -6)
+position = Vector2(-3, -6)
 scale = Vector2(0.4, 0.4)
 script = ExtResource("6_effect")
 sheet = ExtResource("8_fx")

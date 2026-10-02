@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://restaurante/componentes/interactable_component.gd" id="2_interactable"]
 [ext_resource type="PackedScene" path="res://restaurante/itens/carryable_item.tscn" id="3_item"]
 [ext_resource type="Resource" path="res://restaurante/itens/dados/carne_bruta.tres" id="4_carne"]
-[ext_resource type="Texture2D" path="res://restaurante/comidas/espetinhos/base/carne/CarneCaixa32.png" id="5_caixa"]
+[ext_resource type="Texture2D" path="res://restaurante/cozinha/estacoes/arte_v2/mesa_carne.png" id="5_caixa"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
 size = Vector2(20, 20)

@@ -17,7 +17,10 @@ class_name AssemblyStation
 ##      fogo e entra em cooldown.
 ##   Ao fim de qualquer cooldown toca o efeito de "pronto" e ela volta a aceitar itens.
 ##
-## Filhos esperados: Sprite2D, CollisionShape2D, InteractableComponent, Slots (com
+## Visual: se for um RegrowSprite, ao COLETAR toca `corte` -> `regenerando` -> `idle`.
+## No RESET (tecla T) o espeto continua lá, então só escurece durante o cooldown.
+##
+## Filhos esperados: Visual (ou Sprite2D), CollisionShape2D, InteractableComponent, Slots (com
 ## HandComponents dentro), CooldownComponent e, opcionais, BarraProgresso
 ## (ProgressBarComponent), EfeitoReset e EfeitoPronto (SpriteSheetEffect).
 
@@ -42,7 +45,7 @@ signal cooldown_ended
 @export var reset_cooldown: float = 3.0
 
 @export_group("Feedback")
-## Cor do sprite enquanto a estação está em cooldown.
+## Cor do sprite enquanto a estação está em cooldown sem animação de regeneração.
 @export var cooldown_modulate: Color = Color(0.45, 0.45, 0.45, 1.0)
 @export var show_progress_bar: bool = true
 ## Esticadinha do item ao ser fincado.
@@ -52,7 +55,7 @@ signal cooldown_ended
 
 @onready var slots_root: Node = get_node_or_null("Slots")
 @onready var cooldown: CooldownComponent = get_node_or_null("CooldownComponent")
-@onready var visual: CanvasItem = get_node_or_null("Sprite2D")
+@onready var visual: CanvasItem = KitchenStation.find_visual(self)
 @onready var progress_bar: ProgressBarComponent = get_node_or_null("BarraProgresso")
 @onready var reset_effect: SpriteSheetEffect = get_node_or_null("EfeitoReset")
 @onready var ready_effect: SpriteSheetEffect = get_node_or_null("EfeitoPronto")
@@ -192,7 +195,7 @@ func collect_item(actor_hand: HandComponent) -> bool:
 
 	_clear_slots()
 	item_collected.emit(recipe.output_data)
-	_start_cooldown(collect_cooldown)
+	_start_cooldown(collect_cooldown, true)
 	return true
 
 
@@ -241,15 +244,19 @@ func _clear_slots() -> void:
 		slot.consume_item()
 
 
-func _start_cooldown(time: float) -> void:
+## `harvested` = o item foi levado (toca a animação de colheita, se houver).
+func _start_cooldown(time: float, harvested: bool = false) -> void:
 	if cooldown == null:
 		return
 	interactable.enabled = false
 	interactable.set_focused(false)
-	if visual:
+	var total: float = time if time > 0.0 else cooldown.duration
+	if harvested and visual is RegrowSprite:
+		(visual as RegrowSprite).play_harvest(total)
+	elif visual:
 		visual.self_modulate = cooldown_modulate
 	set_process(show_progress_bar)
-	cooldown_started.emit(time if time > 0.0 else cooldown.duration)
+	cooldown_started.emit(total)
 	cooldown.start(time)
 	_refresh_bar()
 
@@ -258,6 +265,8 @@ func _on_cooldown_finished() -> void:
 	interactable.enabled = true
 	if visual:
 		visual.self_modulate = Color.WHITE
+	if visual is RegrowSprite:
+		(visual as RegrowSprite).play_ready()
 	set_process(false)
 	_refresh_bar()
 	if ready_effect:

@@ -7,7 +7,8 @@
 [ext_resource type="Script" path="res://restaurante/componentes/progress_bar_component.gd" id="5_bar"]
 [ext_resource type="Script" path="res://restaurante/componentes/sprite_sheet_effect.gd" id="6_effect"]
 [ext_resource type="PackedScene" path="res://restaurante/itens/carryable_item.tscn" id="7_item"]
-[ext_resource type="Texture2D" uid="uid://c8ltnje51xnr8" path="res://restaurante/comidas/espetinhos/base/espeto/RaizEspeto128.png" id="8_espeto"]
+[ext_resource type="SpriteFrames" path="res://restaurante/cozinha/estacoes/arte_v2/raiz_espeto_frames.tres" id="8_espeto"]
+[ext_resource type="Script" path="res://restaurante/componentes/regrow_sprite.gd" id="14_regrow"]
 [ext_resource type="Texture2D" uid="uid://cgqbrmknjg0qu" path="res://restaurante/comidas/espetinhos/base/espeto/1361.png" id="9_fogo"]
 [ext_resource type="Texture2D" path="res://restaurante/comidas/espetinhos/base/espeto/925.png" id="10_brilho"]
 [ext_resource type="Resource" path="res://restaurante/itens/dados/receitas/espeto_carne.tres" id="11_carne"]
@@ -29,9 +30,12 @@ item_scene = ExtResource("7_item")
 collect_cooldown = 3.0
 reset_cooldown = 3.0
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("8_espeto")
+[node name="Visual" type="AnimatedSprite2D" parent="."]
+offset = Vector2(0, -4)
+sprite_frames = ExtResource("8_espeto")
+animation = &"idle"
+autoplay = "idle"
+script = ExtResource("14_regrow")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 10)
@@ -42,7 +46,7 @@ collision_layer = 8
 collision_mask = 0
 monitoring = false
 script = ExtResource("2_interactable")
-highlight_target = NodePath("../Sprite2D")
+highlight_target = NodePath("../Visual")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableComponent"]
 shape = SubResource("RectangleShape2D_area")
@@ -50,14 +54,14 @@ shape = SubResource("RectangleShape2D_area")
 [node name="Slots" type="Node2D" parent="."]
 
 [node name="SlotBaixo" type="Node2D" parent="Slots"]
-position = Vector2(0, 4)
-scale = Vector2(0.4, 0.4)
+position = Vector2(1, -6)
+scale = Vector2(0.5, 0.5)
 script = ExtResource("3_hand")
 flip_with_facing = false
 
 [node name="SlotTopo" type="Node2D" parent="Slots"]
-position = Vector2(0, -4)
-scale = Vector2(0.4, 0.4)
+position = Vector2(1, -15)
+scale = Vector2(0.5, 0.5)
 script = ExtResource("3_hand")
 flip_with_facing = false
 
@@ -67,7 +71,7 @@ duration = 3.0
 
 [node name="BarraProgresso" type="Node2D" parent="."]
 z_index = 3
-position = Vector2(0, -22)
+position = Vector2(0, -30)
 script = ExtResource("5_bar")
 size = Vector2(26, 4)
 fill_color = Color(0.72, 0.4, 0.95, 1)

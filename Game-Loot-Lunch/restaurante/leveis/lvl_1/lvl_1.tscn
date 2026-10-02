@@ -1,0 +1,174 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://restaurante/leveis/restaurant_level.gd" id="1_level"]
+[ext_resource type="Resource" path="res://restaurante/leveis/lvl_1/lvl_1.tres" id="2_data"]
+[ext_resource type="PackedScene" path="res://restaurante/personagens/chef/chef.tscn" id="3_chef"]
+[ext_resource type="PackedScene" path="res://restaurante/clientes/componentes/queue_manager.tscn" id="4_fila"]
+[ext_resource type="PackedScene" path="res://restaurante/clientes/pedido/pedido.tscn" id="5_pedido"]
+[ext_resource type="PackedScene" path="res://restaurante/clientes/entrega/entrega.tscn" id="6_entrega"]
+[ext_resource type="Script" path="res://restaurante/leveis/componentes/customer_director.gd" id="7_diretor"]
+[ext_resource type="Script" path="res://restaurante/componentes/cooldown_component.gd" id="8_turno"]
+[ext_resource type="PackedScene" path="res://restaurante/leveis/ui/hud_fase.tscn" id="9_hud"]
+[ext_resource type="PackedScene" path="res://restaurante/cozinha/estacoes/churrasqueira.tscn" id="10_churrasqueira"]
+[ext_resource type="PackedScene" path="res://restaurante/cozinha/estacoes/raiz_espeto.tscn" id="11_raiz"]
+[ext_resource type="PackedScene" path="res://restaurante/cozinha/estacoes/pe_cogumelo.tscn" id="12_cogumelo"]
+[ext_resource type="PackedScene" path="res://restaurante/cozinha/estacoes/caixa_carne.tscn" id="13_mesa_carne"]
+[ext_resource type="PackedScene" path="res://restaurante/cozinha/estacoes/tabua_corte.tscn" id="14_mesa_corte"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cima"]
+size = Vector2(592, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lado"]
+size = Vector2(16, 326)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lado_cozinha"]
+size = Vector2(16, 254)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rua"]
+size = Vector2(700, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_balcao"]
+size = Vector2(560, 12)
+
+[node name="Lvl1" type="Node2D" node_paths=PackedStringArray("chef", "director", "shift", "hud")]
+script = ExtResource("1_level")
+level_data = ExtResource("2_data")
+chef = NodePath("Chef")
+director = NodePath("Diretor")
+shift = NodePath("Turno")
+hud = NodePath("HudFase")
+
+[node name="Cenario" type="Node2D" parent="."]
+
+[node name="Fundo" type="Polygon2D" parent="Cenario"]
+color = Color(0.09, 0.07, 0.1, 1)
+polygon = PackedVector2Array(-40, -40, 680, -40, 680, 400, -40, 400)
+
+[node name="Chao" type="Polygon2D" parent="Cenario"]
+color = Color(0.17, 0.16, 0.2, 1)
+polygon = PackedVector2Array(40, 40, 600, 40, 600, 266, 40, 266)
+
+[node name="ParedeCima" type="Polygon2D" parent="Cenario"]
+color = Color(0.3, 0.22, 0.36, 1)
+polygon = PackedVector2Array(24, 24, 616, 24, 616, 40, 24, 40)
+
+[node name="ParedeEsquerda" type="Polygon2D" parent="Cenario"]
+color = Color(0.3, 0.22, 0.36, 1)
+polygon = PackedVector2Array(24, 24, 40, 24, 40, 330, 24, 330)
+
+[node name="ParedeDireita" type="Polygon2D" parent="Cenario"]
+color = Color(0.3, 0.22, 0.36, 1)
+polygon = PackedVector2Array(600, 24, 616, 24, 616, 278, 600, 278)
+
+[node name="FaixaClientes" type="Polygon2D" parent="Cenario"]
+color = Color(0.22, 0.18, 0.2, 1)
+polygon = PackedVector2Array(40, 278, 680, 278, 680, 330, 40, 330)
+
+[node name="Calcada" type="Polygon2D" parent="Cenario"]
+color = Color(0.3, 0.22, 0.36, 1)
+polygon = PackedVector2Array(24, 330, 680, 330, 680, 346, 24, 346)
+
+[node name="Balcao" type="Polygon2D" parent="Cenario"]
+color = Color(0.42, 0.29, 0.18, 1)
+polygon = PackedVector2Array(40, 266, 600, 266, 600, 278, 40, 278)
+
+[node name="BalcaoTampo" type="Polygon2D" parent="Cenario"]
+color = Color(0.58, 0.42, 0.27, 1)
+polygon = PackedVector2Array(40, 266, 600, 266, 600, 269, 40, 269)
+
+[node name="Paredes" type="StaticBody2D" parent="Cenario"]
+collision_layer = 1
+collision_mask = 0
+
+[node name="Cima" type="CollisionShape2D" parent="Cenario/Paredes"]
+position = Vector2(320, 32)
+shape = SubResource("RectangleShape2D_cima")
+
+[node name="Esquerda" type="CollisionShape2D" parent="Cenario/Paredes"]
+position = Vector2(32, 187)
+shape = SubResource("RectangleShape2D_lado")
+
+[node name="Direita" type="CollisionShape2D" parent="Cenario/Paredes"]
+position = Vector2(608, 151)
+shape = SubResource("RectangleShape2D_lado_cozinha")
+
+[node name="Rua" type="CollisionShape2D" parent="Cenario/Paredes"]
+position = Vector2(360, 338)
+shape = SubResource("RectangleShape2D_rua")
+
+[node name="BalcaoColisao" type="StaticBody2D" parent="Cenario"]
+collision_layer = 32
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Cenario/BalcaoColisao"]
+position = Vector2(320, 272)
+shape = SubResource("RectangleShape2D_balcao")
+
+[node name="Estacoes" type="Node2D" parent="."]
+
+[node name="Churrasqueira" parent="Estacoes" instance=ExtResource("10_churrasqueira")]
+position = Vector2(320, 90)
+
+[node name="RaizEspetoEsquerda" parent="Estacoes" instance=ExtResource("11_raiz")]
+position = Vector2(240, 118)
+
+[node name="RaizEspetoDireita" parent="Estacoes" instance=ExtResource("11_raiz")]
+position = Vector2(400, 118)
+
+[node name="CogumeloCimaEsquerda" parent="Estacoes" instance=ExtResource("12_cogumelo")]
+position = Vector2(80, 80)
+
+[node name="CogumeloCimaDireita" parent="Estacoes" instance=ExtResource("12_cogumelo")]
+position = Vector2(560, 80)
+
+[node name="CogumeloBaixoEsquerda" parent="Estacoes" instance=ExtResource("12_cogumelo")]
+position = Vector2(80, 240)
+
+[node name="CogumeloBaixoDireita" parent="Estacoes" instance=ExtResource("12_cogumelo")]
+position = Vector2(560, 240)
+
+[node name="MesaCarneEsquerda" parent="Estacoes" instance=ExtResource("13_mesa_carne")]
+position = Vector2(224, 196)
+
+[node name="MesaCorteEsquerda" parent="Estacoes" instance=ExtResource("14_mesa_corte")]
+position = Vector2(288, 196)
+
+[node name="MesaCorteDireita" parent="Estacoes" instance=ExtResource("14_mesa_corte")]
+position = Vector2(352, 196)
+
+[node name="MesaCarneDireita" parent="Estacoes" instance=ExtResource("13_mesa_carne")]
+position = Vector2(416, 196)
+
+[node name="CentroMapa" type="Marker2D" parent="." groups=["centro_mapa"]]
+position = Vector2(320, 170)
+
+[node name="Fila" parent="." instance=ExtResource("4_fila")]
+position = Vector2(430, 298)
+max_queue_size = 3
+slot_spacing = 110.0
+debug_draw = false
+
+[node name="Entrada" type="Marker2D" parent="."]
+position = Vector2(690, 298)
+
+[node name="ItensNoChao" type="Node2D" parent="."]
+
+[node name="Chef" parent="." node_paths=PackedStringArray("items_container") instance=ExtResource("3_chef")]
+position = Vector2(320, 236)
+collision_mask = 37
+items_container = NodePath("../ItensNoChao")
+
+[node name="Diretor" type="Node" parent="." node_paths=PackedStringArray("queue", "spawn_point", "customers_parent", "insert_before")]
+script = ExtResource("7_diretor")
+queue = NodePath("../Fila")
+spawn_point = NodePath("../Entrada")
+customers_parent = NodePath("..")
+insert_before = NodePath("../ItensNoChao")
+order_scene = ExtResource("5_pedido")
+delivery_scene = ExtResource("6_entrega")
+
+[node name="Turno" type="Node" parent="."]
+script = ExtResource("8_turno")
+duration = 180.0
+
+[node name="HudFase" parent="." instance=ExtResource("9_hud")]

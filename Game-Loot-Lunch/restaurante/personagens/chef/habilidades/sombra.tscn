@@ -1,7 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://restaurante/personagens/chef/habilidades/chef_shadow.gd" id="1_shadow"]
-[ext_resource type="Texture2D" uid="uid://c1wqitccu7e00" path="res://restaurante/personagens/chef/habilidade_art/jscoutinho_idle_L_34F_sombra.png" id="2_sombra_png"]
+[ext_resource type="Texture2D" path="res://restaurante/personagens/chef/habilidade_art/idle_sombra.png" id="2_sombra_png"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sombra0"]
 atlas = ExtResource("2_sombra_png")
