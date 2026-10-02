@@ -2,9 +2,8 @@ extends BossMinigame
 class_name EntregaVip
 ## FINALIZAÇÃO da boss fight: A ENTREGA AO VIP.
 ##
-## O chef (o MESMO chef.tscn do restaurante: WASD, F, ESPAÇO...) começa com o prato
-## completo na mão e precisa CAMINHAR até o VIP e entregar (F perto dele, ou largar o
-## prato encostado nele). O VIP usa o DeliveryReceiverComponent do restaurante, então
+## O chef (o MESMO chef.tscn do restaurante: WASD + ESPAÇO para tudo) começa com o prato
+## completo na mão e precisa CAMINHAR até o VIP e entregar (ESPAÇO de frente para ele). O VIP usa o DeliveryReceiverComponent do restaurante, então
 ## nenhuma regra nova de entrega foi criada.
 
 

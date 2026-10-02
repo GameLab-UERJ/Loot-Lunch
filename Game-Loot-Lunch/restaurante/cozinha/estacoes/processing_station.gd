@@ -3,14 +3,14 @@ class_name ProcessingStation
 ## Estação que TRANSFORMA um ingrediente em outro por etapas (tábua de corte, e no futuro
 ## fogão, liquidificador, pilão...). Quais itens ela aceita é DADO: a lista `recipes`.
 ##
-## Fluxo (clique direito, `chef_interact`):
-##   1. Clique com o ingrediente certo na mão -> o item vai para cima da estação e a tarefa começa.
-##   2. Clique de novo, N vezes              -> cada toque conta uma etapa e enche a barrinha.
-##   3. na última etapa                   -> o item vira o `output_data` da receita.
-##   4. Clique com a mão vazia               -> pega o item pronto de volta.
+## Fluxo (tecla ESPAÇO):
+##   1. ESPAÇO com o ingrediente certo na mão -> o item vai para cima da estação e a tarefa começa.
+##   2. ESPAÇO de novo, N vezes              -> cada toque conta uma etapa e enche a barrinha.
+##   3. na última etapa                      -> o item vira o `output_data` da receita.
+##   4. ESPAÇO com a mão vazia               -> pega o item pronto de volta.
 ##
 ## REGRA: começou, tem que terminar. Enquanto a tarefa está em andamento a estação só
-## aceita o clique para avançar o corte — não devolve o item nem aceita outro ingrediente.
+## aceita o ESPAÇO para avançar o corte — não devolve o item nem aceita outro ingrediente.
 ##
 ## Filhos esperados: Sprite2D, CollisionShape2D, InteractableComponent, ItemSlot (HandComponent),
 ## ProgressComponent e, opcionais, BarraProgresso (ProgressBarComponent) e EfeitoCorte (SpriteSheetEffect).
@@ -66,16 +66,26 @@ func find_recipe(data: ItemData) -> ProcessingRecipe:
 	return null
 
 
+func _can_interact(_actor: Node, actor_hand: HandComponent) -> bool:
+	if actor_hand == null:
+		return false
+	if is_busy():
+		return true  # cada ESPAÇO é um corte
+	if slot.has_item():
+		return actor_hand.is_empty()  # retirar o item pronto
+	return actor_hand.has_item() and find_recipe(actor_hand.held_item.data) != null
+
+
 func _interact(_actor: Node, actor_hand: HandComponent) -> void:
 	if actor_hand == null:
 		return
 
-	# Tarefa em andamento: o clique só corta. Não devolve o item até terminar.
+	# Tarefa em andamento: o ESPAÇO só corta. Não devolve o item até terminar.
 	if is_busy():
 		_do_step()
 		return
 
-	# Item pronto em cima da estação: clique com a mão vazia retira.
+	# Item pronto em cima da estação: ESPAÇO com a mão vazia retira.
 	if slot.has_item():
 		slot.transfer_to(actor_hand)
 		_refresh_bar()

@@ -20,7 +20,7 @@ Três minigames em sequência + entrega final. Tudo fica em `restaurante/minigam
 | Fase 1 | **Segurar ESPAÇO** canaliza o Mini-Sol (barra verde sobe). **Soltar** tira a carne. **Clique** nas fagulhas antes que caiam na carne. |
 | Fase 2 | A garrafa segue o **mouse**. **Segurar clique** despeja a manteiga (só conta em cima da macaxeira). **ESPAÇO** tira da chapa. |
 | Fase 3 | Seu turno: **1** Frigideirada, **2** Investida Sombria, **3** Bolo de Fogo, **4** Devorar (só com a formiga < 20%) — ou clique. Turno da formiga: **ESPAÇO** no tempo do anel (investida, terremoto, cada pedra) e **clique** no buraco certo (cavar). |
-| Entrega | **WASD** anda, **F** entrega (ou larga o prato encostado no VIP com **ESPAÇO**). |
+| Entrega | **WASD** anda, **ESPAÇO** de frente para o VIP entrega. |
 
 ESPAÇO = ação `chef_pick_drop`, clique = `left_click` (já existem no Input Map; nada novo foi adicionado ao `project.godot`).
 

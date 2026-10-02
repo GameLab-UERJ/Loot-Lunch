@@ -27,7 +27,7 @@ vip = NodePath("VIP")
 item_scene = ExtResource("7_item")
 dish_data = ExtResource("6_prato")
 title = "A Entrega ao VIP"
-instructions = "O prato está pronto! Caminhe com [WASD] até o Cliente VIP e entregue com [F] (ou largue o prato encostado nele com [ESPAÇO])."
+instructions = "O prato está pronto! Caminhe com [WASD] até o Cliente VIP e aperte [ESPAÇO] de frente para ele para entregar."
 
 [node name="Chao" type="Polygon2D" parent="."]
 color = Color(0.17, 0.16, 0.2, 1)

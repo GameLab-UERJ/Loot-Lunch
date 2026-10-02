@@ -1,10 +1,14 @@
 extends KitchenStation
 class_name IngredientCrate
-## Caixa de ingredientes infinita: clique direito com a mão vazia gera um item novo na mão.
+## Caixa de ingredientes infinita: ESPAÇO com a mão vazia gera um item novo na mão.
 
 
 @export var item_scene: PackedScene
 @export var item_data: ItemData
+
+
+func _can_interact(_actor: Node, actor_hand: HandComponent) -> bool:
+	return actor_hand != null and actor_hand.is_empty() and item_scene != null
 
 
 func _interact(_actor: Node, actor_hand: HandComponent) -> void:

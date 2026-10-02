@@ -39,6 +39,10 @@ func is_regrowing() -> bool:
 	return not cooldown.is_ready()
 
 
+func _can_interact(actor: Node, actor_hand: HandComponent) -> bool:
+	return not is_regrowing() and super(actor, actor_hand)
+
+
 func _interact(_actor: Node, actor_hand: HandComponent) -> void:
 	if is_regrowing():
 		return

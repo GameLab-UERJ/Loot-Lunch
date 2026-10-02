@@ -19,6 +19,11 @@ class_name Chef
 ##   - CONFUSO (ConfusionComponent): as setas ficam invertidas;
 ##   - LENTO (SlowComponent): mexe sozinho no max_speed.
 ##
+## ESPAÇO FAZ TUDO (`unified_action`): pegar da caixa de carne / pé de cogumelo, cortar na
+## tábua, montar o espeto, assar, tirar da churrasqueira, entregar ao cliente e pegar/largar
+## item do chão. Ordem: se o que está à frente REAGIRIA agora (`would_react`), usa; senão
+## pega o item do chão (mão vazia) ou larga o da mão.
+##
 ## HABILIDADES: o chef só REPASSA as teclas para os filhos AbilityComponent
 ## (press ao apertar, release ao soltar, interrupt ao levar dano). Nova habilidade =
 ## novo nó filho; nada muda aqui.
@@ -34,11 +39,16 @@ const GROUP: StringName = &"chefs"
 
 @export_group("Input")
 ## Nomes das ações do Input Map. Exportados para permitir um 2º jogador com outras teclas.
-@export var interact_action: StringName = &"chef_interact"   # F (ou clique direito)
-@export var pick_drop_action: StringName = &"chef_pick_drop" # Espaço
+## Interação separada (antiga F / clique direito). Hoje sem tecla no Input Map: o ESPAÇO faz tudo.
+@export var interact_action: StringName = &"chef_interact"
+@export var pick_drop_action: StringName = &"chef_pick_drop" # Espaço: AÇÃO ÚNICA
 @export var dash_action: StringName = &"chef_dash"           # Shift
 ## Ação secundária das estações: descartar/limpar (raiz de espeto, lixeira...).
 @export var trash_action: StringName = &"chef_trash"         # R
+
+## Ligado: o ESPAÇO interage com estações/clientes E pega/larga itens (botão único).
+## Desligado: comportamento antigo (ESPAÇO só pega/larga; interação na `interact_action`).
+@export var unified_action: bool = true
 
 @export_group("Itens")
 ## Distância à frente do chef onde o item cai ao ser largado.
@@ -109,7 +119,10 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event.is_action_pressed(interact_action):
 		interact(event is InputEventMouseButton)
 	elif event.is_action_pressed(pick_drop_action):
-		pick_or_drop()
+		if unified_action:
+			act()
+		else:
+			pick_or_drop()
 	elif event.is_action_pressed(trash_action):
 		trash(event is InputEventMouseButton)
 	else:
@@ -193,7 +206,18 @@ func try_dash() -> bool:
 	return false
 
 
-## Tecla F (ou clique direito): interage com o objeto embaixo do mouse (se estiver
+## ESPAÇO (botão único): usa a estação/cliente à frente se ele reagiria agora; senão
+## pega/larga item do chão. Público para IA/testes/tutorial.
+func act() -> bool:
+	if not can_act():
+		return false
+	var target: InteractableComponent = interactor_component.get_target(true, true)
+	if target and target.interact(self):
+		return true
+	return pick_or_drop()
+
+
+## Interação direta (antiga F / clique direito): interage com o objeto embaixo do mouse (se estiver
 ## ao alcance) ou com a bancada/caixa/fogão mais próximo à frente.
 ## `from_mouse` = veio do clique: aí clicar num objeto LONGE não faz nada. Pelo
 ## teclado, mouse parado em cima de algo longe não atrapalha: vale o que está à frente.
@@ -206,7 +230,8 @@ func interact(from_mouse: bool = false) -> bool:
 	return target.interact(self)
 
 
-## Espaço: com item na mão, larga no chão; com a mão vazia, pega o item do chão mais próximo.
+## Com item na mão, larga no chão; com a mão vazia, pega o item do chão mais próximo.
+## (O ESPAÇO chama isto quando não há estação/cliente reagindo à frente.)
 func pick_or_drop() -> bool:
 	if not can_act():
 		return false

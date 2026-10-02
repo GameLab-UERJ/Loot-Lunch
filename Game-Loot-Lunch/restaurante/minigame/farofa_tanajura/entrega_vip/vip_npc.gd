@@ -7,8 +7,8 @@ class_name VipNpc
 ## `fallback_texture` tingida de dourado e avisa no Output — assim a cena roda hoje e
 ## fica certa sozinha quando a arte chegar (é só soltar o PNG no caminho).
 ##
-## Recebe a entrega pelo DeliveryReceiverComponent do restaurante (F com o prato na mão,
-## ou largar o prato encostado nele) e repassa em `dish_received`.
+## Recebe a entrega pelo DeliveryReceiverComponent do restaurante (ESPAÇO com o prato na
+## mão, de frente para ele) e repassa em `dish_received`.
 
 
 signal dish_received(data: ItemData, deliverer: Node)

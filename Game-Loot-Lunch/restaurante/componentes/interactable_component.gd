@@ -1,6 +1,6 @@
 extends Area2D
 class_name InteractableComponent
-## Coloque em qualquer coisa da cozinha que reage à interação (tecla F ou clique direito)
+## Coloque em qualquer coisa da cozinha que reage à interação (tecla ESPAÇO)
 ## (bancada, caixa de ingredientes, fogão, lixeira, balcão de entrega...).
 ## A lógica fica no dono, conectado ao sinal `interacted`.
 ##
@@ -9,7 +9,7 @@ class_name InteractableComponent
 ##   - HOVER (mouse em cima): silhueta BRANCA em volta da arte. Mais apagada
 ##     quando o jogador ainda está longe demais para interagir.
 ##
-## ALVO (`is_targeted`): é o que a tecla F usaria agora. Não muda nada sozinho; o dono
+## ALVO (`is_targeted`): é o que o ESPAÇO usaria agora. Não muda nada sozinho; o dono
 ## escuta `target_changed` se quiser mostrar algo (ex.: a churrasqueira destaca o
 ## espetinho que vai sair). O dono também pode trocar a silhueta da arte inteira por
 ## outra coisa com `set_outline_blocked(true)`.
@@ -22,7 +22,7 @@ signal interacted(actor: Node)
 signal alt_interacted(actor: Node)
 signal focus_changed(is_focused: bool)
 signal hover_changed(is_hovered: bool)
-## Virou (ou deixou de ser) o alvo da tecla F. `actor` = quem vai interagir (null ao sair).
+## Virou (ou deixou de ser) o alvo do ESPAÇO. `actor` = quem vai interagir (null ao sair).
 signal target_changed(is_targeted: bool, actor: Node)
 
 
@@ -64,6 +64,19 @@ func can_interact(_actor: Node) -> bool:
 	return enabled
 
 
+## A interação principal (ESPAÇO) faria alguma coisa AGORA? Diferente de `can_interact`
+## (que só diz se o objeto está ligado): a caixa de carne com a mão cheia, por exemplo,
+## está ligada mas não faria nada — aí o ESPAÇO larga o item no chão em vez de usar a caixa.
+## O dono responde implementando `can_react_to(actor) -> bool` (KitchenStation já tem).
+func would_react(actor: Node) -> bool:
+	if not can_interact(actor):
+		return false
+	var owner_node: Node = get_parent()
+	if owner_node and owner_node.has_method(&"can_react_to"):
+		return bool(owner_node.call(&"can_react_to", actor))
+	return true
+
+
 func interact(actor: Node) -> bool:
 	if not can_interact(actor):
 		return false
@@ -97,7 +110,7 @@ func set_hovered(value: bool, in_reach: bool = true) -> void:
 		hover_changed.emit(value)
 
 
-## Chamado pelo InteractorComponent: este objeto é (ou deixou de ser) o alvo da tecla F.
+## Chamado pelo InteractorComponent: este objeto é (ou deixou de ser) o alvo do ESPAÇO.
 func set_targeted(value: bool, actor: Node = null) -> void:
 	var new_actor: Node = actor if value else null
 	if is_targeted == value and target_actor == new_actor:
