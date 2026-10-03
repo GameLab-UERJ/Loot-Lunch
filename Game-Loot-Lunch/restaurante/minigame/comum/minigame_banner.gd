@@ -23,6 +23,8 @@ signal confirmed
 @export var title_color: Color = Color(1.0, 0.95, 0.8, 1.0)
 @export var text_color: Color = Color(0.95, 0.92, 0.85, 1.0)
 @export var outline_color: Color = Color(0.1, 0.05, 0.12, 1.0)
+## Altura dos avisos curtos (toast) a partir do topo. Desça se houver barra de chefe.
+@export var toast_top: float = 36.0
 
 
 var _panel: PanelContainer
@@ -164,8 +166,8 @@ func _build() -> void:
 	_toast.set_anchors_preset(Control.PRESET_CENTER_TOP)
 	_toast.offset_left = -150.0
 	_toast.offset_right = 150.0
-	_toast.offset_top = 36.0
-	_toast.offset_bottom = 60.0
+	_toast.offset_top = toast_top
+	_toast.offset_bottom = toast_top + 24.0
 	_toast.pivot_offset = Vector2(150, 12)
 	_toast.hide()
 	add_child(_toast)

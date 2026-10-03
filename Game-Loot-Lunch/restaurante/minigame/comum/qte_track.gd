@@ -36,6 +36,9 @@ enum BeatState { PENDING, OPEN, HIT, MISSED }
 ## Quão antes da janela um aperto ainda conta como "cedo demais" (antes disso é ignorado).
 @export_range(0.0, 3.0, 0.05, "suffix:s") var attention_time: float = 0.6
 @export_range(0.0, 1.0, 0.01, "suffix:s") var whiff_lockout: float = 0.0
+## Multiplica as janelas que vêm do `configure()` (1.5 = 50% mais tempo para acertar).
+## Um botão só para deixar a etapa inteira mais fácil ou mais difícil.
+@export_range(0.5, 3.0, 0.05) var window_scale: float = 1.0
 
 @export_group("Anéis")
 @export var ring_anchor: Node2D
@@ -61,8 +64,8 @@ func is_running() -> bool:
 ## Ajusta as regras de uma vez (cada ataque inimigo tem as suas).
 func configure(early: float, late: float, early_fails: bool, attention: float = 0.6,
 		lockout: float = 0.0) -> void:
-	early_tolerance = early
-	late_tolerance = late
+	early_tolerance = early * window_scale
+	late_tolerance = late * window_scale
 	early_press_fails = early_fails
 	attention_time = attention
 	whiff_lockout = lockout

@@ -48,6 +48,17 @@ func is_dead() -> bool:
 	return health == null or health.is_dead()
 
 
+## No ar (voando): golpes corpo a corpo não alcançam. A base nunca voa.
+func is_airborne() -> bool:
+	return false
+
+
+## Chamado pelas habilidades À DISTÂNCIA (Besta) depois de acertar. A base não faz nada;
+## a Rainha usa para cair do céu e devolver a mana do chef.
+func on_ranged_hit(_battle: Node, _user: Battler) -> void:
+	pass
+
+
 ## Posição dos pés (global).
 func feet_position() -> Vector2:
 	return global_position + Vector2(0.0, ground_offset)

@@ -56,21 +56,21 @@ show_hover_ring = false
 
 [node name="BattleHealthComponent" type="Node" parent="."]
 script = ExtResource("6_health")
-max_hp = 30
+max_hp = 20
 
 [node name="BattleWaitComponent" type="Node" parent="."]
 script = ExtResource("7_wait")
-wait_time = 7.0
-jitter = 0.2
-start_ratio_min = 0.05
-start_ratio_max = 0.55
+wait_time = 4.5
+jitter = 0.15
+start_ratio_min = 0.1
+start_ratio_max = 0.5
 
 [node name="Investida" type="Node" parent="."]
 script = ExtResource("13_investida")
 dust_anim = ExtResource("17_poeira")
 display_name = "Investida"
 weight = 3.0
-damage = 3
+damage = 1
 counter_animation = &"contra_frigideirada"
 counter_hit_frame = 4
 counter_damage = 3
@@ -83,7 +83,7 @@ long_wave = ExtResource("19_onda_longa")
 landing_dust = ExtResource("20_pouso")
 display_name = "Terremoto"
 weight = 2.0
-damage = 3
+damage = 1
 
 [node name="LancarPedra" type="Node" parent="."]
 script = ExtResource("15_pedra")
@@ -92,6 +92,7 @@ break_anim = ExtResource("22_pedra_quebra")
 display_name = "Lançar Pedra"
 weight = 3.0
 damage = 1
+reflect_damage = 2
 counter_animation = &"contra_rebater"
 counter_hit_frame = 2
 counter_daze = 1.5
@@ -99,10 +100,12 @@ counter_daze = 1.5
 [node name="Cavar" type="Node" parent="."]
 script = ExtResource("16_cavar")
 hole_scene = ExtResource("23_buraco")
+hint_time = 1.3
+react_time = 1.2
 erupt_anim = ExtResource("24_erupcao")
 display_name = "Cavar"
 weight = 2.0
-damage = 3
+damage = 1
 counter_animation = &"contra_martelada"
 counter_hit_frame = 4
 counter_damage = 4

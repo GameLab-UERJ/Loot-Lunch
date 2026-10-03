@@ -18,6 +18,11 @@ class_name FormigaSkill
 ## Dano no chef se ele NÃO se defender (em meias caveiras).
 @export_range(0, 10) var damage: int = 2
 @export var enabled: bool = true
+## Depois de usada, fica de fora por tantos turnos DESTA formiga (0 = sem recarga).
+@export_range(0, 10) var cooldown_turns: int = 0
+## PRIORIDADE MÁXIMA: com `has_priority` verdadeiro, sai NA HORA, sem esperar a barra de
+## espera da formiga encher (as outras formigas e o chef esperam).
+@export var interrupts: bool = false
 
 @export_group("Contra-ataque")
 @export var counter_animation: StringName = &""
@@ -30,6 +35,10 @@ class_name FormigaSkill
 @export var impact: SheetAnimation
 
 
+## Turno (da formiga) em que foi usada pela última vez.
+var last_used_turn: int = -100
+
+
 static func find_all_in(node: Node) -> Array[FormigaSkill]:
 	var found: Array[FormigaSkill] = []
 	if node == null:
@@ -38,6 +47,28 @@ static func find_all_in(node: Node) -> Array[FormigaSkill]:
 		if child is FormigaSkill:
 			found.append(child)
 	return found
+
+
+## Pode ser sorteada agora? (ex.: Arremesso só com formigas no campo). Sobrescreva.
+func can_use(_battle: TurnBattle, _ant: FormigaBattler) -> bool:
+	return true
+
+
+## Tem que sair AGORA, sem sorteio? (ex.: Devorar e Conjurar com a vida baixa). Sobrescreva.
+func has_priority(_battle: TurnBattle, _ant: FormigaBattler) -> bool:
+	return false
+
+
+func is_cooling_down(ant: FormigaBattler) -> bool:
+	return cooldown_turns > 0 and ant.turns_taken - last_used_turn <= cooldown_turns
+
+
+## Dano no chef JÁ com o bônus da batalha (formigas em fúria com a Rainha voando).
+## Use sempre isto em vez de `chef.take_hit` direto.
+func deal(battle: TurnBattle, ant: FormigaBattler, chef: ChefBattler, amount: int,
+		from_direction: Vector2 = Vector2.ZERO) -> int:
+	var total: int = amount * (battle.damage_multiplier(ant) if battle else 1)
+	return chef.take_hit(total, from_direction)
 
 
 func execute(battle: TurnBattle, ant: FormigaBattler, chef: ChefBattler) -> void:

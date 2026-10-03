@@ -18,6 +18,10 @@ class_name BattleSkill
 @export_range(0, 10) var mana_cost: int = 0
 @export_range(0, 10) var mana_gain: int = 0
 @export var enabled: bool = true
+## Alcança alvo VOANDO (Besta). Corpo a corpo (false) não alcança.
+@export var ranged: bool = false
+## Pode ser usada no chefe (Devorar não: ele é grande demais).
+@export var can_target_boss: bool = true
 
 
 ## Todas as habilidades filhas diretas de um nó (na ordem da árvore = ordem do menu).
@@ -43,6 +47,10 @@ func why_not(user: ChefBattler, target: FormigaBattler) -> String:
 		return "Mana insuficiente"
 	if target == null or target.is_dead():
 		return "Sem alvo"
+	if not ranged and target.is_airborne():
+		return "ela está voando: só a Besta alcança"
+	if not can_target_boss and target.is_boss:
+		return "o chefe é grande demais para isso"
 	return _why_not(user, target)
 
 

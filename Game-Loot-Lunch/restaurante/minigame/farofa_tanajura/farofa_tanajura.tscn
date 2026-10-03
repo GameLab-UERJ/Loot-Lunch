@@ -4,8 +4,9 @@
 [ext_resource type="PackedScene" path="res://restaurante/minigame/farofa_tanajura/batalha/formiga.tscn" id="2_formiga"]
 [ext_resource type="PackedScene" path="res://restaurante/minigame/farofa_tanajura/batalha/chef_battler.tscn" id="3_chef"]
 [ext_resource type="Script" path="res://restaurante/minigame/comum/sheet_sprite.gd" id="4_sheet"]
-[ext_resource type="Resource" path="res://restaurante/minigame/farofa_tanajura/art/anim/churrasqueira_ociosa.tres" id="5_ociosa"]
-[ext_resource type="Resource" path="res://restaurante/minigame/farofa_tanajura/art/anim/churrasqueira_risada.tres" id="6_risada"]
+[ext_resource type="Resource" path="res://restaurante/minigame/farofa_tanajura/art/anim/vip_idle.tres" id="5_vip"]
+[ext_resource type="Resource" path="res://restaurante/minigame/farofa_tanajura/art/anim/fx_fumaca_sombria.tres" id="6_fumaca"]
+[ext_resource type="Resource" path="res://restaurante/minigame/farofa_tanajura/art/anim/fx_cavar_erupcao.tres" id="22_erupcao"]
 [ext_resource type="Script" path="res://restaurante/minigame/farofa_tanajura/cutscene/farofa_cutscene.gd" id="7_cutscene"]
 [ext_resource type="Texture2D" path="res://restaurante/comidas/utensilios/tabuacorte64.png" id="8_tabua"]
 [ext_resource type="Texture2D" path="res://restaurante/minigame/farofa_tanajura/art/frigideira.png" id="9_frigideira"]
@@ -18,36 +19,41 @@
 [ext_resource type="Script" path="res://restaurante/minigame/comum/minigame_banner.gd" id="17_banner"]
 [ext_resource type="Script" path="res://restaurante/minigame/farofa_tanajura/batalha/target_cursor.gd" id="18_cursor"]
 [ext_resource type="Texture2D" path="res://restaurante/minigame/farofa_tanajura/art/Entities/formiga/dropTanajura.png" id="19_drop"]
+[ext_resource type="PackedScene" path="res://restaurante/minigame/farofa_tanajura/batalha/rainha.tscn" id="20_rainha"]
+[ext_resource type="Script" path="res://restaurante/minigame/comum/boss_health_bar.gd" id="21_bossbar"]
 
-[node name="FarofaTanajura" type="Node2D" node_paths=PackedStringArray("battle", "chef", "grill", "grill_mouth", "formation", "cutscene", "battle_layer")]
+[node name="FarofaTanajura" type="Node2D" node_paths=PackedStringArray("boss_slot", "battle", "chef", "summoner", "formation", "cutscene", "battle_layer")]
 script = ExtResource("1_script")
 ant_scene = ExtResource("2_formiga")
+boss_scene = ExtResource("20_rainha")
+boss_slot = NodePath("VagaRainha")
 battle = NodePath("TurnBattle")
 chef = NodePath("Arena/Chef")
-grill = NodePath("Churrasqueira")
-grill_mouth = NodePath("Churrasqueira/Boca")
+summoner = NodePath("ClienteVip")
+summon_fx = ExtResource("6_fumaca")
+erupt_fx = ExtResource("22_erupcao")
 formation = NodePath("Formacao")
 cutscene = NodePath("Preparo")
 battle_layer = NodePath("Arena")
 title = "Fase 3 — Ritual Terrestre"
-instructions = "A churrasqueira vai cuspir 5 tanajuras e TODAS lutam ao mesmo tempo! Cada uma tem o seu tempo de espera — e algumas são mais rápidas que as outras...
+instructions = "O Cliente VIP invocou a TANAJURA RAINHA e duas tanajuras pequenas! Derrube a RAINHA (barra de vida no topo) — sem ela as pequenas fogem.
 
-Sua barrinha dourada encheu: [1] Frigideirada  [2] Investida Sombria  [3] Besta  [4] Devorar (formiga abaixo de 20%). [◀ ▶] ou clique troca o alvo. Apertar antes da barra encher agenda o golpe.
+Sua barrinha dourada encheu: [1] Frigideirada  [2] Investida Sombria  [3] Besta  [4] Devorar (pequena abaixo de 20%). [◀ ▶] ou clique troca o alvo.
 
-Quando aparecer o [!] em cima de uma formiga, defenda-se: [ESPAÇO] no tempo do anel (investida, terremoto, cada pedra) e CLIQUE no buraco certo quando ela cavar. Contra-ataque certeiro deixa a formiga tonta."
+[!] em cima de uma formiga = ataque vindo: [ESPAÇO] no tempo do anel e CLIQUE no buraco certo.
+Rainha VOANDO: só a Besta alcança — flechada derruba e enche sua mana. As pequenas ficam em fúria (dano dobrado).
+BOLA DE TERRA: acerte 3 golpes na Rainha antes de ela arremessar!"
 
 [node name="Chao" type="Polygon2D" parent="."]
 z_index = -20
 color = Color(0.17, 0.16, 0.2, 1)
 polygon = PackedVector2Array(-20, -20, 660, -20, 660, 380, -20, 380)
 
-[node name="Churrasqueira" type="AnimatedSprite2D" parent="."]
-position = Vector2(320, 62)
+[node name="ClienteVip" type="AnimatedSprite2D" parent="."]
+position = Vector2(320, 72)
+scale = Vector2(2, 2)
 script = ExtResource("4_sheet")
-sheets = Array[Resource]([ExtResource("5_ociosa"), ExtResource("6_risada")])
-
-[node name="Boca" type="Marker2D" parent="Churrasqueira"]
-position = Vector2(0, 22)
+sheets = Array[Resource]([ExtResource("5_vip")])
 
 [node name="Preparo" type="Node2D" parent="." node_paths=PackedStringArray("board", "pan", "flour_bowl", "chef_spot")]
 script = ExtResource("7_cutscene")
@@ -80,19 +86,16 @@ position = Vector2(100, 158)
 [node name="Formacao" type="Node2D" parent="."]
 
 [node name="Vaga1" type="Marker2D" parent="Formacao"]
-position = Vector2(370, 140)
+position = Vector2(385, 140)
 
 [node name="Vaga2" type="Marker2D" parent="Formacao"]
-position = Vector2(370, 245)
+position = Vector2(385, 250)
 
-[node name="Vaga3" type="Marker2D" parent="Formacao"]
-position = Vector2(465, 192)
+[node name="VagaRainha" type="Marker2D" parent="."]
+position = Vector2(530, 190)
 
-[node name="Vaga4" type="Marker2D" parent="Formacao"]
-position = Vector2(560, 140)
-
-[node name="Vaga5" type="Marker2D" parent="Formacao"]
-position = Vector2(560, 245)
+[node name="PilhaDrops" type="Marker2D" parent="."]
+position = Vector2(42, 272)
 
 [node name="Arena" type="Node2D" parent="."]
 y_sort_enabled = true
@@ -105,14 +108,21 @@ script = ExtResource("18_cursor")
 
 [node name="QteTrack" type="Node" parent="."]
 script = ExtResource("14_qte")
+window_scale = 1.6
+ring_approach = 1.0
+
+[node name="BarraRainha" type="CanvasLayer" parent="."]
+script = ExtResource("21_bossbar")
+marks = Array[float]([0.6, 0.2])
 
 [node name="Avisos" type="CanvasLayer" parent="."]
 script = ExtResource("17_banner")
+toast_top = 54.0
 
 [node name="MenuBatalha" type="CanvasLayer" parent="."]
 script = ExtResource("16_menu")
 
-[node name="TurnBattle" type="Node" parent="." node_paths=PackedStringArray("chef", "menu", "qte", "banner", "arena", "shake_target", "target_cursor")]
+[node name="TurnBattle" type="Node" parent="." node_paths=PackedStringArray("chef", "menu", "qte", "banner", "arena", "shake_target", "target_cursor", "boss_bar", "formation", "drop_pile")]
 script = ExtResource("15_battle")
 chef = NodePath("../Arena/Chef")
 menu = NodePath("../MenuBatalha")
@@ -121,3 +131,7 @@ banner = NodePath("../Avisos")
 arena = NodePath("../Arena")
 shake_target = NodePath("..")
 target_cursor = NodePath("../Alvo")
+boss_bar = NodePath("../BarraRainha")
+ant_scene = ExtResource("2_formiga")
+formation = NodePath("../Formacao")
+drop_pile = NodePath("../PilhaDrops")

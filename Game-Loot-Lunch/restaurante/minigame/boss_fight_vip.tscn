@@ -17,6 +17,7 @@ stage_holder = NodePath("Etapas")
 banner = NodePath("Banner")
 
 [node name="Fundo" type="Polygon2D" parent="."]
+z_index = -100
 color = Color(0.1, 0.05, 0.12, 1)
 polygon = PackedVector2Array(0, 0, 640, 0, 640, 360, 0, 360)
 

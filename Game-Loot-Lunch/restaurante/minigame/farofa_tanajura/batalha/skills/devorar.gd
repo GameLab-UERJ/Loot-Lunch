@@ -7,7 +7,7 @@ extends BattleSkill
 
 @export_range(0.0, 1.0, 0.01) var hp_threshold: float = 0.2
 ## Vida recuperada (em meias caveiras).
-@export var heal_amount: int = 2
+@export var heal_amount: int = 4
 @export var approach_offset: Vector2 = Vector2(-74, 24)
 @export var bite_frame: int = 3
 

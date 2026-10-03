@@ -27,12 +27,22 @@ signal clicked(ant: FormigaBattler)
 ## Altura da cabeça (onde ficam o "!" e as estrelas).
 @export var head_offset: Vector2 = Vector2(4, -46)
 @export var click_target: ClickTargetComponent
+## Chefe (a Rainha): a batalha acaba quando ele cai.
+@export var is_boss: bool = false
 
 
 ## 0..4: qual formiga da fila é (as últimas ficam mais espertas).
 var level: int = 0
-## Foi devorada (Devorar) em vez de nocauteada.
+## Foi devorada pelo CHEF (Devorar): a bunda fica para a farofa.
 var devoured: bool = false
+## Foi devorada pela RAINHA: some sem deixar drop.
+var eaten: bool = false
+## Vaga da formação onde ela fica (-1 = nenhuma).
+var slot_index: int = -1
+## Quantas vezes já agiu (para o tempo de recarga das habilidades).
+var turns_taken: int = 0
+var _enraged: bool = false
+var _rage_tween: Tween
 ## O drop no chão depois de cair (null enquanto viva).
 var drop: Sprite2D
 var _last_skill: FormigaSkill = null
@@ -54,11 +64,22 @@ func _ready() -> void:
 		click_target.clicked.connect(func() -> void: clicked.emit(self))
 
 
-func choose_skill() -> FormigaSkill:
+## Sorteia o ataque do turno. Primeiro vê se alguma habilidade EXIGE sair agora
+## (`has_priority`, ex.: Devorar e Conjurar da Rainha); senão sorteia por `weight` entre as
+## que podem (`can_use`), fora da recarga, sem repetir a última.
+func choose_skill(battle: TurnBattle = null) -> FormigaSkill:
+	for skill in skills:
+		if skill.enabled and skill.has_priority(battle, self) and skill.can_use(battle, self):
+			return _pick(skill)
 	var pool: Array[FormigaSkill] = []
 	for skill in skills:
-		if skill.enabled and (skill != _last_skill or skills.size() == 1):
-			pool.append(skill)
+		if not skill.enabled or not skill.can_use(battle, self) or skill.is_cooling_down(self):
+			continue
+		if skill == _last_skill and skills.size() > 1:
+			continue
+		pool.append(skill)
+	if pool.is_empty() and _last_skill and _last_skill.can_use(battle, self):
+		pool.append(_last_skill)
 	if pool.is_empty():
 		return null
 	var total: float = 0.0
@@ -68,10 +89,48 @@ func choose_skill() -> FormigaSkill:
 	for skill in pool:
 		roll -= skill.weight
 		if roll <= 0.0:
-			_last_skill = skill
+			return _pick(skill)
+	return _pick(pool.back())
+
+
+## Habilidade de PRIORIDADE MÁXIMA pronta para sair agora (sem esperar a barra), ou null.
+func interrupting_skill(battle: TurnBattle) -> FormigaSkill:
+	for skill in skills:
+		if skill.enabled and skill.interrupts and skill.has_priority(battle, self) and skill.can_use(battle, self):
 			return skill
-	_last_skill = pool.back()
-	return _last_skill
+	return null
+
+
+## Marca a habilidade como a escolhida deste turno (recarga, "não repetir").
+func use_skill(skill: FormigaSkill) -> FormigaSkill:
+	return _pick(skill)
+
+
+func _pick(skill: FormigaSkill) -> FormigaSkill:
+	_last_skill = skill
+	skill.last_used_turn = turns_taken
+	turns_taken += 1
+	return skill
+
+
+## Fúria (a Rainha voando): pisca vermelho enquanto estiver ligada.
+func set_enraged(value: bool) -> void:
+	if value == _enraged or sprite == null:
+		return
+	_enraged = value
+	if _rage_tween:
+		_rage_tween.kill()
+		_rage_tween = null
+	if value and not is_dead():
+		_rage_tween = create_tween().set_loops()
+		_rage_tween.tween_property(sprite, "self_modulate", Color(1.6, 0.55, 0.5), 0.3)
+		_rage_tween.tween_property(sprite, "self_modulate", Color(1.15, 0.85, 0.85), 0.3)
+	else:
+		sprite.self_modulate = Color.WHITE
+
+
+func is_enraged() -> bool:
+	return _enraged
 
 
 ## "!" piscando em cima da cabeça (vai atacar).
@@ -98,12 +157,13 @@ func set_targetable(value: bool) -> void:
 
 ## Nocaute: vira de barriga para cima, some e deixa o drop.
 func play_death() -> void:
+	set_enraged(false)
 	show_alert(false)
 	_on_stun_changed(false)
 	set_targetable(false)
 	if hp_bar:
 		hp_bar.set_bar_visible(false)
-	if sprite and not devoured:
+	if sprite and not devoured and not eaten:
 		var tween := create_tween()
 		tween.tween_property(sprite, "scale:y", -absf(sprite.scale.y), 0.15)
 		tween.parallel().tween_property(sprite, "position:y", -10.0, 0.15)
@@ -113,7 +173,8 @@ func play_death() -> void:
 		await tween.finished
 	if sprite:
 		sprite.hide()
-	_spawn_drop()
+	if not eaten:
+		_spawn_drop()
 
 
 func hide_drop() -> void:

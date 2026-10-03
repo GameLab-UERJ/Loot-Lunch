@@ -47,6 +47,7 @@ var _current: BossMinigame = null
 
 
 func _ready() -> void:
+	DayNightSwitch.disable(self)  # boss fight é interna: sem o efeito de dia e noite
 	if autostart:
 		run.call_deferred()
 

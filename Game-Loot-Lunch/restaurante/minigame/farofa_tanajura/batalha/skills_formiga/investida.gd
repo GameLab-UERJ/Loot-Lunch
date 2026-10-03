@@ -57,7 +57,7 @@ func _execute(battle: TurnBattle, ant: FormigaBattler, chef: ChefBattler) -> voi
 	else:
 		if tween.is_running():
 			await tween.finished
-		chef.take_hit(damage, chef.global_position - ant.global_position)
+		deal(battle, ant, chef, damage, chef.global_position - ant.global_position)
 		battle.shake(4.0, 0.25)
 		await battle.wait(0.12)
 	ant.sprite.speed_scale = 1.0

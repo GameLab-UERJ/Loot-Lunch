@@ -2,6 +2,9 @@ extends FormigaSkill
 ## LANÇAR PEDRA: a formiga cava e arremessa de 1 a `max_stones` pedras (sorteado),
 ## girando (pedra_projetil).
 ##
+## REUTILIZÁVEL: com `reflect` desligado vira a habilidade básica da Rainha (CORTES DE
+## VENTO): a frigideira só DEFENDE (o corte se desfaz), não devolve.
+##
 ## QTE: aperte ESPAÇO quando CADA pedra chegar (um anel por pedra) para REBATER com a
 ## frigideira (animação `contra_rebater`) — a pedra volta e quebra na formiga
 ## (`reflect_damage`). Errou = a pedra quebra no chef (pedra_quebrando).
@@ -18,6 +21,13 @@ extends FormigaSkill
 @export var early_tolerance: float = 0.13
 @export var late_tolerance: float = 0.07
 @export var whiff_lockout: float = 0.3
+## Rebatida devolve o projétil e dá dano em quem jogou. Desligado = só defende.
+@export var reflect: bool = true
+## De onde sai (em relação a quem joga) e onde chega (em relação ao chef).
+@export var throw_offset: Vector2 = Vector2(-36, -10)
+@export var aim_offset: Vector2 = Vector2(18, -6)
+## Texto do aviso ("%d pedra%s!"). Vazio = sem aviso.
+@export var count_text: String = "%d pedra%s!"
 
 @export_group("Arte")
 @export var stone_anim: SheetAnimation
@@ -40,8 +50,9 @@ func _execute(battle: TurnBattle, ant: FormigaBattler, chef: ChefBattler) -> voi
 	_chef = chef
 	_cancelled = false
 	# As últimas da fila jogam mais pedras de uma vez.
-	var count: int = randi_range(1 + mini(ant.level / 2, 2), max_stones)
-	battle.announce("%d pedra%s!" % [count, "s" if count > 1 else ""], Color(1.0, 0.75, 0.5))
+	var count: int = randi_range(mini(1 + mini(ant.level / 2, 2), max_stones), max_stones)
+	if count_text != "":
+		battle.announce(count_text % [count, "s" if count > 1 else ""], Color(1.0, 0.75, 0.5))
 
 	var hit_times: Array[float] = []
 	var throw_time: float = first_throw
@@ -64,8 +75,8 @@ func _execute(battle: TurnBattle, ant: FormigaBattler, chef: ChefBattler) -> voi
 	for i in count:
 		battle.register_qte(i < hits)
 	if hits == count and count > 1:
-		battle.announce("Rebateu todas!", Color(0.55, 1.0, 0.55))
-		if not ant.is_dead():
+		battle.announce("Rebateu todas!" if reflect else "Defendeu todos!", Color(0.55, 1.0, 0.55))
+		if reflect and not ant.is_dead():
 			ant.daze(counter_daze)
 	await battle.wait(0.3)
 	for flight in _flights:
@@ -86,8 +97,8 @@ func _throw(i: int) -> void:
 		return
 	var stone: Node2D = _make_stone()
 	_battle.add_effect(stone)
-	var from: Vector2 = _ant.global_position + Vector2(-36, -10)
-	var to: Vector2 = _chef.global_position + Vector2(18, -6)
+	var from: Vector2 = _ant.global_position + throw_offset
+	var to: Vector2 = _chef.global_position + aim_offset
 	stone.global_position = from
 	_stones[i] = stone
 	_ant.squash(Vector2(0.85, 1.15), 0.15)
@@ -120,10 +131,12 @@ func _on_beat_resolved(i: int, success: bool) -> void:
 		_flights[i].kill()
 	if not is_instance_valid(stone):
 		return
-	if success:
+	if success and not reflect:
+		_block(stone)
+	elif success:
 		_rebater(stone)
 	else:
-		_chef.take_hit(damage, Vector2.LEFT)
+		deal(_battle, _ant, _chef, damage, Vector2.LEFT)
 		_battle.shake(2.0, 0.12)
 		_battle.fx(break_anim, stone.global_position)
 		stone.queue_free()
@@ -140,4 +153,11 @@ func _rebater(stone: Node2D) -> void:
 	_battle.fx(break_anim, stone.global_position)
 	if not _ant.is_dead():
 		_ant.take_hit(reflect_damage, Vector2.RIGHT)
+	stone.queue_free()
+
+
+func _block(stone: Node2D) -> void:
+	# A frigideira apara: o projétil se desfaz na frente do chef, sem voltar.
+	_chef.act(counter_animation, -1)
+	_battle.fx(impact if impact else break_anim, stone.global_position)
 	stone.queue_free()

@@ -7,7 +7,7 @@ Três minigames em sequência + entrega final. Tudo fica em `restaurante/minigam
 | `boss_fight_vip.tscn` | **Gerenciador**: roda as etapas em ordem, repete a que falhar, mostra o prato e chama a entrega. |
 | `carne_sol/carne_sol.tscn` | Fase 1 — Conjuração Solar (Carne de Sol) |
 | `macaxeira_manteiga/macaxeira_manteiga.tscn` | Fase 2 — Alquimia de Cozimento (Macaxeira na Manteiga de Garrafa) |
-| `farofa_tanajura/farofa_tanajura.tscn` | Fase 3 — Ritual Terrestre (batalha em tempo ativo contra 5 formigas + farofa) |
+| `farofa_tanajura/farofa_tanajura.tscn` | Fase 3 — Ritual Terrestre (chefe: Tanajura Rainha + 2 pequenas, depois a farofa) |
 | `farofa_tanajura/entrega_vip/entrega_vip.tscn` | Final — andar até o VIP com o prato |
 
 **Testar:** abra qualquer uma dessas cenas e aperte **F6**. Cada etapa roda sozinha
@@ -19,7 +19,7 @@ Três minigames em sequência + entrega final. Tudo fica em `restaurante/minigam
 |---|---|
 | Fase 1 | **Segurar ESPAÇO** canaliza o Mini-Sol (barra verde sobe). **Soltar** tira a carne. **Clique** nas fagulhas antes que caiam na carne. |
 | Fase 2 | A garrafa segue o **mouse**. **Segurar clique** despeja a manteiga (só conta em cima da macaxeira). **ESPAÇO** tira da chapa. |
-| Fase 3 | Barrinha dourada do chef cheia: **1** Frigideirada, **2** Investida Sombria, **3** Besta, **4** Devorar (só com a formiga < 20%) — ou clique. **◀ ▶ / A D** (ou clique na formiga) trocam o alvo. Apertar antes da barra encher **agenda** o golpe. Formiga com **!** vai atacar: **ESPAÇO** no tempo do anel (investida, terremoto, cada pedra) e **clique** no buraco certo (cavar). |
+| Fase 3 | Barrinha dourada do chef cheia: **1** Frigideirada, **2** Investida Sombria, **3** Besta, **4** Devorar (só com a formiga < 20%) — ou clique. **◀ ▶ / A D** (ou clique na formiga) trocam o alvo. Apertar antes da barra encher **agenda** o golpe. Formiga com **!** vai atacar: **ESPAÇO** no tempo do anel (investida, terremoto, pedras, cortes, formiga arremessada) e **clique** no buraco certo (cavar). Rainha voando: só a Besta. Bola de terra: 3 golpes na Rainha. |
 | Entrega | **WASD** anda, **ESPAÇO** de frente para o VIP entrega. |
 
 ESPAÇO = ação `chef_pick_drop`, clique = `left_click` (já existem no Input Map; nada novo foi adicionado ao `project.godot`).
@@ -39,12 +39,14 @@ minigame/
 │   ├── click_target_component.gd  ClickTargetComponent: alvo de clique (fagulha, buraco)
 │   ├── battle_health_component.gd BattleHealthComponent: vida da batalha por turnos
 │   ├── battle_wait_component.gd   BattleWaitComponent: TEMPO DE ESPERA (barra ATB) de quem luta
+│   ├── boss_health_bar.gd         BossHealthBar: barra de vida gigante de chefe no topo da tela
 │   ├── sheet_sprite.gd            SheetSprite: AnimatedSprite2D montado de SheetAnimation (offset por animação, wait_frame)
 │   └── anim/                      SheetAnimation do chef (idle/andar)
 ├── carne_sol/                     Fase 1: CarneSolMinigame, MiniSol, FagulhaSolar
 ├── macaxeira_manteiga/            Fase 2: MacaxeiraMinigame, GarrafaManteiga
 └── farofa_tanajura/               Fase 3 + final
-    ├── batalha/                   TurnBattle (ATB), BattleMenu, Battler, ChefBattler, FormigaBattler, TargetCursor
+    ├── batalha/                   TurnBattle (ATB), BattleMenu, Battler, ChefBattler, FormigaBattler, QueenAntBattler, TargetCursor
+    │   ├── skills_rainha/         Arremesso, Voar, UltraArremesso, DevorarConjurar
     │   ├── skills/                BattleSkill + Frigideirada, InvestidaSombria, Besta, Devorar
     │   ├── skills_formiga/        FormigaSkill (+ contra-ataque) + Investida, Terremoto, LancarPedra, Cavar
     │   └── efeitos/               OndaTerremoto (reserva, se a arte da onda faltar)
@@ -85,22 +87,47 @@ var venceu: bool = await boss.boss_fight_finished  # (sucesso, resultados por et
   garrafa, frigideira, bola de fogo, pedra, buraco, bunda de tanajura, farinha e o prato completo.
 - **VIP:** `farofa_tanajura/art/Entities/NPC/vip-m/idle/jscoutinho_idle_VIP_34F.png` (4 quadros 32x32).
 
-## Fase 3 — batalha em tempo ativo (update 02/10)
+## Fase 3 — a TANAJURA RAINHA (update 03/10)
 
-- **As 5 formigas lutam juntas**, em formação (nó `Formacao`, 5 `Marker2D`). Cada lutador tem um
-  `BattleWaitComponent`: o relógio corre, a barra enche e quem encher age. Enquanto alguém ataca o
-  relógio para (um QTE por vez). `TurnBattle.active_time` ligado = o relógio NÃO para com o menu
-  aberto (pensou demais, apanha). Desligue para o modo "espera".
-- **2 formigas rápidas** (`FarofaTanajuraMinigame.fast_ant_count` / `fast_wait_time` = 4 s contra
-  7 s das normais, ±20%). São sorteadas e **não aparecem na tela**.
-- **Contra-ataques** (arte `fx/player/contra`): investida → `contra_frigideirada`, pedra →
-  `contra_rebater`, cavar → `contra_martelada`, terremoto → `pulo` + `poeira_pouso`. Contra
-  certeiro deixa a formiga **tonta** (`counter_daze`, estrelinhas): a espera dela para.
-- **Frigideirada e Besta atrasam** a espera do alvo (`wait_knock_back`).
-- **Besta** substituiu o Bolo de Fogo (mesmo custo: 2 de mana, 13 de dano). Mana igual: 5 barras,
-  Frigideirada e Devorar dão +1, Investida Sombria custa 1.
-- Números de dificuldade (tudo no Inspector): formiga 30 HP; investida 3, terremoto 3, cavar 3,
-  pedra 1 cada; chef 10 (5 caveiras), espera do chef 1,5 s; Devorar cura 2.
+O **Cliente VIP** (no alto da arena) invoca as 2 tanajuras pequenas (saem do chão) e chama a
+Rainha (desce do céu) — `FarofaTanajuraMinigame.summoner`. Luta em tempo ativo: **2 tanajuras pequenas + a Rainha** (chefe com asas, barra de vida
+gigante no topo — `comum/boss_health_bar.gd`). A luta acaba quando a **Rainha** cai; as
+pequenas fogem.
+
+- **Tempo de espera** (`BattleWaitComponent`): chef 4 s, pequenas 4,5 s (±15%), Rainha 7 s.
+  Enquanto alguém ataca/conjura, o relógio para e as outras esperam.
+- **Pequenas** (`formiga.tscn`, 20 de vida): Investida, Terremoto, Lançar Pedra, Cavar — **meia
+  caveira por acerto** (5 pedras = até 2,5 caveiras). Com a Rainha voando entram em **fúria**
+  (`TurnBattle.rage_multiplier` = 2: 5 pedras = 5 caveiras).
+- **Rainha** (`rainha.tscn`, `QueenAntBattler`, 110 de vida), habilidades em `batalha/skills_rainha/`:
+  1. **Arremesso** — joga as pequenas no chef, uma de cada vez. ESPAÇO rebate (a formiga leva 8 e
+     fica tonta); errou = 1 caveira por formiga. Sem pequenas no campo ela nem cogita.
+  2. **Voar** — sobe por 12 s: só a **Besta** alcança (`BattleSkill.ranged`). Flechada derruba e
+     **enche a mana** do chef. No céu ela não ataca e as pequenas entram em fúria.
+  3. **Ultra Arremesso** — carrega a bola de terra por 13 s; **só o chef age** nesse tempo
+     (`TurnBattle.channel`). 3 golpes nela = a bola cai em todas as formigas (12 de dano em cada);
+     senão = 3 caveiras no chef, sem defesa.
+  4. **Devorar e Conjurar** — PRIORIDADE MÁXIMA (`FormigaSkill.interrupts`): quando a vida dela
+     chega em 60% e depois em 20% (só 2 vezes na partida, `devour_thresholds`) ela NÃO espera a
+     barra dela — solta na hora (se estiver voando, desce antes) e as pequenas e o chef esperam.
+     Devora as pequenas (+20% de vida por formiga, elas morrem sem drop), conjura 2 novas do chão
+     e fica **20% mais rápida** a cada vez (`wait_multiplier` 0.8: espera 7 s → 5,6 s → 4,5 s).
+     Nunca há mais de 2 pequenas (= vagas em `Formacao`).
+  5. **Cortes de Vento** (básica) — o `lancar_pedra.gd` reaproveitado com `reflect = false`: até
+     5 cortes, a frigideira só defende.
+- **Chef**: Besta alcança voando; Frigideirada/Investida Sombria/Devorar não. Devorar só nas
+  pequenas (`can_target_boss = false`), cura 2 caveiras.
+- **Alvo bem visível**: a formiga na mira ganha a aura branca piscando (o mesmo `SpriteOutline`
+  dos itens da cozinha) + a setinha. `TurnBattle.target_outline_color` / `target_outline_width`.
+- **Mais tempo para defender**: `QteTrack.window_scale = 1.6` na fase 3 (todas as janelas de
+  ESPAÇO 60% maiores), anel aparece 1 s antes (`ring_approach`), "!" fica 0,7 s em cima da formiga
+  antes do ataque (`TurnBattle.alert_time`), Cavar: buraco treme 1,3 s + 1,2 s para clicar.
+- Drops das pequenas vão para a pilha (`PilhaDrops`) e, no fim, até 5 viram farofa (a da Rainha
+  vai junto).
+- **Arte provisória** (feita no padrão da tanajura, troque quando a equipe mandar): asas
+  `art/Entities/rainha/rainha_asas_4F.png` (4 quadros 56x48), bola `art/fx/rainha/bola_terra.png`
+  (2 quadros 48x48), corte `art/fx/rainha/corte_vento.png` (3 quadros 32x16). O corpo da Rainha é
+  a `tanajura_L_6F` em escala 3.
 - Quadros 48x48 do chef: o chef fica em (4,16) → `offset (4,-8)` no `.tres` (o SheetSprite aplica
   sozinho e espelha com `flip_h`). Pulo 32x56 → `offset (0,-15)`.
 - Arte velha que ficou sem uso (pode apagar): `skills/bolo_de_fogo.gd`, `art/bola_fogo.png`,

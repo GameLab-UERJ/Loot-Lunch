@@ -2,7 +2,8 @@ extends BattleSkill
 ## 3. BESTA: tiro de virote à distância (substituiu o Bolo de Fogo). O chef saca a
 ## besta (`besta`, 7 quadros: 0 saca · 1-2 mira · 3 DISPARO · 4-5 recuo · 6 abaixa); no
 ## quadro do disparo o virote sai voando, acerta com faíscas e fica CRAVADO na formiga
-## um tempinho. Muito dano, custa mana.
+## um tempinho. Muito dano, custa mana. É À DISTÂNCIA (`ranged`): alcança a Rainha voando
+## (e derruba ela — `on_ranged_hit`).
 
 
 @export var damage: int = 13
@@ -45,6 +46,7 @@ func _execute(battle: TurnBattle, user: ChefBattler, target: FormigaBattler) -> 
 	battle.fx(impact, to)
 	battle.shake(3.0, 0.15)
 	_stick_bolt(target, hit_offset, side)
+	await target.on_ranged_hit(battle, user)
 	await user.finish_action()
 
 

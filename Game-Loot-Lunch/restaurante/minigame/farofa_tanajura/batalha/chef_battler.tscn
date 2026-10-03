@@ -68,10 +68,10 @@ max_hp = 10
 
 [node name="BattleWaitComponent" type="Node" parent="."]
 script = ExtResource("12_wait")
-wait_time = 1.5
+wait_time = 4.0
 jitter = 0.0
-start_ratio_min = 0.6
-start_ratio_max = 0.6
+start_ratio_min = 0.7
+start_ratio_max = 0.7
 
 [node name="ManaComponent" type="Node" parent="."]
 script = ExtResource("13_mana")
@@ -100,16 +100,18 @@ mana_cost = 1
 
 [node name="Besta" type="Node" parent="."]
 script = ExtResource("18_besta")
+ranged = true
 bolt_anim = ExtResource("28_flecha")
 impact = ExtResource("29_besta_impacto")
 stuck_texture = ExtResource("30_cravada")
 display_name = "Besta"
-description = "Tiro de virote à distância. Muito dano e atrasa bastante a formiga."
+description = "Tiro de virote à distância (alcança a Rainha voando e derruba ela: mana cheia!)."
 icon = ExtResource("22_besta_icon")
 mana_cost = 2
 
 [node name="Devorar" type="Node" parent="."]
 script = ExtResource("19_devorar")
+can_target_boss = false
 bite_anim = ExtResource("31_mordida")
 heal_anim = ExtResource("32_cura")
 display_name = "Devorar"

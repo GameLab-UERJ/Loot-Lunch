@@ -21,7 +21,7 @@ signal finished
 @export var chef_spot: Marker2D
 @export var piece_scale: Vector2 = Vector2(1.5, 1.5)
 ## Escala do drop no chão da luta (dropTanajura) e quando ele pousa na tábua.
-@export var drop_scale: Vector2 = Vector2(2, 2)
+@export var drop_scale: Vector2 = Vector2(1.5, 1.5)
 @export var bunda_board_scale: Vector2 = Vector2(0.7, 0.7)
 
 

@@ -102,7 +102,7 @@ func _execute(battle: TurnBattle, ant: FormigaBattler, chef: ChefBattler) -> voi
 		else:
 			battle.announce("Demorou!", Color(1.0, 0.5, 0.4))
 		await ant.hop(14.0, 0.2)
-		chef.take_hit(damage, chef.global_position - exit_hole.global_position)
+		deal(battle, ant, chef, damage, chef.global_position - exit_hole.global_position)
 		battle.shake(3.0, 0.2)
 	await battle.wait(0.3)
 	for hole in holes:

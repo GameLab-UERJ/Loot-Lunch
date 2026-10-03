@@ -28,6 +28,7 @@ var _done: bool = false
 
 
 func _ready() -> void:
+	DayNightSwitch.disable(self)  # minigame é interno: sem o efeito de dia e noite
 	if autostart_when_alone and get_tree().current_scene == self:
 		_autostart.call_deferred()
 

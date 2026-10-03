@@ -47,11 +47,11 @@ func _execute(battle: TurnBattle, ant: FormigaBattler, chef: ChefBattler) -> voi
 		battle.announce("Pulou!", Color(0.55, 1.0, 0.55))
 		await _jump(battle, chef)
 	else:
-		if elapsed < hit_time - early_tolerance:
+		if elapsed < hit_time - battle.qte.early_tolerance:
 			battle.announce("Pulou cedo demais!", Color(1.0, 0.6, 0.4))
 			_jump(battle, chef)
 			await battle.wait(maxf(hit_time - elapsed, 0.0))
-		chef.take_hit(damage)
+		deal(battle, ant, chef, damage)
 		battle.shake(6.0, 0.35)
 		await battle.wait(0.3)
 
