@@ -1,28 +1,35 @@
 extends FormigaSkill
-## LANÇAR PEDRA: a formiga cava e arremessa de 1 a `max_stones` pedras (sorteado).
+## LANÇAR PEDRA: a formiga cava e arremessa de 1 a `max_stones` pedras (sorteado),
+## girando (pedra_projetil).
 ##
-## QTE: aperte ESPAÇO quando CADA pedra chegar (um anel por pedra) para rebater com a
-## frigideira — a pedra rebatida volta e acerta a formiga (`reflect_damage`).
+## QTE: aperte ESPAÇO quando CADA pedra chegar (um anel por pedra) para REBATER com a
+## frigideira (animação `contra_rebater`) — a pedra volta e quebra na formiga
+## (`reflect_damage`). Errou = a pedra quebra no chef (pedra_quebrando).
 ## Martelar o ESPAÇO não funciona: apertar no vazio trava o botão um instante.
 
 
-@export var stone_texture: Texture2D
-@export_range(1, 5) var max_stones: int = 5
-@export var first_throw: float = 0.6
-@export var gap_min: float = 0.45
-@export var gap_max: float = 0.8
-@export var flight_time: float = 0.75
+@export_range(1, 6) var max_stones: int = 5
+@export var first_throw: float = 0.55
+@export var gap_min: float = 0.4
+@export var gap_max: float = 0.75
+@export var flight_time: float = 0.7
 @export var arc_height: float = 50.0
 @export var reflect_damage: int = 1
 @export var early_tolerance: float = 0.13
 @export var late_tolerance: float = 0.07
 @export var whiff_lockout: float = 0.3
 
+@export_group("Arte")
+@export var stone_anim: SheetAnimation
+@export var break_anim: SheetAnimation
+## Fallback sem animação.
+@export var stone_texture: Texture2D
+
 
 var _battle: TurnBattle
 var _ant: FormigaBattler
 var _chef: ChefBattler
-var _stones: Array[Sprite2D] = []
+var _stones: Array[Node2D] = []
 var _flights: Array[Tween] = []
 var _cancelled: bool = false
 
@@ -32,7 +39,8 @@ func _execute(battle: TurnBattle, ant: FormigaBattler, chef: ChefBattler) -> voi
 	_ant = ant
 	_chef = chef
 	_cancelled = false
-	var count: int = randi_range(1, max_stones)
+	# As últimas da fila jogam mais pedras de uma vez.
+	var count: int = randi_range(1 + mini(ant.level / 2, 2), max_stones)
 	battle.announce("%d pedra%s!" % [count, "s" if count > 1 else ""], Color(1.0, 0.75, 0.5))
 
 	var hit_times: Array[float] = []
@@ -52,11 +60,14 @@ func _execute(battle: TurnBattle, ant: FormigaBattler, chef: ChefBattler) -> voi
 	battle.qte.beat_resolved.connect(_on_beat_resolved)
 	var hits: int = await battle.qte.run(hit_times)
 	battle.qte.beat_resolved.disconnect(_on_beat_resolved)
+	_cancelled = true  # timers de arremesso que ainda não dispararam não jogam mais nada
 	for i in count:
 		battle.register_qte(i < hits)
 	if hits == count and count > 1:
 		battle.announce("Rebateu todas!", Color(0.55, 1.0, 0.55))
-	await battle.wait(0.35)
+		if not ant.is_dead():
+			ant.daze(counter_daze)
+	await battle.wait(0.3)
 	for flight in _flights:
 		if flight:
 			flight.kill()
@@ -73,13 +84,10 @@ func _throw(i: int) -> void:
 		_cancelled = true
 		_battle.qte.cancel()
 		return
-	var stone := Sprite2D.new()
-	stone.texture = stone_texture
-	stone.scale = Vector2(1.5, 1.5)
-	stone.z_index = 30
+	var stone: Node2D = _make_stone()
 	_battle.add_effect(stone)
-	var from: Vector2 = _ant.global_position + Vector2(-10, -10)
-	var to: Vector2 = _chef.global_position + Vector2(8, -10)
+	var from: Vector2 = _ant.global_position + Vector2(-36, -10)
+	var to: Vector2 = _chef.global_position + Vector2(18, -6)
 	stone.global_position = from
 	_stones[i] = stone
 	_ant.squash(Vector2(0.85, 1.15), 0.15)
@@ -88,33 +96,48 @@ func _throw(i: int) -> void:
 	_flights[i] = flight
 
 
+func _make_stone() -> Node2D:
+	if stone_anim:
+		return stone_anim.create_sprite()
+	var stone := Sprite2D.new()
+	stone.texture = stone_texture
+	stone.scale = Vector2(1.5, 1.5)
+	stone.z_index = 30
+	return stone
+
+
 ## `stone` sem tipo de propósito: a pedra pode ter sido apagada no meio do voo.
 func _fly(t: float, stone, from: Vector2, to: Vector2) -> void:
 	if is_instance_valid(stone):
 		stone.global_position = from.lerp(to, t) + Vector2(0.0, -arc_height * sin(PI * t))
-		stone.rotation = -t * TAU
 
 
 func _on_beat_resolved(i: int, success: bool) -> void:
-	if _cancelled or i >= _stones.size():
+	if i >= _stones.size():
 		return
-	var stone: Sprite2D = _stones[i]
+	var stone: Node2D = _stones[i]
 	if _flights[i]:
 		_flights[i].kill()
 	if not is_instance_valid(stone):
 		return
 	if success:
-		_chef.swing_pan(_ant.global_position - _chef.global_position)
-		var back := create_tween()
-		back.tween_property(stone, "global_position", _ant.global_position + Vector2(0, -8), 0.22)
-		back.tween_callback(func() -> void:
-			if not _ant.is_dead():
-				_ant.take_hit(reflect_damage, Vector2.RIGHT)
-			stone.queue_free())
+		_rebater(stone)
 	else:
 		_chef.take_hit(damage, Vector2.LEFT)
 		_battle.shake(2.0, 0.12)
-		var fall := create_tween().set_parallel(true)
-		fall.tween_property(stone, "global_position", stone.global_position + Vector2(-12, 18), 0.25)
-		fall.tween_property(stone, "modulate:a", 0.0, 0.25)
-		fall.chain().tween_callback(stone.queue_free)
+		_battle.fx(break_anim, stone.global_position)
+		stone.queue_free()
+
+
+func _rebater(stone: Node2D) -> void:
+	# O QTE já acertou: a frigideira bate e a pedra volta voando para a formiga.
+	_chef.act(counter_animation, -1)
+	var back := create_tween()
+	back.tween_property(stone, "global_position", _ant.global_position + Vector2(-10, -8), 0.2)
+	await back.finished
+	if not is_instance_valid(stone):
+		return
+	_battle.fx(break_anim, stone.global_position)
+	if not _ant.is_dead():
+		_ant.take_hit(reflect_damage, Vector2.RIGHT)
+	stone.queue_free()

@@ -1,6 +1,6 @@
 extends Node2D
 class_name FarofaCutscene
-## ANIMAÇÃO do fim da Fase 3: as 5 bundas de tanajura caem na tábua, o chef corta uma
+## ANIMAÇÃO do fim da Fase 3: os 5 drops (bundas de tanajura) voam para a tábua, o chef corta uma
 ## por uma, joga na frigideira, despeja a farinha, mexe e... FAROFA DE TANAJURA!
 ##
 ## Só tweens (sem AnimationPlayer), então funciona com qualquer quantidade de drops:
@@ -20,6 +20,9 @@ signal finished
 ## Onde o chef fica para cortar (ao lado da tábua).
 @export var chef_spot: Marker2D
 @export var piece_scale: Vector2 = Vector2(1.5, 1.5)
+## Escala do drop no chão da luta (dropTanajura) e quando ele pousa na tábua.
+@export var drop_scale: Vector2 = Vector2(2, 2)
+@export var bunda_board_scale: Vector2 = Vector2(0.7, 0.7)
 
 
 var _pieces: Array[Sprite2D] = []
@@ -38,7 +41,8 @@ func play(chef: Battler, drop_spots: Array[Vector2]) -> void:
 	for i in drop_spots.size():
 		var piece := Sprite2D.new()
 		piece.texture = bunda_texture
-		piece.scale = piece_scale
+		piece.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		piece.scale = drop_scale
 		piece.z_index = 20
 		get_parent().add_child(piece)
 		piece.global_position = drop_spots[i]
@@ -46,6 +50,7 @@ func play(chef: Battler, drop_spots: Array[Vector2]) -> void:
 		var spread: float = (i - (drop_spots.size() - 1) * 0.5) * 9.0
 		var to: Vector2 = board.global_position + Vector2(spread, -4)
 		_arc(piece, drop_spots[i], to, 0.5, 40.0)
+		create_tween().tween_property(piece, "scale", bunda_board_scale, 0.5)
 		FloatingText.spawn(get_parent(), drop_spots[i] + Vector2(0, -12), "Bunda de tanajura!", Color(1.0, 0.8, 0.5))
 		await _wait(0.18)
 	await _wait(0.5)

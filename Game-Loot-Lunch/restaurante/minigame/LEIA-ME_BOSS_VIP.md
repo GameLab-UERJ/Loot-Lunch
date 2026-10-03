@@ -7,7 +7,7 @@ Três minigames em sequência + entrega final. Tudo fica em `restaurante/minigam
 | `boss_fight_vip.tscn` | **Gerenciador**: roda as etapas em ordem, repete a que falhar, mostra o prato e chama a entrega. |
 | `carne_sol/carne_sol.tscn` | Fase 1 — Conjuração Solar (Carne de Sol) |
 | `macaxeira_manteiga/macaxeira_manteiga.tscn` | Fase 2 — Alquimia de Cozimento (Macaxeira na Manteiga de Garrafa) |
-| `farofa_tanajura/farofa_tanajura.tscn` | Fase 3 — Ritual Terrestre (batalha por turnos + farofa) |
+| `farofa_tanajura/farofa_tanajura.tscn` | Fase 3 — Ritual Terrestre (batalha em tempo ativo contra 5 formigas + farofa) |
 | `farofa_tanajura/entrega_vip/entrega_vip.tscn` | Final — andar até o VIP com o prato |
 
 **Testar:** abra qualquer uma dessas cenas e aperte **F6**. Cada etapa roda sozinha
@@ -19,7 +19,7 @@ Três minigames em sequência + entrega final. Tudo fica em `restaurante/minigam
 |---|---|
 | Fase 1 | **Segurar ESPAÇO** canaliza o Mini-Sol (barra verde sobe). **Soltar** tira a carne. **Clique** nas fagulhas antes que caiam na carne. |
 | Fase 2 | A garrafa segue o **mouse**. **Segurar clique** despeja a manteiga (só conta em cima da macaxeira). **ESPAÇO** tira da chapa. |
-| Fase 3 | Seu turno: **1** Frigideirada, **2** Investida Sombria, **3** Bolo de Fogo, **4** Devorar (só com a formiga < 20%) — ou clique. Turno da formiga: **ESPAÇO** no tempo do anel (investida, terremoto, cada pedra) e **clique** no buraco certo (cavar). |
+| Fase 3 | Barrinha dourada do chef cheia: **1** Frigideirada, **2** Investida Sombria, **3** Besta, **4** Devorar (só com a formiga < 20%) — ou clique. **◀ ▶ / A D** (ou clique na formiga) trocam o alvo. Apertar antes da barra encher **agenda** o golpe. Formiga com **!** vai atacar: **ESPAÇO** no tempo do anel (investida, terremoto, cada pedra) e **clique** no buraco certo (cavar). |
 | Entrega | **WASD** anda, **ESPAÇO** de frente para o VIP entrega. |
 
 ESPAÇO = ação `chef_pick_drop`, clique = `left_click` (já existem no Input Map; nada novo foi adicionado ao `project.godot`).
@@ -38,19 +38,20 @@ minigame/
 │   ├── qte_track.gd / qte_ring.gd QteTrack + QteRing: QTE de timing (1 ou N batidas)
 │   ├── click_target_component.gd  ClickTargetComponent: alvo de clique (fagulha, buraco)
 │   ├── battle_health_component.gd BattleHealthComponent: vida da batalha por turnos
-│   ├── sheet_sprite.gd            SheetSprite: AnimatedSprite2D montado de SheetAnimation
+│   ├── battle_wait_component.gd   BattleWaitComponent: TEMPO DE ESPERA (barra ATB) de quem luta
+│   ├── sheet_sprite.gd            SheetSprite: AnimatedSprite2D montado de SheetAnimation (offset por animação, wait_frame)
 │   └── anim/                      SheetAnimation do chef (idle/andar)
 ├── carne_sol/                     Fase 1: CarneSolMinigame, MiniSol, FagulhaSolar
 ├── macaxeira_manteiga/            Fase 2: MacaxeiraMinigame, GarrafaManteiga
 └── farofa_tanajura/               Fase 3 + final
-    ├── batalha/                   TurnBattle, BattleMenu, Battler, ChefBattler, FormigaBattler
-    │   ├── skills/                BattleSkill + Frigideirada, InvestidaSombria, BoloDeFogo, Devorar
-    │   ├── skills_formiga/        FormigaSkill + Investida, Terremoto, LancarPedra, Cavar
-    │   └── efeitos/               OndaTerremoto
+    ├── batalha/                   TurnBattle (ATB), BattleMenu, Battler, ChefBattler, FormigaBattler, TargetCursor
+    │   ├── skills/                BattleSkill + Frigideirada, InvestidaSombria, Besta, Devorar
+    │   ├── skills_formiga/        FormigaSkill (+ contra-ataque) + Investida, Terremoto, LancarPedra, Cavar
+    │   └── efeitos/               OndaTerremoto (reserva, se a arte da onda faltar)
     ├── cutscene/                  FarofaCutscene (cortar bundas, farinha, mexer)
     ├── entrega_vip/               EntregaVip, VipNpc
     ├── dados/prato_vip.tres       ItemData do prato final
-    └── art/                       arte nova (pixel art no padrão arte_v2) + art/anim/*.tres
+    └── art/                       arte (Entities/formiga, fx/formiga, fx/player) + art/anim/*.tres
 ```
 
 Peças do restaurante que foram **reaproveitadas** (sem alterar nada nelas):
@@ -82,6 +83,26 @@ var venceu: bool = await boss.boss_fight_finished  # (sucesso, resultados por et
 - Gerada no padrão `arte_v2` (contorno `#2b1d0e`, 3–4 tons, luz de cima-esquerda, 32x32):
   estados da carne (derivados de `carne_bruta.png`), Mini-Sol, fagulha, macaxeira, chapa,
   garrafa, frigideira, bola de fogo, pedra, buraco, bunda de tanajura, farinha e o prato completo.
-- **VIP:** coloque `jscoutinho_idle_VIP_34F.png` em
-  `farofa_tanajura/art/Entities/NPC/vip-m/idle/`. Até lá a entrega usa uma arte provisória
-  (esqueleto dourado) e avisa no Output.
+- **VIP:** `farofa_tanajura/art/Entities/NPC/vip-m/idle/jscoutinho_idle_VIP_34F.png` (4 quadros 32x32).
+
+## Fase 3 — batalha em tempo ativo (update 02/10)
+
+- **As 5 formigas lutam juntas**, em formação (nó `Formacao`, 5 `Marker2D`). Cada lutador tem um
+  `BattleWaitComponent`: o relógio corre, a barra enche e quem encher age. Enquanto alguém ataca o
+  relógio para (um QTE por vez). `TurnBattle.active_time` ligado = o relógio NÃO para com o menu
+  aberto (pensou demais, apanha). Desligue para o modo "espera".
+- **2 formigas rápidas** (`FarofaTanajuraMinigame.fast_ant_count` / `fast_wait_time` = 4 s contra
+  7 s das normais, ±20%). São sorteadas e **não aparecem na tela**.
+- **Contra-ataques** (arte `fx/player/contra`): investida → `contra_frigideirada`, pedra →
+  `contra_rebater`, cavar → `contra_martelada`, terremoto → `pulo` + `poeira_pouso`. Contra
+  certeiro deixa a formiga **tonta** (`counter_daze`, estrelinhas): a espera dela para.
+- **Frigideirada e Besta atrasam** a espera do alvo (`wait_knock_back`).
+- **Besta** substituiu o Bolo de Fogo (mesmo custo: 2 de mana, 13 de dano). Mana igual: 5 barras,
+  Frigideirada e Devorar dão +1, Investida Sombria custa 1.
+- Números de dificuldade (tudo no Inspector): formiga 30 HP; investida 3, terremoto 3, cavar 3,
+  pedra 1 cada; chef 10 (5 caveiras), espera do chef 1,5 s; Devorar cura 2.
+- Quadros 48x48 do chef: o chef fica em (4,16) → `offset (4,-8)` no `.tres` (o SheetSprite aplica
+  sozinho e espelha com `flip_h`). Pulo 32x56 → `offset (0,-15)`.
+- Arte velha que ficou sem uso (pode apagar): `skills/bolo_de_fogo.gd`, `art/bola_fogo.png`,
+  `art/anim/bola_fogo_anim.tres`, `art/anim/formiga_morrer.tres`, `art/buraco_terra.png`,
+  `art/pedra.png`, `art/bunda_tanajura.png`.

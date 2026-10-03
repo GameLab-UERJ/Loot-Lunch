@@ -1,19 +1,25 @@
 extends Node
 class_name TurnBattle
-## BATALHA POR TURNOS estilo RPG clássico/Pokémon (Fase 3): o chef contra uma FILA de
-## formigas, UMA por vez no ringue.
+## BATALHA EM TEMPO ATIVO (estilo ATB dos RPGs clássicos) da Fase 3: o chef contra as
+## 5 tanajuras AO MESMO TEMPO.
 ##
-##   1. a próxima formiga da fila entra no `fight_slot`
-##   2. TURNO DO CHEF: o BattleMenu mostra as 4 habilidades (teclas 1-4 ou clique)
-##   3. TURNO DA FORMIGA: ela sorteia um ataque; cada ataque é um QTE de defesa
-##   4. formiga nocauteada vai para o "cemitério" (`graveyard`) e entra a próxima
+## SISTEMA DE ESPERA: cada lutador tem um BattleWaitComponent. O relógio corre e as
+## barras enchem; quem encher age:
+##   - CHEF cheio  -> o BattleMenu libera as 4 habilidades (teclas 1-4 ou clique) e o
+##                    chef ataca o ALVO marcado (◀ ▶ / A D trocam, ou clique na formiga)
+##   - FORMIGA cheia -> "!" em cima dela e ela ataca; cada ataque é um QTE de defesa
+## Enquanto alguém ataca o relógio PARA (um golpe de cada vez, sem QTE embolado).
+## Com `active_time` o relógio NÃO para com o menu aberto: pensou demais, apanha.
+##
+## Apertou a habilidade antes da barra encher? Fica AGENDADA e sai assim que encher.
 ##
 ## `await battle.run()` devolve true (venceu todas) ou false (o chef caiu).
-## As habilidades recebem a batalha para usar o QTE, o aviso na tela, o tremor e a arena.
+## As habilidades recebem a batalha para usar o QTE, os avisos, o tremor e a arena.
 
 
 signal ant_entered(ant: FormigaBattler)
 signal ant_defeated(ant: FormigaBattler, index: int)
+signal target_changed(ant: FormigaBattler)
 signal battle_finished(victory: bool)
 
 
@@ -25,19 +31,29 @@ signal battle_finished(victory: bool)
 @export var arena: Node2D
 ## Nó que treme nos impactos (normalmente a raiz da etapa).
 @export var shake_target: Node2D
-@export var fight_slot: Marker2D
-## Fileira onde os corpos das formigas ficam (os drops saem daqui no fim).
-@export var graveyard: Marker2D
-@export var graveyard_spacing: float = 44.0
-## Respiro entre um turno e outro.
-@export var turn_pause: float = 0.35
+## Marcador do alvo (desenhado em cima da formiga escolhida).
+@export var target_cursor: TargetCursor
+
+@export_group("Tempo")
+## O relógio continua correndo com o menu aberto (mais difícil e mais fluido).
+@export var active_time: bool = true
+## Quanto tempo o "!" fica em cima da formiga antes do ataque.
+@export_range(0.0, 2.0, 0.05, "suffix:s") var alert_time: float = 0.45
+## Respiro depois de cada ação.
+@export_range(0.0, 2.0, 0.05, "suffix:s") var action_pause: float = 0.15
+## Ninguém ataca nos primeiros segundos (o jogador se situa).
+@export_range(0.0, 5.0, 0.1, "suffix:s") var opening_grace: float = 1.0
 
 
 var ants: Array[FormigaBattler] = []
 var defeated: Array[FormigaBattler] = []
+var target: FormigaBattler = null
 ## Estatística de QTEs (o VIP avalia a elegância da luta).
 var qte_successes: int = 0
 var qte_total: int = 0
+var running: bool = false
+var _queued_skill: BattleSkill = null
+var _busy: bool = false
 var _shake_tween: Tween
 var _shake_origin: Vector2
 
@@ -46,38 +62,102 @@ func setup(queue: Array[FormigaBattler]) -> void:
 	ants = queue.duplicate()
 	defeated.clear()
 	for i in ants.size():
-		ants[i].level = i
-		ants[i].display_name = "Tanajura %d/%d" % [i + 1, ants.size()]
+		var ant: FormigaBattler = ants[i]
+		ant.level = i
+		ant.display_name = "Tanajura %d" % (i + 1)
+		ant.clicked.connect(select_target)
+		ant.set_targetable(true)
+		if ant.hp_bar:
+			ant.hp_bar.set_bar_visible(true)
+		ant.face(chef.global_position, ant.art_faces_left)
+		ant_entered.emit(ant)
 	if shake_target:
 		_shake_origin = shake_target.position
+	if menu:
+		if not menu.skill_chosen.is_connected(_on_skill_chosen):
+			menu.skill_chosen.connect(_on_skill_chosen)
+		if not menu.target_step.is_connected(cycle_target):
+			menu.target_step.connect(cycle_target)
 
 
 func run() -> bool:
-	while not ants.is_empty():
-		var ant: FormigaBattler = ants[0]
-		await _bring_in(ant)
-		while not ant.is_dead() and not chef.is_dead():
-			# --- Turno do chef ---
-			announce("Sua vez!", Color(0.95, 0.85, 0.5))
-			var skill: BattleSkill = await menu.choose(chef, ant)
-			if skill:
-				await skill.execute(self, chef, ant)
-			if ant.is_dead() or chef.is_dead():
-				break
-			await wait(turn_pause)
-			# --- Turno da formiga ---
-			var attack: FormigaSkill = ant.choose_skill()
-			if attack:
-				await attack.execute(self, ant, chef)
-			await wait(turn_pause)
+	running = true
+	chef.show_wait_bar(true)
+	select_target(_first_alive())
+	menu.open(chef, target)
+	var grace: float = opening_grace
+	while true:
 		if chef.is_dead():
-			announce("O chef desmaiou...", Color(1.0, 0.4, 0.4))
-			battle_finished.emit(false)
+			return _end(false)
+		if alive_ants().is_empty():
+			return _end(true)
+
+		# 1. Formiga com a espera cheia ataca (uma de cada vez).
+		var ant: FormigaBattler = _next_ready_ant() if grace <= 0.0 else null
+		if ant:
+			await _ant_turn(ant)
+			continue
+
+		# 2. Chef com a espera cheia e uma habilidade escolhida (ou agendada).
+		if chef.wait.is_ready() and _queued_skill:
+			var skill: BattleSkill = _queued_skill
+			_queued_skill = null
+			menu.set_queued(null)
+			if skill.can_use(chef, target):
+				await _chef_turn(skill)
+				continue
+			menu.show_reason(skill)
+
+		# 3. O relógio anda.
+		await get_tree().process_frame
+		if not running:
 			return false
-		await _defeat(ant)
-		ants.pop_front()
-	battle_finished.emit(true)
-	return true
+		var delta: float = get_process_delta_time()
+		grace = maxf(grace - delta, 0.0)
+		_tick(delta)
+	return false
+
+
+func stop() -> void:
+	running = false
+	if menu:
+		menu.close()
+	if target_cursor:
+		target_cursor.hide()
+
+
+func alive_ants() -> Array[FormigaBattler]:
+	var alive: Array[FormigaBattler] = []
+	for ant in ants:
+		if is_instance_valid(ant) and not ant.is_dead():
+			alive.append(ant)
+	return alive
+
+
+# --- Alvo --------------------------------------------------------------------------
+
+func select_target(ant: FormigaBattler) -> void:
+	if ant != null and ant.is_dead():
+		ant = null
+	target = ant
+	if target_cursor:
+		target_cursor.follow(target, target.head_offset + Vector2(0, -14) if target else Vector2.ZERO)
+	if menu:
+		menu.set_target(target)
+	target_changed.emit(target)
+
+
+## Próximo/anterior alvo vivo (de cima para baixo, da frente para trás).
+func cycle_target(step: int) -> void:
+	var alive: Array[FormigaBattler] = alive_ants()
+	if alive.is_empty():
+		return
+	alive.sort_custom(func(a: FormigaBattler, b: FormigaBattler) -> bool:
+		return a.home_position.y < b.home_position.y if not is_equal_approx(a.home_position.y, b.home_position.y) \
+			else a.home_position.x < b.home_position.x)
+	var index: int = alive.find(target)
+	index = 0 if index < 0 else wrapi(index + step, 0, alive.size())
+	select_target(alive[index])
 
 
 # --- Ferramentas para as habilidades -------------------------------------------
@@ -122,32 +202,99 @@ func add_effect(node: Node) -> void:
 	(arena if arena else shake_target).add_child(node)
 
 
+## Toca um efeito (SheetAnimation) UMA vez na arena. `follow` = anda junto com o nó.
+func fx(anim: SheetAnimation, at: Vector2, follow: Node2D = null) -> AnimatedSprite2D:
+	return SheetAnimation.spawn_once(anim, arena if arena else shake_target, at, follow)
+
+
 # --- Fluxo -----------------------------------------------------------------------
 
-func _bring_in(ant: FormigaBattler) -> void:
-	ant.home_position = fight_slot.global_position
-	await ant.move_to(fight_slot.global_position, 0.6)
-	ant.face(chef.global_position, ant.art_faces_left)
-	if ant.hp_bar:
-		ant.hp_bar.set_bar_visible(true)
-	announce("%s entrou na luta!" % ant.display_name, Color(1.0, 0.7, 0.5))
-	ant_entered.emit(ant)
-	await wait(0.4)
+func _tick(delta: float) -> void:
+	var menu_waiting: bool = chef.wait.is_ready() and _queued_skill == null
+	if not chef.wait.is_ready():
+		chef.wait.tick(delta)
+		if chef.wait.is_ready():
+			menu.set_ready(true)
+	if menu_waiting and not active_time:
+		return  # modo "espera": o tempo para enquanto o jogador escolhe
+	for ant in alive_ants():
+		ant.wait.tick(delta)
 
 
-func _defeat(ant: FormigaBattler) -> void:
-	var index: int = defeated.size()
-	defeated.append(ant)
-	var spot: Vector2 = graveyard.global_position + Vector2(graveyard_spacing * index, 0)
-	if ant.devoured:
-		# Foi para a barriga do chef: só a bunda sobra, no cemitério.
-		ant.global_position = spot
-		ant.visible = false
-	else:
-		announce("%s nocauteada!" % ant.display_name, Color(0.55, 1.0, 0.55))
+func _next_ready_ant() -> FormigaBattler:
+	var best: FormigaBattler = null
+	for ant in alive_ants():
+		if ant.wait.is_ready() and (best == null or ant.wait.elapsed - ant.wait.current_wait \
+				> best.wait.elapsed - best.wait.current_wait):
+			best = ant
+	return best
+
+
+func _on_skill_chosen(skill: BattleSkill) -> void:
+	_queued_skill = skill
+	menu.set_queued(skill)
+
+
+func _chef_turn(skill: BattleSkill) -> void:
+	_busy = true
+	menu.lock(true)
+	var aimed: FormigaBattler = target
+	await skill.execute(self, chef, aimed)
+	chef.wait.consume()
+	menu.set_ready(false)
+	await _reap_dead()
+	await wait(action_pause)
+	menu.lock(false)
+	_busy = false
+
+
+func _ant_turn(ant: FormigaBattler) -> void:
+	_busy = true
+	menu.lock(true)
+	ant.show_alert(true)
+	await wait(alert_time)
+	ant.show_alert(false)
+	if not ant.is_dead() and not chef.is_dead():
+		var attack: FormigaSkill = ant.choose_skill()
+		if attack:
+			await attack.execute(self, ant, chef)
+	ant.wait.consume()
+	await _reap_dead()
+	await wait(action_pause)
+	menu.lock(false)
+	_busy = false
+
+
+## Formigas que caíram durante a ação: animação de nocaute + drop.
+func _reap_dead() -> void:
+	for ant in ants:
+		if not is_instance_valid(ant) or not ant.is_dead() or defeated.has(ant):
+			continue
+		var index: int = defeated.size()
+		defeated.append(ant)
+		if ant.devoured:
+			ant.global_position = ant.home_position
+		else:
+			announce("%s nocauteada!" % ant.display_name, Color(0.55, 1.0, 0.55))
 		await ant.play_death()
-		var tween := create_tween().set_parallel(true)
-		tween.tween_property(ant, "global_position", spot, 0.45).set_trans(Tween.TRANS_QUAD)
-		tween.tween_property(ant, "scale", Vector2(0.7, 0.7), 0.45)
-		await tween.finished
-	ant_defeated.emit(ant, index)
+		ant_defeated.emit(ant, index)
+	if target == null or target.is_dead():
+		select_target(_first_alive())
+
+
+func _first_alive() -> FormigaBattler:
+	var alive: Array[FormigaBattler] = alive_ants()
+	if alive.is_empty():
+		return null
+	alive.sort_custom(func(a: FormigaBattler, b: FormigaBattler) -> bool:
+		return a.global_position.x < b.global_position.x)
+	return alive[0]
+
+
+func _end(victory: bool) -> bool:
+	stop()
+	chef.show_wait_bar(false)
+	if not victory:
+		announce("O chef desmaiou...", Color(1.0, 0.4, 0.4))
+	battle_finished.emit(victory)
+	return victory

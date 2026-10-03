@@ -1,7 +1,7 @@
 extends Node
 class_name BattleSkill
 ## BASE de toda HABILIDADE DO CHEF na batalha por turnos (Frigideirada, Investida
-## Sombria, Bolo de Fogo, Devorar...). Mesma ideia do AbilityComponent do restaurante:
+## Sombria, Besta, Devorar...). Mesma ideia do AbilityComponent do restaurante:
 ## o chef e o menu não sabem o que cada uma faz.
 ##
 ## Quem herda sobrescreve:

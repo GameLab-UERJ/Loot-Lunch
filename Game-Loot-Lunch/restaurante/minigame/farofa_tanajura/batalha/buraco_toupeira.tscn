@@ -1,7 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://restaurante/minigame/farofa_tanajura/batalha/buraco_toupeira.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://restaurante/minigame/farofa_tanajura/art/buraco_terra.png" id="2_tex"]
+[ext_resource type="Texture2D" path="res://restaurante/minigame/farofa_tanajura/art/fx/formiga/cavar/cavar_buraco.png" id="2_tex"]
 [ext_resource type="Script" path="res://restaurante/minigame/comum/click_target_component.gd" id="3_click"]
 
 [node name="BuracoToupeira" type="Node2D"]
@@ -9,11 +9,14 @@ z_index = -1
 script = ExtResource("1_script")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(1.5, 1.5)
+texture_filter = 1
+scale = Vector2(2, 2)
 texture = ExtResource("2_tex")
-hframes = 3
+hframes = 5
+frame = 1
 
 [node name="ClickTargetComponent" type="Node2D" parent="."]
-position = Vector2(0, 2)
+position = Vector2(0, 6)
 script = ExtResource("3_click")
-radius = 20.0
+radius = 24.0
+show_hover_ring = false
