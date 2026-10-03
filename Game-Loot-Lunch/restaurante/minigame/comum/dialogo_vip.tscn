@@ -1,0 +1,28 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://restaurante/minigame/comum/dialogue_box.gd" id="1_box"]
+[ext_resource type="Texture2D" path="res://restaurante/minigame/farofa_tanajura/art/Entities/NPC/vip-m/idle/jscoutinho_idle_VIP_34F.png" id="2_vip"]
+[ext_resource type="Texture2D" path="res://restaurante/personagens/chef/art/jscoutinho_idle_L_34F.png" id="3_chef"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vip"]
+atlas = ExtResource("2_vip")
+region = Rect2(4, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_chef"]
+atlas = ExtResource("3_chef")
+region = Rect2(4, 0, 24, 24)
+
+[node name="DialogoVip" type="CanvasLayer"]
+script = ExtResource("1_box")
+speaker_names = {
+"Chef": "Chef",
+"VIP": "Coronel Ossvaldo"
+}
+speaker_colors = {
+"Chef": Color(0.6, 0.85, 1, 1),
+"VIP": Color(1, 0.8, 0.35, 1)
+}
+speaker_portraits = {
+"Chef": SubResource("AtlasTexture_chef"),
+"VIP": SubResource("AtlasTexture_vip")
+}

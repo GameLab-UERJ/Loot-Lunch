@@ -1,14 +1,15 @@
 # Boss Fight — Cliente VIP
 
-Três minigames em sequência + entrega final. Tudo fica em `restaurante/minigame/`.
+Cutscene de abertura + três minigames em sequência + cutscene final (a avaliação do VIP). Tudo fica em `restaurante/minigame/`.
 
 | Cena | O que é |
 |---|---|
-| `boss_fight_vip.tscn` | **Gerenciador**: roda as etapas em ordem, repete a que falhar, mostra o prato e chama a entrega. |
+| `boss_fight_vip.tscn` | **Gerenciador**: roda as etapas em ordem, repete a que falhar, mostra o prato e chama a avaliação do VIP. |
+| `intro_vip/intro_vip.tscn` | Abertura — cutscene: o Coronel Ossvaldo chega e pede um prato com as tanajuras da fazenda dele |
 | `carne_sol/carne_sol.tscn` | Fase 1 — Conjuração Solar (Carne de Sol) |
 | `macaxeira_manteiga/macaxeira_manteiga.tscn` | Fase 2 — Alquimia de Cozimento (Macaxeira na Manteiga de Garrafa) |
 | `farofa_tanajura/farofa_tanajura.tscn` | Fase 3 — Ritual Terrestre (chefe: Tanajura Rainha + 2 pequenas, depois a farofa) |
-| `farofa_tanajura/entrega_vip/entrega_vip.tscn` | Final — andar até o VIP com o prato |
+| `final_vip/avaliacao_vip.tscn` | Final — cutscene: o VIP prova o prato e reage (ruim / médio / bom / perfeito) |
 
 **Testar:** abra qualquer uma dessas cenas e aperte **F6**. Cada etapa roda sozinha
 (mostra as instruções, começa no ESPAÇO e `R` reinicia no fim).
@@ -20,7 +21,7 @@ Três minigames em sequência + entrega final. Tudo fica em `restaurante/minigam
 | Fase 1 | **Segurar ESPAÇO** canaliza o Mini-Sol (barra verde sobe). **Soltar** tira a carne. **Clique** nas fagulhas antes que caiam na carne. |
 | Fase 2 | A garrafa segue o **mouse**. **Segurar clique** despeja a manteiga (só conta em cima da macaxeira). **ESPAÇO** tira da chapa. |
 | Fase 3 | Barrinha dourada do chef cheia: **1** Frigideirada, **2** Investida Sombria, **3** Besta, **4** Devorar (só com a formiga < 20%) — ou clique. **◀ ▶ / A D** (ou clique na formiga) trocam o alvo. Apertar antes da barra encher **agenda** o golpe. Formiga com **!** vai atacar: **ESPAÇO** no tempo do anel (investida, terremoto, pedras, cortes, formiga arremessada) e **clique** no buraco certo (cavar). Rainha voando: só a Besta. Bola de terra: 3 golpes na Rainha. |
-| Entrega | **WASD** anda, **ESPAÇO** de frente para o VIP entrega. |
+| Cutscenes (abertura e avaliação) | **ESPAÇO**/clique avança a fala (1º toque completa o texto), **ESC** pula o diálogo. |
 
 ESPAÇO = ação `chef_pick_drop`, clique = `left_click` (já existem no Input Map; nada novo foi adicionado ao `project.godot`).
 
@@ -40,18 +41,26 @@ minigame/
 │   ├── battle_health_component.gd BattleHealthComponent: vida da batalha por turnos
 │   ├── battle_wait_component.gd   BattleWaitComponent: TEMPO DE ESPERA (barra ATB) de quem luta
 │   ├── boss_health_bar.gd         BossHealthBar: barra de vida gigante de chefe no topo da tela
+│   ├── cutscene_stage.gd          CutsceneStage: base das cutscenes (andar, zoom, falas, pulinho, arco, efeito)
+│   ├── dialogue_box.gd            DialogueBox: caixa de diálogo (retrato, nome, máquina de escrever, ESPAÇO/ESC)
+│   ├── dialogo_vip.tscn           DialogueBox configurada: nome/cor/retrato do VIP e do Chef
+│   ├── cinema_bars.gd             CinemaBars: faixas pretas de cinema + clarão
+│   ├── salao_vip.tscn             salão do restaurante (porta, mesa, cadeira, luz) usado pelas 2 cutscenes
 │   ├── sheet_sprite.gd            SheetSprite: AnimatedSprite2D montado de SheetAnimation (offset por animação, wait_frame)
 │   └── anim/                      SheetAnimation do chef (idle/andar)
 ├── carne_sol/                     Fase 1: CarneSolMinigame, MiniSol, FagulhaSolar
 ├── macaxeira_manteiga/            Fase 2: MacaxeiraMinigame, GarrafaManteiga
-└── farofa_tanajura/               Fase 3 + final
+├── intro_vip/                     ABERTURA: VipIntro (o Coronel chega e conversa com o chef)
+├── final_vip/                     FINAL: VipTasting (cutscene da avaliação), GoldenRays
+│   └── art/                       mesa, cadeira e garfada (provisórias)
+└── farofa_tanajura/               Fase 3
     ├── batalha/                   TurnBattle (ATB), BattleMenu, Battler, ChefBattler, FormigaBattler, QueenAntBattler, TargetCursor
     │   ├── skills_rainha/         Arremesso, Voar, UltraArremesso, DevorarConjurar
     │   ├── skills/                BattleSkill + Frigideirada, InvestidaSombria, Besta, Devorar
     │   ├── skills_formiga/        FormigaSkill (+ contra-ataque) + Investida, Terremoto, LancarPedra, Cavar
     │   └── efeitos/               OndaTerremoto (reserva, se a arte da onda faltar)
     ├── cutscene/                  FarofaCutscene (cortar bundas, farinha, mexer)
-    ├── entrega_vip/               EntregaVip, VipNpc
+    ├── entrega_vip/               EntregaVip, VipNpc (entrega antiga andando — não é mais usada)
     ├── dados/prato_vip.tres       ItemData do prato final
     └── art/                       arte (Entities/formiga, fx/formiga, fx/player) + art/anim/*.tres
 ```
@@ -133,3 +142,58 @@ pequenas fogem.
 - Arte velha que ficou sem uso (pode apagar): `skills/bolo_de_fogo.gd`, `art/bola_fogo.png`,
   `art/anim/bola_fogo_anim.tres`, `art/anim/formiga_morrer.tres`, `art/buraco_terra.png`,
   `art/pedra.png`, `art/bunda_tanajura.png`.
+
+## Final — A AVALIAÇÃO DO VIP (update 03/10)
+
+A entrega andando foi trocada por uma **cutscene** estilo Dave the Diver / o crítico do
+Ratatouille (`final_vip/avaliacao_vip.tscn`, script `VipTasting`, herda `BossMinigame`):
+
+1. Faixas pretas de cinema entram; o VIP espera sentado na mesa, sob a luz.
+2. O chef entra com o prato na cabeça, serve ("Bon appétit!") e se afasta.
+3. A câmera dá **zoom** no VIP, o fundo escurece, ele leva a garfada à boca, mastiga... "..."
+4. **Reação** pelas estrelas das 3 etapas (`VipTasting.rate()`):
+
+| Reação | Regra | O que acontece |
+|---|---|---|
+| **PERFEITO** | 3 estrelas em todas | raios dourados, flutua, clarão, brilhos, corações, confete |
+| **BOM** | nenhuma abaixo de 2 e pelo menos uma com 3 | corações, pulinhos |
+| **MÉDIO** | 2 estrelas em todas | aceno curto, "Aceitável..." |
+| **RUIM** | alguma abaixo de 2 | fica verde, fumaça, treme e empurra o prato |
+
+5. Câmera volta, o chef reage lá atrás, e o painel final mostra a reação com a cor dela.
+
+- **Como as estrelas chegam:** o `BossFightVip` chama `set_results(resultados)` na etapa
+  (se ela tiver esse método) antes do `begin()`. O resultado da cutscene traz `title`,
+  `label`, `color` e `reaction`, que o painel final usa.
+- **Testar cada reação (F6):** no Inspector da raiz troque `preview_stars`
+  (ex.: `[3,3,3]` perfeito, `[3,2,2]` bom, `[2,2,2]` médio, `[1,3,3]` ruim).
+- **Ajustes no Inspector:** falas de cada reação (`Falas`), `zoom_level`, `zoom_focus`,
+  efeitos (`Efeitos`), `letterbox_height`.
+- `GoldenRays` (`final_vip/golden_rays.gd`) é reaproveitável: raios girando atrás de
+  qualquer coisa (`burst()` / `fade_out()`), desenhados por código.
+- Arte da **mesa, cadeira e garfada** (`final_vip/art/`) é provisória: troque o PNG
+  mantendo o nome. Os arquivos da entrega antiga (`farofa_tanajura/entrega_vip/`)
+  continuam no projeto, mas não são mais usados.
+
+## Abertura + diálogos (update 03/10)
+
+- **`intro_vip/intro_vip.tscn` (`VipIntro`)** roda antes do painel de introdução
+  (`BossFightVip.intro_stage`) e **não entra no placar**. Roteiro: salão vazio → porta abre
+  ("tlim-tlim!") → o VIP entra → zoom nos dois → conversa → ele senta na mesa (o mesmo lugar
+  onde prova o prato no final) → o chef vai para a cozinha → começam as etapas.
+- O VIP agora tem nome: **Coronel Ossvaldo**, fazendeiro do Primeiro Andar da Masmorra que
+  cria tanajuras gigantes (e elas comeram o chapéu dele). Na abertura ele avisa que trouxe
+  "umas formigas de amostra" — é a deixa para a luta da Fase 3.
+- **Final:** depois da reação, a câmera abre e os dois conversam (`outro_perfect`,
+  `outro_good`, `outro_medium`, `outro_bad`). Em **BOM** e **PERFEITO** o Coronel convida o
+  chef para fazer negócio na fazenda dele; o resultado traz `"farm_deal": true` e o placar
+  final ganha a linha `deal_label` (para o jogo liberar a fazenda depois).
+- **Falas:** ficam no Inspector (grupo "Falas") no formato `Quem: fala` (`VIP:` ou `Chef:`;
+  sem "Quem:" ou começando com `*` = narração). Nome que aparece, cor e retrato ficam só em
+  `comum/dialogo_vip.tscn` — trocar o nome do VIP é mudar `speaker_names` lá (as falas em
+  que ele se apresenta pelo nome precisam ser trocadas à mão).
+- **Reaproveitar em outra cena:** script `extends CutsceneStage`, adicione um nó
+  `CinemaBars` e uma `DialogueBox` (ou instancie `dialogo_vip.tscn`), e escreva o roteiro no
+  `_on_begin()` com `walk`, `zoom_to`, `talk`, `say`, `hop`, `squash`... Etapa com
+  `show_intro_banner = false` entra direto, sem o painel de instruções.
+

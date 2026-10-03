@@ -3,10 +3,12 @@ class_name BossFightVip
 ## GERENCIADOR da BOSS FIGHT do CLIENTE VIP: roda as etapas em sequência e termina
 ## com a entrega do prato.
 ##
+##   Intro   intro_vip/intro_vip.tscn (cutscene: o Coronel Ossvaldo chega e pede o prato)
 ##   Fase 1  carne_sol/carne_sol.tscn                     (Conjuração Solar)
 ##   Fase 2  macaxeira_manteiga/macaxeira_manteiga.tscn   (Alquimia de Cozimento)
 ##   Fase 3  farofa_tanajura/farofa_tanajura.tscn         (Ritual Terrestre / batalha)
-##   Final   imagem do prato completo + farofa_tanajura/entrega_vip/entrega_vip.tscn
+##   Final   imagem do prato completo + final_vip/avaliacao_vip.tscn (cutscene: o VIP
+##           prova o prato e reage conforme as estrelas — ruim / médio / bom / perfeito)
 ##
 ## Não sabe o que cada etapa faz: instancia a cena (BossMinigame), mostra título e
 ## instruções, chama `begin()` e espera `finished(sucesso, resultado)`. Falhou = tenta a
@@ -22,9 +24,12 @@ signal stage_finished(index: int, success: bool, result: Dictionary)
 signal boss_fight_finished(success: bool, results: Array)
 
 
+## Cutscene de abertura (antes do painel de introdução). Não conta no placar.
+@export var intro_stage: PackedScene
 ## As etapas em ordem (cenas cuja raiz herda BossMinigame).
 @export var stages: Array[PackedScene] = []
-## Etapa final (andar até o VIP com o prato).
+## Etapa final (a cutscene da avaliação do VIP). Recebe as estrelas das etapas por
+## `set_results(resultados)`, se tiver esse método.
 @export var delivery_stage: PackedScene
 ## Imagem do prato montado, mostrada antes da entrega.
 @export var final_dish_texture: Texture2D
@@ -38,7 +43,7 @@ signal boss_fight_finished(success: bool, results: Array)
 
 @export_group("Textos")
 @export var intro_title: String = "BOSS: O CLIENTE VIP"
-@export_multiline var intro_text: String = "Um cliente VIP sentou no Ossos & Brasas e exige o prato mais lendário da casa: Carne de Sol, Macaxeira na Manteiga de Garrafa e Farofa de Tanajura.\n\nTrês etapas de pura magia culinária. Ele NÃO aceita nada menos que perfeito."
+@export_multiline var intro_text: String = "O Coronel Ossvaldo quer provar as tanajuras da fazenda dele num prato digno do Ossos & Brasas: Carne de Sol, Macaxeira na Manteiga de Garrafa e Farofa de Tanajura.\n\nTrês etapas de pura magia culinária. Capricha: o paladar dele é exigente!"
 
 
 var results: Array[Dictionary] = []
@@ -56,6 +61,8 @@ func _ready() -> void:
 func run() -> bool:
 	results.clear()
 	attempts = 0
+	if intro_stage:
+		await _play_stage(-1, intro_stage)  # cutscene: não entra no placar
 	await banner.ask(intro_title, intro_text, "[ESPAÇO] aceitar o desafio")
 
 	for i in stages.size():
@@ -66,13 +73,18 @@ func run() -> bool:
 
 	await banner.ask("PRATO COMPLETO!", _summary_text(), "[ESPAÇO] levar ao VIP", final_dish_texture)
 
+	var delivery: Dictionary = {}
 	if delivery_stage:
-		var delivery: Dictionary = await _play_stage(stages.size(), delivery_stage)
+		delivery = await _play_stage(stages.size(), delivery_stage)
 		if delivery.is_empty():
 			return _end(false)
 
-	await banner.ask("VITÓRIA!", "O Cliente VIP aprovou o prato!\n\n%s" % _summary_text(),
-		"[ESPAÇO] continuar", final_dish_texture, Color(0.55, 1.0, 0.55))
+	# A cutscene diz como o VIP reagiu (título, frase e cor); sem ela, vitória simples.
+	var final_title: String = String(delivery.get("title", "VITÓRIA!"))
+	var final_label: String = String(delivery.get("label", "O Cliente VIP aprovou o prato!"))
+	var final_color: Color = delivery.get("color", Color(0.55, 1.0, 0.55))
+	await banner.ask(final_title, "%s\n\n%s" % [final_label, _summary_text()],
+		"[ESPAÇO] continuar", final_dish_texture, final_color)
 	return _end(true)
 
 
@@ -87,7 +99,10 @@ func _play_stage(index: int, scene: PackedScene) -> Dictionary:
 		stage.autostart_when_alone = false
 		stage_holder.add_child(stage)
 		_current = stage
-		await banner.ask(stage.title, stage.instructions, "[ESPAÇO] começar")
+		if stage.show_intro_banner:
+			await banner.ask(stage.title, stage.instructions, "[ESPAÇO] começar")
+		if stage.has_method("set_results"):
+			stage.set_results(results)  # a avaliação do VIP precisa das estrelas
 		stage_started.emit(index, stage)
 		stage.begin()
 
@@ -99,7 +114,7 @@ func _play_stage(index: int, scene: PackedScene) -> Dictionary:
 
 		var label: String = String(result.get("label", ""))
 		if success:
-			if index < stages.size():
+			if index >= 0 and index < stages.size():
 				await banner.ask("SUCESSO!", "%s\n%s" % [label, _stars_text(result)], "[ESPAÇO] próxima etapa",
 					null, Color(0.55, 1.0, 0.55))
 			_free_stage(stage)

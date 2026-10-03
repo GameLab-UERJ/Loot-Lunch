@@ -21,6 +21,9 @@ signal finished(success: bool, result: Dictionary)
 @export_multiline var instructions: String = ""
 ## Rodando a cena sozinha (F6), mostra as instruções e começa ao confirmar.
 @export var autostart_when_alone: bool = true
+## O BossFightVip mostra o painel de título/instruções antes de começar. Desligue em
+## cutscenes (a cena entra direto).
+@export var show_intro_banner: bool = true
 
 
 var running: bool = false
@@ -36,7 +39,8 @@ func _ready() -> void:
 func _autostart() -> void:
 	var banner := MinigameBanner.new()
 	add_child(banner)
-	await banner.show_intro(title, instructions)
+	if show_intro_banner:
+		await banner.show_intro(title, instructions)
 	finished.connect(func(success: bool, result: Dictionary) -> void:
 		banner.show_result(success, "%s\n\n[R] reinicia a cena" % String(result.get("label", ""))))
 	begin()

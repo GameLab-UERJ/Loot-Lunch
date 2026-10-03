@@ -4,12 +4,14 @@
 [ext_resource type="PackedScene" path="res://restaurante/minigame/carne_sol/carne_sol.tscn" id="2_carne"]
 [ext_resource type="PackedScene" path="res://restaurante/minigame/macaxeira_manteiga/macaxeira_manteiga.tscn" id="3_macaxeira"]
 [ext_resource type="PackedScene" path="res://restaurante/minigame/farofa_tanajura/farofa_tanajura.tscn" id="4_farofa"]
-[ext_resource type="PackedScene" path="res://restaurante/minigame/farofa_tanajura/entrega_vip/entrega_vip.tscn" id="5_entrega"]
+[ext_resource type="PackedScene" path="res://restaurante/minigame/final_vip/avaliacao_vip.tscn" id="5_entrega"]
 [ext_resource type="Texture2D" path="res://restaurante/minigame/farofa_tanajura/art/prato_vip_completo.png" id="6_prato"]
 [ext_resource type="Script" path="res://restaurante/minigame/comum/minigame_banner.gd" id="7_banner"]
+[ext_resource type="PackedScene" path="res://restaurante/minigame/intro_vip/intro_vip.tscn" id="8_intro"]
 
 [node name="BossFightVip" type="Node2D" node_paths=PackedStringArray("stage_holder", "banner")]
 script = ExtResource("1_script")
+intro_stage = ExtResource("8_intro")
 stages = Array[PackedScene]([ExtResource("2_carne"), ExtResource("3_macaxeira"), ExtResource("4_farofa")])
 delivery_stage = ExtResource("5_entrega")
 final_dish_texture = ExtResource("6_prato")

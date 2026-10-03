@@ -1,0 +1,69 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://restaurante/minigame/intro_vip/intro_vip.gd" id="1_script"]
+[ext_resource type="Script" path="res://restaurante/minigame/comum/sheet_sprite.gd" id="2_sheet"]
+[ext_resource type="Resource" path="res://restaurante/minigame/farofa_tanajura/art/anim/vip_idle.tres" id="3_vip"]
+[ext_resource type="Resource" path="res://restaurante/minigame/comum/anim/chef_idle.tres" id="4_chef_idle"]
+[ext_resource type="Resource" path="res://restaurante/minigame/comum/anim/chef_andar.tres" id="5_chef_andar"]
+[ext_resource type="PackedScene" path="res://restaurante/minigame/comum/salao_vip.tscn" id="6_salao"]
+[ext_resource type="PackedScene" path="res://restaurante/minigame/comum/dialogo_vip.tscn" id="7_dialogo"]
+[ext_resource type="Script" path="res://restaurante/minigame/comum/cinema_bars.gd" id="8_bars"]
+
+[node name="IntroVip" type="Node2D" node_paths=PackedStringArray("vip", "chef", "door_open", "vip_door_spot", "vip_talk_spot", "vip_seat", "chef_spot", "chef_exit", "camera", "bars", "dialogue", "left_facing_actors", "fixed_facing_actors")]
+script = ExtResource("1_script")
+vip = NodePath("Vip")
+chef = NodePath("Chef")
+door_open = NodePath("Salao/Fundo/Porta/Aberta")
+vip_door_spot = NodePath("Marcas/VipPorta")
+vip_talk_spot = NodePath("Marcas/VipConversa")
+vip_seat = NodePath("Marcas/VipCadeira")
+chef_spot = NodePath("Marcas/ChefEspera")
+chef_exit = NodePath("Marcas/ChefCozinha")
+camera = NodePath("Camera")
+bars = NodePath("Faixas")
+dialogue = NodePath("Dialogo")
+left_facing_actors = [NodePath("Chef")]
+fixed_facing_actors = [NodePath("Vip")]
+title = "O Cliente VIP"
+instructions = "Um cliente importante acabou de chegar..."
+show_intro_banner = false
+
+[node name="Salao" parent="." instance=ExtResource("6_salao")]
+
+[node name="Vip" type="AnimatedSprite2D" parent="."]
+position = Vector2(531, 196)
+scale = Vector2(2, 2)
+script = ExtResource("2_sheet")
+sheets = Array[Resource]([ExtResource("3_vip")])
+
+[node name="Chef" type="AnimatedSprite2D" parent="."]
+z_index = 4
+position = Vector2(290, 202)
+scale = Vector2(2, 2)
+script = ExtResource("2_sheet")
+sheets = Array[Resource]([ExtResource("4_chef_idle"), ExtResource("5_chef_andar")])
+
+[node name="Marcas" type="Node2D" parent="."]
+
+[node name="VipPorta" type="Marker2D" parent="Marcas"]
+position = Vector2(531, 196)
+
+[node name="VipConversa" type="Marker2D" parent="Marcas"]
+position = Vector2(490, 206)
+
+[node name="VipCadeira" type="Marker2D" parent="Marcas"]
+position = Vector2(400, 158)
+
+[node name="ChefEspera" type="Marker2D" parent="Marcas"]
+position = Vector2(290, 202)
+
+[node name="ChefCozinha" type="Marker2D" parent="Marcas"]
+position = Vector2(-40, 202)
+
+[node name="Camera" type="Camera2D" parent="."]
+position = Vector2(320, 180)
+
+[node name="Faixas" type="CanvasLayer" parent="."]
+script = ExtResource("8_bars")
+
+[node name="Dialogo" parent="." instance=ExtResource("7_dialogo")]

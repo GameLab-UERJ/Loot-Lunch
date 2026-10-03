@@ -1,0 +1,101 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://restaurante/minigame/final_vip/avaliacao_vip.gd" id="1_script"]
+[ext_resource type="Script" path="res://restaurante/minigame/final_vip/golden_rays.gd" id="2_rays"]
+[ext_resource type="Script" path="res://restaurante/minigame/comum/sheet_sprite.gd" id="3_sheet"]
+[ext_resource type="Resource" path="res://restaurante/minigame/farofa_tanajura/art/anim/vip_idle.tres" id="4_vip"]
+[ext_resource type="Resource" path="res://restaurante/minigame/comum/anim/chef_idle.tres" id="5_chef_idle"]
+[ext_resource type="Resource" path="res://restaurante/minigame/comum/anim/chef_andar.tres" id="6_chef_andar"]
+[ext_resource type="PackedScene" path="res://restaurante/minigame/comum/salao_vip.tscn" id="7_salao"]
+[ext_resource type="PackedScene" path="res://restaurante/minigame/comum/dialogo_vip.tscn" id="8_dialogo"]
+[ext_resource type="Texture2D" path="res://restaurante/minigame/final_vip/art/garfada.png" id="9_garfo"]
+[ext_resource type="Texture2D" path="res://restaurante/minigame/farofa_tanajura/art/prato_vip_completo.png" id="10_prato"]
+[ext_resource type="Resource" path="res://restaurante/minigame/farofa_tanajura/art/anim/fx_devorar_cura.tres" id="11_hearts"]
+[ext_resource type="Resource" path="res://restaurante/minigame/farofa_tanajura/art/anim/fx_impacto.tres" id="12_sparkle"]
+[ext_resource type="Resource" path="res://restaurante/minigame/farofa_tanajura/art/anim/fx_fumaca_sombria.tres" id="13_smoke"]
+[ext_resource type="Script" path="res://restaurante/minigame/comum/cinema_bars.gd" id="14_bars"]
+
+[node name="AvaliacaoVip" type="Node2D" node_paths=PackedStringArray("vip", "chef", "dish", "fork", "rays", "dim", "chef_start", "chef_serve_spot", "chef_wait_spot", "dish_spot", "camera", "bars", "dialogue", "left_facing_actors")]
+script = ExtResource("1_script")
+vip = NodePath("Vip")
+chef = NodePath("Chef")
+dish = NodePath("Prato")
+fork = NodePath("Garfo")
+rays = NodePath("Raios")
+dim = NodePath("Escuro")
+chef_start = NodePath("Marcas/ChefInicio")
+chef_serve_spot = NodePath("Marcas/ChefServe")
+chef_wait_spot = NodePath("Marcas/ChefEspera")
+dish_spot = NodePath("Marcas/PratoNaMesa")
+hearts_fx = ExtResource("11_hearts")
+sparkle_fx = ExtResource("12_sparkle")
+smoke_fx = ExtResource("13_smoke")
+camera = NodePath("Camera")
+bars = NodePath("Faixas")
+dialogue = NodePath("Dialogo")
+left_facing_actors = [NodePath("Chef")]
+title = "A Avaliação do VIP"
+instructions = "O prato está pronto. Agora é com o Cliente VIP...\n\nSente, assista e torça!"
+show_intro_banner = false
+
+[node name="Salao" parent="." instance=ExtResource("7_salao")]
+
+[node name="Escuro" type="Polygon2D" parent="."]
+modulate = Color(1, 1, 1, 0)
+z_index = -30
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-100, -100, 740, -100, 740, 460, -100, 460)
+
+[node name="Raios" type="Node2D" parent="."]
+z_index = -20
+position = Vector2(400, 156)
+script = ExtResource("2_rays")
+radius = 190.0
+
+[node name="Vip" type="AnimatedSprite2D" parent="."]
+position = Vector2(400, 158)
+scale = Vector2(2, 2)
+script = ExtResource("3_sheet")
+sheets = Array[Resource]([ExtResource("4_vip")])
+
+[node name="Prato" type="Sprite2D" parent="."]
+texture_filter = 1
+z_index = 3
+position = Vector2(400, 181)
+scale = Vector2(0.45, 0.45)
+texture = ExtResource("10_prato")
+
+[node name="Chef" type="AnimatedSprite2D" parent="."]
+z_index = 4
+position = Vector2(-40, 200)
+scale = Vector2(2, 2)
+script = ExtResource("3_sheet")
+sheets = Array[Resource]([ExtResource("5_chef_idle"), ExtResource("6_chef_andar")])
+
+[node name="Garfo" type="Sprite2D" parent="."]
+texture_filter = 1
+z_index = 5
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("9_garfo")
+
+[node name="Marcas" type="Node2D" parent="."]
+
+[node name="ChefInicio" type="Marker2D" parent="Marcas"]
+position = Vector2(-40, 200)
+
+[node name="ChefServe" type="Marker2D" parent="Marcas"]
+position = Vector2(334, 200)
+
+[node name="ChefEspera" type="Marker2D" parent="Marcas"]
+position = Vector2(236, 200)
+
+[node name="PratoNaMesa" type="Marker2D" parent="Marcas"]
+position = Vector2(400, 181)
+
+[node name="Camera" type="Camera2D" parent="."]
+position = Vector2(320, 180)
+
+[node name="Faixas" type="CanvasLayer" parent="."]
+script = ExtResource("14_bars")
+
+[node name="Dialogo" parent="." instance=ExtResource("8_dialogo")]
