@@ -15,7 +15,7 @@
 [ext_resource type="Resource" path="res://restaurante/minigame/farofa_tanajura/art/anim/fx_fumaca_sombria.tres" id="13_smoke"]
 [ext_resource type="Script" path="res://restaurante/minigame/comum/cinema_bars.gd" id="14_bars"]
 
-[node name="AvaliacaoVip" type="Node2D" node_paths=PackedStringArray("vip", "chef", "dish", "fork", "rays", "dim", "chef_start", "chef_serve_spot", "chef_wait_spot", "dish_spot", "camera", "bars", "dialogue", "left_facing_actors")]
+[node name="AvaliacaoVip" type="Node2D" node_paths=PackedStringArray("vip", "chef", "dish", "fork", "rays", "dim", "chef_start", "chef_serve_spot", "chef_wait_spot", "dish_spot", "camera", "bars", "dialogue")]
 script = ExtResource("1_script")
 vip = NodePath("Vip")
 chef = NodePath("Chef")
@@ -33,7 +33,6 @@ smoke_fx = ExtResource("13_smoke")
 camera = NodePath("Camera")
 bars = NodePath("Faixas")
 dialogue = NodePath("Dialogo")
-left_facing_actors = [NodePath("Chef")]
 title = "A Avaliação do VIP"
 instructions = "O prato está pronto. Agora é com o Cliente VIP...\n\nSente, assista e torça!"
 show_intro_banner = false

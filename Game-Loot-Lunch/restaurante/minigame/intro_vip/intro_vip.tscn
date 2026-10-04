@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" path="res://restaurante/minigame/comum/dialogo_vip.tscn" id="7_dialogo"]
 [ext_resource type="Script" path="res://restaurante/minigame/comum/cinema_bars.gd" id="8_bars"]
 
-[node name="IntroVip" type="Node2D" node_paths=PackedStringArray("vip", "chef", "door_open", "vip_door_spot", "vip_talk_spot", "vip_seat", "chef_spot", "chef_exit", "camera", "bars", "dialogue", "left_facing_actors", "fixed_facing_actors")]
+[node name="IntroVip" type="Node2D" node_paths=PackedStringArray("vip", "chef", "door_open", "vip_door_spot", "vip_talk_spot", "vip_seat", "chef_spot", "chef_exit", "camera", "bars", "dialogue")]
 script = ExtResource("1_script")
 vip = NodePath("Vip")
 chef = NodePath("Chef")
@@ -22,8 +22,6 @@ chef_exit = NodePath("Marcas/ChefCozinha")
 camera = NodePath("Camera")
 bars = NodePath("Faixas")
 dialogue = NodePath("Dialogo")
-left_facing_actors = [NodePath("Chef")]
-fixed_facing_actors = [NodePath("Vip")]
 title = "O Cliente VIP"
 instructions = "Um cliente importante acabou de chegar..."
 show_intro_banner = false

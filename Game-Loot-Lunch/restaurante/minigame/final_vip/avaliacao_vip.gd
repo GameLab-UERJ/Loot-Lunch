@@ -127,6 +127,9 @@ func _ready() -> void:
 		_vip_rest = vip.position
 	if chef and chef_start:
 		chef.global_position = chef_start.global_position
+	speaker_actors = {"VIP": vip, "Chef": chef}
+	if vip and chef_wait_spot:
+		face(vip, chef_wait_spot.global_position.x)  # sentado, olhando para o lado do chef
 
 
 func _on_begin() -> void:
@@ -234,7 +237,7 @@ func _taste() -> void:
 	# A garfada sobe do prato até a boca.
 	if fork:
 		fork.show()
-		await arc(fork, dish.global_position + Vector2(6, -2), vip.global_position + Vector2(4, 4), 14.0, 0.7)
+		await arc(fork, dish.global_position + Vector2(6, -2), vip.global_position + Vector2(-4.0 if vip.flip_h else 4.0, 4), 14.0, 0.7)
 		fork.hide()
 	for i in 3:
 		await squash(vip, Vector2(1.08, 0.9), 0.22)

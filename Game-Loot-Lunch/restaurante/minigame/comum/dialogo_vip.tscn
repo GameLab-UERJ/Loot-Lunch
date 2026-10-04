@@ -22,6 +22,9 @@ speaker_colors = {
 "Chef": Color(0.6, 0.85, 1, 1),
 "VIP": Color(1, 0.8, 0.35, 1)
 }
+speaker_portrait_flip = {
+"VIP": true
+}
 speaker_portraits = {
 "Chef": SubResource("AtlasTexture_chef"),
 "VIP": SubResource("AtlasTexture_vip")

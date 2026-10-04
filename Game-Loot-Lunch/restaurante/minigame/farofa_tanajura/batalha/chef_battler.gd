@@ -25,6 +25,10 @@ signal health_changed(current: int, maximum: int)
 @export var wait_bar: ProgressBarComponent
 @export var wait_fill_color: Color = Color(0.95, 0.72, 0.25, 1.0)
 @export var ready_fill_color: Color = Color(0.55, 1.0, 0.45, 1.0)
+@export_group("Descanso")
+## Mana ganha por MINUTO enquanto a barra de espera está CHEIA e o jogador não ataca
+## ninguém (pode agir, mas espera). 2 = +1 mana a cada 30 s parado. 0 = desligado.
+@export_range(0.0, 20.0, 0.5) var rest_mana_per_minute: float = 2.0
 
 
 # Lidos pelo ChefHUD (que pode acordar antes do chef: por isso procura o componente).
@@ -39,6 +43,8 @@ var max_hp: int:
 
 
 var _clock: float = 0.0
+## Mana "juntando" no descanso (ao chegar em 1, vira +1 mana).
+var _rest_mana: float = 0.0
 
 
 @onready var mana: ManaComponent = ManaComponent.find_in(self)
@@ -53,6 +59,23 @@ func _ready() -> void:
 	if wait and wait_bar:
 		wait.progress_changed.connect(_on_wait_progress)
 		_on_wait_progress(wait.get_ratio())
+
+
+## DESCANSO: a batalha chama a cada quadro em que o chef PODE agir (barra cheia) e não
+## escolheu nenhum ataque. Junta `rest_mana_per_minute` e devolve a mana aos poucos.
+func tick_rest(delta: float) -> void:
+	if mana == null or rest_mana_per_minute <= 0.0 or mana.is_full():
+		return
+	_rest_mana += rest_mana_per_minute / 60.0 * delta
+	while _rest_mana >= 1.0 and not mana.is_full():
+		_rest_mana -= 1.0
+		mana.restore(1)
+		FloatingText.spawn(get_parent(), global_position + Vector2(0, -48), "+1 mana (descanso)", Color(0.55, 0.8, 1.0))
+
+
+## Atacou: o descanso começa do zero.
+func reset_rest() -> void:
+	_rest_mana = 0.0
 
 
 ## Mostra/esconde a barrinha de espera (some fora da luta, ex.: no preparo da farofa).

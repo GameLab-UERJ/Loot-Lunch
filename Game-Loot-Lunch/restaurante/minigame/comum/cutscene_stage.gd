@@ -17,7 +17,8 @@ class_name CutsceneStage
 @export var camera: Camera2D
 @export var bars: CinemaBars
 @export var dialogue: DialogueBox
-## Atores cuja arte olha para a ESQUERDA (ex.: o chef jscoutinho_*_L).
+## Atores cuja arte olha para a ESQUERDA. O chef e o VIP (jscoutinho_*) olham para a
+## DIREITA, apesar do "_L" no nome do arquivo (igual ao `sprite_faces_left = false` do chef.gd).
 @export var left_facing_actors: Array[Node2D] = []
 ## Atores que NUNCA viram (arte de frente, ex.: o VIP).
 @export var fixed_facing_actors: Array[Node2D] = []

@@ -23,6 +23,10 @@
 [ext_resource type="Resource" path="res://restaurante/minigame/farofa_tanajura/art/anim/fx_cavar_erupcao.tres" id="21_erupcao"]
 [ext_resource type="Resource" path="res://restaurante/minigame/farofa_tanajura/art/anim/fx_devorar_mordida.tres" id="22_mordida"]
 [ext_resource type="Resource" path="res://restaurante/minigame/farofa_tanajura/art/anim/fx_devorar_cura.tres" id="23_cura"]
+[ext_resource type="Script" path="res://restaurante/minigame/farofa_tanajura/batalha/skills_rainha/raio_psiquico.gd" id="24_raio"]
+[ext_resource type="Script" path="res://restaurante/minigame/farofa_tanajura/batalha/skills_rainha/esferas_psiquicas.gd" id="25_esferas"]
+[ext_resource type="Resource" path="res://restaurante/minigame/farofa_tanajura/art/anim/fx_esfera_psiquica.tres" id="26_esfera"]
+[ext_resource type="PackedScene" path="res://restaurante/minigame/farofa_tanajura/batalha/formiga_guardia.tscn" id="27_guardia"]
 
 [node name="Rainha" type="Node2D" node_paths=PackedStringArray("wings", "ground_shadow", "click_target")]
 script = ExtResource("1_script")
@@ -83,10 +87,12 @@ reflect = false
 throw_offset = Vector2(-60, -30)
 aim_offset = Vector2(20, -6)
 count_text = "%d corte%s de vento!"
+stones_by_phase = Array[Vector2i]([Vector2i(0, 0), Vector2i(6, 10)])
 stone_anim = ExtResource("18_corte")
 break_anim = ExtResource("12_impacto")
 display_name = "Cortes de Vento"
 weight = 3.0
+usable_airborne = true
 damage = 1
 counter_animation = &"contra_rebater"
 counter_hit_frame = 2
@@ -117,12 +123,41 @@ display_name = "Ultra Arremesso"
 weight = 1.5
 damage = 6
 cooldown_turns = 3
+phases = Array[int]([0])
 
 [node name="DevorarConjurar" type="Node" parent="."]
 script = ExtResource("17_devorar")
 bite_anim = ExtResource("22_mordida")
 heal_anim = ExtResource("23_cura")
 erupt_anim = ExtResource("21_erupcao")
+final_summon_scene = ExtResource("27_guardia")
 display_name = "Devorar e Conjurar"
 weight = 0.0
 interrupts = true
+usable_airborne = true
+
+[node name="RaioPsiquico" type="Node" parent="."]
+script = ExtResource("24_raio")
+presses_needed = 12
+mash_time = 3.0
+mash_decay = 2.0
+charge_anim = ExtResource("26_esfera")
+display_name = "Raio Psíquico"
+weight = 2.0
+damage = 4
+phases = Array[int]([1])
+usable_airborne = true
+counter_animation = &"contra_rebater"
+counter_hit_frame = 2
+impact = ExtResource("12_impacto")
+
+[node name="EsferasPsiquicas" type="Node" parent="."]
+script = ExtResource("25_esferas")
+orb_anim = ExtResource("26_esfera")
+splash_anim = ExtResource("12_impacto")
+display_name = "Esferas Psíquicas"
+weight = 2.0
+damage = 1
+phases = Array[int]([1])
+usable_airborne = true
+

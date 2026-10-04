@@ -30,6 +30,8 @@ signal advanced
 @export var speaker_colors: Dictionary = {}
 ## Chave -> retrato (Texture2D; use AtlasTexture para pegar 1 quadro da folha).
 @export var speaker_portraits: Dictionary = {}
+## Chave -> true para ESPELHAR o retrato (ex.: o VIP olhando para o outro lado).
+@export var speaker_portrait_flip: Dictionary = {}
 @export var panel_color: Color = Color(0.1, 0.05, 0.12, 0.92)
 @export var border_color: Color = Color(0.95, 0.72, 0.25, 1.0)
 @export var text_color: Color = Color(0.97, 0.94, 0.88, 1.0)
@@ -86,6 +88,7 @@ func show_line(speaker: String, text: String, color_override: Color = Color(0, 0
 	_name.add_theme_color_override("font_color", speaker_colors.get(speaker, border_color))
 	var portrait: Texture2D = speaker_portraits.get(speaker, null)
 	_portrait.texture = portrait
+	_portrait.flip_h = bool(speaker_portrait_flip.get(speaker, false))
 	_portrait_frame.visible = portrait != null
 	_text.text = text
 	var color: Color = narration_color if is_narration else text_color

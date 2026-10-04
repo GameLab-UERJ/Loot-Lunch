@@ -60,6 +60,7 @@ func _ready() -> void:
 	if vip and vip_door_spot:
 		vip.global_position = vip_door_spot.global_position
 		vip.modulate.a = 0.0
+		face(vip, chef_spot.global_position.x)  # o VIP olha para o chef
 	if chef and chef_spot:
 		chef.global_position = chef_spot.global_position
 		face(chef, chef.global_position.x + 100.0)
@@ -90,6 +91,7 @@ func _on_begin() -> void:
 	vip.global_position = vip_seat.global_position
 	await squash(vip, Vector2(1.12, 0.88), 0.25)
 	face(chef, vip.global_position.x)
+	face(vip, chef.global_position.x)
 	await wait(0.4)
 
 	# 4. O chef fala a última e vai para a cozinha.

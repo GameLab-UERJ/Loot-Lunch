@@ -53,6 +53,11 @@ func is_airborne() -> bool:
 	return false
 
 
+## Protegido (não leva dano nem pode ser alvo). A Rainha usa com as Guardiãs vivas.
+func is_protected() -> bool:
+	return false
+
+
 ## Chamado pelas habilidades À DISTÂNCIA (Besta) depois de acertar. A base não faz nada;
 ## a Rainha usa para cair do céu e devolver a mana do chef.
 func on_ranged_hit(_battle: Node, _user: Battler) -> void:

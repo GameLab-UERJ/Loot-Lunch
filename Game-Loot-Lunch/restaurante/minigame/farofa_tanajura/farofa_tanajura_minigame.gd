@@ -61,6 +61,7 @@ func _on_begin() -> void:
 		return
 
 	await wait(0.5)
+	var loot: Array[Dictionary] = await _award_boss_loot(boss)
 	var spots: Array[Vector2] = []
 	if boss and boss.drop:
 		spots.append(boss.drop.global_position)
@@ -82,7 +83,23 @@ func _on_begin() -> void:
 		"stars": BossMinigame.stars_for(quality),
 		"hp_left": chef.hp,
 		"qte": "%d/%d" % [battle.qte_successes, battle.qte_total],
+		"loot": loot,  # itens ganhos (ainda só registro: o item não existe no jogo)
 	})
+
+
+## A Rainha caiu: o item dela (Asa de Formiga Rainha) voa até o chef + aviso.
+## TODO: quando o item existir, entregá-lo ao inventário aqui (ou a partir de "loot").
+func _award_boss_loot(boss: FormigaBattler) -> Array[Dictionary]:
+	var loot: Array[Dictionary] = []
+	var queen := boss as QueenAntBattler
+	if queen == null or queen.loot_name == "":
+		return loot
+	loot.append(queen.get_loot())
+	if battle:
+		battle.announce("Você ganhou: %s!" % queen.loot_name, Color(1.0, 0.85, 0.35))
+	await LootPopup.play(self, queen.get_loot_icon(), queen.global_position + Vector2(40, -50),
+		chef.global_position + Vector2(0, -20), queen.loot_name, 1.5)
+	return loot
 
 
 func _on_finish(_success: bool) -> void:

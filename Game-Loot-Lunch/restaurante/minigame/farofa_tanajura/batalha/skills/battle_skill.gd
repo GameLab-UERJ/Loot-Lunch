@@ -47,6 +47,8 @@ func why_not(user: ChefBattler, target: FormigaBattler) -> String:
 		return "Mana insuficiente"
 	if target == null or target.is_dead():
 		return "Sem alvo"
+	if target.is_protected():
+		return "protegida pelas Guardiãs: derrube elas primeiro"
 	if not ranged and target.is_airborne():
 		return "ela está voando: só a Besta alcança"
 	if not can_target_boss and target.is_boss:

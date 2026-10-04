@@ -29,6 +29,13 @@ signal clicked(ant: FormigaBattler)
 @export var click_target: ClickTargetComponent
 ## Chefe (a Rainha): a batalha acaba quando ele cai.
 @export var is_boss: bool = false
+## Nome na luta ("Tanajura 1", "Guardiã 2"...).
+@export var name_prefix: String = "Tanajura"
+## GUARDIÃ: enquanto houver uma viva, o chefe não leva dano nem pode ser alvo.
+@export var protects_boss: bool = false
+## Cor do pisca-pisca da FÚRIA (a Rainha voando). A Guardiã usa uma mais fraca para a
+## armadura continuar aparecendo.
+@export var rage_tint: Color = Color(1.6, 0.55, 0.5)
 
 
 ## 0..4: qual formiga da fila é (as últimas ficam mais espertas).
@@ -41,6 +48,9 @@ var eaten: bool = false
 var slot_index: int = -1
 ## Quantas vezes já agiu (para o tempo de recarga das habilidades).
 var turns_taken: int = 0
+## Fase da formiga (as habilidades filtram por `FormigaSkill.phases`). A Rainha vai para
+## 1 na fase final; as outras ficam sempre em 0.
+var phase: int = 0
 var _enraged: bool = false
 var _rage_tween: Tween
 ## O drop no chão depois de cair (null enquanto viva).
@@ -69,16 +79,17 @@ func _ready() -> void:
 ## que podem (`can_use`), fora da recarga, sem repetir a última.
 func choose_skill(battle: TurnBattle = null) -> FormigaSkill:
 	for skill in skills:
-		if skill.enabled and skill.has_priority(battle, self) and skill.can_use(battle, self):
+		if skill.enabled and skill.allowed_for(self) and skill.has_priority(battle, self) and skill.can_use(battle, self):
 			return _pick(skill)
 	var pool: Array[FormigaSkill] = []
 	for skill in skills:
-		if not skill.enabled or not skill.can_use(battle, self) or skill.is_cooling_down(self):
+		if not skill.enabled or not skill.allowed_for(self) or not skill.can_use(battle, self) \
+				or skill.is_cooling_down(self):
 			continue
 		if skill == _last_skill and skills.size() > 1:
 			continue
 		pool.append(skill)
-	if pool.is_empty() and _last_skill and _last_skill.can_use(battle, self):
+	if pool.is_empty() and _last_skill and _last_skill.allowed_for(self) and _last_skill.can_use(battle, self):
 		pool.append(_last_skill)
 	if pool.is_empty():
 		return null
@@ -123,7 +134,7 @@ func set_enraged(value: bool) -> void:
 		_rage_tween = null
 	if value and not is_dead():
 		_rage_tween = create_tween().set_loops()
-		_rage_tween.tween_property(sprite, "self_modulate", Color(1.6, 0.55, 0.5), 0.3)
+		_rage_tween.tween_property(sprite, "self_modulate", rage_tint, 0.3)
 		_rage_tween.tween_property(sprite, "self_modulate", Color(1.15, 0.85, 0.85), 0.3)
 	else:
 		sprite.self_modulate = Color.WHITE
@@ -148,6 +159,11 @@ func show_alert(value: bool) -> void:
 func daze(seconds: float) -> void:
 	if wait and not is_dead():
 		wait.stun(seconds)
+
+
+## Pode ser escolhida como alvo agora? (viva e sem proteção).
+func can_be_targeted() -> bool:
+	return not is_dead() and not is_protected()
 
 
 func set_targetable(value: bool) -> void:

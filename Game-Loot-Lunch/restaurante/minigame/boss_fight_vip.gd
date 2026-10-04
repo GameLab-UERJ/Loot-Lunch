@@ -115,8 +115,8 @@ func _play_stage(index: int, scene: PackedScene) -> Dictionary:
 		var label: String = String(result.get("label", ""))
 		if success:
 			if index >= 0 and index < stages.size():
-				await banner.ask("SUCESSO!", "%s\n%s" % [label, _stars_text(result)], "[ESPAÇO] próxima etapa",
-					null, Color(0.55, 1.0, 0.55))
+				await banner.ask("SUCESSO!", "%s\n%s%s" % [label, _stars_text(result), _loot_text(result)],
+					"[ESPAÇO] próxima etapa", null, Color(0.55, 1.0, 0.55))
 			_free_stage(stage)
 			return result
 
@@ -143,6 +143,16 @@ func _end(success: bool) -> bool:
 func _stars_text(result: Dictionary) -> String:
 	var stars: int = int(result.get("stars", 0))
 	return "Nota: %d de 3 estrelas" % stars if stars > 0 else ""
+
+
+## Itens ganhos na etapa ("loot": [{id, name}]). Ainda só aviso: os itens não existem.
+## TODO: quando houver inventário, entregar aqui os itens de `result["loot"]`.
+func _loot_text(result: Dictionary) -> String:
+	var names := PackedStringArray()
+	for item in result.get("loot", []):
+		if item is Dictionary:
+			names.append(String(item.get("name", "?")))
+	return "" if names.is_empty() else "\nItem ganho: %s" % ", ".join(names)
 
 
 func _summary_text() -> String:

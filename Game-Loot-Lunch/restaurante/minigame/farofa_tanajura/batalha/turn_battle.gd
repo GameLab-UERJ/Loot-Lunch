@@ -77,9 +77,11 @@ var running: bool = false
 var _queued_skill: BattleSkill = null
 var _busy: bool = false
 var _channeling: bool = false
+var _chef_acting: bool = false
 var _shake_tween: Tween
 var _shake_origin: Vector2
-var _next_ant_number: int = 1
+## Contador de nomes por tipo ("Tanajura 3", "Guardiã 1"...).
+var _name_counters: Dictionary = {}
 var _outlined: FormigaBattler = null
 var _outline_tween: Tween
 
@@ -110,13 +112,17 @@ func register_ant(ant: FormigaBattler) -> void:
 			boss.status_changed.connect(boss_bar.set_status)
 		if boss:
 			boss.flight_changed.connect(_on_boss_flight_changed)
+			boss.protection_changed.connect(_on_boss_protection_changed)
 	else:
 		ant.level = clampi(ant.slot_index, 0, 4)
-		ant.display_name = "Tanajura %d" % _next_ant_number
-		_next_ant_number += 1
+		var number: int = int(_name_counters.get(ant.name_prefix, 0)) + 1
+		_name_counters[ant.name_prefix] = number
+		ant.display_name = "%s %d" % [ant.name_prefix, number]
 		ant.set_enraged(is_boss_airborne())
+		if ant.protects_boss and boss and not boss.is_dead():
+			boss.add_guardian(ant)
 	ant.clicked.connect(select_target)
-	ant.set_targetable(true)
+	ant.set_targetable(ant.can_be_targeted())
 	if ant.hp_bar:
 		ant.hp_bar.set_bar_visible(true)
 	ant.face(chef.global_position, ant.art_faces_left)
@@ -167,6 +173,15 @@ func run() -> bool:
 	return false
 
 
+## DESCANSO: conta o tempo de verdade (inclusive enquanto as formigas atacam) em que o
+## chef PODE atacar (barra cheia) e não escolheu nada: ele ganha mana aos poucos
+## (ChefBattler.rest_mana_per_minute).
+func _process(delta: float) -> void:
+	if running and not _chef_acting and chef and not chef.is_dead() \
+			and chef.wait.is_ready() and _queued_skill == null:
+		chef.tick_rest(delta)
+
+
 func stop() -> void:
 	running = false
 	target = null
@@ -183,6 +198,15 @@ func alive_ants() -> Array[FormigaBattler]:
 		if is_instance_valid(ant) and not ant.is_dead():
 			alive.append(ant)
 	return alive
+
+
+## Vivas que podem ser alvo agora (a Rainha protegida fica de fora).
+func targetable_ants() -> Array[FormigaBattler]:
+	var list: Array[FormigaBattler] = []
+	for ant in alive_ants():
+		if ant.can_be_targeted():
+			list.append(ant)
+	return list
 
 
 ## Formigas pequenas vivas (sem o chefe).
@@ -230,11 +254,13 @@ func free_slots() -> Array[int]:
 
 ## Cria uma formiga pequena na vaga `slot` (escondida; quem chama faz a entrada) e já
 ## coloca na luta. Retorna null se não houver cena/vaga.
-func spawn_minion(slot: int) -> FormigaBattler:
+## `scene` = outro tipo de formiga (ex.: Guardiã); vazio = `ant_scene`.
+func spawn_minion(slot: int, scene: PackedScene = null) -> FormigaBattler:
 	var slots: Array[Vector2] = slot_positions()
-	if ant_scene == null or slot < 0 or slot >= slots.size():
+	var which: PackedScene = scene if scene else ant_scene
+	if which == null or slot < 0 or slot >= slots.size():
 		return null
-	var ant := ant_scene.instantiate() as FormigaBattler
+	var ant := which.instantiate() as FormigaBattler
 	ant.slot_index = slot
 	(arena if arena else shake_target).add_child(ant)
 	ant.global_position = slots[slot]
@@ -248,6 +274,11 @@ func spawn_minion(slot: int) -> FormigaBattler:
 func select_target(ant: FormigaBattler) -> void:
 	if ant != null and ant.is_dead():
 		ant = null
+	if ant != null and not ant.can_be_targeted():
+		# Clicou na Rainha protegida: avisa e mira a primeira Guardiã.
+		if ant.is_protected():
+			announce("A Rainha está protegida! Derrube as Guardiãs.", Color(0.6, 1.0, 1.0))
+		ant = _first_alive()
 	target = ant
 	_update_target_outline()
 	if target_cursor:
@@ -259,7 +290,7 @@ func select_target(ant: FormigaBattler) -> void:
 
 ## Próximo/anterior alvo vivo (de cima para baixo, da frente para trás).
 func cycle_target(step: int) -> void:
-	var alive: Array[FormigaBattler] = alive_ants()
+	var alive: Array[FormigaBattler] = targetable_ants()
 	if alive.is_empty():
 		return
 	alive.sort_custom(func(a: FormigaBattler, b: FormigaBattler) -> bool:
@@ -401,8 +432,9 @@ func _tick(delta: float) -> void:
 		return  # modo "espera": o tempo para enquanto o jogador escolhe
 	for ant in alive_ants():
 		if ant == boss and boss.airborne:
-			boss.tick_flight(delta)  # no céu a Rainha não ataca: só conta o voo
-			continue
+			boss.tick_flight(delta)
+			if not boss.acts_while_flying():
+				continue  # no céu a Rainha não ataca: só conta o voo (fora da fase final)
 		ant.wait.tick(delta)
 
 
@@ -430,7 +462,7 @@ func _next_interrupting_ant() -> FormigaBattler:
 func _next_ready_ant() -> FormigaBattler:
 	var best: FormigaBattler = null
 	for ant in alive_ants():
-		if ant == boss and boss.airborne:
+		if ant == boss and boss.airborne and not boss.acts_while_flying():
 			continue
 		if ant.wait.is_ready() and (best == null or ant.wait.elapsed - ant.wait.current_wait \
 				> best.wait.elapsed - best.wait.current_wait):
@@ -441,6 +473,15 @@ func _next_ready_ant() -> FormigaBattler:
 func _on_skill_chosen(skill: BattleSkill) -> void:
 	_queued_skill = skill
 	menu.set_queued(skill)
+
+
+func _on_boss_protection_changed(protected: bool) -> void:
+	if protected:
+		announce("As Guardiãs protegem a Rainha! Derrube elas primeiro!", Color(0.6, 1.0, 1.0))
+		if target == boss:
+			select_target(_first_alive())
+	else:
+		announce("A bolha estourou! A Rainha está vulnerável!", Color(0.55, 1.0, 0.55))
 
 
 func _on_boss_flight_changed(airborne: bool) -> void:
@@ -454,7 +495,10 @@ func _chef_turn(skill: BattleSkill) -> void:
 	_busy = true
 	menu.lock(true)
 	var aimed: FormigaBattler = target
+	chef.reset_rest()
+	_chef_acting = true
 	await skill.execute(self, chef, aimed)
+	_chef_acting = false
 	chef.wait.consume()
 	menu.set_ready(false)
 	await _reap_dead()
@@ -509,7 +553,7 @@ func _reap_dead() -> void:
 
 
 func _first_alive() -> FormigaBattler:
-	var alive: Array[FormigaBattler] = alive_ants()
+	var alive: Array[FormigaBattler] = targetable_ants()
 	if alive.is_empty():
 		return null
 	alive.sort_custom(func(a: FormigaBattler, b: FormigaBattler) -> bool:

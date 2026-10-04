@@ -197,3 +197,67 @@ Ratatouille (`final_vip/avaliacao_vip.tscn`, script `VipTasting`, herda `BossMin
   `_on_begin()` com `walk`, `zoom_to`, `talk`, `say`, `hop`, `squash`... Etapa com
   `show_intro_banner = false` entra direto, sem o painel de instruções.
 
+## Ajustes (update 03/10, tarde)
+
+- **Asas da Rainha:** quando ela é nocauteada, as asas param, caem e somem junto com o
+  corpo (`QueenAntBattler.play_death`). A sombra também some.
+- **Item "Asa de Formiga Rainha":** depois da vitória aparece o aviso
+  "Você ganhou: Asa de Formiga Rainha!" e o ícone voa até o chef (`comum/loot_popup.gd`,
+  `LootPopup.play(...)`, reaproveitável para baús/drops). **O item ainda não existe no
+  jogo:** fica registrado em `"loot"` no resultado da Fase 3 (`[{id, name}]`) e aparece no
+  painel "SUCESSO!" como "Item ganho: ...". Nome/id/ícone no Inspector da `rainha.tscn`
+  (grupo "Recompensa"). Para entregar de verdade no futuro, procure o `TODO` em
+  `BossFightVip._loot_text` e `FarofaTanajuraMinigame._award_boss_loot`.
+- **Direção dos personagens nas cutscenes:** a arte do chef e do VIP (`jscoutinho_*`) olha
+  para a **direita** (apesar do "_L" no nome; igual ao `sprite_faces_left = false` do
+  chef.gd). O chef olha para a direita, e o VIP fica espelhado olhando para o chef
+  (inclusive o retrato dele na caixa de diálogo: `speaker_portrait_flip`).
+
+## Fase 3 — FASE FINAL da Rainha: as GUARDIÃS (update 04/10)
+
+Quando a Rainha chega a **20%**, o Devorar e Conjurar dela vira a **fase final**:
+
+1. Devora as formigas comuns (nesse limiar **não cura**: `final_heal_ratio = 0`, para a
+   fase final ser de 20% para baixo; ponha 0.2 para voltar a curar).
+2. Conjura **2 GUARDIÃS** (`batalha/formiga_guardia.tscn`): mesmas habilidades das comuns,
+   **2x vida (40)**, armadura cinza-azulada com espinhos dourados
+   (`art/Entities/guardia/guardia_L_6F.png`).
+3. Levanta **voo na hora** (mais baixo: `final_flight_height`) e fica numa **bolha de
+   proteção** (`comum/shield_bubble.gd`) com laços até as Guardiãs.
+
+Regras da fase final:
+- **Enquanto houver Guardiã viva, a Rainha não leva dano nenhum e não pode ser alvo**
+  ("Protegida!"; ◀ ▶ pulam ela; a Besta não derruba). Matou as duas → a bolha estoura e
+  ela fica vulnerável (o relógio do voo volta a contar; a Besta derruba, como antes).
+- Com ela voando, as Guardiãs ficam em **FÚRIA** (dano dobrado), igual às comuns.
+- Ela **ataca voando** (a espera dela continua enchendo no céu): **Cortes de Vento**
+  (6 a 10 por vez em vez de até 5), **Raio Psíquico** e **Esferas Psíquicas**.
+  **Ultra Arremesso (bola de terra) não sai mais** nesse estágio; Arremesso só no chão.
+- **Raio Psíquico** (`skills_rainha/raio_psiquico.gd`): esfera na boca → feixe no chef →
+  **martele o ESPAÇO** para encher a barra (`comum/mash_meter.gd`: 12 apertos em 3 s, a
+  barra vaza sozinha). Encheu = segura o raio sem dano; senão dano proporcional ao que
+  faltou (até 2 caveiras).
+- **Esferas Psíquicas** (`skills_rainha/esferas_psiquicas.gd`): chuva de 12 esferas caindo
+  em linha reta; um círculo no chão avisa onde cada uma cai. O chef anda **só para os
+  lados (◀ ▶ / A D)** no espaço dele — da parede até um pouco antes das Guardiãs (faixa
+  clara no chão; `comum/horizontal_dodge.gd`). Cada esfera = meia caveira.
+- A Rainha **não morre antes da fase final**: um golpe que tiraria de 21% para 0 deixa ela
+  com 1 de vida e a fase final começa em seguida ("Resiste!").
+
+Peças novas reaproveitáveis: `ShieldBubble`, `MashMeter`, `HorizontalDodge`,
+`PsychicBeam` (`batalha/efeitos/feixe_psiquico.gd`). Nas habilidades das formigas:
+`FormigaSkill.phases` (em que fase pode sair: 0 normal, 1 final) e `usable_airborne`
+(pode sair voando); `LancarPedra.stones_by_phase` (quantidade por fase).
+
+**Balanceamento (bot):** com 85% de acerto nos QTEs vence ~2 em 3 lutas; com 80%, ~metade.
+Bem mais difícil que antes, como pedido.
+
+## Fase 3 — mana do DESCANSO (update 04/10)
+
+Se a barra de espera do chef está **cheia** (ele pode atacar) e o jogador **não escolhe
+nenhum ataque**, o chef descansa e ganha **2 de mana por minuto** (+1 a cada 30 s, com o
+aviso "+1 mana (descanso)"). Conta o tempo de verdade, inclusive enquanto as formigas
+atacam. Atacou = o descanso recomeça do zero. Mana cheia = não junta.
+Ajuste em `chef_battler.tscn` → `rest_mana_per_minute` (0 desliga).
+Código: `ChefBattler.tick_rest()` / `reset_rest()`, chamados pelo `TurnBattle._process()`.
+

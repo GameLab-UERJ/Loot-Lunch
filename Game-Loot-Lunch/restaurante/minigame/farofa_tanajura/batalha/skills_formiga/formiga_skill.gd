@@ -23,6 +23,11 @@ class_name FormigaSkill
 ## PRIORIDADE MÁXIMA: com `has_priority` verdadeiro, sai NA HORA, sem esperar a barra de
 ## espera da formiga encher (as outras formigas e o chef esperam).
 @export var interrupts: bool = false
+## Fases da formiga em que pode ser usada (vazio = todas). 0 = normal; 1 = FASE FINAL da
+## Rainha (depois do Devorar e Conjurar dos 20%). Ex.: Ultra Arremesso = [0]; Raio = [1].
+@export var phases: Array[int] = []
+## Pode ser usada VOANDO (a Rainha só ataca do céu na fase final).
+@export var usable_airborne: bool = false
 
 @export_group("Contra-ataque")
 @export var counter_animation: StringName = &""
@@ -57,6 +62,13 @@ func can_use(_battle: TurnBattle, _ant: FormigaBattler) -> bool:
 ## Tem que sair AGORA, sem sorteio? (ex.: Devorar e Conjurar com a vida baixa). Sobrescreva.
 func has_priority(_battle: TurnBattle, _ant: FormigaBattler) -> bool:
 	return false
+
+
+## Liberada nesta fase/situação (fase da formiga e se ela está voando)?
+func allowed_for(ant: FormigaBattler) -> bool:
+	if not phases.is_empty() and not phases.has(ant.phase):
+		return false
+	return usable_airborne or not ant.is_airborne()
 
 
 func is_cooling_down(ant: FormigaBattler) -> bool:

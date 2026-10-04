@@ -11,7 +11,10 @@ extends FormigaSkill
 ## Martelar o ESPAÇO não funciona: apertar no vazio trava o botão um instante.
 
 
-@export_range(1, 6) var max_stones: int = 5
+@export_range(1, 12) var max_stones: int = 5
+## Quantidade (mín, máx) por FASE de quem joga (índice = fase). (0, 0) ou sem item =
+## regra normal. Ex.: Rainha na fase final = [(0,0), (8,10)] -> 8 a 10 Cortes de Vento.
+@export var stones_by_phase: Array[Vector2i] = []
 @export var first_throw: float = 0.55
 @export var gap_min: float = 0.4
 @export var gap_max: float = 0.75
@@ -51,6 +54,9 @@ func _execute(battle: TurnBattle, ant: FormigaBattler, chef: ChefBattler) -> voi
 	_cancelled = false
 	# As últimas da fila jogam mais pedras de uma vez.
 	var count: int = randi_range(mini(1 + mini(ant.level / 2, 2), max_stones), max_stones)
+	if ant.phase < stones_by_phase.size() and stones_by_phase[ant.phase] != Vector2i.ZERO:
+		var span: Vector2i = stones_by_phase[ant.phase]
+		count = randi_range(mini(span.x, span.y), maxi(span.x, span.y))
 	if count_text != "":
 		battle.announce(count_text % [count, "s" if count > 1 else ""], Color(1.0, 0.75, 0.5))
 
