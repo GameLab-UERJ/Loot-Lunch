@@ -24,8 +24,11 @@ signal target_step(step: int)
 @export var hotkeys: Array[int] = [KEY_1, KEY_2, KEY_3, KEY_4]
 @export var next_target_actions: Array[StringName] = [&"ui_right", &"ui_down"]
 @export var previous_target_actions: Array[StringName] = [&"ui_left", &"ui_up"]
-@export var panel_color: Color = Color(0.1, 0.05, 0.12, 0.9)
-@export var border_color: Color = Color(0.95, 0.72, 0.25, 1.0)
+@export var panel_color: Color = Color(0.06, 0.03, 0.08, 0.6)
+@export var border_color: Color = Color(0.95, 0.72, 0.25, 0.35)
+## Canto inferior ESQUERDO: distância das bordas e largura do painel (px da tela 640x360).
+@export var corner_margin: Vector2 = Vector2(4, 4)
+@export var panel_width: float = 140.0
 @export var queued_color: Color = Color(0.55, 0.85, 1.0, 1.0)
 
 
@@ -40,6 +43,8 @@ var _locked: bool = false
 var _chef_ready: bool = false
 var _queued: BattleSkill = null
 var _message_time: float = 0.0
+## Segundos que restam para escolher na VEZ DO CHEF (< 0 = sem contagem).
+var _countdown: float = -1.0
 
 
 func _init() -> void:
@@ -93,6 +98,14 @@ func lock(value: bool) -> void:
 	_locked = value
 	_root.modulate = Color(1, 1, 1, 0.45) if value else Color.WHITE
 	if _open and not value:
+		_refresh()
+
+
+## Contagem da VEZ DO CHEF (segundos para escolher). Negativo = some.
+func set_countdown(seconds: float) -> void:
+	var changed: bool = (seconds < 0.0) != (_countdown < 0.0) or ceilf(seconds * 10.0) != ceilf(_countdown * 10.0)
+	_countdown = seconds
+	if changed and _open and _message_time <= 0.0:
 		_refresh()
 
 
@@ -153,13 +166,17 @@ func _refresh() -> void:
 		return
 	var who: String = _target.display_name if _target else "—"
 	if _queued and not _chef_ready:
-		_description.text = "%s agendada  →  %s" % [_queued.display_name, who]
+		_description.text = "%s agendada → %s" % [_queued.display_name, who]
 		_description.modulate = queued_color
+	elif _chef_ready and _countdown >= 0.0:
+		_description.text = "SUA VEZ  %.1fs  → %s" % [_countdown, who]
+		# Fica vermelho no fim da contagem.
+		_description.modulate = Color(0.75, 1.0, 0.65) if _countdown > 2.0 else Color(1.0, 0.55, 0.4)
 	elif _chef_ready:
-		_description.text = "SUA VEZ! (1-4)   Alvo: %s  [◀ ▶ troca]" % who
+		_description.text = "SUA VEZ → %s" % who
 		_description.modulate = Color(0.75, 1.0, 0.65)
 	else:
-		_description.text = "Preparando...   Alvo: %s  [◀ ▶ troca]" % who
+		_description.text = "Preparando... → %s" % who
 		_description.modulate = Color.WHITE
 
 
@@ -174,9 +191,9 @@ func _refresh_buttons() -> void:
 		button.icon = skill.icon
 		var cost: String = ""
 		if skill.mana_cost > 0:
-			cost = "  [%d mana]" % skill.mana_cost
+			cost = "  %d mana" % skill.mana_cost
 		elif skill.mana_gain > 0:
-			cost = "  [+%d mana]" % skill.mana_gain
+			cost = "  +%d" % skill.mana_gain
 		button.text = "%d %s%s" % [i + 1, skill.display_name, cost]
 		var usable: bool = _user != null and skill.can_use(_user, _target)
 		if skill == _queued:
@@ -204,45 +221,58 @@ func _on_hover(index: int) -> void:
 
 
 func _build() -> void:
+	# Painel COMPACTO no canto inferior ESQUERDO: uma linha de estado + as habilidades
+	# em lista. Cresce para cima se a mensagem quebrar linha.
 	_root = PanelContainer.new()
-	_root.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
-	_root.offset_top = -64.0
-	_root.offset_left = 6.0
-	_root.offset_right = -6.0
-	_root.offset_bottom = -4.0
+	_root.set_anchors_preset(Control.PRESET_BOTTOM_LEFT)
+	_root.grow_vertical = Control.GROW_DIRECTION_BEGIN
+	_root.offset_left = corner_margin.x
+	_root.offset_right = corner_margin.x + panel_width
+	_root.offset_bottom = -corner_margin.y
+	_root.offset_top = -corner_margin.y
 	var style := StyleBoxFlat.new()
 	style.bg_color = panel_color
 	style.border_color = border_color
-	style.set_border_width_all(2)
-	style.set_content_margin_all(4)
+	style.set_border_width_all(1)
+	style.set_corner_radius_all(2)
+	style.set_content_margin_all(3)
 	_root.add_theme_stylebox_override("panel", style)
 	add_child(_root)
 
 	var column := VBoxContainer.new()
-	column.add_theme_constant_override("separation", 3)
+	column.add_theme_constant_override("separation", 1)
 	_root.add_child(column)
 
 	_description = Label.new()
-	_description.add_theme_font_size_override("font_size", 9)
+	_description.add_theme_font_size_override("font_size", 7)
 	_description.add_theme_color_override("font_outline_color", Color(0.1, 0.05, 0.12))
-	_description.add_theme_constant_override("outline_size", 3)
-	_description.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_description.add_theme_constant_override("outline_size", 2)
+	_description.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_description.custom_minimum_size = Vector2(panel_width - 8.0, 0)
 	column.add_child(_description)
 
-	var grid := GridContainer.new()
-	grid.columns = 4
-	grid.add_theme_constant_override("h_separation", 4)
-	column.add_child(grid)
 	for i in hotkeys.size():
 		var button := Button.new()
 		button.focus_mode = Control.FOCUS_NONE  # ESPAÇO é do QTE, não do botão
-		button.custom_minimum_size = Vector2(150, 30)
-		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		button.add_theme_font_size_override("font_size", 9)
-		button.add_theme_constant_override("icon_max_width", 20)
+		button.custom_minimum_size = Vector2(0, 11)
+		button.add_theme_font_size_override("font_size", 7)
+		button.add_theme_constant_override("icon_max_width", 10)
+		button.add_theme_constant_override("h_separation", 3)
+		button.flat = true
+		# Sem margens do tema: uma linha fina por habilidade.
+		for state in [&"normal", &"pressed", &"disabled", &"focus"]:
+			var empty := StyleBoxEmpty.new()
+			empty.set_content_margin_all(0)
+			empty.content_margin_left = 2
+			button.add_theme_stylebox_override(state, empty)
+		var hover := StyleBoxFlat.new()
+		hover.bg_color = Color(1, 1, 1, 0.08)
+		hover.set_content_margin_all(0)
+		hover.content_margin_left = 2
+		button.add_theme_stylebox_override(&"hover", hover)
 		button.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 		button.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		button.pressed.connect(_try.bind(i))
 		button.mouse_entered.connect(_on_hover.bind(i))
-		grid.add_child(button)
+		column.add_child(button)
 		_buttons.append(button)

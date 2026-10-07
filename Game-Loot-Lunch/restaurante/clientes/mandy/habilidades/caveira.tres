@@ -30,5 +30,5 @@ damage = 2
 knockback = 100
 target_group = &"chefs"
 slow_percent = 0.5
-slow_duration = 3.0
+slow_duration = 2.0
 slow_tint = Color(0.85, 0.7, 1, 1)

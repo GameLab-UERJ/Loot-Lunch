@@ -17,5 +17,5 @@ first_spawn_delay = 3.0
 spawn_interval_min = 12.0
 spawn_interval_max = 18.0
 patience_time = 60.0
-ability_thresholds = Array[float]([0.9, 0.5, 0.2])
+ability_thresholds = Array[float]([0.5, 0.3, 0.1])
 order_reveal_distance = 96.0

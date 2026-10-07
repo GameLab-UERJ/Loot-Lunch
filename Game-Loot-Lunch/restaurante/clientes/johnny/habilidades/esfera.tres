@@ -39,5 +39,5 @@ hit_radius = 7.0
 damage = 4
 knockback = 60
 target_group = &"chefs"
-stun_duration = 5.0
+stun_duration = 2.5
 stun_visual = ExtResource("6_stun")

@@ -21,6 +21,7 @@
 [ext_resource type="Texture2D" path="res://restaurante/minigame/farofa_tanajura/art/Entities/formiga/dropTanajura.png" id="19_drop"]
 [ext_resource type="PackedScene" path="res://restaurante/minigame/farofa_tanajura/batalha/rainha.tscn" id="20_rainha"]
 [ext_resource type="Script" path="res://restaurante/minigame/comum/boss_health_bar.gd" id="21_bossbar"]
+[ext_resource type="Script" path="res://restaurante/minigame/comum/turn_order_bar.gd" id="23_turnbar"]
 
 [node name="FarofaTanajura" type="Node2D" node_paths=PackedStringArray("boss_slot", "battle", "chef", "summoner", "formation", "cutscene", "battle_layer")]
 script = ExtResource("1_script")
@@ -39,6 +40,7 @@ title = "Fase 3 — Ritual Terrestre"
 instructions = "O Cliente VIP invocou a TANAJURA RAINHA e duas tanajuras pequenas! Derrube a RAINHA (barra de vida no topo) — sem ela as pequenas fogem.
 
 Sua barrinha dourada encheu: [1] Frigideirada  [2] Investida Sombria  [3] Besta  [4] Devorar (pequena abaixo de 20%). [◀ ▶] ou clique troca o alvo.
+Na SUA VEZ o tempo PARA: você tem 5 s para escolher, senão perde a vez. A barra de turnos embaixo mostra quem age em seguida.
 
 [!] em cima de uma formiga = ataque vindo: [ESPAÇO] no tempo do anel e CLIQUE no buraco certo.
 Rainha VOANDO: só a Besta alcança — flechada derruba e enche sua mana. As pequenas ficam em fúria (dano dobrado).
@@ -95,7 +97,7 @@ position = Vector2(385, 250)
 position = Vector2(530, 190)
 
 [node name="PilhaDrops" type="Marker2D" parent="."]
-position = Vector2(42, 272)
+position = Vector2(42, 240)
 
 [node name="Arena" type="Node2D" parent="."]
 y_sort_enabled = true
@@ -135,3 +137,7 @@ boss_bar = NodePath("../BarraRainha")
 ant_scene = ExtResource("2_formiga")
 formation = NodePath("../Formacao")
 drop_pile = NodePath("../PilhaDrops")
+
+[node name="BarraTurnos" type="CanvasLayer" parent="." node_paths=PackedStringArray("battle")]
+script = ExtResource("23_turnbar")
+battle = NodePath("../TurnBattle")
