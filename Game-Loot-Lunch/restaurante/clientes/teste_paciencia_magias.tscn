@@ -102,6 +102,6 @@ offset_top = 334.0
 offset_right = 636.0
 offset_bottom = 360.0
 theme_override_font_sizes/font_size = 7
-text = "Paciência: 90% = magia 1 | 50% = magia 2 | 20% = magia 3 | 0% = vai embora.  Entregue antes: F perto do cliente, ou segure Q, mire com o mouse e solte (arremesso)
+text = "Paciência: 90% = magia 1 | 50% = magia 2 | 20% = magia 3 | 0% = vai embora.  Entregue antes: ESPAÇO perto do cliente, ou segure Q, mire com o mouse e solte (arremesso)
 WASD/setas anda | Espaço pega/larga | Shift dash | E sombra | G repõe espetinhos | H cura | M mana cheia | N chama o próximo cliente"
 horizontal_alignment = 1

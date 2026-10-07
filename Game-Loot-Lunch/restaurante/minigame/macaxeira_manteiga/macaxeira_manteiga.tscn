@@ -1,0 +1,98 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://restaurante/minigame/macaxeira_manteiga/macaxeira_minigame.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://restaurante/minigame/macaxeira_manteiga/art/chapa.png" id="2_chapa"]
+[ext_resource type="Texture2D" path="res://restaurante/minigame/macaxeira_manteiga/art/macaxeira_estados.png" id="3_macaxeira"]
+[ext_resource type="Texture2D" path="res://restaurante/minigame/macaxeira_manteiga/art/garrafa_manteiga.png" id="4_garrafa"]
+[ext_resource type="Script" path="res://restaurante/minigame/macaxeira_manteiga/garrafa_manteiga.gd" id="5_garrafa"]
+[ext_resource type="Script" path="res://restaurante/minigame/comum/sheet_sprite.gd" id="6_sheet"]
+[ext_resource type="Resource" path="res://restaurante/minigame/comum/anim/chef_idle.tres" id="7_chef_idle"]
+[ext_resource type="Script" path="res://restaurante/minigame/comum/target_meter_component.gd" id="8_meter"]
+[ext_resource type="Resource" path="res://restaurante/minigame/macaxeira_manteiga/dados/macaxeira_ponto.tres" id="9_ponto"]
+[ext_resource type="Resource" path="res://restaurante/minigame/macaxeira_manteiga/dados/manteiga_dose.tres" id="10_dose"]
+[ext_resource type="Script" path="res://restaurante/minigame/comum/timing_gauge.gd" id="11_gauge"]
+
+[node name="MacaxeiraManteiga" type="Node2D" node_paths=PackedStringArray("cook_meter", "butter_meter", "bottle", "macaxeira")]
+texture_filter = 1
+script = ExtResource("1_script")
+cook_meter = NodePath("Cozimento")
+butter_meter = NodePath("Manteiga")
+bottle = NodePath("Garrafa")
+macaxeira = NodePath("Macaxeira")
+title = "Fase 2 — Alquimia de Cozimento"
+instructions = "A macaxeira cozinha sozinha na chapa. Aperte [ESPAÇO] para TIRAR quando a barra de COZIMENTO estiver na faixa dourada.
+
+Ao mesmo tempo, a garrafa segue o MOUSE: SEGURE o clique para despejar a manteiga EM CIMA da macaxeira até a barra de MANTEIGA ficar na faixa. O fluxo engrossa: dose em pulsos!
+
+Sem manteiga ela gruda e cozinha mais rápido. Manteiga demais = encharcada."
+
+[node name="Chao" type="Polygon2D" parent="."]
+color = Color(0.17, 0.16, 0.2, 1)
+polygon = PackedVector2Array(0, 0, 640, 0, 640, 360, 0, 360)
+
+[node name="Chef" type="AnimatedSprite2D" parent="."]
+position = Vector2(140, 236)
+scale = Vector2(2, 2)
+script = ExtResource("6_sheet")
+sheets = Array[Resource]([ExtResource("7_chef_idle")])
+
+[node name="Chapa" type="Sprite2D" parent="."]
+position = Vector2(300, 236)
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("2_chapa")
+
+[node name="Macaxeira" type="Sprite2D" parent="."]
+position = Vector2(300, 212)
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("3_macaxeira")
+hframes = 4
+
+[node name="Garrafa" type="Node2D" parent="."]
+z_index = 20
+position = Vector2(300, 96)
+script = ExtResource("5_garrafa")
+min_x = 150.0
+max_x = 450.0
+stream_floor_y = 212.0
+mouth_offset = Vector2(0, -30)
+
+[node name="Sprite2D" type="Sprite2D" parent="Garrafa"]
+scale = Vector2(2, 2)
+texture = ExtResource("4_garrafa")
+
+[node name="Cozimento" type="Node" parent="."]
+script = ExtResource("8_meter")
+profile = ExtResource("9_ponto")
+
+[node name="Manteiga" type="Node" parent="."]
+script = ExtResource("8_meter")
+profile = ExtResource("10_dose")
+reset_acceleration_on_stop = true
+
+[node name="BarraCozimento" type="Node2D" parent="." node_paths=PackedStringArray("meter")]
+position = Vector2(500, 196)
+script = ExtResource("11_gauge")
+meter = NodePath("../Cozimento")
+size = Vector2(12, 130)
+caption = "COZIMENTO"
+
+[node name="BarraManteiga" type="Node2D" parent="." node_paths=PackedStringArray("meter")]
+position = Vector2(300, 306)
+script = ExtResource("11_gauge")
+meter = NodePath("../Manteiga")
+size = Vector2(200, 10)
+vertical = false
+caption = "MANTEIGA"
+fill_color = Color(0.98, 0.8, 0.3, 1)
+
+[node name="Dica" type="Label" parent="."]
+offset_left = 100.0
+offset_top = 330.0
+offset_right = 540.0
+offset_bottom = 350.0
+theme_override_colors/font_color = Color(0.8, 0.78, 0.86, 1)
+theme_override_colors/font_outline_color = Color(0.1, 0.05, 0.12, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 9
+text = "[MOUSE] mira a garrafa  •  [SEGURAR CLIQUE] despeja  •  [ESPAÇO] tira da chapa"
+horizontal_alignment = 1

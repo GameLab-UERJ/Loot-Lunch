@@ -21,7 +21,7 @@ class_name CookingSlot
 ##                                   (vem da receita: `CookingRecipe.bubble_icons`)
 ##
 ## DESTAQUE: `set_targeted(true)` põe uma silhueta no espetinho (girando ou parado)
-## e realça o balão. A estação chama isso na boca que a tecla F vai esvaziar.
+## e realça o balão. A estação chama isso na boca que o ESPAÇO vai esvaziar.
 
 
 ## Ponto do cozimento. RAW = ainda cru, PERFECT = no ponto, BURNT = torrado.

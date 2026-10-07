@@ -6,16 +6,17 @@ class_name InteractorComponent
 ## Também acompanha o MOUSE: o interagível embaixo do cursor ganha a silhueta branca
 ## (`hovered_interactable`), e `get_target()` prefere ele na hora de interagir.
 ##
-## ALVO: a cada frame avisa ao interagível que a tecla F usaria agora
+## ALVO: a cada frame avisa ao interagível que o ESPAÇO usaria agora
 ## (`InteractableComponent.set_targeted`). É assim que a churrasqueira sabe qual
-## espetinho destacar antes do jogador apertar.
+## espetinho destacar antes do jogador apertar. Só vira alvo quem REAGIRIA de verdade
+## (`InteractableComponent.would_react`); sem alvo, o ESPAÇO pega/larga item do chão.
 ##
 ## Camada sugerida: collision_layer = 0, collision_mask = 24 (camadas 4 e 5).
 
 
 signal focused_interactable_changed(interactable: InteractableComponent)
 signal hovered_interactable_changed(interactable: InteractableComponent)
-## O que a tecla F usaria agora mudou (ou null).
+## O que o ESPAÇO usaria agora mudou (ou null).
 signal targeted_interactable_changed(interactable: InteractableComponent)
 
 
@@ -37,7 +38,7 @@ signal targeted_interactable_changed(interactable: InteractableComponent)
 
 var focused_interactable: InteractableComponent = null
 var hovered_interactable: InteractableComponent = null
-## O que a tecla F usaria agora (ver `get_target(true)`).
+## O que o ESPAÇO usaria agora (ver `get_target(true, true)`).
 var targeted_interactable: InteractableComponent = null
 
 
@@ -59,9 +60,10 @@ func set_facing(direction: Vector2) -> void:
 		position = direction.normalized() * reach
 
 
-func get_nearest_interactable() -> InteractableComponent:
+## `require_reaction` = só quem faria algo agora (`would_react`), usado pelo ESPAÇO.
+func get_nearest_interactable(require_reaction: bool = false) -> InteractableComponent:
 	return _get_nearest(func(area: Area2D) -> bool:
-		return area is InteractableComponent and area.can_interact(actor)
+		return area is InteractableComponent and _accepts(area, require_reaction)
 	) as InteractableComponent
 
 
@@ -96,19 +98,20 @@ func is_in_reach(interactable: InteractableComponent) -> bool:
 	return _distance_to_area(origin, interactable) <= mouse_reach
 
 
-## Com quem interagir agora (F / clique direito / R):
+## Com quem interagir agora (ESPAÇO / R):
 ##   - mouse em cima de algo ao alcance -> esse objeto;
 ##   - mouse em cima de algo LONGE      -> clique: nada. Teclado (`fallback_to_nearest`):
 ##                                         o mais perto à frente, como se o mouse não estivesse lá;
 ##   - mouse no vazio                   -> o mais perto à frente.
-func get_target(fallback_to_nearest: bool = false) -> InteractableComponent:
+## `require_reaction`: ignora quem não faria nada agora (ver `would_react`).
+func get_target(fallback_to_nearest: bool = false, require_reaction: bool = false) -> InteractableComponent:
 	var hovered: InteractableComponent = get_hovered_interactable()
 	if use_mouse_hover and hovered:
-		if hovered.can_interact(actor) and is_in_reach(hovered):
+		if _accepts(hovered, require_reaction) and is_in_reach(hovered):
 			return hovered
 		if not fallback_to_nearest:
 			return null
-	return get_nearest_interactable()
+	return get_nearest_interactable(require_reaction)
 
 
 func _refresh_focus() -> void:
@@ -132,7 +135,13 @@ func _refresh_hover() -> void:
 
 
 func _refresh_target() -> void:
-	_set_targeted(get_target(true))
+	_set_targeted(get_target(true, true))
+
+
+func _accepts(interactable: InteractableComponent, require_reaction: bool) -> bool:
+	if require_reaction:
+		return interactable.would_react(actor)
+	return interactable.can_interact(actor)
 
 
 func _set_targeted(interactable: InteractableComponent) -> void:

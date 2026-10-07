@@ -1,0 +1,88 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://restaurante/minigame/final_vip/art/mesa_vip.png" id="1_mesa"]
+[ext_resource type="Texture2D" path="res://restaurante/minigame/final_vip/art/cadeira_vip.png" id="2_cadeira"]
+
+[node name="SalaoVip" type="Node2D"]
+
+[node name="Fundo" type="Polygon2D" parent="."]
+z_index = -50
+color = Color(0.227, 0.141, 0.188, 1)
+polygon = PackedVector2Array(-60, -40, 700, -40, 700, 230, -60, 230)
+
+[node name="Lambri" type="Polygon2D" parent="Fundo"]
+color = Color(0.32, 0.18, 0.16, 1)
+polygon = PackedVector2Array(-60, 170, 700, 170, 700, 230, -60, 230)
+
+[node name="Friso" type="Polygon2D" parent="Fundo"]
+color = Color(0.78, 0.58, 0.25, 1)
+polygon = PackedVector2Array(-60, 166, 700, 166, 700, 170, -60, 170)
+
+[node name="QuadroEsq" type="Polygon2D" parent="Fundo"]
+color = Color(0.78, 0.58, 0.25, 1)
+polygon = PackedVector2Array(150, 70, 210, 70, 210, 120, 150, 120)
+
+[node name="Tela" type="Polygon2D" parent="Fundo/QuadroEsq"]
+color = Color(0.25, 0.32, 0.3, 1)
+polygon = PackedVector2Array(154, 74, 206, 74, 206, 116, 154, 116)
+
+[node name="QuadroDir" type="Polygon2D" parent="Fundo"]
+color = Color(0.78, 0.58, 0.25, 1)
+polygon = PackedVector2Array(590, 70, 650, 70, 650, 120, 590, 120)
+
+[node name="Tela" type="Polygon2D" parent="Fundo/QuadroDir"]
+color = Color(0.36, 0.22, 0.3, 1)
+polygon = PackedVector2Array(594, 74, 646, 74, 646, 116, 594, 116)
+
+[node name="Porta" type="Polygon2D" parent="Fundo"]
+color = Color(0.2, 0.11, 0.08, 1)
+polygon = PackedVector2Array(504, 100, 558, 100, 558, 230, 504, 230)
+
+[node name="Folha" type="Polygon2D" parent="Fundo/Porta"]
+color = Color(0.46, 0.27, 0.15, 1)
+polygon = PackedVector2Array(508, 104, 554, 104, 554, 230, 508, 230)
+
+[node name="Painel" type="Polygon2D" parent="Fundo/Porta/Folha"]
+color = Color(0.38, 0.21, 0.12, 1)
+polygon = PackedVector2Array(514, 112, 548, 112, 548, 160, 514, 160)
+
+[node name="Macaneta" type="Polygon2D" parent="Fundo/Porta/Folha"]
+color = Color(0.95, 0.75, 0.3, 1)
+polygon = PackedVector2Array(546, 170, 550, 170, 550, 174, 546, 174)
+
+[node name="Aberta" type="Polygon2D" parent="Fundo/Porta"]
+visible = false
+color = Color(0.05, 0.03, 0.05, 1)
+polygon = PackedVector2Array(508, 104, 554, 104, 554, 230, 508, 230)
+
+[node name="Piso" type="Polygon2D" parent="."]
+z_index = -50
+color = Color(0.36, 0.22, 0.14, 1)
+polygon = PackedVector2Array(-60, 230, 700, 230, 700, 400, -60, 400)
+
+[node name="Rodape" type="Polygon2D" parent="Piso"]
+color = Color(0.18, 0.1, 0.08, 1)
+polygon = PackedVector2Array(-60, 228, 700, 228, 700, 234, -60, 234)
+
+[node name="Tapete" type="Polygon2D" parent="Piso"]
+color = Color(0.55, 0.12, 0.16, 1)
+polygon = PackedVector2Array(330, 236, 470, 236, 500, 270, 300, 270)
+
+[node name="Luz" type="Polygon2D" parent="."]
+z_index = -40
+color = Color(1, 0.88, 0.55, 0.13)
+polygon = PackedVector2Array(375, -40, 425, -40, 480, 250, 320, 250)
+
+[node name="Cadeira" type="Sprite2D" parent="."]
+texture_filter = 1
+z_index = -10
+position = Vector2(400, 166)
+scale = Vector2(2, 2)
+texture = ExtResource("2_cadeira")
+
+[node name="Mesa" type="Sprite2D" parent="."]
+texture_filter = 1
+z_index = 2
+position = Vector2(400, 200)
+scale = Vector2(2, 2)
+texture = ExtResource("1_mesa")

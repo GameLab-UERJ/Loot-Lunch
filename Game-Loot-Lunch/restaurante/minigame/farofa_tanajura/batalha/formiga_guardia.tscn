@@ -1,0 +1,17 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://restaurante/minigame/farofa_tanajura/batalha/formiga.tscn" id="1_base"]
+[ext_resource type="Resource" path="res://restaurante/minigame/farofa_tanajura/art/anim/guardia_idle.tres" id="2_idle"]
+[ext_resource type="Resource" path="res://restaurante/minigame/farofa_tanajura/art/anim/guardia_andar.tres" id="3_andar"]
+
+[node name="FormigaGuardia" instance=ExtResource("1_base")]
+name_prefix = "Guardiã"
+protects_boss = true
+rage_tint = Color(1.35, 0.95, 0.9, 1)
+display_name = "Guardiã"
+
+[node name="Sprite" parent="."]
+sheets = Array[Resource]([ExtResource("2_idle"), ExtResource("3_andar")])
+
+[node name="BattleHealthComponent" parent="."]
+max_hp = 40

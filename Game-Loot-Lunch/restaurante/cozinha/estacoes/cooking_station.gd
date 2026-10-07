@@ -11,10 +11,10 @@ class_name CookingStation
 ## (ordem da árvore = ordem em que são ocupadas).
 ##
 ## Fluxo:
-##   1. F (ou clique direito) com um espetinho cru na mão -> vai para a primeira boca livre.
+##   1. ESPAÇO com um espetinho cru na mão -> vai para a primeira boca livre.
 ##   2. Cada boca conta o tempo sozinha e troca a arte: cru -> no ponto -> torrado
 ##      (o espetinho aparece GIRANDO no fogo, linha certa da spritesheet).
-##   3. F com a MÃO VAZIA -> tira o espetinho da boca mais perto do
+##   3. ESPAÇO com a MÃO VAZIA -> tira o espetinho da boca mais perto do
 ##      cursor (ou do jogador, se o mouse não está em cima da estação),
 ##      no ponto em que ele estiver (são 3 resultados possíveis).
 ##      Antes de apertar, o espetinho que vai sair já fica com a SILHUETA branca
@@ -63,7 +63,7 @@ func _ready() -> void:
 	set_process(false)
 
 
-## Enquanto a churrasqueira é o alvo da tecla F, destaca a boca que vai sair
+## Enquanto a churrasqueira é o alvo do ESPAÇO, destaca a boca que vai sair
 ## (muda quando o jogador anda, mexe o mouse ou o espetinho sai).
 func _process(_delta: float) -> void:
 	_set_target_slot(get_slot_to_collect(interactable.target_actor))
@@ -102,13 +102,13 @@ func find_recipe(data: ItemData) -> CookingRecipe:
 	return null
 
 
-## Boca que `actor` esvaziaria se apertasse F agora (mão vazia), ou null.
+## Boca que `actor` esvaziaria se apertasse ESPAÇO agora (mão vazia), ou null.
 func get_slot_to_collect(actor: Node) -> CookingSlot:
 	if actor == null:
 		return null
 	var actor_hand: HandComponent = HandComponent.find_in(actor)
 	if actor_hand and actor_hand.has_item():
-		return null  # com algo na mão, F coloca em vez de tirar
+		return null  # com algo na mão, ESPAÇO coloca em vez de tirar
 	return _nearest_occupied_slot(actor)
 
 
@@ -118,6 +118,14 @@ func can_accept(data: ItemData) -> bool:
 
 
 # --- Interação ---
+
+func _can_interact(actor: Node, actor_hand: HandComponent) -> bool:
+	if actor_hand == null:
+		return false
+	if actor_hand.has_item():
+		return can_accept(actor_hand.held_item.data)
+	return _nearest_occupied_slot(actor) != null
+
 
 func _interact(actor: Node, actor_hand: HandComponent) -> void:
 	if actor_hand == null:

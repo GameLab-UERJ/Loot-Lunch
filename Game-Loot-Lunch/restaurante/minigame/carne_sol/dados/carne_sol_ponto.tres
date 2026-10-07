@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="TargetMeterProfile" format=3]
+
+[ext_resource type="Script" path="res://restaurante/minigame/comum/target_meter_profile.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+display_name = "Ponto da Carne de Sol"
+rise_speed = 0.11
+rise_acceleration = 0.012
+fall_speed = 0.02
+wobble = 0.35
+wobble_frequency = 0.6
+perfect_min = 0.7
+perfect_max = 0.8
+ruin_at = 1.0
+min_commit = 0.2
+under_label = "Carne Suada"
+perfect_label = "Carne de Sol Perfeita"
+over_label = "Carne Carbonizada"

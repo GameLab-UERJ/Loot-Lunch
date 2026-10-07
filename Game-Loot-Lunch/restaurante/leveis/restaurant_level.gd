@@ -40,6 +40,7 @@ var _time_at_end: float = 0.0
 
 
 func _ready() -> void:
+	DayNightSwitch.disable(self)  # restaurante é interno: sem o efeito de dia e noite
 	randomize()
 	if level_data == null:
 		push_error("RestaurantLevel '%s': falta o LevelData." % name)

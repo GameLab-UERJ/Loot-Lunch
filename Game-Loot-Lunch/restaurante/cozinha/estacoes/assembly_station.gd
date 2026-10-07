@@ -9,9 +9,9 @@ class_name AssemblyStation
 ## HandComponents dentro do nó `Slots` (ordem da árvore = de baixo para cima).
 ##
 ## Fluxo:
-##   1. Clique direito com um ingrediente aceito na mão -> o item é fincado no primeiro slot livre.
+##   1. ESPAÇO com um ingrediente aceito na mão -> o item é fincado no primeiro slot livre.
 ##   2. Repete até encher os slots.
-##   3. Clique direito com a MÃO VAZIA e o conjunto fechando uma receita -> o jogador leva o item pronto
+##   3. ESPAÇO com a MÃO VAZIA e o conjunto fechando uma receita -> o jogador leva o item pronto
 ##      e a estação entra em cooldown.
 ##   4. T (ação secundária) perto dela -> apaga o que estiver montado, toca o efeito de
 ##      fogo e entra em cooldown.
@@ -136,6 +136,14 @@ func can_accept(data: ItemData) -> bool:
 
 
 # --- Interação ---
+
+func _can_interact(_actor: Node, actor_hand: HandComponent) -> bool:
+	if actor_hand == null or is_on_cooldown():
+		return false
+	if actor_hand.has_item():
+		return can_accept(actor_hand.held_item.data)
+	return is_complete()
+
 
 func _interact(_actor: Node, actor_hand: HandComponent) -> void:
 	if actor_hand == null or is_on_cooldown():
