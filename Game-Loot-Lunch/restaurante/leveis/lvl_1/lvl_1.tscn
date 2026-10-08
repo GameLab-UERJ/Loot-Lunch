@@ -169,6 +169,6 @@ delivery_scene = ExtResource("6_entrega")
 
 [node name="Turno" type="Node" parent="."]
 script = ExtResource("8_turno")
-duration = 180.0
+duration = 300.0
 
 [node name="HudFase" parent="." instance=ExtResource("9_hud")]

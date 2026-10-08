@@ -22,6 +22,9 @@ signal stage_started(index: int, stage: BossMinigame)
 signal stage_finished(index: int, success: bool, result: Dictionary)
 ## `results` = um Dictionary por etapa (label, quality, stars...).
 signal boss_fight_finished(success: bool, results: Array)
+## O jogador escolheu SAIR no painel de falha (`offer_quit_on_fail`). Logo depois vem
+## `boss_fight_finished(false, ...)`.
+signal quit_requested
 
 
 ## Cutscene de abertura (antes do painel de introdução). Não conta no placar.
@@ -38,6 +41,12 @@ signal boss_fight_finished(success: bool, results: Array)
 @export var banner: MinigameBanner
 ## Falhou: repete a etapa. Desligado: a boss fight acaba na primeira falha.
 @export var retry_on_fail: bool = true
+## Falhou: em vez de só "tentar de novo", mostra os botões "Tentar de novo" e "Sair".
+## Sair encerra a boss fight com falha (`quit_requested` + `boss_fight_finished(false)`).
+## Quem liga: o fluxo do MVP (restaurante/mvp/fluxo_boss_vip.gd).
+@export var offer_quit_on_fail: bool = false
+@export var retry_option_text: String = "Tentar de novo"
+@export var quit_option_text: String = "Sair para o menu"
 ## Começa sozinho ao entrar na árvore.
 @export var autostart: bool = true
 
@@ -121,6 +130,14 @@ func _play_stage(index: int, scene: PackedScene) -> Dictionary:
 			return result
 
 		_free_stage(stage)
+		if offer_quit_on_fail:
+			var choice: int = await banner.choose("FALHOU...",
+				"%s\n\nO VIP está ficando impaciente..." % label,
+				PackedStringArray([retry_option_text, quit_option_text]), Color(1.0, 0.45, 0.45))
+			if choice == 0:
+				continue
+			quit_requested.emit()
+			return {}
 		if not retry_on_fail:
 			await banner.ask("FALHOU...", label, "[ESPAÇO] continuar", null, Color(1.0, 0.45, 0.45))
 			return {}

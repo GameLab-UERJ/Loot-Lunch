@@ -125,6 +125,11 @@ func _land() -> void:
 	var dropped: CarryableItem = item
 	dropped.reparent(container, false)
 	dropped.global_position = global_position
+	# Bateu numa bancada/parede: cai no chão livre do lado de cá, não dentro dela.
+	var exclude: Array[RID] = []
+	if thrower is CollisionObject2D:
+		exclude.append((thrower as CollisionObject2D).get_rid())
+	dropped.settle(global_position, global_position - direction * 16.0, collision_mask, exclude)
 	dropped.rotation = 0.0
 	dropped.set_deferred("monitorable", true)
 	landed.emit(dropped)

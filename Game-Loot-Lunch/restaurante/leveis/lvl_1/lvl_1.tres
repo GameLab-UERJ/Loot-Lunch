@@ -8,8 +8,8 @@
 [resource]
 script = ExtResource("1_data")
 display_name = "Fase 1"
-duration = 180.0
-money_goal = 60
+duration = 300.0
+money_goal = 100
 fail_on_chef_death = true
 customer_scenes = Array[PackedScene]([ExtResource("2_johnny"), ExtResource("3_mandy"), ExtResource("4_patolino")])
 max_customers = 3

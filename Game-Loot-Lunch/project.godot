@@ -16,7 +16,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 config/name="LootLunch"
 config/version="1.0.0"
-run/main_scene="uid://b2evbancyosmu"
+run/main_scene="uid://bb4t1nykti8br"
 config/features=PackedStringArray("4.7", "Mobile")
 boot_splash/image="uid://r63dkyw36fm0"
 config/icon="res://icon.svg"

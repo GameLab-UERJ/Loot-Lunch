@@ -1,0 +1,158 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://restaurante/mvp/ui/creditos_mvp.gd" id="1_script"]
+[ext_resource type="FontFile" uid="uid://fjcmb5r6tkvp" path="res://assets/fonts/Silver.ttf" id="2_silver"]
+[ext_resource type="Theme" uid="uid://blqubia4djs1d" path="res://resources/themes/ui/button.tres" id="3_tema"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_painel"]
+bg_color = Color(0.1, 0.05, 0.12, 0.92)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.95, 0.72, 0.25, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+content_margin_left = 18.0
+content_margin_top = 8.0
+content_margin_right = 18.0
+content_margin_bottom = 10.0
+
+[node name="CreditosMvp" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="Escurecer" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.6)
+
+[node name="Centro" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Painel" type="PanelContainer" parent="Centro"]
+custom_minimum_size = Vector2(420, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_painel")
+
+[node name="Coluna" type="VBoxContainer" parent="Centro/Painel"]
+layout_mode = 2
+theme_override_constants/separation = 2
+alignment = 1
+
+[node name="Titulo" type="Label" parent="Centro/Painel/Coluna"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.72, 0.25, 1)
+theme_override_colors/font_outline_color = Color(0.1, 0.05, 0.12, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("2_silver")
+theme_override_font_sizes/font_size = 38
+text = "Créditos"
+horizontal_alignment = 1
+
+[node name="Subtitulo" type="Label" parent="Centro/Painel/Coluna"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.78, 0.86, 1)
+theme_override_fonts/font = ExtResource("2_silver")
+theme_override_font_sizes/font_size = 19
+text = "Loot & Lunch — Demonstração"
+horizontal_alignment = 1
+
+[node name="Espaco1" type="Control" parent="Centro/Painel/Coluna"]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+
+[node name="DevsTitulo" type="Label" parent="Centro/Painel/Coluna"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.72, 0.25, 1)
+theme_override_fonts/font = ExtResource("2_silver")
+theme_override_font_sizes/font_size = 19
+text = "Desenvolvido por"
+horizontal_alignment = 1
+
+[node name="Devs" type="Label" parent="Centro/Painel/Coluna"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.95, 0.8, 1)
+theme_override_fonts/font = ExtResource("2_silver")
+theme_override_font_sizes/font_size = 19
+text = "Igor Amaral, Ramon Lima e João Coutinho"
+horizontal_alignment = 1
+
+[node name="Espaco2" type="Control" parent="Centro/Painel/Coluna"]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+
+[node name="Disciplina" type="Label" parent="Centro/Painel/Coluna"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92, 0.9, 0.86, 1)
+theme_override_fonts/font = ExtResource("2_silver")
+theme_override_font_sizes/font_size = 19
+text = "Esta demonstração foi feita para a disciplina
+Engenharia de Sistema A, do professor Gabriel Carvalho."
+horizontal_alignment = 1
+
+[node name="Espaco3" type="Control" parent="Centro/Painel/Coluna"]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+
+[node name="EquipeTitulo" type="Label" parent="Centro/Painel/Coluna"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.72, 0.25, 1)
+theme_override_fonts/font = ExtResource("2_silver")
+theme_override_font_sizes/font_size = 19
+text = "Equipe GameLab-UERJ"
+horizontal_alignment = 1
+
+[node name="EquipeCentro" type="CenterContainer" parent="Centro/Painel/Coluna"]
+layout_mode = 2
+
+[node name="Equipe" type="GridContainer" parent="Centro/Painel/Coluna/EquipeCentro"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/h_separation = 24
+theme_override_constants/v_separation = 0
+columns = 3
+
+[node name="NomeModelo" type="Label" parent="Centro/Painel/Coluna/EquipeCentro/Equipe"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.83, 0.9, 1)
+theme_override_fonts/font = ExtResource("2_silver")
+theme_override_font_sizes/font_size = 19
+text = "Nome"
+horizontal_alignment = 1
+
+[node name="Espaco4" type="Control" parent="Centro/Painel/Coluna"]
+custom_minimum_size = Vector2(0, 6)
+layout_mode = 2
+
+[node name="Voltar" type="Button" parent="Centro/Painel/Coluna"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(110, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("3_tema")
+text = "Voltar"

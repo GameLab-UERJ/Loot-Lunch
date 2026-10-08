@@ -16,25 +16,26 @@ class_name TurnOrderBar
 
 
 @export var battle: Node
-## Distância da borda de baixo da tela (fica logo acima do menu de habilidades).
-@export var bottom_margin: float = 66.0
-@export var bar_height: float = 30.0
-@export var side_margin: float = 6.0
-## Largura da área do "PRÓXIMO: nome" na esquerda.
-@export var label_width: float = 92.0
+## Canto inferior DIREITO: distância das bordas (px da tela 640x360).
+@export var corner_margin: Vector2 = Vector2(4, 4)
+@export var bar_width: float = 200.0
+@export var bar_height: float = 26.0
 ## Pedaço final da linha que é a zona de AÇÃO (0.15 = últimos 15%).
-@export_range(0.05, 0.4, 0.01) var action_zone: float = 0.14
-@export var icon_size: float = 14.0
+@export_range(0.05, 0.4, 0.01) var action_zone: float = 0.12
+@export var icon_size: float = 11.0
 
 @export_group("Cores")
-@export var panel_color: Color = Color(0.1, 0.05, 0.12, 0.82)
-@export var border_color: Color = Color(0.95, 0.72, 0.25, 1.0)
+@export var panel_color: Color = Color(0.06, 0.03, 0.08, 0.6)
+@export var border_color: Color = Color(0.95, 0.72, 0.25, 0.35)
 @export var track_color: Color = Color(0.55, 0.6, 0.75, 1.0)
 @export var action_color: Color = Color(0.95, 0.72, 0.25, 1.0)
 @export var ally_color: Color = Color(0.95, 0.72, 0.25, 1.0)
 @export var enemy_color: Color = Color(0.75, 0.28, 0.25, 1.0)
 @export var boss_color: Color = Color(0.6, 0.3, 0.8, 1.0)
 @export var next_color: Color = Color.WHITE
+
+
+const LABEL_HEIGHT: float = 10.0
 
 
 var _canvas: Control
@@ -51,11 +52,12 @@ func _ready() -> void:
 	_canvas.name = "Linha"
 	_canvas.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_canvas.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	_canvas.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
-	_canvas.offset_left = side_margin
-	_canvas.offset_right = -side_margin
-	_canvas.offset_bottom = -bottom_margin
-	_canvas.offset_top = -bottom_margin - bar_height
+	_canvas.set_anchors_preset(Control.PRESET_BOTTOM_RIGHT)
+	# Linha de cima (10 px) = nome do próximo; embaixo = a barra.
+	_canvas.offset_right = -corner_margin.x
+	_canvas.offset_left = -corner_margin.x - bar_width
+	_canvas.offset_bottom = -corner_margin.y
+	_canvas.offset_top = -corner_margin.y - bar_height - LABEL_HEIGHT
 	_canvas.draw.connect(_on_draw)
 	add_child(_canvas)
 	hide()
@@ -71,38 +73,32 @@ func _process(delta: float) -> void:
 
 func _on_draw() -> void:
 	var entries: Array = battle.turn_order()
-	var size: Vector2 = _canvas.size
 	var font: Font = _canvas.get_theme_default_font()
-	var mid: float = size.y * 0.5
+	var panel := Rect2(0.0, LABEL_HEIGHT, _canvas.size.x, _canvas.size.y - LABEL_HEIGHT)
+	var mid: float = panel.position.y + panel.size.y * 0.5
 
-	_canvas.draw_rect(Rect2(Vector2.ZERO, size), panel_color)
-	_canvas.draw_rect(Rect2(Vector2.ZERO, size), border_color, false, 1.0)
+	_canvas.draw_rect(panel, panel_color)
+	_canvas.draw_rect(panel, border_color, false, 1.0)
 
-	# --- Linha do tempo -------------------------------------------------------------
-	var x0: float = label_width + 8.0
-	var x1: float = size.x - 10.0
-	var xa: float = lerpf(x0, x1, 1.0 - action_zone)  # começo da zona de AÇÃO
-	_canvas.draw_line(Vector2(x0, mid), Vector2(xa, mid), track_color, 2.0)
-	_canvas.draw_line(Vector2(xa, mid), Vector2(x1, mid), action_color, 4.0)
-	_canvas.draw_line(Vector2(xa, mid - 6), Vector2(xa, mid + 6), action_color, 1.0)
-	_text(font, "ESPERA", Vector2(x0, size.y - 2), 7, Color(track_color, 0.8))
-	_text(font, "AÇÃO", Vector2(x1 - 22, size.y - 2), 7, action_color)
+	# --- Linha do tempo (ESPERA azulada -> AÇÃO dourada) ------------------------------
+	var x0: float = 8.0
+	var x1: float = panel.size.x - 6.0
+	var xa: float = lerpf(x0, x1, 1.0 - action_zone)
+	_canvas.draw_line(Vector2(x0, mid), Vector2(xa, mid), Color(track_color, 0.7), 1.0)
+	_canvas.draw_line(Vector2(xa, mid), Vector2(x1, mid), action_color, 3.0)
 
-	# --- Próximo (nome na esquerda) --------------------------------------------------
+	# --- Nome do próximo, pequeno, em cima da barra (alinhado à direita) -------------
 	var next: Dictionary = {}
 	for entry in entries:
 		if int(entry["order"]) == 1:
 			next = entry
-	var who: String = "—"
-	var who_color: Color = Color.WHITE
 	if not next.is_empty():
 		var b: Node = next["battler"]
-		who = "VOCÊ!" if next["ally"] else str(b.get("display_name"))
-		who_color = ally_color if next["ally"] else Color(1.0, 0.6, 0.55)
-	var title: String = "AGINDO:" if not next.is_empty() and next["acting"] else "PRÓXIMO:"
-	_text(font, title, Vector2(4, 12), 8, Color(0.85, 0.85, 0.9))
-	_text(font, who, Vector2(4, 25), 9, who_color)
-	_canvas.draw_line(Vector2(label_width, 4), Vector2(label_width, size.y - 4), Color(border_color, 0.5), 1.0)
+		var who: String = "VOCÊ" if next["ally"] else str(b.get("display_name"))
+		var text: String = ("Agindo: %s" if next["acting"] else "Próximo: %s") % who
+		var color: Color = ally_color if next["ally"] else Color(1.0, 0.62, 0.58)
+		var width: float = font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, 7).x if font else 0.0
+		_text(font, text, Vector2(panel.size.x - width - 2.0, LABEL_HEIGHT - 2.0), 7, color)
 
 	# --- Retratos (desenha o próximo por último, por cima) ---------------------------
 	var ordered: Array = entries.duplicate()
@@ -127,7 +123,7 @@ func _draw_icon(entry: Dictionary, font: Font, x0: float, xa: float, x1: float, 
 	var at_action: bool = ratio >= 1.0 or entry["acting"]
 	var x: float = lerpf(xa, x1, 0.5) if at_action else lerpf(x0, xa, ratio)
 	var r: float = icon_size * 0.5
-	var y: float = mid - r - 1.0 if entry["ally"] else mid + r + 1.0
+	var y: float = mid - r if entry["ally"] else mid + r
 	var center := Vector2(x, y)
 	# Dois retratos no mesmo lugar (mesma espera): empurra o de baixo para a esquerda.
 	var moved: bool = true
@@ -155,20 +151,20 @@ func _draw_icon(entry: Dictionary, font: Font, x0: float, xa: float, x1: float, 
 	# Próximo a agir: anel branco piscando.
 	if order == 1:
 		var pulse: float = 0.6 + 0.4 * sin(_clock * 9.0)
-		_canvas.draw_arc(center, r + 2.5, 0.0, TAU, 24, Color(next_color, pulse), 1.5)
+		_canvas.draw_arc(center, r + 2.0, 0.0, TAU, 24, Color(next_color, pulse), 1.0)
 
 	# Vez do chef: anel da contagem esvaziando.
 	if entry["deciding"]:
 		var total: float = maxf(float(battle.get("decision_time")), 0.001)
 		var left: float = clampf(float(battle.get("decision_left")) / total, 0.0, 1.0)
 		var warn: Color = Color(0.55, 1.0, 0.45) if left > 0.4 else Color(1.0, 0.45, 0.35)
-		_canvas.draw_arc(center, r + 4.5, -PI * 0.5, -PI * 0.5 + TAU * left, 32, warn, 2.0)
+		_canvas.draw_arc(center, r + 3.5, -PI * 0.5, -PI * 0.5 + TAU * left, 32, warn, 2.0)
 
 	# Número da ordem / atordoado
 	if entry["stunned"]:
-		_text(font, "zz", center + Vector2(r - 2, -r + 4), 7, Color(0.7, 0.85, 1.0))
+		_text(font, "zz", center + Vector2(r - 2, -r + 4), 6, Color(0.7, 0.85, 1.0))
 	elif order > 0:
-		_text(font, str(order), center + Vector2(r - 1, r + 1), 7, Color.WHITE)
+		_text(font, str(order), center + Vector2(r - 2, r + 1), 6, Color.WHITE)
 
 
 func _text(font: Font, text: String, at: Vector2, font_size: int, color: Color) -> void:
