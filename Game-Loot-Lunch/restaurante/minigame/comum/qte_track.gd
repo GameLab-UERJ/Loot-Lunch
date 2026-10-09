@@ -14,7 +14,9 @@ class_name QteTrack
 ##   - `whiff_lockout`: apertou no vazio = botão travado um instante. Castiga quem fica
 ##     martelando o ESPAÇO nas pedras.
 ##
-## Com `ring_anchor` definido, desenha um QteRing por batida em volta dele.
+## Com `ring_anchor` definido, desenha um QteRing por batida em volta dele e, em cima,
+## a TECLA da ação (KeyPrompt: "ESPAÇO" + `prompt_caption`), que acende quando a janela
+## abre. Quem usa troca o texto antes do `run` (ex.: `qte.prompt_caption = "PULE!"`).
 ## Reutilizável: defesa, parry, ritmo, cozinhar no compasso...
 
 
@@ -46,6 +48,17 @@ enum BeatState { PENDING, OPEN, HIT, MISSED }
 ## Segundos que o anel leva fechando até o impacto.
 @export var ring_approach: float = 0.8
 
+@export_group("Tecla na tela")
+## Mostra a TECLA da ação em cima de `ring_anchor` enquanto o QTE roda (aparece junto
+## com o primeiro anel e acende quando a janela de acerto abre).
+@export var show_key_prompt: bool = true
+## Posição da tecla em relação ao `ring_anchor`.
+@export var key_prompt_offset: Vector2 = Vector2(0, -60)
+
+
+## Texto em cima da tecla ("REBATA!", "PULE!"). Volta a "" quando o QTE acaba.
+var prompt_caption: String = ""
+
 
 var _hits: Array[float] = []
 ## Estado de cada batida (valores de BeatState).
@@ -55,6 +68,7 @@ var _time: float = 0.0
 var _lockout: float = 0.0
 var _running: bool = false
 var _successes: int = 0
+var _prompt: KeyPrompt = null
 
 
 func is_running() -> bool:
@@ -81,7 +95,9 @@ func run(hit_times: Array[float]) -> int:
 
 ## Começa sem esperar (escute `beat_resolved` / `finished`).
 func start(hit_times: Array[float]) -> void:
+	var caption: String = prompt_caption  # o cancel() limpa o texto: guarda o de agora
 	cancel()
+	prompt_caption = caption
 	_hits = hit_times.duplicate()
 	_hits.sort()
 	_states.clear()
@@ -102,6 +118,7 @@ func start(hit_times: Array[float]) -> void:
 func cancel() -> void:
 	var was_running: bool = _running
 	_running = false
+	_hide_prompt()
 	for ring in _rings:
 		if is_instance_valid(ring):
 			ring.queue_free()
@@ -136,6 +153,7 @@ func _process(delta: float) -> void:
 			beat_opened.emit(i)
 		if _time > _hits[i] + late_tolerance:
 			_resolve(i, false)
+	_update_prompt()
 	_check_finished()
 
 
@@ -187,7 +205,31 @@ func _resolve(i: int, success: bool) -> void:
 func _check_finished() -> void:
 	if _running and _next_pending() < 0:
 		_running = false
+		_hide_prompt()
 		finished.emit(_successes)
+
+
+## A tecla aparece junto com o primeiro anel e acende enquanto alguma janela está aberta.
+func _update_prompt() -> void:
+	if not _running or not show_key_prompt or ring_anchor == null:
+		return
+	var next: int = _next_pending()
+	if next < 0:
+		return
+	if _prompt == null and _time >= _hits[next] - ring_approach:
+		var key: String = KeyCap.key_for_action(action)
+		if key != "":
+			_prompt = KeyPrompt.spawn(ring_anchor, ring_offset + key_prompt_offset,
+				PackedStringArray([key]), prompt_caption)
+	if is_instance_valid(_prompt):
+		_prompt.set_active(_states[next] == BeatState.OPEN)
+
+
+func _hide_prompt() -> void:
+	if is_instance_valid(_prompt):
+		_prompt.dismiss()
+	_prompt = null
+	prompt_caption = ""
 
 
 func _spawn_ring(time_to_hit: float) -> QteRing:

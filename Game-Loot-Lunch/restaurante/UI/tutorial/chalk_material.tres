@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" format=3]
+
+[ext_resource type="Shader" path="res://restaurante/UI/tutorial/chalk_sprite.gdshader" id="1_shader"]
+
+[resource]
+shader = ExtResource("1_shader")
+shader_parameter/chalk_color = Color(0.96, 0.94, 0.88, 1)
+shader_parameter/outline_px = 1.0
+shader_parameter/grain = 0.45
+shader_parameter/pastel = 0.18

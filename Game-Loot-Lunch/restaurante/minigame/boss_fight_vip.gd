@@ -108,7 +108,10 @@ func _play_stage(index: int, scene: PackedScene) -> Dictionary:
 		stage.autostart_when_alone = false
 		stage_holder.add_child(stage)
 		_current = stage
-		if stage.show_intro_banner:
+		if stage.tutorial and not TutorialBoard.was_seen(stage.tutorial):
+			# Primeira vez da etapa: o quadro desenhado no lugar do texto.
+			await TutorialBoard.play(self, stage.tutorial, true)
+		elif stage.show_intro_banner:
 			await banner.ask(stage.title, stage.instructions, "[ESPAÇO] começar")
 		if stage.has_method("set_results"):
 			stage.set_results(results)  # a avaliação do VIP precisa das estrelas

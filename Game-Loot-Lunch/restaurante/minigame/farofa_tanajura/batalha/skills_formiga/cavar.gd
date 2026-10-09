@@ -24,6 +24,11 @@ signal choice_made(index: int)
 @export var erupt_anim: SheetAnimation
 
 
+## Aviso em cima do chef (tecla do mouse + texto) enquanto dá para clicar.
+@export var prompt_caption: String = "CLIQUE NO BURACO QUE TREME!"
+@export var prompt_offset: Vector2 = Vector2(0, -74)
+
+
 var _waiting: bool = false
 var _round: int = 0
 
@@ -66,6 +71,9 @@ func _execute(battle: TurnBattle, ant: FormigaBattler, chef: ChefBattler) -> voi
 	for d in decoys:
 		others[d].tremble(0.6, hint * 0.6)
 	battle.announce("Clique no buraco certo!", Color(1.0, 0.9, 0.5))
+	# Tecla em cima do chef: botão ESQUERDO do mouse no buraco que treme.
+	var prompt := KeyPrompt.spawn(chef, prompt_offset, PackedStringArray(["MOUSE_LEFT"]), prompt_caption)
+	prompt.set_active(true)
 
 	_round += 1
 	var this_round: int = _round
@@ -74,6 +82,7 @@ func _execute(battle: TurnBattle, ant: FormigaBattler, chef: ChefBattler) -> voi
 		if this_round == _round:
 			_choose(-1))
 	var choice: int = await choice_made
+	prompt.dismiss()
 	for hole in holes:
 		hole.set_clickable(false)
 

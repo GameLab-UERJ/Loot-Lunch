@@ -11,10 +11,12 @@
 [ext_resource type="Resource" path="res://restaurante/minigame/macaxeira_manteiga/dados/macaxeira_ponto.tres" id="9_ponto"]
 [ext_resource type="Resource" path="res://restaurante/minigame/macaxeira_manteiga/dados/manteiga_dose.tres" id="10_dose"]
 [ext_resource type="Script" path="res://restaurante/minigame/comum/timing_gauge.gd" id="11_gauge"]
+[ext_resource type="PackedScene" path="res://restaurante/minigame/macaxeira_manteiga/tutorial_macaxeira.tscn" id="99_tutorial"]
 
 [node name="MacaxeiraManteiga" type="Node2D" node_paths=PackedStringArray("cook_meter", "butter_meter", "bottle", "macaxeira")]
 texture_filter = 1
 script = ExtResource("1_script")
+tutorial = ExtResource("99_tutorial")
 cook_meter = NodePath("Cozimento")
 butter_meter = NodePath("Manteiga")
 bottle = NodePath("Garrafa")

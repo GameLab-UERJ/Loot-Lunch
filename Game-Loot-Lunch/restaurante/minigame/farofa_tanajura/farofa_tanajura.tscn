@@ -22,9 +22,11 @@
 [ext_resource type="PackedScene" path="res://restaurante/minigame/farofa_tanajura/batalha/rainha.tscn" id="20_rainha"]
 [ext_resource type="Script" path="res://restaurante/minigame/comum/boss_health_bar.gd" id="21_bossbar"]
 [ext_resource type="Script" path="res://restaurante/minigame/comum/turn_order_bar.gd" id="23_turnbar"]
+[ext_resource type="PackedScene" path="res://restaurante/minigame/farofa_tanajura/tutorial_farofa.tscn" id="99_tutorial"]
 
 [node name="FarofaTanajura" type="Node2D" node_paths=PackedStringArray("boss_slot", "battle", "chef", "summoner", "formation", "cutscene", "battle_layer")]
 script = ExtResource("1_script")
+tutorial = ExtResource("99_tutorial")
 ant_scene = ExtResource("2_formiga")
 boss_scene = ExtResource("20_rainha")
 boss_slot = NodePath("VagaRainha")

@@ -1,0 +1,1402 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://restaurante/UI/tutorial/tutorial_board.gd" id="1_r"]
+[ext_resource type="Script" path="res://restaurante/UI/tutorial/tutorial_page.gd" id="2_r"]
+[ext_resource type="Script" path="res://restaurante/UI/tutorial/chalk_doodle.gd" id="3_r"]
+[ext_resource type="Script" path="res://restaurante/componentes/key_cap.gd" id="4_r"]
+[ext_resource type="Script" path="res://restaurante/minigame/comum/sheet_sprite.gd" id="5_r"]
+[ext_resource type="Material" path="res://restaurante/UI/tutorial/chalk_material.tres" id="6_r"]
+[ext_resource type="FontFile" path="res://assets/fonts/Silver.ttf" id="7_r"]
+[ext_resource type="Resource" path="res://restaurante/minigame/comum/anim/chef_idle.tres" id="8_r"]
+[ext_resource type="Resource" path="res://restaurante/minigame/farofa_tanajura/art/anim/formiga_idle.tres" id="9_r"]
+[ext_resource type="Texture2D" path="res://restaurante/minigame/farofa_tanajura/art/fx/player/frigideirada/frigideira_item.png" id="10_r"]
+[ext_resource type="Texture2D" path="res://restaurante/minigame/farofa_tanajura/art/fx/player/investida_sombria/sombra_chef.png" id="11_r"]
+[ext_resource type="Texture2D" path="res://restaurante/minigame/farofa_tanajura/art/fx/player/besta/besta_item.png" id="12_r"]
+[ext_resource type="Texture2D" path="res://restaurante/minigame/farofa_tanajura/art/fx/player/devorar/devorar_mordida.png" id="13_r"]
+[ext_resource type="Texture2D" path="res://restaurante/UI/arte/jscoutinho_ui_mana_idle.png" id="14_r"]
+[ext_resource type="Texture2D" path="res://restaurante/personagens/chef/art/jscoutinho_idle_L_34F.png" id="15_r"]
+[ext_resource type="Texture2D" path="res://restaurante/minigame/farofa_tanajura/art/Entities/formiga/tanajura_L_6F.png" id="16_r"]
+[ext_resource type="Resource" path="res://restaurante/minigame/farofa_tanajura/art/anim/chef_pulo.tres" id="17_r"]
+[ext_resource type="Texture2D" path="res://restaurante/minigame/farofa_tanajura/art/fx/formiga/terremoto/terremoto_onda_longa.png" id="18_r"]
+[ext_resource type="Texture2D" path="res://restaurante/minigame/farofa_tanajura/art/fx/formiga/cavar/cavar_buraco.png" id="19_r"]
+[ext_resource type="Resource" path="res://restaurante/minigame/farofa_tanajura/art/anim/fx_esfera_psiquica.tres" id="20_r"]
+[ext_resource type="Resource" path="res://restaurante/minigame/farofa_tanajura/art/anim/fx_bola_terra.tres" id="21_r"]
+[ext_resource type="Resource" path="res://restaurante/minigame/farofa_tanajura/art/anim/rainha_asas.tres" id="22_r"]
+[ext_resource type="Resource" path="res://restaurante/minigame/farofa_tanajura/art/anim/chef_besta.tres" id="23_r"]
+[ext_resource type="Resource" path="res://restaurante/minigame/farofa_tanajura/art/anim/guardia_idle.tres" id="24_r"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1"]
+font = ExtResource("7_r")
+font_size = 16
+font_color = Color(0.55, 0.95, 0.5, 1)
+line_spacing = -3.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_2"]
+font = ExtResource("7_r")
+font_size = 14
+font_color = Color(0.95, 0.93, 0.86, 0.6)
+line_spacing = -3.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_3"]
+font = ExtResource("7_r")
+font_size = 16
+font_color = Color(1, 0.82, 0.35, 1)
+line_spacing = -3.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_4"]
+font = ExtResource("7_r")
+font_size = 19
+font_color = Color(0.95, 0.93, 0.86, 0.95)
+line_spacing = -3.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_5"]
+font = ExtResource("7_r")
+font_size = 15
+font_color = Color(0.55, 0.8, 1, 1)
+line_spacing = -3.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_6"]
+font = ExtResource("7_r")
+font_size = 15
+font_color = Color(0.95, 0.93, 0.86, 0.95)
+line_spacing = -3.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_7"]
+font = ExtResource("7_r")
+font_size = 15
+font_color = Color(0.55, 0.95, 0.5, 1)
+line_spacing = -3.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_8"]
+font = ExtResource("7_r")
+font_size = 14
+font_color = Color(0.55, 0.8, 1, 1)
+line_spacing = -3.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_9"]
+font = ExtResource("7_r")
+font_size = 15
+font_color = Color(1, 0.82, 0.35, 1)
+line_spacing = -3.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_10"]
+font = ExtResource("7_r")
+font_size = 13
+font_color = Color(1, 0.82, 0.35, 1)
+line_spacing = -3.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_11"]
+font = ExtResource("7_r")
+font_size = 13
+font_color = Color(0.82, 0.62, 1, 1)
+line_spacing = -3.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_12"]
+font = ExtResource("7_r")
+font_size = 13
+font_color = Color(1, 0.45, 0.4, 1)
+line_spacing = -3.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_13"]
+font = ExtResource("7_r")
+font_size = 13
+font_color = Color(0.95, 0.93, 0.86, 0.6)
+line_spacing = -3.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_14"]
+font = ExtResource("7_r")
+font_size = 14
+font_color = Color(0.95, 0.93, 0.86, 0.95)
+line_spacing = -3.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_15"]
+font = ExtResource("7_r")
+font_size = 14
+font_color = Color(1, 0.82, 0.35, 1)
+line_spacing = -3.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_16"]
+font = ExtResource("7_r")
+font_size = 14
+font_color = Color(0.82, 0.62, 1, 1)
+line_spacing = -3.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_17"]
+font = ExtResource("7_r")
+font_size = 16
+font_color = Color(0.95, 0.93, 0.86, 0.95)
+line_spacing = -3.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_18"]
+font = ExtResource("7_r")
+font_size = 15
+font_color = Color(1, 0.45, 0.4, 1)
+line_spacing = -3.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_19"]
+font = ExtResource("7_r")
+font_size = 16
+font_color = Color(0.6, 1, 1, 1)
+line_spacing = -3.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_20"]
+font = ExtResource("7_r")
+font_size = 14
+font_color = Color(0.6, 1, 1, 1)
+line_spacing = -3.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_offset = Vector2(1, 1)
+
+[node name="Tutorial" type="CanvasLayer"]
+script = ExtResource("1_r")
+tag_text = "CHEFE!"
+close_text = "lutar!"
+
+[node name="Habilidades" type="Node2D" parent="."]
+script = ExtResource("2_r")
+title = "SUA VEZ DE ATACAR"
+caption = "Quando a [color=#ffd75a]barrinha dourada[/color] do chef enche, escolha um golpe com [color=#ffd75a]1 2 3 4[/color]. A [color=#8fd0ff]Frigideirada[/color] é de graça e devolve 1 de mana; o [color=#8cf27c]Devorar[/color] recupera vida e mana."
+
+[node name="Anim1" type="AnimatedSprite2D" parent="Habilidades"]
+position = Vector2(78, 168)
+script = ExtResource("5_r")
+sheets = Array[Resource]([ExtResource("8_r")])
+scale = Vector2(2, 2)
+material = ExtResource("6_r")
+
+[node name="Gauge2" type="Node2D" parent="Habilidades"]
+position = Vector2(78, 206)
+script = ExtResource("3_r")
+shape = 4
+size = Vector2(40, 5)
+vertical = false
+ratio = 1.0
+zone = Vector2(0, 0)
+fill_color = Color(0.55, 1, 0.45, 1)
+
+[node name="Texto3" type="Label" parent="Habilidades"]
+offset_left = 23.0
+offset_top = 214.0
+offset_right = 133.0
+offset_bottom = 250.0
+text = "barrinha cheia\n= SUA VEZ!"
+label_settings = SubResource("LabelSettings_1")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Texto4" type="Label" parent="Habilidades"]
+offset_left = 23.0
+offset_top = 92.0
+offset_right = 133.0
+offset_bottom = 124.0
+text = "o tempo para:\n5 s para escolher"
+label_settings = SubResource("LabelSettings_2")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Anim5" type="AnimatedSprite2D" parent="Habilidades"]
+position = Vector2(196, 168)
+script = ExtResource("5_r")
+sheets = Array[Resource]([ExtResource("9_r")])
+scale = Vector2(0.85, 0.85)
+material = ExtResource("6_r")
+
+[node name="Arrow6" type="Node2D" parent="Habilidades"]
+position = Vector2(0, 0)
+script = ExtResource("3_r")
+shape = 0
+points = PackedVector2Array(196, 108, 196, 124)
+color = Color(1, 0.82, 0.35, 1)
+width = 2.5
+animate = true
+
+[node name="Texto7" type="Label" parent="Habilidades"]
+offset_left = 171.0
+offset_top = 90.0
+offset_right = 221.0
+offset_bottom = 108.0
+text = "alvo"
+label_settings = SubResource("LabelSettings_3")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Tecla8" type="Node2D" parent="Habilidades"]
+position = Vector2(172, 226)
+script = ExtResource("4_r")
+key = "LEFT"
+height = 15.0
+font_size = 12
+
+[node name="Tecla9" type="Node2D" parent="Habilidades"]
+position = Vector2(190, 226)
+script = ExtResource("4_r")
+key = "RIGHT"
+height = 15.0
+font_size = 12
+
+[node name="Texto10" type="Label" parent="Habilidades"]
+offset_left = 199.0
+offset_top = 218.0
+offset_right = 219.0
+offset_bottom = 234.0
+text = "ou"
+label_settings = SubResource("LabelSettings_2")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Tecla11" type="Node2D" parent="Habilidades"]
+position = Vector2(226, 226)
+script = ExtResource("4_r")
+key = "MOUSE_LEFT"
+height = 15.0
+font_size = 12
+
+[node name="Texto12" type="Label" parent="Habilidades"]
+offset_left = 148.0
+offset_top = 238.0
+offset_right = 248.0
+offset_bottom = 254.0
+text = "troca o alvo"
+label_settings = SubResource("LabelSettings_2")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Line13" type="Node2D" parent="Habilidades"]
+position = Vector2(0, 0)
+script = ExtResource("3_r")
+shape = 1
+points = PackedVector2Array(258, 76, 258, 276)
+color = Color(0.95, 0.93, 0.86, 0.25)
+width = 1.5
+
+[node name="Tecla14" type="Node2D" parent="Habilidades"]
+position = Vector2(282, 94)
+script = ExtResource("4_r")
+key = "1"
+height = 20.0
+font_size = 17
+pressing = true
+
+[node name="Desenho15" type="Sprite2D" parent="Habilidades"]
+position = Vector2(312, 94)
+texture = ExtResource("10_r")
+scale = Vector2(1.4, 1.4)
+material = ExtResource("6_r")
+
+[node name="Texto16" type="Label" parent="Habilidades"]
+offset_left = 334.0
+offset_top = 80.0
+offset_right = 534.0
+offset_bottom = 101.0
+text = "Frigideirada"
+label_settings = SubResource("LabelSettings_4")
+horizontal_alignment = 0
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Texto17" type="Label" parent="Habilidades"]
+offset_left = 334.0
+offset_top = 96.0
+offset_right = 604.0
+offset_bottom = 113.0
+text = "grátis  •  +1 mana  •  atrasa a formiga"
+label_settings = SubResource("LabelSettings_5")
+horizontal_alignment = 0
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Tecla18" type="Node2D" parent="Habilidades"]
+position = Vector2(282, 138)
+script = ExtResource("4_r")
+key = "2"
+height = 20.0
+font_size = 17
+
+[node name="Desenho19" type="Sprite2D" parent="Habilidades"]
+position = Vector2(312, 138)
+texture = ExtResource("11_r")
+scale = Vector2(1.4, 1.4)
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+material = ExtResource("6_r")
+
+[node name="Texto20" type="Label" parent="Habilidades"]
+offset_left = 334.0
+offset_top = 124.0
+offset_right = 534.0
+offset_bottom = 145.0
+text = "Investida Sombria"
+label_settings = SubResource("LabelSettings_4")
+horizontal_alignment = 0
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Texto21" type="Label" parent="Habilidades"]
+offset_left = 334.0
+offset_top = 140.0
+offset_right = 604.0
+offset_bottom = 157.0
+text = "custa 1 mana  •  trombada forte"
+label_settings = SubResource("LabelSettings_6")
+horizontal_alignment = 0
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Tecla22" type="Node2D" parent="Habilidades"]
+position = Vector2(282, 182)
+script = ExtResource("4_r")
+key = "3"
+height = 20.0
+font_size = 17
+
+[node name="Desenho23" type="Sprite2D" parent="Habilidades"]
+position = Vector2(312, 182)
+texture = ExtResource("12_r")
+scale = Vector2(1.4, 1.4)
+material = ExtResource("6_r")
+
+[node name="Texto24" type="Label" parent="Habilidades"]
+offset_left = 334.0
+offset_top = 168.0
+offset_right = 534.0
+offset_bottom = 189.0
+text = "Besta"
+label_settings = SubResource("LabelSettings_4")
+horizontal_alignment = 0
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Texto25" type="Label" parent="Habilidades"]
+offset_left = 334.0
+offset_top = 184.0
+offset_right = 604.0
+offset_bottom = 201.0
+text = "custa 2 mana  •  acerta a Rainha VOANDO"
+label_settings = SubResource("LabelSettings_6")
+horizontal_alignment = 0
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Tecla26" type="Node2D" parent="Habilidades"]
+position = Vector2(282, 226)
+script = ExtResource("4_r")
+key = "4"
+height = 20.0
+font_size = 17
+
+[node name="Desenho27" type="Sprite2D" parent="Habilidades"]
+position = Vector2(312, 226)
+texture = ExtResource("13_r")
+scale = Vector2(0.8, 0.8)
+region_enabled = true
+region_rect = Rect2(96, 0, 48, 48)
+material = ExtResource("6_r")
+
+[node name="Texto28" type="Label" parent="Habilidades"]
+offset_left = 334.0
+offset_top = 212.0
+offset_right = 534.0
+offset_bottom = 233.0
+text = "Devorar"
+label_settings = SubResource("LabelSettings_4")
+horizontal_alignment = 0
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Texto29" type="Label" parent="Habilidades"]
+offset_left = 334.0
+offset_top = 228.0
+offset_right = 604.0
+offset_bottom = 262.0
+text = "formiga com menos de 20%: engole e\nrecupera 2 caveiras de vida +1 mana"
+label_settings = SubResource("LabelSettings_7")
+horizontal_alignment = 0
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Desenho30" type="Sprite2D" parent="Habilidades"]
+position = Vector2(286, 270)
+texture = ExtResource("14_r")
+scale = Vector2(0.8, 0.8)
+hframes = 11
+material = ExtResource("6_r")
+
+[node name="Texto31" type="Label" parent="Habilidades"]
+offset_left = 300.0
+offset_top = 262.0
+offset_right = 620.0
+offset_bottom = 278.0
+text = "parado com a barra cheia: +1 mana a cada 30 s (descanso)"
+label_settings = SubResource("LabelSettings_8")
+horizontal_alignment = 0
+mouse_filter = 2
+autowrap_mode = 3
+
+[node name="Turnos" type="Node2D" parent="."]
+script = ExtResource("2_r")
+title = "BARRA DE TURNOS"
+caption = "A barra de turnos ([color=#ffd75a]canto de baixo da tela[/color]) mostra quem vai agir: cada retrato anda até a [color=#ffd75a]ponta dourada[/color]. Quem chega lá, ataca! O número é a ordem: [color=#ffd75a]1 = o próximo[/color]."
+
+[node name="Rect32" type="Node2D" parent="Turnos"]
+position = Vector2(320, 160)
+script = ExtResource("3_r")
+shape = 3
+size = Vector2(520, 96)
+color = Color(0.95, 0.93, 0.86, 0.5)
+width = 1.5
+
+[node name="Texto33" type="Label" parent="Turnos"]
+offset_left = 72.0
+offset_top = 114.0
+offset_right = 212.0
+offset_bottom = 131.0
+text = "PRÓXIMO: VOCÊ"
+label_settings = SubResource("LabelSettings_9")
+horizontal_alignment = 0
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Line34" type="Node2D" parent="Turnos"]
+position = Vector2(0, 0)
+script = ExtResource("3_r")
+shape = 1
+points = PackedVector2Array(84, 162, 500, 162)
+color = Color(0.6, 0.66, 0.8, 1)
+width = 2.0
+
+[node name="Line35" type="Node2D" parent="Turnos"]
+position = Vector2(0, 0)
+script = ExtResource("3_r")
+shape = 1
+points = PackedVector2Array(500, 162, 562, 162)
+color = Color(1, 0.82, 0.35, 1)
+width = 4.0
+
+[node name="Texto36" type="Label" parent="Turnos"]
+offset_left = 501.0
+offset_top = 176.0
+offset_right = 561.0
+offset_bottom = 194.0
+text = "AÇÃO!"
+label_settings = SubResource("LabelSettings_3")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Texto37" type="Label" parent="Turnos"]
+offset_left = 70.0
+offset_top = 176.0
+offset_right = 150.0
+offset_bottom = 192.0
+text = "esperando"
+label_settings = SubResource("LabelSettings_2")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Seta38" type="Node2D" parent="Turnos"]
+position = Vector2(0, 0)
+script = ExtResource("3_r")
+shape = 0
+points = PackedVector2Array(150, 104, 440, 104)
+color = Color(0.95, 0.93, 0.86, 0.6)
+width = 1.5
+animate = true
+
+[node name="Texto39" type="Label" parent="Turnos"]
+offset_left = 186.0
+offset_top = 86.0
+offset_right = 406.0
+offset_bottom = 102.0
+text = "os retratos andam para a direita"
+label_settings = SubResource("LabelSettings_2")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Circle40" type="Node2D" parent="Turnos"]
+position = Vector2(460, 140)
+script = ExtResource("3_r")
+shape = 2
+size = Vector2(13, 13)
+color = Color(1, 0.82, 0.35, 1)
+width = 2.0
+filled = true
+
+[node name="Desenho41" type="Sprite2D" parent="Turnos"]
+position = Vector2(460, 140)
+texture = ExtResource("15_r")
+scale = Vector2(0.85, 0.85)
+hframes = 4
+
+[node name="Badge42" type="Node2D" parent="Turnos"]
+position = Vector2(474, 126)
+script = ExtResource("3_r")
+shape = 5
+size = Vector2(11, 11)
+text = "1"
+font_size = 13
+color = Color(1, 0.82, 0.35, 1)
+filled = true
+
+[node name="Ring43" type="Node2D" parent="Turnos"]
+position = Vector2(460, 140)
+script = ExtResource("3_r")
+shape = 10
+size = Vector2(19, 16)
+ratio = 0.6
+color = Color(1, 0.82, 0.35, 1)
+width = 1.5
+
+[node name="Texto44" type="Label" parent="Turnos"]
+offset_left = 410.0
+offset_top = 108.0
+offset_right = 510.0
+offset_bottom = 123.0
+text = "você (por cima)"
+label_settings = SubResource("LabelSettings_10")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Circle45" type="Node2D" parent="Turnos"]
+position = Vector2(360, 184)
+script = ExtResource("3_r")
+shape = 2
+size = Vector2(13, 13)
+color = Color(1, 0.45, 0.4, 1)
+width = 2.0
+filled = true
+
+[node name="Desenho46" type="Sprite2D" parent="Turnos"]
+position = Vector2(360, 184)
+texture = ExtResource("16_r")
+scale = Vector2(0.26, 0.26)
+hframes = 6
+
+[node name="Badge47" type="Node2D" parent="Turnos"]
+position = Vector2(374, 198)
+script = ExtResource("3_r")
+shape = 5
+size = Vector2(11, 11)
+text = "2"
+font_size = 13
+color = Color(1, 0.45, 0.4, 1)
+filled = true
+
+[node name="Circle48" type="Node2D" parent="Turnos"]
+position = Vector2(250, 184)
+script = ExtResource("3_r")
+shape = 2
+size = Vector2(13, 13)
+color = Color(0.82, 0.62, 1, 1)
+width = 2.0
+filled = true
+
+[node name="Desenho49" type="Sprite2D" parent="Turnos"]
+position = Vector2(250, 184)
+texture = ExtResource("16_r")
+scale = Vector2(0.26, 0.26)
+hframes = 6
+modulate = Color(1.05, 0.9, 1.1, 1)
+
+[node name="Badge50" type="Node2D" parent="Turnos"]
+position = Vector2(264, 198)
+script = ExtResource("3_r")
+shape = 5
+size = Vector2(11, 11)
+text = "3"
+font_size = 13
+color = Color(0.82, 0.62, 1, 1)
+filled = true
+
+[node name="Texto51" type="Label" parent="Turnos"]
+offset_left = 220.0
+offset_top = 204.0
+offset_right = 280.0
+offset_bottom = 219.0
+text = "Rainha"
+label_settings = SubResource("LabelSettings_11")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Texto52" type="Label" parent="Turnos"]
+offset_left = 305.0
+offset_top = 204.0
+offset_right = 415.0
+offset_bottom = 219.0
+text = "formigas (por baixo)"
+label_settings = SubResource("LabelSettings_12")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 3
+
+[node name="Circle53" type="Node2D" parent="Turnos"]
+position = Vector2(150, 184)
+script = ExtResource("3_r")
+shape = 2
+size = Vector2(13, 13)
+color = Color(0.6, 0.6, 0.6, 0.6)
+width = 2.0
+filled = true
+
+[node name="Desenho54" type="Sprite2D" parent="Turnos"]
+position = Vector2(150, 184)
+texture = ExtResource("16_r")
+scale = Vector2(0.26, 0.26)
+hframes = 6
+modulate = Color(1, 1, 1, 0.4)
+
+[node name="Texto55" type="Label" parent="Turnos"]
+offset_left = 156.0
+offset_top = 170.0
+offset_right = 176.0
+offset_bottom = 186.0
+text = "zz"
+label_settings = SubResource("LabelSettings_2")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Texto56" type="Label" parent="Turnos"]
+offset_left = 115.0
+offset_top = 204.0
+offset_right = 185.0
+offset_bottom = 219.0
+text = "atordoada"
+label_settings = SubResource("LabelSettings_13")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Texto57" type="Label" parent="Turnos"]
+offset_left = 40.0
+offset_top = 226.0
+offset_right = 600.0
+offset_bottom = 260.0
+text = "Na SUA VEZ o tempo para e o anel em volta do seu retrato conta os 5 s.\nRainha voando fica apagada (não ataca). Golpes atrasam a formiga!"
+label_settings = SubResource("LabelSettings_6")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Defesas" type="Node2D" parent="."]
+script = ExtResource("2_r")
+title = "DEFENDA-SE!"
+caption = "Formiga com [color=#ff7a6b]![/color] em cima vai atacar e [color=#ffd75a]a tecla aparece em cima do chef[/color]. Acertou o tempo? Contra-ataque e ela fica tonta!"
+
+[node name="Rect58" type="Node2D" parent="Defesas"]
+position = Vector2(118, 126)
+script = ExtResource("3_r")
+shape = 3
+size = Vector2(190, 92)
+color = Color(0.95, 0.93, 0.86, 0.22)
+width = 1.0
+
+[node name="Rect59" type="Node2D" parent="Defesas"]
+position = Vector2(320, 126)
+script = ExtResource("3_r")
+shape = 3
+size = Vector2(190, 92)
+color = Color(0.95, 0.93, 0.86, 0.22)
+width = 1.0
+
+[node name="Rect60" type="Node2D" parent="Defesas"]
+position = Vector2(522, 126)
+script = ExtResource("3_r")
+shape = 3
+size = Vector2(190, 92)
+color = Color(0.95, 0.93, 0.86, 0.22)
+width = 1.0
+
+[node name="Rect61" type="Node2D" parent="Defesas"]
+position = Vector2(118, 222)
+script = ExtResource("3_r")
+shape = 3
+size = Vector2(190, 92)
+color = Color(0.95, 0.93, 0.86, 0.22)
+width = 1.0
+
+[node name="Rect62" type="Node2D" parent="Defesas"]
+position = Vector2(320, 222)
+script = ExtResource("3_r")
+shape = 3
+size = Vector2(190, 92)
+color = Color(0.95, 0.93, 0.86, 0.22)
+width = 1.0
+
+[node name="Rect63" type="Node2D" parent="Defesas"]
+position = Vector2(522, 222)
+script = ExtResource("3_r")
+shape = 3
+size = Vector2(190, 92)
+color = Color(0.95, 0.93, 0.86, 0.22)
+width = 1.0
+
+[node name="Texto64" type="Label" parent="Defesas"]
+offset_left = 25.0
+offset_top = 84.0
+offset_right = 211.0
+offset_bottom = 100.0
+text = "INVESTIDA • PEDRAS • CORTES"
+label_settings = SubResource("LabelSettings_14")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Anim65" type="AnimatedSprite2D" parent="Defesas"]
+position = Vector2(66, 136)
+script = ExtResource("5_r")
+sheets = Array[Resource]([ExtResource("8_r")])
+scale = Vector2(1.3, 1.3)
+material = ExtResource("6_r")
+
+[node name="Ring66" type="Node2D" parent="Defesas"]
+position = Vector2(66, 134)
+script = ExtResource("3_r")
+shape = 10
+size = Vector2(28, 12)
+color = Color(0.95, 0.93, 0.86, 0.95)
+fill_color = Color(0.55, 0.95, 0.5, 1)
+animate = true
+width = 2.0
+
+[node name="Anim67" type="AnimatedSprite2D" parent="Defesas"]
+position = Vector2(172, 134)
+script = ExtResource("5_r")
+sheets = Array[Resource]([ExtResource("9_r")])
+scale = Vector2(0.5, 0.5)
+material = ExtResource("6_r")
+
+[node name="Bang68" type="Node2D" parent="Defesas"]
+position = Vector2(172, 106)
+script = ExtResource("3_r")
+shape = 9
+size = Vector2(8, 14)
+color = Color(1, 0.45, 0.4, 1)
+
+[node name="Seta69" type="Node2D" parent="Defesas"]
+position = Vector2(0, 0)
+script = ExtResource("3_r")
+shape = 0
+points = PackedVector2Array(152, 136, 98, 136)
+color = Color(0.95, 0.93, 0.86, 0.95)
+width = 1.5
+animate = true
+
+[node name="Tecla70" type="Node2D" parent="Defesas"]
+position = Vector2(128, 154)
+script = ExtResource("4_r")
+key = "SPACE"
+height = 15.0
+font_size = 12
+pressing = true
+
+[node name="Texto71" type="Label" parent="Defesas"]
+offset_left = 28.0
+offset_top = 160.0
+offset_right = 208.0
+offset_bottom = 176.0
+text = "quando o anel fechar"
+label_settings = SubResource("LabelSettings_15")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Texto72" type="Label" parent="Defesas"]
+offset_left = 230.0
+offset_top = 84.0
+offset_right = 410.0
+offset_bottom = 100.0
+text = "TERREMOTO"
+label_settings = SubResource("LabelSettings_14")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Anim73" type="AnimatedSprite2D" parent="Defesas"]
+position = Vector2(274, 128)
+script = ExtResource("5_r")
+sheets = Array[Resource]([ExtResource("17_r")])
+scale = Vector2(1.2, 1.2)
+material = ExtResource("6_r")
+
+[node name="Desenho74" type="Sprite2D" parent="Defesas"]
+position = Vector2(326, 156)
+texture = ExtResource("18_r")
+scale = Vector2(0.32, 0.32)
+hframes = 10
+frame = 6
+material = ExtResource("6_r")
+
+[node name="Tecla75" type="Node2D" parent="Defesas"]
+position = Vector2(370, 114)
+script = ExtResource("4_r")
+key = "SPACE"
+height = 15.0
+font_size = 12
+pressing = true
+
+[node name="Texto76" type="Label" parent="Defesas"]
+offset_left = 325.0
+offset_top = 122.0
+offset_right = 415.0
+offset_bottom = 138.0
+text = "PULE a onda"
+label_settings = SubResource("LabelSettings_15")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Texto77" type="Label" parent="Defesas"]
+offset_left = 432.0
+offset_top = 84.0
+offset_right = 612.0
+offset_bottom = 100.0
+text = "CAVAR"
+label_settings = SubResource("LabelSettings_14")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Desenho78" type="Sprite2D" parent="Defesas"]
+position = Vector2(466, 136)
+texture = ExtResource("19_r")
+hframes = 5
+frame = 1
+material = ExtResource("6_r")
+
+[node name="Desenho79" type="Sprite2D" parent="Defesas"]
+position = Vector2(502, 136)
+texture = ExtResource("19_r")
+hframes = 5
+frame = 2
+material = ExtResource("6_r")
+
+[node name="Desenho80" type="Sprite2D" parent="Defesas"]
+position = Vector2(538, 136)
+texture = ExtResource("19_r")
+hframes = 5
+frame = 1
+material = ExtResource("6_r")
+
+[node name="Line81" type="Node2D" parent="Defesas"]
+position = Vector2(0, 0)
+script = ExtResource("3_r")
+shape = 1
+points = PackedVector2Array(490, 126, 492, 120)
+color = Color(1, 0.82, 0.35, 1)
+width = 1.5
+
+[node name="Line82" type="Node2D" parent="Defesas"]
+position = Vector2(0, 0)
+script = ExtResource("3_r")
+shape = 1
+points = PackedVector2Array(514, 126, 512, 120)
+color = Color(1, 0.82, 0.35, 1)
+width = 1.5
+
+[node name="Tecla83" type="Node2D" parent="Defesas"]
+position = Vector2(584, 126)
+script = ExtResource("4_r")
+key = "MOUSE_LEFT"
+height = 18.0
+font_size = 15
+pressing = true
+
+[node name="Texto84" type="Label" parent="Defesas"]
+offset_left = 432.0
+offset_top = 154.0
+offset_right = 612.0
+offset_bottom = 170.0
+text = "clique no buraco que TREME"
+label_settings = SubResource("LabelSettings_15")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Texto85" type="Label" parent="Defesas"]
+offset_left = 28.0
+offset_top = 180.0
+offset_right = 208.0
+offset_bottom = 196.0
+text = "RAIO PSÍQUICO"
+label_settings = SubResource("LabelSettings_16")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Anim86" type="AnimatedSprite2D" parent="Defesas"]
+position = Vector2(66, 232)
+script = ExtResource("5_r")
+sheets = Array[Resource]([ExtResource("8_r")])
+scale = Vector2(1.3, 1.3)
+material = ExtResource("6_r")
+
+[node name="Line87" type="Node2D" parent="Defesas"]
+position = Vector2(0, 0)
+script = ExtResource("3_r")
+shape = 1
+points = PackedVector2Array(188, 206, 138, 220, 78, 228)
+color = Color(0.82, 0.62, 1, 1)
+width = 3.0
+dashed = true
+animate = true
+
+[node name="Tecla88" type="Node2D" parent="Defesas"]
+position = Vector2(140, 242)
+script = ExtResource("4_r")
+key = "SPACE"
+height = 15.0
+font_size = 12
+pressing = true
+
+[node name="Texto89" type="Label" parent="Defesas"]
+offset_left = 80.0
+offset_top = 250.0
+offset_right = 200.0
+offset_bottom = 266.0
+text = "MARTELE rápido!"
+label_settings = SubResource("LabelSettings_15")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Texto90" type="Label" parent="Defesas"]
+offset_left = 230.0
+offset_top = 180.0
+offset_right = 410.0
+offset_bottom = 196.0
+text = "ESFERAS PSÍQUICAS"
+label_settings = SubResource("LabelSettings_16")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Anim91" type="AnimatedSprite2D" parent="Defesas"]
+position = Vector2(314, 236)
+script = ExtResource("5_r")
+sheets = Array[Resource]([ExtResource("8_r")])
+scale = Vector2(1.3, 1.3)
+material = ExtResource("6_r")
+
+[node name="Anim92" type="AnimatedSprite2D" parent="Defesas"]
+position = Vector2(270, 200)
+script = ExtResource("5_r")
+sheets = Array[Resource]([ExtResource("20_r")])
+scale = Vector2(1.3, 1.3)
+material = ExtResource("6_r")
+
+[node name="Circle93" type="Node2D" parent="Defesas"]
+position = Vector2(270, 250)
+script = ExtResource("3_r")
+shape = 2
+size = Vector2(7, 3)
+color = Color(0.82, 0.62, 1, 0.6)
+width = 1.0
+
+[node name="Anim94" type="AnimatedSprite2D" parent="Defesas"]
+position = Vector2(356, 210)
+script = ExtResource("5_r")
+sheets = Array[Resource]([ExtResource("20_r")])
+scale = Vector2(1.3, 1.3)
+material = ExtResource("6_r")
+
+[node name="Circle95" type="Node2D" parent="Defesas"]
+position = Vector2(356, 250)
+script = ExtResource("3_r")
+shape = 2
+size = Vector2(7, 3)
+color = Color(0.82, 0.62, 1, 0.6)
+width = 1.0
+
+[node name="Anim96" type="AnimatedSprite2D" parent="Defesas"]
+position = Vector2(296, 216)
+script = ExtResource("5_r")
+sheets = Array[Resource]([ExtResource("20_r")])
+scale = Vector2(1.3, 1.3)
+material = ExtResource("6_r")
+
+[node name="Circle97" type="Node2D" parent="Defesas"]
+position = Vector2(296, 250)
+script = ExtResource("3_r")
+shape = 2
+size = Vector2(7, 3)
+color = Color(0.82, 0.62, 1, 0.6)
+width = 1.0
+
+[node name="Anim98" type="AnimatedSprite2D" parent="Defesas"]
+position = Vector2(380, 198)
+script = ExtResource("5_r")
+sheets = Array[Resource]([ExtResource("20_r")])
+scale = Vector2(1.3, 1.3)
+material = ExtResource("6_r")
+
+[node name="Circle99" type="Node2D" parent="Defesas"]
+position = Vector2(380, 250)
+script = ExtResource("3_r")
+shape = 2
+size = Vector2(7, 3)
+color = Color(0.82, 0.62, 1, 0.6)
+width = 1.0
+
+[node name="Tecla100" type="Node2D" parent="Defesas"]
+position = Vector2(280, 236)
+script = ExtResource("4_r")
+key = "LEFT"
+height = 16.0
+font_size = 13
+pressing = true
+
+[node name="Tecla101" type="Node2D" parent="Defesas"]
+position = Vector2(348, 236)
+script = ExtResource("4_r")
+key = "RIGHT"
+height = 16.0
+font_size = 13
+pressing = true
+
+[node name="Texto102" type="Label" parent="Defesas"]
+offset_left = 230.0
+offset_top = 256.0
+offset_right = 410.0
+offset_bottom = 272.0
+text = "DESVIE para os lados"
+label_settings = SubResource("LabelSettings_15")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Texto103" type="Label" parent="Defesas"]
+offset_left = 432.0
+offset_top = 180.0
+offset_right = 612.0
+offset_bottom = 196.0
+text = "BOLA DE TERRA"
+label_settings = SubResource("LabelSettings_14")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Anim104" type="AnimatedSprite2D" parent="Defesas"]
+position = Vector2(568, 216)
+script = ExtResource("5_r")
+sheets = Array[Resource]([ExtResource("21_r")])
+material = ExtResource("6_r")
+
+[node name="Tecla105" type="Node2D" parent="Defesas"]
+position = Vector2(462, 222)
+script = ExtResource("4_r")
+key = "1"
+height = 16.0
+font_size = 13
+pressing = true
+
+[node name="Tecla106" type="Node2D" parent="Defesas"]
+position = Vector2(484, 222)
+script = ExtResource("4_r")
+key = "2"
+height = 16.0
+font_size = 13
+
+[node name="Tecla107" type="Node2D" parent="Defesas"]
+position = Vector2(506, 222)
+script = ExtResource("4_r")
+key = "3"
+height = 16.0
+font_size = 13
+
+[node name="Texto108" type="Label" parent="Defesas"]
+offset_left = 424.0
+offset_top = 234.0
+offset_right = 544.0
+offset_bottom = 282.0
+text = "acerte 3 golpes\nna Rainha antes\ndo arremesso!"
+label_settings = SubResource("LabelSettings_15")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Rainha" type="Node2D" parent="."]
+script = ExtResource("2_r")
+title = "A RAINHA"
+caption = "Vitória = a [color=#c99cff]Rainha cai[/color]! Voando, [color=#ffd75a]só a Besta alcança[/color] (e a queda enche sua mana). Na fase final as [color=#8fd0ff]Guardiãs[/color] protegem a Rainha: derrube elas primeiro!"
+
+[node name="RainhaVoando" type="Node2D" parent="Rainha"]
+position = Vector2(140, 150)
+scale = Vector2(0.5, 0.5)
+
+[node name="Anim109" type="AnimatedSprite2D" parent="Rainha/RainhaVoando"]
+position = Vector2(50, -62)
+script = ExtResource("5_r")
+sheets = Array[Resource]([ExtResource("22_r")])
+scale = Vector2(2, 2)
+material = ExtResource("6_r")
+
+[node name="Anim110" type="AnimatedSprite2D" parent="Rainha/RainhaVoando"]
+position = Vector2(0, 0)
+script = ExtResource("5_r")
+sheets = Array[Resource]([ExtResource("9_r")])
+scale = Vector2(3, 3)
+material = ExtResource("6_r")
+modulate = Color(1.05, 0.9, 1.1, 1)
+
+[node name="Anim111" type="AnimatedSprite2D" parent="Rainha"]
+position = Vector2(70, 238)
+script = ExtResource("5_r")
+sheets = Array[Resource]([ExtResource("23_r")])
+scale = Vector2(1.5, 1.5)
+material = ExtResource("6_r")
+
+[node name="Seta112" type="Node2D" parent="Rainha"]
+position = Vector2(0, 0)
+script = ExtResource("3_r")
+shape = 0
+points = PackedVector2Array(86, 222, 128, 170)
+color = Color(1, 0.82, 0.35, 1)
+width = 2.0
+animate = true
+
+[node name="Texto113" type="Label" parent="Rainha"]
+offset_left = 0.0
+offset_top = 82.0
+offset_right = 120.0
+offset_bottom = 118.0
+text = "voando: só a\nBESTA alcança"
+label_settings = SubResource("LabelSettings_3")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Texto114" type="Label" parent="Rainha"]
+offset_left = 113.0
+offset_top = 220.0
+offset_right = 243.0
+offset_bottom = 254.0
+text = "acertou = ela cai\ne sua MANA enche!"
+label_settings = SubResource("LabelSettings_5")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Desenho115" type="Sprite2D" parent="Rainha"]
+position = Vector2(178, 260)
+texture = ExtResource("14_r")
+scale = Vector2(0.9, 0.9)
+hframes = 11
+material = ExtResource("6_r")
+
+[node name="Desenho116" type="Sprite2D" parent="Rainha"]
+position = Vector2(196, 260)
+texture = ExtResource("14_r")
+scale = Vector2(0.9, 0.9)
+hframes = 11
+material = ExtResource("6_r")
+
+[node name="Desenho117" type="Sprite2D" parent="Rainha"]
+position = Vector2(214, 260)
+texture = ExtResource("14_r")
+scale = Vector2(0.9, 0.9)
+hframes = 11
+material = ExtResource("6_r")
+
+[node name="Line118" type="Node2D" parent="Rainha"]
+position = Vector2(0, 0)
+script = ExtResource("3_r")
+shape = 1
+points = PackedVector2Array(258, 76, 258, 276)
+color = Color(0.95, 0.93, 0.86, 0.25)
+width = 1.5
+
+[node name="Texto119" type="Label" parent="Rainha"]
+offset_left = 260.0
+offset_top = 76.0
+offset_right = 460.0
+offset_bottom = 94.0
+text = "60% e 20% de vida:"
+label_settings = SubResource("LabelSettings_17")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Texto120" type="Label" parent="Rainha"]
+offset_left = 260.0
+offset_top = 94.0
+offset_right = 460.0
+offset_bottom = 145.0
+text = "ela DEVORA as pequenas,\nconjura novas e fica\nmais rápida"
+label_settings = SubResource("LabelSettings_18")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Anim121" type="AnimatedSprite2D" parent="Rainha"]
+position = Vector2(300, 168)
+script = ExtResource("5_r")
+sheets = Array[Resource]([ExtResource("9_r")])
+scale = Vector2(0.5, 0.5)
+material = ExtResource("6_r")
+
+[node name="Anim122" type="AnimatedSprite2D" parent="Rainha"]
+position = Vector2(340, 168)
+script = ExtResource("5_r")
+sheets = Array[Resource]([ExtResource("9_r")])
+scale = Vector2(0.5, 0.5)
+material = ExtResource("6_r")
+
+[node name="Seta123" type="Node2D" parent="Rainha"]
+position = Vector2(0, 0)
+script = ExtResource("3_r")
+shape = 0
+points = PackedVector2Array(364, 168, 396, 168)
+color = Color(0.95, 0.93, 0.86, 0.95)
+width = 1.5
+animate = true
+
+[node name="RainhaDevora" type="Node2D" parent="Rainha"]
+position = Vector2(436, 170)
+scale = Vector2(0.32, 0.32)
+
+[node name="Anim124" type="AnimatedSprite2D" parent="Rainha/RainhaDevora"]
+position = Vector2(0, 0)
+script = ExtResource("5_r")
+sheets = Array[Resource]([ExtResource("9_r")])
+scale = Vector2(3, 3)
+material = ExtResource("6_r")
+modulate = Color(1.05, 0.9, 1.1, 1)
+
+[node name="Line125" type="Node2D" parent="Rainha"]
+position = Vector2(0, 0)
+script = ExtResource("3_r")
+shape = 1
+points = PackedVector2Array(470, 76, 470, 276)
+color = Color(0.95, 0.93, 0.86, 0.25)
+width = 1.5
+
+[node name="Texto126" type="Label" parent="Rainha"]
+offset_left = 479.0
+offset_top = 76.0
+offset_right = 609.0
+offset_bottom = 94.0
+text = "FASE FINAL"
+label_settings = SubResource("LabelSettings_19")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="RainhaFinal" type="Node2D" parent="Rainha"]
+position = Vector2(548, 140)
+scale = Vector2(0.3, 0.3)
+
+[node name="Anim127" type="AnimatedSprite2D" parent="Rainha/RainhaFinal"]
+position = Vector2(50, -62)
+script = ExtResource("5_r")
+sheets = Array[Resource]([ExtResource("22_r")])
+scale = Vector2(2, 2)
+material = ExtResource("6_r")
+
+[node name="Anim128" type="AnimatedSprite2D" parent="Rainha/RainhaFinal"]
+position = Vector2(0, 0)
+script = ExtResource("5_r")
+sheets = Array[Resource]([ExtResource("9_r")])
+scale = Vector2(3, 3)
+material = ExtResource("6_r")
+modulate = Color(1.05, 0.9, 1.1, 1)
+
+[node name="Circle129" type="Node2D" parent="Rainha"]
+position = Vector2(548, 136)
+script = ExtResource("3_r")
+shape = 2
+size = Vector2(30, 30)
+color = Color(0.6, 1, 1, 0.7)
+width = 1.5
+filled = true
+
+[node name="Anim130" type="AnimatedSprite2D" parent="Rainha"]
+position = Vector2(512, 214)
+script = ExtResource("5_r")
+sheets = Array[Resource]([ExtResource("24_r")])
+scale = Vector2(0.45, 0.45)
+material = ExtResource("6_r")
+
+[node name="Anim131" type="AnimatedSprite2D" parent="Rainha"]
+position = Vector2(578, 214)
+script = ExtResource("5_r")
+sheets = Array[Resource]([ExtResource("24_r")])
+scale = Vector2(0.45, 0.45)
+material = ExtResource("6_r")
+
+[node name="Line132" type="Node2D" parent="Rainha"]
+position = Vector2(0, 0)
+script = ExtResource("3_r")
+shape = 1
+points = PackedVector2Array(528, 150, 514, 198)
+color = Color(0.6, 1, 1, 0.6)
+width = 1.0
+dashed = true
+animate = true
+
+[node name="Line133" type="Node2D" parent="Rainha"]
+position = Vector2(0, 0)
+script = ExtResource("3_r")
+shape = 1
+points = PackedVector2Array(566, 150, 578, 198)
+color = Color(0.6, 1, 1, 0.6)
+width = 1.0
+dashed = true
+animate = true
+
+[node name="Texto134" type="Label" parent="Rainha"]
+offset_left = 474.0
+offset_top = 236.0
+offset_right = 614.0
+offset_bottom = 284.0
+text = "Guardiãs vivas = Rainha\nprotegida: derrube\nas Guardiãs primeiro!"
+label_settings = SubResource("LabelSettings_20")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0

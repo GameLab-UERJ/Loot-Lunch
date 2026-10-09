@@ -12,10 +12,12 @@
 [ext_resource type="Script" path="res://restaurante/minigame/comum/target_meter_component.gd" id="10_meter"]
 [ext_resource type="Resource" path="res://restaurante/minigame/carne_sol/dados/carne_sol_ponto.tres" id="11_ponto"]
 [ext_resource type="Script" path="res://restaurante/minigame/comum/timing_gauge.gd" id="12_gauge"]
+[ext_resource type="PackedScene" path="res://restaurante/minigame/carne_sol/tutorial_carne_sol.tscn" id="99_tutorial"]
 
 [node name="CarneSol" type="Node2D" node_paths=PackedStringArray("meter", "mini_sol", "meat", "burn_marks", "chef_sprite", "beam")]
 texture_filter = 1
 script = ExtResource("1_script")
+tutorial = ExtResource("99_tutorial")
 meter = NodePath("Medidor")
 mini_sol = NodePath("MiniSol")
 meat = NodePath("Carne")

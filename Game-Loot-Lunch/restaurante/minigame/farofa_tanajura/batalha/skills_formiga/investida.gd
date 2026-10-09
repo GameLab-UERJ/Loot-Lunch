@@ -39,6 +39,7 @@ func _execute(battle: TurnBattle, ant: FormigaBattler, chef: ChefBattler) -> voi
 		.set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN)
 
 	var beats: Array[float] = [windup + open_after]
+	battle.qte.prompt_caption = "DEFENDA!"
 	var hits: int = await battle.qte.run(beats)
 	battle.register_qte(hits > 0)
 	if hits > 0:

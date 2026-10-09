@@ -40,6 +40,7 @@ func _execute(battle: TurnBattle, ant: FormigaBattler, chef: ChefBattler) -> voi
 
 	var started_ms: int = Time.get_ticks_msec()
 	var beats: Array[float] = [hit_time]
+	battle.qte.prompt_caption = "PULE!"
 	var hits: int = await battle.qte.run(beats)
 	var elapsed: float = (Time.get_ticks_msec() - started_ms) / 1000.0
 	battle.register_qte(hits > 0)

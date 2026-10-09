@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" path="res://restaurante/cozinha/estacoes/pe_cogumelo.tscn" id="12_cogumelo"]
 [ext_resource type="PackedScene" path="res://restaurante/cozinha/estacoes/caixa_carne.tscn" id="13_mesa_carne"]
 [ext_resource type="PackedScene" path="res://restaurante/cozinha/estacoes/tabua_corte.tscn" id="14_mesa_corte"]
+[ext_resource type="PackedScene" path="res://restaurante/leveis/lvl_1/tutorial_lvl_1.tscn" id="99_tutorial"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cima"]
 size = Vector2(592, 16)
@@ -32,6 +33,7 @@ size = Vector2(560, 12)
 
 [node name="Lvl1" type="Node2D" node_paths=PackedStringArray("chef", "director", "shift", "hud")]
 script = ExtResource("1_level")
+tutorial = ExtResource("99_tutorial")
 level_data = ExtResource("2_data")
 chef = NodePath("Chef")
 director = NodePath("Diretor")
