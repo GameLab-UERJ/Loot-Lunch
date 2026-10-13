@@ -64,6 +64,9 @@ func _execute(battle: TurnBattle, ant: FormigaBattler, chef: ChefBattler) -> voi
 	dodge.name = "DesvioEsferas"
 	battle.add_child(dodge)
 	dodge.start(chef, left_x, right_x)
+	# Setas em cima do chef (acompanham ele enquanto desvia).
+	var prompt := KeyPrompt.spawn(chef, Vector2(0, -60), PackedStringArray(["LEFT", "RIGHT"]), "DESVIE!")
+	prompt.set_active(true)
 	_running = true
 	ant.squash(Vector2(1.15, 0.85), 0.4)
 	await battle.wait(0.5)
@@ -83,6 +86,7 @@ func _execute(battle: TurnBattle, ant: FormigaBattler, chef: ChefBattler) -> voi
 	await _wait_ticking(warn_time + fall_time + 0.4)
 	_running = false
 
+	prompt.dismiss()
 	dodge.stop()
 	dodge.queue_free()
 	zone.queue_free()

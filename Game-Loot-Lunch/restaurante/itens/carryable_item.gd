@@ -61,6 +61,52 @@ func notify_released() -> void:
 	dropped.emit()
 
 
+## Põe o item no chão em `desired`, mas NUNCA dentro de algo sólido (bancada,
+## churrasqueira, parede...): se o lugar está ocupado, procura o ponto livre mais perto
+## em anéis em volta; sem nenhum livre, cai em `fallback` (ex.: no pé de quem largou).
+## `mask` = camadas que contam como sólido (1 = mundo). `exclude` = corpos ignorados.
+func settle(desired: Vector2, fallback: Vector2, mask: int = 1, exclude: Array[RID] = [],
+		clearance: float = 8.0) -> Vector2:
+	global_position = find_free_spot(desired, fallback, mask, exclude, clearance)
+	return global_position
+
+
+func find_free_spot(desired: Vector2, fallback: Vector2, mask: int = 1, exclude: Array[RID] = [],
+		clearance: float = 8.0) -> Vector2:
+	if not is_inside_tree():
+		return desired
+	var space: PhysicsDirectSpaceState2D = get_world_2d().direct_space_state
+	var shape := CircleShape2D.new()
+	shape.radius = clearance
+	var query := PhysicsShapeQueryParameters2D.new()
+	query.shape = shape
+	query.collision_mask = mask
+	query.collide_with_bodies = true
+	query.collide_with_areas = false
+	query.exclude = exclude
+	var is_free := func(point: Vector2) -> bool:
+		query.transform = Transform2D(0.0, point)
+		return space.intersect_shape(query, 1).is_empty()
+	if is_free.call(desired):
+		return desired
+	# Anéis de 8 em 8 px; em cada anel, prefere o lado de quem largou (`fallback`).
+	for ring in range(1, 6):
+		var radius: float = ring * 8.0
+		var best: Vector2 = Vector2.INF
+		var best_distance: float = INF
+		for i in 12:
+			var point: Vector2 = desired + Vector2.RIGHT.rotated(TAU * i / 12.0) * radius
+			if not is_free.call(point):
+				continue
+			var distance: float = point.distance_squared_to(fallback)
+			if distance < best_distance:
+				best_distance = distance
+				best = point
+		if best != Vector2.INF:
+			return best
+	return fallback
+
+
 func _apply_data() -> void:
 	if sprite:
 		sprite.texture = data.texture if data else null

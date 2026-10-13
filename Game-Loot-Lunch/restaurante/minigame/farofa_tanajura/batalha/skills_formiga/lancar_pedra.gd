@@ -75,6 +75,7 @@ func _execute(battle: TurnBattle, ant: FormigaBattler, chef: ChefBattler) -> voi
 	battle.qte.configure(early_tolerance, late_tolerance, false, 0.0, whiff_lockout)
 	battle.qte.ring_anchor = chef.qte_anchor
 	battle.qte.beat_resolved.connect(_on_beat_resolved)
+	battle.qte.prompt_caption = "REBATA!" if reflect else "DEFENDA!"
 	var hits: int = await battle.qte.run(hit_times)
 	battle.qte.beat_resolved.disconnect(_on_beat_resolved)
 	_cancelled = true  # timers de arremesso que ainda não dispararam não jogam mais nada

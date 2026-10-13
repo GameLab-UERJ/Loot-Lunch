@@ -54,7 +54,19 @@ signal battle_finished(victory: bool)
 @export_range(1, 5) var rage_multiplier: int = 2
 
 @export_group("Tempo")
+## RITMO DA LUTA: multiplica a velocidade com que as barras de espera enchem (chef e
+## formigas). 1.25 = todo mundo ataca 25% mais vezes. Os QTEs não mudam.
+@export_range(0.25, 4.0, 0.05) var attack_speed: float = 1.25
+## Velocidade das ANIMAÇÕES durante a luta (Engine.time_scale). 1 = normal. Acima de 1
+## os golpes ficam mais rápidos, mas as janelas dos QTEs também encurtam.
+@export_range(0.5, 3.0, 0.05) var animation_speed: float = 1.0
+## VEZ DO CHEF: a barra dele encheu e nenhuma habilidade estava agendada -> o tempo das
+## formigas PARA (igual durante o ataque delas) até ele escolher.
+@export var pause_on_chef_turn: bool = true
+## Segundos (reais) para escolher. Passou disso, o chef PERDE A VEZ e o tempo volta.
+@export_range(1.0, 30.0, 0.5, "suffix:s") var decision_time: float = 5.0
 ## O relógio continua correndo com o menu aberto (mais difícil e mais fluido).
+## Ignorado na vez do chef quando `pause_on_chef_turn` está ligado.
 @export var active_time: bool = true
 ## Quanto tempo o "!" fica em cima da formiga antes do ataque.
 @export_range(0.0, 2.0, 0.05, "suffix:s") var alert_time: float = 0.7
@@ -84,6 +96,12 @@ var _shake_origin: Vector2
 var _name_counters: Dictionary = {}
 var _outlined: FormigaBattler = null
 var _outline_tween: Tween
+## Quem está agindo agora (para a barra de turnos destacar). null = ninguém.
+var acting: Battler = null
+## Vez do chef aberta (tempo parado esperando a escolha) e segundos que restam.
+var deciding: bool = false
+var decision_left: float = 0.0
+var _saved_time_scale: float = 1.0
 
 
 func setup(queue: Array[FormigaBattler]) -> void:
@@ -131,6 +149,8 @@ func register_ant(ant: FormigaBattler) -> void:
 
 func run() -> bool:
 	running = true
+	_saved_time_scale = Engine.time_scale
+	Engine.time_scale = animation_speed
 	chef.show_wait_bar(true)
 	select_target(_first_alive())
 	menu.open(chef, target)
@@ -140,6 +160,8 @@ func run() -> bool:
 			return await _end(false)
 		if _is_won():
 			return await _end(true)
+
+		_update_decision_state()
 
 		# 0. A Rainha cansou de voar: desce (momento seguro, ninguém atacando).
 		if boss and boss.airborne and boss.flight_left <= 0.0:
@@ -153,8 +175,9 @@ func run() -> bool:
 			await _ant_turn(urgent, urgent.interrupting_skill(self))
 			continue
 
-		# 2. Formiga com a espera cheia ataca (uma de cada vez).
-		var ant: FormigaBattler = _next_ready_ant() if grace <= 0.0 else null
+		# 2. Formiga com a espera cheia ataca (uma de cada vez). Na VEZ DO CHEF elas
+		#    esperam: o tempo está parado até ele escolher.
+		var ant: FormigaBattler = _next_ready_ant() if grace <= 0.0 and not deciding else null
 		if ant:
 			await _ant_turn(ant)
 			continue
@@ -163,14 +186,95 @@ func run() -> bool:
 		if await _try_chef_turn():
 			continue
 
-		# 4. O relógio anda.
+		# 4. O relógio anda (ou, na vez do chef, só a contagem de decisão).
 		await get_tree().process_frame
 		if not running:
 			return false
 		var delta: float = get_process_delta_time()
+		if deciding:
+			# Conta em segundos REAIS (não depende do animation_speed).
+			decision_left -= delta / maxf(Engine.time_scale, 0.001)
+			menu.set_countdown(maxf(decision_left, 0.0))
+			if decision_left <= 0.0 and _queued_skill == null:
+				await _chef_skip_turn()
+			continue
 		grace = maxf(grace - delta, 0.0)
-		_tick(delta)
+		_tick(delta * attack_speed)
 	return false
+
+
+## Abre/fecha a VEZ DO CHEF (tempo parado + contagem de `decision_time`).
+func _update_decision_state() -> void:
+	var now: bool = pause_on_chef_turn and running and not chef.is_dead() \
+			and chef.wait.is_ready() and _queued_skill == null
+	if now and not deciding:
+		decision_left = decision_time
+		menu.set_countdown(decision_left)
+	elif not now and deciding:
+		menu.set_countdown(-1.0)
+	deciding = now
+
+
+## Acabou o tempo de escolher: o chef perde a vez e o relógio volta a andar.
+func _chef_skip_turn() -> void:
+	deciding = false
+	menu.set_countdown(-1.0)
+	chef.wait.consume()
+	menu.set_ready(false)
+	announce("Tempo esgotado! O chef perdeu a vez.", Color(1.0, 0.6, 0.35))
+	FloatingText.spawn(chef.get_parent(), chef.global_position + Vector2(0, -48), "Perdeu a vez!", Color(1.0, 0.6, 0.35))
+	await wait(action_pause)
+
+
+## ORDEM DOS TURNOS (para a TurnOrderBar). Cada item:
+##   battler, ratio (0..1 da espera), eta (segundos até agir; INF = não age),
+##   ally (é o chef), boss, stunned, acting (agindo agora), deciding (vez do chef aberta),
+##   order (1 = o próximo a agir; 0 = não age).
+func turn_order() -> Array[Dictionary]:
+	var list: Array[Dictionary] = []
+	if chef == null:
+		return list
+	var everyone: Array[Battler] = [chef]
+	for ant in alive_ants():
+		everyone.append(ant)
+	for b in everyone:
+		if b.wait == null or b.is_dead():
+			continue
+		list.append({
+			"battler": b,
+			"ratio": b.wait.get_ratio(),
+			"eta": _eta(b),
+			"ally": b == chef,
+			"boss": b == boss,
+			"stunned": b.wait.is_stunned(),
+			"acting": b == acting,
+			"deciding": b == chef and deciding,
+			"order": 0,
+		})
+	var sorted: Array[Dictionary] = list.duplicate()
+	sorted.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
+		if a["acting"] != b["acting"]:
+			return a["acting"]
+		return a["eta"] < b["eta"])
+	var n: int = 0
+	for entry in sorted:
+		if is_inf(entry["eta"]) and not entry["acting"]:
+			continue
+		n += 1
+		entry["order"] = n
+	return list
+
+
+## Segundos (do relógio da luta) até `b` poder agir. INF = não vai agir (Rainha voando).
+func _eta(b: Battler) -> float:
+	if b == acting:
+		return 0.0
+	if b == boss and boss.airborne and not boss.acts_while_flying():
+		return INF
+	var w: BattleWaitComponent = b.wait
+	var speed: float = maxf(w.speed_scale * attack_speed, 0.001)
+	var left: float = maxf(w.current_wait - w.elapsed, 0.0) / speed
+	return w.stun_left / attack_speed + left
 
 
 ## DESCANSO: conta o tempo de verdade (inclusive enquanto as formigas atacam) em que o
@@ -183,7 +287,11 @@ func _process(delta: float) -> void:
 
 
 func stop() -> void:
+	if running:
+		Engine.time_scale = _saved_time_scale
 	running = false
+	deciding = false
+	acting = null
 	target = null
 	_update_target_outline()
 	if menu:
@@ -386,7 +494,7 @@ func channel(seconds: float, done: Callable, on_tick: Callable = Callable()) -> 
 		var delta: float = get_process_delta_time()
 		left -= delta
 		if not chef.wait.is_ready():
-			chef.wait.tick(delta)
+			chef.wait.tick(delta * attack_speed)
 			if chef.wait.is_ready():
 				menu.set_ready(true)
 		if on_tick.is_valid():
@@ -493,11 +601,15 @@ func _on_boss_flight_changed(airborne: bool) -> void:
 
 func _chef_turn(skill: BattleSkill) -> void:
 	_busy = true
+	deciding = false
+	menu.set_countdown(-1.0)
 	menu.lock(true)
 	var aimed: FormigaBattler = target
 	chef.reset_rest()
 	_chef_acting = true
+	acting = chef
 	await skill.execute(self, chef, aimed)
+	acting = null
 	_chef_acting = false
 	chef.wait.consume()
 	menu.set_ready(false)
@@ -511,6 +623,10 @@ func _chef_turn(skill: BattleSkill) -> void:
 ## Turno de uma formiga. `forced` = habilidade de prioridade máxima (não sorteia).
 func _ant_turn(ant: FormigaBattler, forced: FormigaSkill = null) -> void:
 	_busy = true
+	if deciding:
+		# Ataque de prioridade máxima no meio da vez do chef: a contagem recomeça depois.
+		deciding = false
+		menu.set_countdown(-1.0)
 	menu.lock(true)
 	var attack: FormigaSkill = ant.use_skill(forced) if forced else ant.choose_skill(self)
 	if attack == null:
@@ -518,11 +634,13 @@ func _ant_turn(ant: FormigaBattler, forced: FormigaSkill = null) -> void:
 		menu.lock(false)
 		_busy = false
 		return
+	acting = ant
 	ant.show_alert(true)
 	await wait(alert_time)
 	ant.show_alert(false)
 	if not ant.is_dead() and not chef.is_dead():
 		await attack.execute(self, ant, chef)
+	acting = null
 	if is_instance_valid(ant) and not ant.is_dead():
 		ant.wait.consume()
 	await _reap_dead()

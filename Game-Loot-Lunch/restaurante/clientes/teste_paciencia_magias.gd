@@ -25,7 +25,7 @@ extends Node2D
 ## Segundos de paciência de cada cliente (a barra inteira).
 @export var patience_time: float = 30.0
 ## Limites da barra que soltam as magias 1, 2 e 3.
-@export var thresholds: Array[float] = [0.9, 0.5, 0.2]
+@export var thresholds: Array[float] = [0.5, 0.3, 0.1]
 ## Segundos até o primeiro cliente aparecer.
 @export var first_spawn_delay: float = 1.0
 ## Segundos entre um cliente e o próximo.

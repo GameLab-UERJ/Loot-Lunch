@@ -15,6 +15,8 @@ extends FormigaSkill
 ## De onde sai o feixe (em relação à Rainha) e onde aparece a barra (em relação ao chef).
 @export var mouth_offset: Vector2 = Vector2(-62, -18)
 @export var meter_offset: Vector2 = Vector2(0, -64)
+## Tecla (KeyPrompt) em relação à barra de martelar.
+@export var prompt_offset: Vector2 = Vector2(0, -26)
 @export var charge_anim: SheetAnimation
 
 
@@ -46,9 +48,14 @@ func _execute(battle: TurnBattle, ant: FormigaBattler, chef: ChefBattler) -> voi
 	await beam.aim(mouth, chef.global_position + Vector2(10, -8))
 	battle.shake(2.0, 0.2)
 	var meter := MashMeter.new()
+	meter.prompt = ""  # a tecla grande (KeyPrompt) logo acima já diz o que fazer
 	battle.add_effect(meter)
 	meter.global_position = chef.global_position + meter_offset
 	chef.act(counter_animation, -1)
+	# Tecla grande em cima da barra: ESPAÇO afundando rápido ("martele!").
+	var prompt := KeyPrompt.spawn(chef, meter_offset + prompt_offset, PackedStringArray(["SPACE"]), "MARTELE!")
+	prompt.set_press_period(0.16)
+	prompt.set_active(true)
 	meter.run(presses_needed, mash_time, mash_decay)
 	while meter.is_running():
 		beam.clash = meter.progress
@@ -57,6 +64,7 @@ func _execute(battle: TurnBattle, ant: FormigaBattler, chef: ChefBattler) -> voi
 		await battle.get_tree().process_frame
 	if chef.sprite:
 		chef.sprite.position.x = 0.0
+	prompt.dismiss()
 	var progress: float = meter.progress
 	battle.register_qte(progress >= 1.0)
 

@@ -27,6 +27,14 @@ signal targeted_interactable_changed(interactable: InteractableComponent)
 ## Quem está interagindo. Se vazio, usa o nó pai.
 @export var actor: Node
 
+@export_group("Itens soltos")
+## Mão vazia + item solto ao alcance: o ESPAÇO PEGA o item, mesmo que ele esteja em
+## cima de uma estação que também reagiria (caixa de carne, raiz de espeto...).
+@export var prefer_loose_items: bool = true
+## Silhueta no item que o ESPAÇO pegaria agora.
+@export var item_outline_color: Color = Color.WHITE
+@export var item_outline_width: float = 1.0
+
 @export_group("Mouse")
 ## Destaca (silhueta branca) o interagível embaixo do mouse.
 @export var use_mouse_hover: bool = true
@@ -40,6 +48,8 @@ var focused_interactable: InteractableComponent = null
 var hovered_interactable: InteractableComponent = null
 ## O que o ESPAÇO usaria agora (ver `get_target(true, true)`).
 var targeted_interactable: InteractableComponent = null
+## Item solto que o ESPAÇO pegaria agora (ver `get_item_target`).
+var targeted_item: CarryableItem = null
 
 
 func _ready() -> void:
@@ -80,6 +90,7 @@ func clear_focus() -> void:
 	focused_interactable_changed.emit(null)
 	_set_hovered(null)
 	_set_targeted(null)
+	_set_targeted_item(null)
 
 
 ## Interagível embaixo do mouse (ou null).
@@ -135,7 +146,34 @@ func _refresh_hover() -> void:
 
 
 func _refresh_target() -> void:
-	_set_targeted(get_target(true, true))
+	var item: CarryableItem = get_item_target()
+	_set_targeted_item(item)
+	# Com um item para pegar, a estação embaixo dele não é o alvo do ESPAÇO.
+	_set_targeted(null if item else get_target(true, true))
+
+
+## Item solto que o ESPAÇO pegaria agora (mão vazia), ou null. O mouse em cima de uma
+## estação ao alcance que reagiria tem preferência (o jogador escolheu ela).
+func get_item_target() -> CarryableItem:
+	if not prefer_loose_items:
+		return null
+	var hand: HandComponent = HandComponent.find_in(actor)
+	if hand == null or hand.has_item():
+		return null
+	var hovered: InteractableComponent = get_hovered_interactable()
+	if use_mouse_hover and hovered and is_in_reach(hovered) and hovered.would_react(actor):
+		return null
+	return get_nearest_carryable()
+
+
+func _set_targeted_item(item: CarryableItem) -> void:
+	if item == targeted_item:
+		return
+	if is_instance_valid(targeted_item) and targeted_item.sprite:
+		SpriteOutline.hide_on(targeted_item.sprite)
+	targeted_item = item
+	if is_instance_valid(item) and item.sprite and item.sprite.texture:
+		SpriteOutline.show_on(item.sprite, item_outline_color, item_outline_width)
 
 
 func _accepts(interactable: InteractableComponent, require_reaction: bool) -> bool:

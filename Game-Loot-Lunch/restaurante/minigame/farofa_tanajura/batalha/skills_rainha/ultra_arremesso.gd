@@ -38,12 +38,18 @@ func _execute(battle: TurnBattle, ant: FormigaBattler, chef: ChefBattler) -> voi
 		queen.begin_charge()
 	battle.select_target(ant)
 	battle.announce("BOLA DE TERRA! Acerte %d golpes na Rainha!" % hits_needed, Color(1.0, 0.8, 0.4))
+	# Teclas dos golpes em cima do chef, com a contagem de acertos.
+	var prompt := KeyPrompt.spawn(chef, Vector2(0, -60), PackedStringArray(["1", "2", "3", "4"]),
+		"GOLPEIE A RAINHA 0/%d!" % hits_needed)
 	var status := func(left: float) -> void:
+		if is_instance_valid(prompt) and queen:
+			prompt.set_caption("GOLPEIE A RAINHA %d/%d!" % [queen.charge_hits, hits_needed])
 		if queen:
 			queen.status_changed.emit("BOLA DE TERRA  %d/%d golpes  —  %.0fs" % [queen.charge_hits, hits_needed, ceilf(left)])
 	var done := func() -> bool:
 		return ant.is_dead() or (queen != null and queen.charge_hits >= hits_needed)
 	await battle.channel(charge_time, done, status)
+	prompt.dismiss()
 	grow.kill()
 	var broke: bool = done.call()
 	if queen:

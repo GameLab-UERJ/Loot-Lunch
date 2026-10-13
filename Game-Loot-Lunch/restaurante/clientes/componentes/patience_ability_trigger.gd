@@ -3,7 +3,8 @@ class_name PatienceAbilityTrigger
 ## Liga a PACIÊNCIA do cliente às MAGIAS dele: quando a barra CAI abaixo de um limite,
 ## o cliente lança a magia daquele nível.
 ##
-##   limites padrão:  90% -> magia 1   |   50% -> magia 2   |   20% -> magia 3
+##   limites padrão (paciência que RESTA):  50% -> magia 1  |  30% -> magia 2  |  10% -> magia 3
+##   (= 50%, 70% e 90% da barra gasta; 100% gasta o cliente vai embora)
 ##
 ## Não sabe o que cada magia faz: só chama `CustomerAbilityCaster.cast_for_patience_level`.
 ## Não sabe o que é a barra: só escuta `PatienceComponent.patience_changed`.
@@ -25,7 +26,7 @@ signal ability_triggered(level: int)
 
 
 ## Limites da barra (0..1), do MAIOR para o MENOR. O 1º lança a magia 1, o 2º a magia 2...
-@export var thresholds: Array[float] = [0.9, 0.5, 0.2]
+@export var thresholds: Array[float] = [0.5, 0.3, 0.1]
 @export var enabled: bool = true
 ## Cliente dono da paciência. Vazio = o pai deste nó.
 @export var customer: Node

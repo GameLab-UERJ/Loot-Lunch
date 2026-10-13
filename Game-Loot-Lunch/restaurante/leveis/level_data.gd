@@ -29,8 +29,10 @@ class_name LevelData
 @export var spawn_interval_max: float = 16.0
 ## Segundos de paciência de cada cliente (a barra inteira).
 @export var patience_time: float = 60.0
-## Limites da barra de paciência que soltam as magias 1, 2 e 3 (do maior para o menor).
-@export var ability_thresholds: Array[float] = [0.9, 0.5, 0.2]
+## Limites da barra de paciência (o que AINDA RESTA, 0..1) que soltam as magias 1, 2 e 3,
+## do maior para o menor. [0.5, 0.3, 0.1] = magia 1 com 50% da barra gasta, magia 2 com
+## 70% e magia 3 com 90%. Com 100% gasta o cliente vai embora.
+@export var ability_thresholds: Array[float] = [0.5, 0.3, 0.1]
 
 @export_group("Pedido")
 ## Distância (px) do chef até o cliente para o balão do pedido aparecer.

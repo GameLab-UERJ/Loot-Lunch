@@ -49,6 +49,7 @@ func _throw(battle: TurnBattle, queen: FormigaBattler, minion: FormigaBattler, c
 	flight.tween_method(_fly.bind(minion, from, to), 0.0, 1.0, flight_time)
 	flight.tween_property(minion.sprite, "rotation", -TAU * 2.0, flight_time)
 	var beats: Array[float] = [flight_time]
+	battle.qte.prompt_caption = "REBATA!"
 	var hits: int = await battle.qte.run(beats)
 	battle.register_qte(hits > 0)
 	flight.kill()

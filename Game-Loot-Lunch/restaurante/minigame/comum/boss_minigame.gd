@@ -24,6 +24,9 @@ signal finished(success: bool, result: Dictionary)
 ## O BossFightVip mostra o painel de título/instruções antes de começar. Desligue em
 ## cutscenes (a cena entra direto).
 @export var show_intro_banner: bool = true
+## Quadro de TUTORIAL desenhado (TutorialBoard). Com ele, a primeira vez da etapa mostra
+## o quadro no lugar do painel de instruções (nas tentativas seguintes volta o painel).
+@export var tutorial: PackedScene
 
 
 var running: bool = false
@@ -39,7 +42,9 @@ func _ready() -> void:
 func _autostart() -> void:
 	var banner := MinigameBanner.new()
 	add_child(banner)
-	if show_intro_banner:
+	if tutorial:
+		await TutorialBoard.play(self, tutorial)
+	elif show_intro_banner:
 		await banner.show_intro(title, instructions)
 	finished.connect(func(success: bool, result: Dictionary) -> void:
 		banner.show_result(success, "%s\n\n[R] reinicia a cena" % String(result.get("label", ""))))

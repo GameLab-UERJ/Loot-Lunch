@@ -219,7 +219,7 @@ hit_radius = 18.0
 vertical_ratio = 0.7
 damage = 1
 knockback = 0
-stun_duration = 2.0
+stun_duration = 1.5
 stun_visual = ExtResource("2_r")
 
 [node name="Alerta" type="AnimatedSprite2D" parent="."]

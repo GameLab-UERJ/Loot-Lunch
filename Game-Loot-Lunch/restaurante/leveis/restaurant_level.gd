@@ -25,6 +25,15 @@ signal level_finished(success: bool)
 @export var shift: CooldownComponent
 @export var hud: LevelHUD
 
+@export_group("Tutorial")
+## Quadro de tutorial (TutorialBoard) mostrado antes do turno começar. O jogo fica
+## pausado até o jogador fechar. Vazio = sem tutorial.
+@export var tutorial: PackedScene
+## Só na primeira vez da sessão ("Tentar de novo" não mostra de novo).
+@export var tutorial_once: bool = true
+## Tecla que abre o tutorial de novo no meio da fase (KEY_NONE = desligado).
+@export var tutorial_key: Key = KEY_F1
+
 @export_group("Fim")
 ## Pausa o jogo um instante depois do fim (os clientes terminam de sair antes).
 @export var pause_on_end: bool = true
@@ -61,11 +70,24 @@ func _ready() -> void:
 		hud.setup(level_data.display_name, level_data.money_goal, level_data.duration,
 			wallet.currency_name if wallet else "Almas")
 
+	# Tutorial antes de o relógio andar (pausa a árvore até o jogador fechar).
+	if tutorial:
+		await TutorialBoard.play(self, tutorial, tutorial_once)
+
 	shift.finished.connect(_on_shift_finished)
 	shift.start(level_data.duration)
 	if director:
 		director.start()
 	level_started.emit()
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	# F1 (ou a tecla do Inspector): reabre o tutorial no meio da fase.
+	if tutorial == null or tutorial_key == KEY_NONE or _finished:
+		return
+	if event is InputEventKey and event.pressed and not event.echo and event.keycode == tutorial_key:
+		get_viewport().set_input_as_handled()
+		TutorialBoard.play(self, tutorial)
 
 
 func _process(_delta: float) -> void:

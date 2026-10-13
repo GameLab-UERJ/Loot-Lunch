@@ -211,6 +211,10 @@ func try_dash() -> bool:
 func act() -> bool:
 	if not can_act():
 		return false
+	# Mão vazia e item solto ao alcance: PEGA o item (antes da estação embaixo dele).
+	var loose: CarryableItem = interactor_component.get_item_target()
+	if loose and hand_component.hold(loose):
+		return true
 	var target: InteractableComponent = interactor_component.get_target(true, true)
 	if target and target.interact(self):
 		return true
@@ -281,7 +285,11 @@ func _revive() -> void:
 
 func drop_item() -> CarryableItem:
 	var drop_position: Vector2 = global_position + facing_direction * drop_distance
-	return hand_component.drop_to(_get_items_container(), drop_position)
+	var item: CarryableItem = hand_component.drop_to(_get_items_container(), drop_position)
+	if item:
+		# Nunca fica preso em cima/dentro de uma estação: escorrega para o chão livre.
+		item.settle(drop_position, global_position, collision_mask, [get_rid()])
+	return item
 
 
 func _get_items_container() -> Node:

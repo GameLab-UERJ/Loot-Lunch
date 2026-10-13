@@ -9,11 +9,16 @@ class_name MinigameBanner
 ##     await banner.show_intro("Fase 1", "Segure ESPAÇO...")   # espera ESPAÇO/clique
 ##     banner.toast("PERFEITO!", Color.GREEN)
 ##
-## Reutilizável: tutorial, telas de "fase concluída", avisos da fase do restaurante.
+##     var escolha: int = await banner.choose("FALHOU...", "texto", ["Tentar de novo", "Sair"])
+##
+## Reutilizável: tutorial, telas de "fase concluída", avisos da fase do restaurante,
+## menus de "tentar de novo / sair" (choose).
 
 
 ## O jogador confirmou (ESPAÇO, ENTER ou clique) o painel que estava aberto.
 signal confirmed
+## O jogador clicou num dos botões de `choose` (0 = primeiro botão).
+signal choice_made(index: int)
 
 
 ## Ação que confirma o painel (além de ENTER e clique).
@@ -25,6 +30,12 @@ signal confirmed
 @export var outline_color: Color = Color(0.1, 0.05, 0.12, 1.0)
 ## Altura dos avisos curtos (toast) a partir do topo. Desça se houver barra de chefe.
 @export var toast_top: float = 36.0
+@export_group("Botões (choose)")
+## Tema dos botões de `choose`. Vazio: botão simples nas cores do painel.
+@export var button_theme: Theme
+## Segundos em que os botões ficam travados ao abrir (quem estava apertando ESPAÇO no
+## jogo não escolhe sem querer).
+@export var choice_delay: float = 0.5
 
 
 var _panel: PanelContainer
@@ -33,7 +44,9 @@ var _body: Label
 var _prompt: Label
 var _image: TextureRect
 var _toast: Label
+var _choices: HBoxContainer
 var _waiting: bool = false
+var _choosing: bool = false
 var _toast_tween: Tween
 
 
@@ -48,6 +61,14 @@ func _ready() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if _choosing:
+		# ESC escolhe o último botão (normalmente "Sair"). ESPAÇO/ENTER/setas: foco do botão.
+		if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_ESCAPE:
+			var last: Button = _choices.get_child(_choices.get_child_count() - 1) as Button
+			if last and not last.disabled:
+				get_viewport().set_input_as_handled()
+				last.pressed.emit()
+		return
 	if not _waiting:
 		return
 	var ok: bool = event.is_action_pressed(confirm_action) if InputMap.has_action(confirm_action) else false
@@ -86,8 +107,40 @@ func ask(title: String, text: String, prompt: String, image: Texture2D = null,
 	await confirmed
 
 
+## Painel com BOTÕES (mouse ou teclado). Devolve o índice do botão escolhido.
+## Uso: `var escolha: int = await banner.choose("O chef caiu!", "", ["Tentar de novo", "Sair"])`
+## Setas trocam o botão, ESPAÇO/ENTER confirmam e ESC escolhe o último.
+func choose(title: String, text: String, options: PackedStringArray,
+		color: Color = Color(1.0, 0.95, 0.8), image: Texture2D = null) -> int:
+	if options.is_empty():
+		push_warning("MinigameBanner.choose: sem opções.")
+		return -1
+	_fill(title, text, image, "", color)
+	_waiting = false
+	for child in _choices.get_children():
+		child.queue_free()
+	var buttons: Array[Button] = []
+	for i in options.size():
+		var button := _make_button(options[i])
+		button.disabled = true
+		button.pressed.connect(_on_choice_pressed.bind(i))
+		_choices.add_child(button)
+		buttons.append(button)
+	_choices.show()
+	_choosing = true
+	await get_tree().create_timer(choice_delay, true).timeout
+	for button in buttons:
+		if is_instance_valid(button):
+			button.disabled = false
+	if is_instance_valid(buttons[0]):
+		buttons[0].grab_focus()
+	var index: int = await choice_made
+	return index
+
+
 func hide_panel() -> void:
 	_waiting = false
+	_choosing = false
 	_panel.hide()
 
 
@@ -116,6 +169,8 @@ func _fill(title: String, text: String, image: Texture2D, prompt: String, color:
 	_image.visible = image != null
 	_prompt.text = prompt
 	_prompt.visible = prompt != ""
+	_choices.hide()
+	_choosing = false
 	_panel.show()
 	_panel.pivot_offset = _panel.size * 0.5
 	_panel.scale = Vector2(0.85, 0.85)
@@ -162,6 +217,12 @@ func _build() -> void:
 	_prompt = _make_label(10, border_color)
 	column.add_child(_prompt)
 
+	_choices = HBoxContainer.new()
+	_choices.alignment = BoxContainer.ALIGNMENT_CENTER
+	_choices.add_theme_constant_override("separation", 10)
+	_choices.hide()
+	column.add_child(_choices)
+
 	_toast = _make_label(14, Color.WHITE)
 	_toast.set_anchors_preset(Control.PRESET_CENTER_TOP)
 	_toast.offset_left = -150.0
@@ -182,3 +243,34 @@ func _make_label(font_size: int, color: Color) -> Label:
 	label.add_theme_color_override("font_outline_color", outline_color)
 	label.add_theme_constant_override("outline_size", 4)
 	return label
+
+
+func _on_choice_pressed(index: int) -> void:
+	if not _choosing:
+		return
+	_choosing = false
+	_panel.hide()
+	_choices.hide()
+	choice_made.emit(index)
+
+
+func _make_button(text: String) -> Button:
+	var button := Button.new()
+	button.text = text
+	button.focus_mode = Control.FOCUS_ALL
+	button.custom_minimum_size = Vector2(110, 20)
+	if button_theme:
+		button.theme = button_theme
+		return button
+	button.add_theme_font_size_override("font_size", 10)
+	button.add_theme_color_override("font_color", text_color)
+	button.add_theme_color_override("font_focus_color", title_color)
+	button.add_theme_color_override("font_hover_color", title_color)
+	for state in ["normal", "hover", "pressed", "focus", "disabled"]:
+		var style := StyleBoxFlat.new()
+		style.bg_color = panel_color.lightened(0.15 if state in ["hover", "focus"] else 0.05)
+		style.border_color = border_color if state in ["hover", "focus", "pressed"] else border_color.darkened(0.45)
+		style.set_border_width_all(1)
+		style.set_content_margin_all(4)
+		button.add_theme_stylebox_override(state, style)
+	return button

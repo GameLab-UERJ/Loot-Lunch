@@ -1,0 +1,9 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://restaurante/mvp/fluxo_boss_vip.gd" id="1_fluxo"]
+[ext_resource type="Theme" uid="uid://blqubia4djs1d" path="res://resources/themes/ui/button.tres" id="2_tema"]
+
+[node name="FluxoMvp" type="Node"]
+process_mode = 3
+script = ExtResource("1_fluxo")
+button_theme = ExtResource("2_tema")

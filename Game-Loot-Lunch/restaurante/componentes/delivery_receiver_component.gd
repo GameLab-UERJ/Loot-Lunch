@@ -29,10 +29,52 @@ signal item_received(data: ItemData, deliverer: Node)
 ## (Array[Resource] de propósito, mesmo motivo das listas de receitas.)
 @export var accepted_items: Array[Resource] = []
 
+@export_group("Silhueta de entrega")
+## Quando o chef MIRA neste recebedor com um item aceito na mão (é para cá que o ESPAÇO
+## entregaria), o `highlight_target` (sprite do cliente) ganha uma silhueta piscando.
+@export var show_delivery_outline: bool = true
+@export var delivery_outline_color: Color = Color.WHITE
+## Largura em pixels da TELA.
+@export var delivery_outline_width: float = 2.0
+
+
+var _delivery_outline_tween: Tween
+
 
 func _ready() -> void:
 	super._ready()
 	monitoring = true
+	target_changed.connect(_on_target_changed)
+
+
+func _exit_tree() -> void:
+	_set_delivery_outline(false)
+
+
+# --- Silhueta de entrega -----------------------------------------------------
+
+func _on_target_changed(targeted: bool, actor: Node) -> void:
+	_set_delivery_outline(targeted and show_delivery_outline and can_interact(actor))
+
+
+func _set_delivery_outline(value: bool) -> void:
+	if _delivery_outline_tween:
+		_delivery_outline_tween.kill()
+		_delivery_outline_tween = null
+	# A silhueta do hover (shader) sairia junto: some enquanto a de entrega estiver ligada.
+	set_outline_blocked(value)
+	if not is_instance_valid(highlight_target):
+		return
+	if not value:
+		SpriteOutline.hide_on(highlight_target)
+		return
+	var outline: SpriteOutline = SpriteOutline.show_on(highlight_target, delivery_outline_color, delivery_outline_width)
+	if outline:
+		var dim := Color(delivery_outline_color, delivery_outline_color.a * 0.45)
+		# Tween preso no contorno: some junto se o cliente for apagado.
+		_delivery_outline_tween = outline.create_tween().set_loops()
+		_delivery_outline_tween.tween_property(outline, "color", dim, 0.4)
+		_delivery_outline_tween.tween_property(outline, "color", delivery_outline_color, 0.4)
 
 
 # --- Interação (ESPAÇO) -----------------------------------------------------
@@ -96,6 +138,7 @@ func receive(item: CarryableItem, deliverer: Node = null) -> bool:
 
 
 func _accept(item: CarryableItem, deliverer: Node) -> void:
+	_set_delivery_outline(false)
 	var data: ItemData = item.data
 	if item.is_held():
 		item.current_hand.consume_item()

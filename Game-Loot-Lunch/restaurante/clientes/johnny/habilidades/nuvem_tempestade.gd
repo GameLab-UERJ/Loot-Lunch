@@ -25,7 +25,7 @@ signal chef_finalized(target: Node2D)
 ## Distância (centro a centro) que ainda conta como "embaixo da nuvem" no quadro do raio.
 @export var strike_radius: float = 20.0
 ## Segundos de confusão (setas invertidas).
-@export var confusion_time: float = 120.0
+@export var confusion_time: float = 10.0
 ## Arte em cima da cabeça enquanto está confuso.
 @export var confusion_visual: SheetAnimation
 ## Efeito que toca UMA vez no chef quando leva a descarga.

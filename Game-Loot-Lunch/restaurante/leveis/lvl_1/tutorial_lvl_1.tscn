@@ -1,0 +1,1138 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://restaurante/UI/tutorial/tutorial_board.gd" id="1_r"]
+[ext_resource type="Script" path="res://restaurante/UI/tutorial/tutorial_page.gd" id="2_r"]
+[ext_resource type="Script" path="res://restaurante/UI/tutorial/chalk_doodle.gd" id="3_r"]
+[ext_resource type="Script" path="res://restaurante/componentes/key_cap.gd" id="4_r"]
+[ext_resource type="Script" path="res://restaurante/minigame/comum/sheet_sprite.gd" id="5_r"]
+[ext_resource type="Material" path="res://restaurante/UI/tutorial/chalk_material.tres" id="6_r"]
+[ext_resource type="FontFile" path="res://assets/fonts/Silver.ttf" id="7_r"]
+[ext_resource type="Texture2D" path="res://restaurante/cozinha/estacoes/arte_v2/mesa_carne.png" id="8_r"]
+[ext_resource type="Resource" path="res://restaurante/minigame/comum/anim/chef_idle.tres" id="9_r"]
+[ext_resource type="Texture2D" path="res://restaurante/comidas/arte_v2/ingredientes/carne_bruta.png" id="10_r"]
+[ext_resource type="Texture2D" path="res://restaurante/cozinha/estacoes/arte_v2/cogumelo_pe.png" id="11_r"]
+[ext_resource type="Texture2D" path="res://restaurante/comidas/arte_v2/ingredientes/cogumelo_bruto.png" id="12_r"]
+[ext_resource type="Texture2D" path="res://restaurante/cozinha/estacoes/arte_v2/mesa_corte.png" id="13_r"]
+[ext_resource type="Texture2D" path="res://restaurante/comidas/arte_v2/ingredientes/carne_cortada.png" id="14_r"]
+[ext_resource type="Texture2D" path="res://restaurante/cozinha/estacoes/arte_v2/raiz_espeto.png" id="15_r"]
+[ext_resource type="Texture2D" path="res://restaurante/comidas/arte_v2/ingredientes/cogumelo_cortado.png" id="16_r"]
+[ext_resource type="Texture2D" path="res://restaurante/comidas/arte_v2/espetinhos/espetinho_misto_cru.png" id="17_r"]
+[ext_resource type="Resource" path="res://restaurante/minigame/farofa_tanajura/art/anim/churrasqueira_assando.tres" id="18_r"]
+[ext_resource type="Texture2D" path="res://restaurante/comidas/arte_v2/espetinhos/espetinho_carne_perfeito.png" id="19_r"]
+[ext_resource type="Texture2D" path="res://restaurante/comidas/arte_v2/espetinhos/espetinho_carne_torrado.png" id="20_r"]
+[ext_resource type="Texture2D" path="res://restaurante/clientes/johnny/Skeletons-Johnny.png" id="21_r"]
+[ext_resource type="Shader" path="res://restaurante/componentes/aura_outline.gdshader" id="22_r"]
+[ext_resource type="Texture2D" path="res://restaurante/clientes/pedido/pedido_png/balaopensamento.png" id="23_r"]
+[ext_resource type="Texture2D" path="res://restaurante/clientes/pedido/pedido_png/churrasco/carnepensamento.png" id="24_r"]
+[ext_resource type="Texture2D" path="res://restaurante/UI/arte/jscoutinho_ui_dinheiro.png" id="25_r"]
+[ext_resource type="Texture2D" path="res://restaurante/UI/arte/jscoutinho_ui_vida.png" id="26_r"]
+[ext_resource type="Texture2D" path="res://restaurante/UI/arte/jscoutinho_ui_mana_idle.png" id="27_r"]
+[ext_resource type="Texture2D" path="res://restaurante/clientes/mandy/Skeletons-Mandy.png" id="28_r"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1"]
+font = ExtResource("7_r")
+font_size = 19
+font_color = Color(0.95, 0.93, 0.86, 0.95)
+line_spacing = -3.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_2"]
+font = ExtResource("7_r")
+font_size = 18
+font_color = Color(0.95, 0.93, 0.86, 0.6)
+line_spacing = -3.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_3"]
+font = ExtResource("7_r")
+font_size = 20
+font_color = Color(1, 0.82, 0.35, 1)
+line_spacing = -3.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_4"]
+font = ExtResource("7_r")
+font_size = 16
+font_color = Color(0.95, 0.93, 0.86, 0.6)
+line_spacing = -3.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_5"]
+font = ExtResource("7_r")
+font_size = 14
+font_color = Color(1, 0.82, 0.35, 1)
+line_spacing = -3.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_6"]
+font = ExtResource("7_r")
+font_size = 14
+font_color = Color(0.55, 0.95, 0.5, 1)
+line_spacing = -3.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_7"]
+font = ExtResource("7_r")
+font_size = 14
+font_color = Color(1, 0.45, 0.4, 1)
+line_spacing = -3.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_8"]
+font = ExtResource("7_r")
+font_size = 15
+font_color = Color(0.55, 0.95, 0.5, 1)
+line_spacing = -3.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_9"]
+font = ExtResource("7_r")
+font_size = 15
+font_color = Color(1, 0.45, 0.4, 1)
+line_spacing = -3.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_10"]
+shader = ExtResource("22_r")
+shader_parameter/thickness = 7.0
+shader_parameter/softness = 0.55
+shader_parameter/pulse_speed = 4.0
+shader_parameter/pulse_amount = 0.45
+
+[sub_resource type="LabelSettings" id="LabelSettings_11"]
+font = ExtResource("7_r")
+font_size = 15
+font_color = Color(0.95, 0.93, 0.86, 0.6)
+line_spacing = -3.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_12"]
+font = ExtResource("7_r")
+font_size = 15
+font_color = Color(1, 0.82, 0.35, 1)
+line_spacing = -3.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_13"]
+font = ExtResource("7_r")
+font_size = 19
+font_color = Color(0.55, 0.95, 0.5, 1)
+line_spacing = -3.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_14"]
+font = ExtResource("7_r")
+font_size = 19
+font_color = Color(1, 0.45, 0.4, 1)
+line_spacing = -3.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_15"]
+font = ExtResource("7_r")
+font_size = 17
+font_color = Color(0.95, 0.93, 0.86, 0.95)
+line_spacing = -3.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_16"]
+font = ExtResource("7_r")
+font_size = 16
+font_color = Color(1, 0.82, 0.35, 1)
+line_spacing = -3.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_17"]
+font = ExtResource("7_r")
+font_size = 16
+font_color = Color(0.95, 0.93, 0.86, 0.95)
+line_spacing = -3.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_18"]
+font = ExtResource("7_r")
+font_size = 16
+font_color = Color(0.82, 0.62, 1, 1)
+line_spacing = -3.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_offset = Vector2(1, 1)
+
+[node name="Tutorial" type="CanvasLayer"]
+script = ExtResource("1_r")
+tag_text = "NOVA RECEITA"
+close_text = "começar!"
+
+[node name="Receita" type="Node2D" parent="."]
+script = ExtResource("2_r")
+title = "ESPETINHO NA BRASA"
+caption = "[color=#ffd75a]1[/color] Pegue carne ou cogumelo  [color=#ffd75a]2[/color] corte na tábua ([color=#ffd75a]ESPAÇO[/color] 5x)  [color=#ffd75a]3[/color] finque 2 pedaços na raiz de espeto  [color=#ffd75a]4[/color] asse na churrasqueira-cogumelo  [color=#ffd75a]5[/color] tire no ponto certo e entregue ao cliente!"
+
+[node name="Badge1" type="Node2D" parent="Receita"]
+position = Vector2(30, 67)
+script = ExtResource("3_r")
+shape = 5
+size = Vector2(17, 17)
+text = "1"
+font_size = 16
+color = Color(0.95, 0.93, 0.86, 0.95)
+
+[node name="Texto2" type="Label" parent="Receita"]
+offset_left = 44.0
+offset_top = 58.0
+offset_right = 134.0
+offset_bottom = 79.0
+text = "PEGUE"
+label_settings = SubResource("LabelSettings_1")
+horizontal_alignment = 0
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Desenho3" type="Sprite2D" parent="Receita"]
+position = Vector2(50, 118)
+texture = ExtResource("8_r")
+scale = Vector2(1.6, 1.6)
+material = ExtResource("6_r")
+
+[node name="Anim4" type="AnimatedSprite2D" parent="Receita"]
+position = Vector2(100, 124)
+script = ExtResource("5_r")
+sheets = Array[Resource]([ExtResource("9_r")])
+scale = Vector2(1.6, 1.6)
+material = ExtResource("6_r")
+flip_h = true
+
+[node name="Desenho5" type="Sprite2D" parent="Receita"]
+position = Vector2(100, 94)
+texture = ExtResource("10_r")
+scale = Vector2(1.1, 1.1)
+material = ExtResource("6_r")
+
+[node name="Seta6" type="Node2D" parent="Receita"]
+position = Vector2(0, 0)
+script = ExtResource("3_r")
+shape = 0
+points = PackedVector2Array(66, 120, 84, 120)
+color = Color(0.95, 0.93, 0.86, 0.95)
+width = 1.5
+animate = true
+
+[node name="Desenho7" type="Sprite2D" parent="Receita"]
+position = Vector2(50, 206)
+texture = ExtResource("11_r")
+scale = Vector2(1.5, 1.5)
+hframes = 8
+vframes = 4
+material = ExtResource("6_r")
+
+[node name="Anim8" type="AnimatedSprite2D" parent="Receita"]
+position = Vector2(100, 214)
+script = ExtResource("5_r")
+sheets = Array[Resource]([ExtResource("9_r")])
+scale = Vector2(1.6, 1.6)
+material = ExtResource("6_r")
+flip_h = true
+
+[node name="Desenho9" type="Sprite2D" parent="Receita"]
+position = Vector2(100, 184)
+texture = ExtResource("12_r")
+scale = Vector2(1.1, 1.1)
+material = ExtResource("6_r")
+
+[node name="Seta10" type="Node2D" parent="Receita"]
+position = Vector2(0, 0)
+script = ExtResource("3_r")
+shape = 0
+points = PackedVector2Array(66, 210, 84, 210)
+color = Color(0.95, 0.93, 0.86, 0.95)
+width = 1.5
+animate = true
+
+[node name="Texto11" type="Label" parent="Receita"]
+offset_left = 58.0
+offset_top = 156.0
+offset_right = 98.0
+offset_bottom = 176.0
+text = "ou"
+label_settings = SubResource("LabelSettings_2")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Badge12" type="Node2D" parent="Receita"]
+position = Vector2(146, 67)
+script = ExtResource("3_r")
+shape = 5
+size = Vector2(17, 17)
+text = "2"
+font_size = 16
+color = Color(0.95, 0.93, 0.86, 0.95)
+
+[node name="Texto13" type="Label" parent="Receita"]
+offset_left = 160.0
+offset_top = 58.0
+offset_right = 250.0
+offset_bottom = 79.0
+text = "CORTE"
+label_settings = SubResource("LabelSettings_1")
+horizontal_alignment = 0
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Seta14" type="Node2D" parent="Receita"]
+position = Vector2(0, 0)
+script = ExtResource("3_r")
+shape = 0
+points = PackedVector2Array(122, 112, 160, 150)
+color = Color(0.95, 0.93, 0.86, 0.95)
+width = 2.0
+bend = -8.0
+animate = true
+
+[node name="Seta15" type="Node2D" parent="Receita"]
+position = Vector2(0, 0)
+script = ExtResource("3_r")
+shape = 0
+points = PackedVector2Array(122, 208, 160, 176)
+color = Color(0.95, 0.93, 0.86, 0.95)
+width = 2.0
+bend = 8.0
+animate = true
+
+[node name="Desenho16" type="Sprite2D" parent="Receita"]
+position = Vector2(196, 166)
+texture = ExtResource("13_r")
+scale = Vector2(2, 2)
+material = ExtResource("6_r")
+
+[node name="Desenho17" type="Sprite2D" parent="Receita"]
+position = Vector2(196, 150)
+texture = ExtResource("14_r")
+material = ExtResource("6_r")
+
+[node name="Sparkle18" type="Node2D" parent="Receita"]
+position = Vector2(176, 138)
+script = ExtResource("3_r")
+shape = 8
+size = Vector2(8, 8)
+animate = true
+color = Color(1, 0.82, 0.35, 1)
+
+[node name="Tecla19" type="Node2D" parent="Receita"]
+position = Vector2(192, 210)
+script = ExtResource("4_r")
+key = "SPACE"
+height = 17.0
+font_size = 14
+pressing = true
+
+[node name="Texto20" type="Label" parent="Receita"]
+offset_left = 232.0
+offset_top = 202.0
+offset_right = 262.0
+offset_bottom = 224.0
+text = "x5"
+label_settings = SubResource("LabelSettings_3")
+horizontal_alignment = 0
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Badge21" type="Node2D" parent="Receita"]
+position = Vector2(250, 67)
+script = ExtResource("3_r")
+shape = 5
+size = Vector2(17, 17)
+text = "3"
+font_size = 16
+color = Color(0.95, 0.93, 0.86, 0.95)
+
+[node name="Texto22" type="Label" parent="Receita"]
+offset_left = 264.0
+offset_top = 58.0
+offset_right = 354.0
+offset_bottom = 79.0
+text = "ESPETE"
+label_settings = SubResource("LabelSettings_1")
+horizontal_alignment = 0
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Seta23" type="Node2D" parent="Receita"]
+position = Vector2(0, 0)
+script = ExtResource("3_r")
+shape = 0
+points = PackedVector2Array(226, 160, 262, 160)
+color = Color(0.95, 0.93, 0.86, 0.95)
+width = 2.0
+animate = true
+
+[node name="Desenho24" type="Sprite2D" parent="Receita"]
+position = Vector2(294, 158)
+texture = ExtResource("15_r")
+scale = Vector2(1.8, 1.8)
+hframes = 8
+vframes = 4
+material = ExtResource("6_r")
+
+[node name="Desenho25" type="Sprite2D" parent="Receita"]
+position = Vector2(294, 134)
+texture = ExtResource("14_r")
+scale = Vector2(0.7, 0.7)
+material = ExtResource("6_r")
+
+[node name="Desenho26" type="Sprite2D" parent="Receita"]
+position = Vector2(294, 120)
+texture = ExtResource("16_r")
+scale = Vector2(0.7, 0.7)
+material = ExtResource("6_r")
+
+[node name="Texto27" type="Label" parent="Receita"]
+offset_left = 259.0
+offset_top = 194.0
+offset_right = 329.0
+offset_bottom = 212.0
+text = "2 pedaços"
+label_settings = SubResource("LabelSettings_4")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Desenho28" type="Sprite2D" parent="Receita"]
+position = Vector2(294, 232)
+texture = ExtResource("17_r")
+scale = Vector2(1.1, 1.1)
+material = ExtResource("6_r")
+
+[node name="Seta29" type="Node2D" parent="Receita"]
+position = Vector2(0, 0)
+script = ExtResource("3_r")
+shape = 0
+points = PackedVector2Array(294, 208, 294, 218)
+color = Color(0.95, 0.93, 0.86, 0.95)
+width = 1.5
+
+[node name="Badge30" type="Node2D" parent="Receita"]
+position = Vector2(348, 67)
+script = ExtResource("3_r")
+shape = 5
+size = Vector2(17, 17)
+text = "4"
+font_size = 16
+color = Color(0.95, 0.93, 0.86, 0.95)
+
+[node name="Texto31" type="Label" parent="Receita"]
+offset_left = 362.0
+offset_top = 58.0
+offset_right = 452.0
+offset_bottom = 79.0
+text = "ASSE"
+label_settings = SubResource("LabelSettings_1")
+horizontal_alignment = 0
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Seta32" type="Node2D" parent="Receita"]
+position = Vector2(0, 0)
+script = ExtResource("3_r")
+shape = 0
+points = PackedVector2Array(316, 232, 352, 196)
+color = Color(0.95, 0.93, 0.86, 0.95)
+width = 2.0
+bend = 10.0
+animate = true
+
+[node name="Anim33" type="AnimatedSprite2D" parent="Receita"]
+position = Vector2(392, 156)
+script = ExtResource("5_r")
+sheets = Array[Resource]([ExtResource("18_r")])
+material = ExtResource("6_r")
+
+[node name="Gauge34" type="Node2D" parent="Receita"]
+position = Vector2(392, 220)
+script = ExtResource("3_r")
+shape = 4
+size = Vector2(64, 6)
+vertical = false
+ratio = 0.0
+zone = Vector2(0.35, 0.7)
+fill_color = Color(0.95, 0.72, 0.25, 0.9)
+zone_color = Color(0.35, 0.82, 0.35, 1)
+animate = true
+speed = 0.6
+
+[node name="Texto35" type="Label" parent="Receita"]
+offset_left = 353.0
+offset_top = 226.0
+offset_right = 383.0
+offset_bottom = 242.0
+text = "cru"
+label_settings = SubResource("LabelSettings_5")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Texto36" type="Label" parent="Receita"]
+offset_left = 372.0
+offset_top = 226.0
+offset_right = 412.0
+offset_bottom = 242.0
+text = "ponto"
+label_settings = SubResource("LabelSettings_6")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Texto37" type="Label" parent="Receita"]
+offset_left = 401.0
+offset_top = 226.0
+offset_right = 435.0
+offset_bottom = 242.0
+text = "torra"
+label_settings = SubResource("LabelSettings_7")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Badge38" type="Node2D" parent="Receita"]
+position = Vector2(466, 67)
+script = ExtResource("3_r")
+shape = 5
+size = Vector2(17, 17)
+text = "5"
+font_size = 16
+color = Color(0.95, 0.93, 0.86, 0.95)
+
+[node name="Texto39" type="Label" parent="Receita"]
+offset_left = 480.0
+offset_top = 58.0
+offset_right = 570.0
+offset_bottom = 79.0
+text = "ENTREGUE"
+label_settings = SubResource("LabelSettings_1")
+horizontal_alignment = 0
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Seta40" type="Node2D" parent="Receita"]
+position = Vector2(0, 0)
+script = ExtResource("3_r")
+shape = 0
+points = PackedVector2Array(424, 140, 462, 112)
+color = Color(0.95, 0.93, 0.86, 0.95)
+width = 2.0
+bend = -6.0
+animate = true
+
+[node name="Seta41" type="Node2D" parent="Receita"]
+position = Vector2(0, 0)
+script = ExtResource("3_r")
+shape = 0
+points = PackedVector2Array(424, 172, 462, 210)
+color = Color(0.95, 0.93, 0.86, 0.95)
+width = 2.0
+bend = 6.0
+animate = true
+
+[node name="Desenho42" type="Sprite2D" parent="Receita"]
+position = Vector2(482, 112)
+texture = ExtResource("19_r")
+scale = Vector2(1.2, 1.2)
+material = ExtResource("6_r")
+
+[node name="Texto43" type="Label" parent="Receita"]
+offset_left = 442.0
+offset_top = 134.0
+offset_right = 522.0
+offset_bottom = 168.0
+text = "AURA VERDE\nno ponto"
+label_settings = SubResource("LabelSettings_8")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Desenho44" type="Sprite2D" parent="Receita"]
+position = Vector2(482, 212)
+texture = ExtResource("20_r")
+scale = Vector2(1.2, 1.2)
+material = ExtResource("6_r")
+
+[node name="Texto45" type="Label" parent="Receita"]
+offset_left = 437.0
+offset_top = 234.0
+offset_right = 527.0
+offset_bottom = 268.0
+text = "AURA VERMELHA\nbem passada"
+label_settings = SubResource("LabelSettings_9")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Seta46" type="Node2D" parent="Receita"]
+position = Vector2(0, 0)
+script = ExtResource("3_r")
+shape = 0
+points = PackedVector2Array(506, 112, 536, 120)
+color = Color(0.95, 0.93, 0.86, 0.95)
+width = 1.5
+animate = true
+
+[node name="Seta47" type="Node2D" parent="Receita"]
+position = Vector2(0, 0)
+script = ExtResource("3_r")
+shape = 0
+points = PackedVector2Array(506, 212, 536, 220)
+color = Color(0.95, 0.93, 0.86, 0.95)
+width = 1.5
+animate = true
+
+[node name="Desenho48" type="Sprite2D" parent="Receita"]
+position = Vector2(570, 136)
+texture = ExtResource("21_r")
+scale = Vector2(1.5, 1.5)
+hframes = 4
+flip_h = true
+material = ExtResource("6_r")
+
+[node name="Aura49" type="Sprite2D" parent="Receita"]
+position = Vector2(580, 98)
+texture = ExtResource("23_r")
+material = SubResource("ShaderMaterial_10")
+modulate = Color(0.3, 1, 0.35, 1)
+scale = Vector2(0.42, 0.42)
+
+[node name="Desenho50" type="Sprite2D" parent="Receita"]
+position = Vector2(580, 98)
+texture = ExtResource("23_r")
+scale = Vector2(0.42, 0.42)
+
+[node name="Desenho51" type="Sprite2D" parent="Receita"]
+position = Vector2(580, 96)
+texture = ExtResource("24_r")
+scale = Vector2(0.75, 0.75)
+
+[node name="Desenho52" type="Sprite2D" parent="Receita"]
+position = Vector2(570, 236)
+texture = ExtResource("21_r")
+scale = Vector2(1.5, 1.5)
+hframes = 4
+flip_h = true
+material = ExtResource("6_r")
+
+[node name="Aura53" type="Sprite2D" parent="Receita"]
+position = Vector2(580, 198)
+texture = ExtResource("23_r")
+material = SubResource("ShaderMaterial_10")
+modulate = Color(1, 0.2, 0.15, 1)
+scale = Vector2(0.42, 0.42)
+
+[node name="Desenho54" type="Sprite2D" parent="Receita"]
+position = Vector2(580, 198)
+texture = ExtResource("23_r")
+scale = Vector2(0.42, 0.42)
+
+[node name="Desenho55" type="Sprite2D" parent="Receita"]
+position = Vector2(580, 196)
+texture = ExtResource("24_r")
+scale = Vector2(0.75, 0.75)
+
+[node name="Ponto" type="Node2D" parent="."]
+script = ExtResource("2_r")
+title = "O PONTO CERTO"
+caption = "A [color=#8cf27c]AURA[/color] do balão do cliente diz o ponto: [color=#8cf27c]VERDE = carne no ponto[/color], [color=#ff7a6b]VERMELHA = bem passada (torrada)[/color]. Tire o espetinho da churrasqueira quando a barrinha estiver na cor certa!"
+
+[node name="Anim56" type="AnimatedSprite2D" parent="Ponto"]
+position = Vector2(118, 140)
+script = ExtResource("5_r")
+sheets = Array[Resource]([ExtResource("18_r")])
+material = ExtResource("6_r")
+
+[node name="Texto57" type="Label" parent="Ponto"]
+offset_left = 18.0
+offset_top = 194.0
+offset_right = 218.0
+offset_bottom = 211.0
+text = "a barrinha da boca muda de cor:"
+label_settings = SubResource("LabelSettings_11")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 3
+
+[node name="Gauge58" type="Node2D" parent="Ponto"]
+position = Vector2(58, 222)
+script = ExtResource("3_r")
+shape = 4
+size = Vector2(42, 8)
+vertical = false
+ratio = 1.0
+zone = Vector2(0, 0)
+fill_color = Color(0.95, 0.72, 0.25, 0.95)
+
+[node name="Texto59" type="Label" parent="Ponto"]
+offset_left = 28.0
+offset_top = 230.0
+offset_right = 88.0
+offset_bottom = 247.0
+text = "cru"
+label_settings = SubResource("LabelSettings_12")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Gauge60" type="Node2D" parent="Ponto"]
+position = Vector2(104, 222)
+script = ExtResource("3_r")
+shape = 4
+size = Vector2(42, 8)
+vertical = false
+ratio = 1.0
+zone = Vector2(0, 0)
+fill_color = Color(0.35, 0.82, 0.35, 0.95)
+
+[node name="Texto61" type="Label" parent="Ponto"]
+offset_left = 74.0
+offset_top = 230.0
+offset_right = 134.0
+offset_bottom = 247.0
+text = "NO PONTO"
+label_settings = SubResource("LabelSettings_8")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Gauge62" type="Node2D" parent="Ponto"]
+position = Vector2(150, 222)
+script = ExtResource("3_r")
+shape = 4
+size = Vector2(42, 8)
+vertical = false
+ratio = 1.0
+zone = Vector2(0, 0)
+fill_color = Color(0.88, 0.25, 0.22, 0.95)
+
+[node name="Texto63" type="Label" parent="Ponto"]
+offset_left = 120.0
+offset_top = 230.0
+offset_right = 180.0
+offset_bottom = 247.0
+text = "TORRADO"
+label_settings = SubResource("LabelSettings_9")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Seta64" type="Node2D" parent="Ponto"]
+position = Vector2(0, 0)
+script = ExtResource("3_r")
+shape = 0
+points = PackedVector2Array(174, 222, 192, 222)
+color = Color(0.95, 0.93, 0.86, 0.95)
+width = 1.5
+animate = true
+
+[node name="Cross65" type="Node2D" parent="Ponto"]
+position = Vector2(204, 222)
+script = ExtResource("3_r")
+shape = 6
+size = Vector2(12, 12)
+color = Color(1, 0.45, 0.4, 1)
+
+[node name="Texto66" type="Label" parent="Ponto"]
+offset_left = 151.0
+offset_top = 244.0
+offset_right = 241.0
+offset_bottom = 276.0
+text = "passou muito:\nqueima e some!"
+label_settings = SubResource("LabelSettings_7")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Line67" type="Node2D" parent="Ponto"]
+position = Vector2(0, 0)
+script = ExtResource("3_r")
+shape = 1
+points = PackedVector2Array(236, 76, 236, 270)
+color = Color(0.95, 0.93, 0.86, 0.25)
+width = 1.5
+
+[node name="Desenho68" type="Sprite2D" parent="Ponto"]
+position = Vector2(272, 142)
+texture = ExtResource("21_r")
+scale = Vector2(1.5, 1.5)
+hframes = 4
+flip_h = true
+material = ExtResource("6_r")
+
+[node name="Aura69" type="Sprite2D" parent="Ponto"]
+position = Vector2(290, 104)
+texture = ExtResource("23_r")
+material = SubResource("ShaderMaterial_10")
+modulate = Color(0.3, 1, 0.35, 1)
+scale = Vector2(0.62, 0.62)
+
+[node name="Desenho70" type="Sprite2D" parent="Ponto"]
+position = Vector2(290, 104)
+texture = ExtResource("23_r")
+scale = Vector2(0.62, 0.62)
+
+[node name="Desenho71" type="Sprite2D" parent="Ponto"]
+position = Vector2(290, 101)
+texture = ExtResource("24_r")
+
+[node name="Texto72" type="Label" parent="Ponto"]
+offset_left = 330.0
+offset_top = 102.0
+offset_right = 450.0
+offset_bottom = 123.0
+text = "quer NO PONTO"
+label_settings = SubResource("LabelSettings_13")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Seta73" type="Node2D" parent="Ponto"]
+position = Vector2(0, 0)
+script = ExtResource("3_r")
+shape = 0
+points = PackedVector2Array(442, 112, 478, 112)
+color = Color(0.95, 0.93, 0.86, 0.95)
+width = 2.0
+animate = true
+
+[node name="Desenho74" type="Sprite2D" parent="Ponto"]
+position = Vector2(512, 112)
+texture = ExtResource("19_r")
+scale = Vector2(1.5, 1.5)
+material = ExtResource("6_r")
+
+[node name="Check75" type="Node2D" parent="Ponto"]
+position = Vector2(566, 108)
+script = ExtResource("3_r")
+shape = 7
+size = Vector2(16, 16)
+color = Color(0.55, 0.95, 0.5, 1)
+
+[node name="Desenho76" type="Sprite2D" parent="Ponto"]
+position = Vector2(272, 236)
+texture = ExtResource("21_r")
+scale = Vector2(1.5, 1.5)
+hframes = 4
+flip_h = true
+material = ExtResource("6_r")
+
+[node name="Aura77" type="Sprite2D" parent="Ponto"]
+position = Vector2(290, 198)
+texture = ExtResource("23_r")
+material = SubResource("ShaderMaterial_10")
+modulate = Color(1, 0.2, 0.15, 1)
+scale = Vector2(0.62, 0.62)
+
+[node name="Desenho78" type="Sprite2D" parent="Ponto"]
+position = Vector2(290, 198)
+texture = ExtResource("23_r")
+scale = Vector2(0.62, 0.62)
+
+[node name="Desenho79" type="Sprite2D" parent="Ponto"]
+position = Vector2(290, 195)
+texture = ExtResource("24_r")
+
+[node name="Texto80" type="Label" parent="Ponto"]
+offset_left = 330.0
+offset_top = 196.0
+offset_right = 450.0
+offset_bottom = 238.0
+text = "quer BEM PASSADA\n(torrada)"
+label_settings = SubResource("LabelSettings_14")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Seta81" type="Node2D" parent="Ponto"]
+position = Vector2(0, 0)
+script = ExtResource("3_r")
+shape = 0
+points = PackedVector2Array(442, 206, 478, 206)
+color = Color(0.95, 0.93, 0.86, 0.95)
+width = 2.0
+animate = true
+
+[node name="Desenho82" type="Sprite2D" parent="Ponto"]
+position = Vector2(512, 206)
+texture = ExtResource("20_r")
+scale = Vector2(1.5, 1.5)
+material = ExtResource("6_r")
+
+[node name="Check83" type="Node2D" parent="Ponto"]
+position = Vector2(566, 202)
+script = ExtResource("3_r")
+shape = 7
+size = Vector2(16, 16)
+color = Color(1, 0.45, 0.4, 1)
+
+[node name="Texto84" type="Label" parent="Ponto"]
+offset_left = 320.0
+offset_top = 150.0
+offset_right = 540.0
+offset_bottom = 167.0
+text = "+ almas, +1 caveira de vida e +1 mana"
+label_settings = SubResource("LabelSettings_12")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 3
+
+[node name="Cross85" type="Node2D" parent="Ponto"]
+position = Vector2(318, 262)
+script = ExtResource("3_r")
+shape = 6
+size = Vector2(10, 10)
+color = Color(1, 0.45, 0.4, 1)
+
+[node name="Texto86" type="Label" parent="Ponto"]
+offset_left = 330.0
+offset_top = 254.0
+offset_right = 570.0
+offset_bottom = 271.0
+text = "ponto errado = o cliente paga menos"
+label_settings = SubResource("LabelSettings_11")
+horizontal_alignment = 0
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Controles" type="Node2D" parent="."]
+script = ExtResource("2_r")
+title = "CONTROLES"
+caption = "Bata a [color=#ffd75a]META de almas[/color] antes do tempo acabar. Atenda rápido: cliente sem paciência [color=#c99cff]solta magias[/color] em você!"
+tag_text = "DICAS"
+
+[node name="Tecla87" type="Node2D" parent="Controles"]
+position = Vector2(54.5, 84)
+script = ExtResource("4_r")
+key = "W"
+height = 17.0
+font_size = 14
+
+[node name="Tecla88" type="Node2D" parent="Controles"]
+position = Vector2(75.5, 84)
+script = ExtResource("4_r")
+key = "A"
+height = 17.0
+font_size = 14
+
+[node name="Tecla89" type="Node2D" parent="Controles"]
+position = Vector2(96.5, 84)
+script = ExtResource("4_r")
+key = "S"
+height = 17.0
+font_size = 14
+
+[node name="Tecla90" type="Node2D" parent="Controles"]
+position = Vector2(117.5, 84)
+script = ExtResource("4_r")
+key = "D"
+height = 17.0
+font_size = 14
+
+[node name="Texto91" type="Label" parent="Controles"]
+offset_left = 128.0
+offset_top = 74.0
+offset_right = 390.0
+offset_bottom = 93.0
+text = "andar (ou as setas)"
+label_settings = SubResource("LabelSettings_15")
+horizontal_alignment = 0
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Tecla92" type="Node2D" parent="Controles"]
+position = Vector2(72, 117)
+script = ExtResource("4_r")
+key = "SPACE"
+height = 17.0
+font_size = 14
+pressing = true
+
+[node name="Texto93" type="Label" parent="Controles"]
+offset_left = 128.0
+offset_top = 107.0
+offset_right = 390.0
+offset_bottom = 126.0
+text = "pegar, cortar, montar, assar e entregar"
+label_settings = SubResource("LabelSettings_15")
+horizontal_alignment = 0
+mouse_filter = 2
+autowrap_mode = 3
+
+[node name="Tecla94" type="Node2D" parent="Controles"]
+position = Vector2(64, 150)
+script = ExtResource("4_r")
+key = "SHIFT"
+height = 17.0
+font_size = 14
+
+[node name="Texto95" type="Label" parent="Controles"]
+offset_left = 128.0
+offset_top = 140.0
+offset_right = 390.0
+offset_bottom = 159.0
+text = "dash (corridinha rápida)"
+label_settings = SubResource("LabelSettings_15")
+horizontal_alignment = 0
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Tecla96" type="Node2D" parent="Controles"]
+position = Vector2(54.5, 183)
+script = ExtResource("4_r")
+key = "Q"
+height = 17.0
+font_size = 14
+
+[node name="Texto97" type="Label" parent="Controles"]
+offset_left = 128.0
+offset_top = 165.0
+offset_right = 390.0
+offset_bottom = 203.0
+text = "segure, mire com o mouse e solte: arremessa\no espetinho no cliente (1 mana)"
+label_settings = SubResource("LabelSettings_15")
+horizontal_alignment = 0
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Tecla98" type="Node2D" parent="Controles"]
+position = Vector2(54.5, 216)
+script = ExtResource("4_r")
+key = "E"
+height = 17.0
+font_size = 14
+
+[node name="Texto99" type="Label" parent="Controles"]
+offset_left = 128.0
+offset_top = 206.0
+offset_right = 390.0
+offset_bottom = 225.0
+text = "deixa a sombra; E de novo = volta para ela (1 mana)"
+label_settings = SubResource("LabelSettings_15")
+horizontal_alignment = 0
+mouse_filter = 2
+autowrap_mode = 3
+
+[node name="Tecla100" type="Node2D" parent="Controles"]
+position = Vector2(54.5, 249)
+script = ExtResource("4_r")
+key = "R"
+height = 17.0
+font_size = 14
+
+[node name="Texto101" type="Label" parent="Controles"]
+offset_left = 128.0
+offset_top = 239.0
+offset_right = 390.0
+offset_bottom = 258.0
+text = "limpa a raiz de espeto / descarta o espetinho"
+label_settings = SubResource("LabelSettings_15")
+horizontal_alignment = 0
+mouse_filter = 2
+autowrap_mode = 3
+
+[node name="Line102" type="Node2D" parent="Controles"]
+position = Vector2(0, 0)
+script = ExtResource("3_r")
+shape = 1
+points = PackedVector2Array(392, 76, 392, 270)
+color = Color(0.95, 0.93, 0.86, 0.25)
+width = 1.5
+
+[node name="Desenho103" type="Sprite2D" parent="Controles"]
+position = Vector2(424, 92)
+texture = ExtResource("25_r")
+material = ExtResource("6_r")
+
+[node name="Texto104" type="Label" parent="Controles"]
+offset_left = 430.0
+offset_top = 80.0
+offset_right = 590.0
+offset_bottom = 116.0
+text = "META: junte as almas\nantes do tempo acabar"
+label_settings = SubResource("LabelSettings_16")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Desenho105" type="Sprite2D" parent="Controles"]
+position = Vector2(424, 150)
+texture = ExtResource("26_r")
+hframes = 3
+material = ExtResource("6_r")
+
+[node name="Desenho106" type="Sprite2D" parent="Controles"]
+position = Vector2(448, 150)
+texture = ExtResource("27_r")
+hframes = 11
+material = ExtResource("6_r")
+
+[node name="Texto107" type="Label" parent="Controles"]
+offset_left = 445.0
+offset_top = 138.0
+offset_right = 595.0
+offset_bottom = 174.0
+text = "entrega certa:\n+1 caveira e +1 mana"
+label_settings = SubResource("LabelSettings_17")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Desenho108" type="Sprite2D" parent="Controles"]
+position = Vector2(430, 226)
+texture = ExtResource("28_r")
+scale = Vector2(1.6, 1.6)
+hframes = 4
+material = ExtResource("6_r")
+
+[node name="Bang109" type="Node2D" parent="Controles"]
+position = Vector2(430, 190)
+script = ExtResource("3_r")
+shape = 9
+size = Vector2(10, 16)
+color = Color(1, 0.45, 0.4, 1)
+
+[node name="Sparkle110" type="Node2D" parent="Controles"]
+position = Vector2(462, 214)
+script = ExtResource("3_r")
+shape = 8
+size = Vector2(10, 10)
+color = Color(0.82, 0.62, 1, 1)
+animate = true
+
+[node name="Sparkle111" type="Node2D" parent="Controles"]
+position = Vector2(452, 240)
+script = ExtResource("3_r")
+shape = 8
+size = Vector2(7, 7)
+color = Color(0.82, 0.62, 1, 1)
+animate = true
+seed_value = 5
+
+[node name="Texto112" type="Label" parent="Controles"]
+offset_left = 455.0
+offset_top = 202.0
+offset_right = 605.0
+offset_bottom = 256.0
+text = "paciência acabando =\nmagia! desvie com\nSHIFT (dash)"
+label_settings = SubResource("LabelSettings_18")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0

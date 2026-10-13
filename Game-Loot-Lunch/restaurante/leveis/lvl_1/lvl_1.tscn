@@ -14,24 +14,12 @@
 [ext_resource type="PackedScene" path="res://restaurante/cozinha/estacoes/pe_cogumelo.tscn" id="12_cogumelo"]
 [ext_resource type="PackedScene" path="res://restaurante/cozinha/estacoes/caixa_carne.tscn" id="13_mesa_carne"]
 [ext_resource type="PackedScene" path="res://restaurante/cozinha/estacoes/tabua_corte.tscn" id="14_mesa_corte"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_cima"]
-size = Vector2(592, 16)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_lado"]
-size = Vector2(16, 326)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_lado_cozinha"]
-size = Vector2(16, 254)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_rua"]
-size = Vector2(700, 16)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_balcao"]
-size = Vector2(560, 12)
+[ext_resource type="PackedScene" path="res://restaurante/leveis/lvl_1/tutorial_lvl_1.tscn" id="99_tutorial"]
+[ext_resource type="PackedScene" path="res://restaurante/leveis/lvl_1/cenario_lvl_1.tscn" id="20_cenario"]
 
 [node name="Lvl1" type="Node2D" node_paths=PackedStringArray("chef", "director", "shift", "hud")]
 script = ExtResource("1_level")
+tutorial = ExtResource("99_tutorial")
 level_data = ExtResource("2_data")
 chef = NodePath("Chef")
 director = NodePath("Diretor")
@@ -40,69 +28,7 @@ hud = NodePath("HudFase")
 
 [node name="Cenario" type="Node2D" parent="."]
 
-[node name="Fundo" type="Polygon2D" parent="Cenario"]
-color = Color(0.09, 0.07, 0.1, 1)
-polygon = PackedVector2Array(-40, -40, 680, -40, 680, 400, -40, 400)
-
-[node name="Chao" type="Polygon2D" parent="Cenario"]
-color = Color(0.17, 0.16, 0.2, 1)
-polygon = PackedVector2Array(40, 40, 600, 40, 600, 266, 40, 266)
-
-[node name="ParedeCima" type="Polygon2D" parent="Cenario"]
-color = Color(0.3, 0.22, 0.36, 1)
-polygon = PackedVector2Array(24, 24, 616, 24, 616, 40, 24, 40)
-
-[node name="ParedeEsquerda" type="Polygon2D" parent="Cenario"]
-color = Color(0.3, 0.22, 0.36, 1)
-polygon = PackedVector2Array(24, 24, 40, 24, 40, 330, 24, 330)
-
-[node name="ParedeDireita" type="Polygon2D" parent="Cenario"]
-color = Color(0.3, 0.22, 0.36, 1)
-polygon = PackedVector2Array(600, 24, 616, 24, 616, 278, 600, 278)
-
-[node name="FaixaClientes" type="Polygon2D" parent="Cenario"]
-color = Color(0.22, 0.18, 0.2, 1)
-polygon = PackedVector2Array(40, 278, 680, 278, 680, 330, 40, 330)
-
-[node name="Calcada" type="Polygon2D" parent="Cenario"]
-color = Color(0.3, 0.22, 0.36, 1)
-polygon = PackedVector2Array(24, 330, 680, 330, 680, 346, 24, 346)
-
-[node name="Balcao" type="Polygon2D" parent="Cenario"]
-color = Color(0.42, 0.29, 0.18, 1)
-polygon = PackedVector2Array(40, 266, 600, 266, 600, 278, 40, 278)
-
-[node name="BalcaoTampo" type="Polygon2D" parent="Cenario"]
-color = Color(0.58, 0.42, 0.27, 1)
-polygon = PackedVector2Array(40, 266, 600, 266, 600, 269, 40, 269)
-
-[node name="Paredes" type="StaticBody2D" parent="Cenario"]
-collision_layer = 1
-collision_mask = 0
-
-[node name="Cima" type="CollisionShape2D" parent="Cenario/Paredes"]
-position = Vector2(320, 32)
-shape = SubResource("RectangleShape2D_cima")
-
-[node name="Esquerda" type="CollisionShape2D" parent="Cenario/Paredes"]
-position = Vector2(32, 187)
-shape = SubResource("RectangleShape2D_lado")
-
-[node name="Direita" type="CollisionShape2D" parent="Cenario/Paredes"]
-position = Vector2(608, 151)
-shape = SubResource("RectangleShape2D_lado_cozinha")
-
-[node name="Rua" type="CollisionShape2D" parent="Cenario/Paredes"]
-position = Vector2(360, 338)
-shape = SubResource("RectangleShape2D_rua")
-
-[node name="BalcaoColisao" type="StaticBody2D" parent="Cenario"]
-collision_layer = 32
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Cenario/BalcaoColisao"]
-position = Vector2(320, 272)
-shape = SubResource("RectangleShape2D_balcao")
+[node name="CenarioTiles" parent="Cenario" instance=ExtResource("20_cenario")]
 
 [node name="Estacoes" type="Node2D" parent="."]
 
@@ -169,6 +95,6 @@ delivery_scene = ExtResource("6_entrega")
 
 [node name="Turno" type="Node" parent="."]
 script = ExtResource("8_turno")
-duration = 180.0
+duration = 300.0
 
 [node name="HudFase" parent="." instance=ExtResource("9_hud")]
