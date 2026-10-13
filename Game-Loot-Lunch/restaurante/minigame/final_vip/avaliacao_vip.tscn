@@ -7,7 +7,6 @@
 [ext_resource type="Resource" path="res://restaurante/minigame/comum/anim/chef_idle.tres" id="5_chef_idle"]
 [ext_resource type="Resource" path="res://restaurante/minigame/comum/anim/chef_andar.tres" id="6_chef_andar"]
 [ext_resource type="PackedScene" path="res://restaurante/minigame/comum/salao_vip.tscn" id="7_salao"]
-[ext_resource type="PackedScene" path="res://restaurante/minigame/comum/dialogo_vip.tscn" id="8_dialogo"]
 [ext_resource type="Texture2D" path="res://restaurante/minigame/final_vip/art/garfada.png" id="9_garfo"]
 [ext_resource type="Texture2D" path="res://restaurante/minigame/farofa_tanajura/art/prato_vip_completo.png" id="10_prato"]
 [ext_resource type="Resource" path="res://restaurante/minigame/farofa_tanajura/art/anim/fx_devorar_cura.tres" id="11_hearts"]
@@ -15,7 +14,7 @@
 [ext_resource type="Resource" path="res://restaurante/minigame/farofa_tanajura/art/anim/fx_fumaca_sombria.tres" id="13_smoke"]
 [ext_resource type="Script" path="res://restaurante/minigame/comum/cinema_bars.gd" id="14_bars"]
 
-[node name="AvaliacaoVip" type="Node2D" node_paths=PackedStringArray("vip", "chef", "dish", "fork", "rays", "dim", "chef_start", "chef_serve_spot", "chef_wait_spot", "dish_spot", "camera", "bars", "dialogue")]
+[node name="AvaliacaoVip" type="Node2D" node_paths=PackedStringArray("vip", "chef", "dish", "fork", "rays", "dim", "chef_start", "chef_serve_spot", "chef_wait_spot", "dish_spot", "camera", "bars")]
 script = ExtResource("1_script")
 vip = NodePath("Vip")
 chef = NodePath("Chef")
@@ -32,7 +31,6 @@ sparkle_fx = ExtResource("12_sparkle")
 smoke_fx = ExtResource("13_smoke")
 camera = NodePath("Camera")
 bars = NodePath("Faixas")
-dialogue = NodePath("Dialogo")
 title = "A Avaliação do VIP"
 instructions = "O prato está pronto. Agora é com o Cliente VIP...\n\nSente, assista e torça!"
 show_intro_banner = false
@@ -96,5 +94,3 @@ position = Vector2(320, 180)
 
 [node name="Faixas" type="CanvasLayer" parent="."]
 script = ExtResource("14_bars")
-
-[node name="Dialogo" parent="." instance=ExtResource("8_dialogo")]

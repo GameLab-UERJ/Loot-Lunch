@@ -9,8 +9,8 @@ class_name VipIntro
 ##   3. o VIP vai sentar na mesa (o mesmo lugar onde ele prova o prato no final);
 ##   4. o chef fala a última (`lines_after_sit`) e vai para a cozinha -> começam as etapas.
 ##
-## As falas ficam no Inspector (grupo "Falas"), no formato "Quem: fala". Nome, cor e
-## retrato de cada um ficam em `comum/dialogo_vip.tscn`.
+## As falas ficam no arquivo `res://resources/dialogues/vip_boss.dialogue` e são
+## gerenciadas pelo DialogueManager 3 oficial (usando o `common_balloon.tscn`).
 
 
 @export var vip: SheetSprite
@@ -80,7 +80,7 @@ func _on_begin() -> void:
 	# 2. Conversa.
 	var middle: Vector2 = (chef.global_position + vip.global_position) * 0.5 + Vector2(0, -5)
 	await zoom_to(middle, talk_zoom, 0.9)
-	await talk(lines_meeting)
+	await talk("intro_meeting")
 
 	# 3. O VIP vai para a mesa (por trás dela) e senta.
 	var behind_table := Vector2(vip_talk_spot.global_position.x - 22.0, vip_seat.global_position.y + 2.0)
@@ -95,7 +95,7 @@ func _on_begin() -> void:
 	await wait(0.4)
 
 	# 4. O chef fala a última e vai para a cozinha.
-	await talk(lines_after_sit)
+	await talk("intro_after_sit")
 	zoom_reset(1.0)
 	await walk(chef, chef_exit.global_position, 1.2)
 	await faixas_out()

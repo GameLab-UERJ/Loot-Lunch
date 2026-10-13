@@ -171,7 +171,7 @@ func _on_begin() -> void:
 	if dim:
 		open.tween_property(dim, "modulate:a", 0.0, 0.9)
 	await zoom_to(both, 1.6, 0.9)
-	await talk(_outro_lines())
+	await talk(_outro_title())
 	await zoom_reset(0.8)
 	await faixas_out()
 
@@ -193,6 +193,17 @@ func _on_begin() -> void:
 		"quality": quality,
 		"stars": BossMinigame.stars_for(quality),
 	})
+
+
+func _outro_title() -> String:
+	match reaction:
+		Reaction.PERFEITO:
+			return "outro_perfect"
+		Reaction.BOM:
+			return "outro_good"
+		Reaction.MEDIO:
+			return "outro_medium"
+	return "outro_bad"
 
 
 func _outro_lines() -> Array[String]:
