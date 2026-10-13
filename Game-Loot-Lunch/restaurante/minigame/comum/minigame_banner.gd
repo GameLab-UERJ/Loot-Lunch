@@ -104,7 +104,7 @@ func show_intro(title: String, text: String, image: Texture2D = null,
 
 ## Painel de resultado. Com `prompt` vazio não espera ninguém (só mostra).
 func show_result(success: bool, text: String, prompt: String = "") -> void:
-	var color: Color = Color(0.55, 1.0, 0.55) if success else Color(1.0, 0.45, 0.45)
+	var color: Color = Color(0.12, 0.48, 0.16) if success else Color(0.75, 0.15, 0.12)
 	_fill("SUCESSO!" if success else "FALHOU...", text, null, prompt, color)
 	_waiting = prompt != ""
 

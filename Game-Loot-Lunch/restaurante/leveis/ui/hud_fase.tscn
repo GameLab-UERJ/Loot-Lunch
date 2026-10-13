@@ -157,4 +157,12 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 theme = ExtResource("4_button_theme")
-text = "Jogar de novo (Enter)"
+text = "Jogar de novo"
+
+[node name="SairRestaurante" type="Button" parent="FimDeTurno/Painel/Coluna" unique_id=574417550]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("4_button_theme")
+text = "Sair do restaurante"
+

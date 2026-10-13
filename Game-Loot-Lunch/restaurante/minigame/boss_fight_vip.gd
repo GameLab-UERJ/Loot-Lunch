@@ -46,7 +46,7 @@ signal quit_requested
 ## Quem liga: o fluxo do MVP (restaurante/mvp/fluxo_boss_vip.gd).
 @export var offer_quit_on_fail: bool = false
 @export var retry_option_text: String = "Tentar de novo"
-@export var quit_option_text: String = "Sair para o menu"
+@export var quit_option_text: String = "Sair do restaurante"
 ## Começa sozinho ao entrar na árvore.
 @export var autostart: bool = true
 
@@ -62,8 +62,18 @@ var _current: BossMinigame = null
 
 func _ready() -> void:
 	DayNightSwitch.disable(self)  # boss fight é interna: sem o efeito de dia e noite
+	_ensure_pause_menu()
 	if autostart:
 		run.call_deferred()
+
+
+func _ensure_pause_menu() -> void:
+	if get_tree().root.has_node("PauseMenu"):
+		return
+	var pause_scene: PackedScene = load("res://menus/pause/pause_menu.tscn")
+	if pause_scene:
+		var pm := pause_scene.instantiate()
+		get_tree().root.call_deferred("add_child", pm)
 
 
 ## Roda a boss fight inteira. Retorna true se o VIP recebeu o prato.
@@ -128,7 +138,7 @@ func _play_stage(index: int, scene: PackedScene) -> Dictionary:
 		if success:
 			if index >= 0 and index < stages.size():
 				await banner.ask("SUCESSO!", "%s\n%s%s" % [label, _stars_text(result), _loot_text(result)],
-					"[ESPAÇO] próxima etapa", null, Color(0.55, 1.0, 0.55))
+					"[ESPAÇO] próxima etapa", null, Color(0.12, 0.48, 0.16))
 			_free_stage(stage)
 			return result
 
@@ -136,16 +146,16 @@ func _play_stage(index: int, scene: PackedScene) -> Dictionary:
 		if offer_quit_on_fail:
 			var choice: int = await banner.choose("FALHOU...",
 				"%s\n\nO VIP está ficando impaciente..." % label,
-				PackedStringArray([retry_option_text, quit_option_text]), Color(1.0, 0.45, 0.45))
+				PackedStringArray([retry_option_text, quit_option_text]), Color(0.75, 0.15, 0.12))
 			if choice == 0:
 				continue
 			quit_requested.emit()
 			return {}
 		if not retry_on_fail:
-			await banner.ask("FALHOU...", label, "[ESPAÇO] continuar", null, Color(1.0, 0.45, 0.45))
+			await banner.ask("FALHOU...", label, "[ESPAÇO] continuar", null, Color(0.75, 0.15, 0.12))
 			return {}
 		await banner.ask("FALHOU...", "%s\n\nO VIP está ficando impaciente..." % label,
-			"[ESPAÇO] tentar de novo", null, Color(1.0, 0.45, 0.45))
+			"[ESPAÇO] tentar de novo", null, Color(0.75, 0.15, 0.12))
 	return {}
 
 

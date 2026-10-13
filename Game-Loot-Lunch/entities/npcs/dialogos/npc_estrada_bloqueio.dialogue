@@ -1,21 +1,11 @@
 ~ start
 
-Guarda: Alto lá, viajante! Esta estrada está interditada por ordens superiores.
-Guarda: Apenas quem conhece a senha secreta tem permissão para entrar na cozinha do restaurante clandestino.
-Guarda: Diga-me... qual é a senha?
-- Loot & Lunch
+Guarda: Alto lá, viajante! Esta estrada está interditada.
+Guarda: Apenas quem conhece a senha secreta tem permissão para entrar na cozinha do restaurante.
+- Osso e Brasa
 	Guarda: [shake rate=20 level=10]Senha correta![/shake]
 	Guarda: Pode passar. O chef está te esperando na cozinha! Bom apetite!
-	do GlobalData.enter_restaurant()
-	=> END
-- Tanajura na Brasa
-	Guarda: Hmmm... Parece um prato delicioso, mas não é essa a senha de hoje! Circulando!
-	=> END
-- Abra-te, Sésamo!
-	Guarda: O que você acha que isto é, uma caverna de ladrões? Errado! Dê meia-volta!
-	=> END
-- Não sei a senha...
-	Guarda: Sem senha, sem banquete. Volte quando descobrir!
+	do enter_restaurant()
 	=> END
 
 => END

@@ -32,6 +32,9 @@ func _process(_delta: float) -> void:
 
 
 func enter_restaurant() -> void:
+	if is_instance_valid(dialogue_balloon):
+		dialogue_balloon.queue_free()
+		dialogue_balloon = null
 	GlobalData.enter_restaurant()
 
 

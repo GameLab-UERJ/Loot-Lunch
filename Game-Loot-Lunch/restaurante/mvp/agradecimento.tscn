@@ -125,7 +125,7 @@ custom_minimum_size = Vector2(110, 20)
 layout_mode = 2
 size_flags_horizontal = 4
 theme = ExtResource("5_tema")
-text = "Voltar ao menu principal"
+text = "Sair do restaurante"
 
 [node name="Musica" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_musica")

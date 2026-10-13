@@ -49,8 +49,8 @@ var _hover_audio: AudioStreamPlayer
 var _press_audio: AudioStreamPlayer
 
 
-const HOVER_SOUND := preload("res://assets/sound/effects/abs-pointer-2.mp3")
-const PRESS_SOUND := preload("res://assets/sound/effects/abs-confirm-2.mp3")
+const HOVER_SOUND := preload("res://assets/sfx/menus/abs-pointer-2.mp3")
+const PRESS_SOUND := preload("res://assets/sfx/menus/abs-confirm-2.mp3")
 
 
 func _init() -> void:

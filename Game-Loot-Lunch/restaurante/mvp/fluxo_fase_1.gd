@@ -17,7 +17,7 @@ class_name MvpLevelFlow
 @export var continue_text: String = "Continuar"
 @export var death_title: String = "O chef caiu!"
 @export var retry_text: String = "Tentar de novo"
-@export var quit_text: String = "Sair para o menu"
+@export var quit_text: String = "Sair do restaurante"
 
 @export_group("Visual")
 ## Tema dos botões (o mesmo do menu principal).
@@ -57,16 +57,27 @@ func _on_level_finished(success: bool) -> void:
 		if not lines.is_empty() and lines[0] == death_title:
 			lines.remove_at(0)
 		var choice: int = await _banner.choose(death_title, "\n".join(lines),
-			PackedStringArray([retry_text, quit_text]), Color(1.0, 0.45, 0.45))
+			PackedStringArray([retry_text, quit_text]), Color(0.75, 0.15, 0.12))
 		if choice == 0:
 			MvpFlow.play_level_1(get_tree())
 		else:
-			MvpFlow.go_to_main_menu(get_tree())
+			MvpFlow.exit_restaurant(get_tree())
 		return
 
-	# Tempo acabou: segue para o boss mesmo sem bater a meta.
+	# Tempo acabou
 	var title: String = goal_done_title if success else time_up_title
-	var color: Color = Color(0.55, 1.0, 0.55) if success else Color(1.0, 0.85, 0.45)
-	await _banner.choose(title, "%s\n\n%s" % [stats, boss_teaser],
-		PackedStringArray([continue_text]), color)
-	MvpFlow.play_boss_fight(get_tree())
+	var color: Color = Color(0.12, 0.48, 0.16) if success else Color(0.75, 0.15, 0.12)
+	if success:
+		var choice: int = await _banner.choose(title, "%s\n\n%s" % [stats, boss_teaser],
+			PackedStringArray([continue_text, quit_text]), color)
+		if choice == 0:
+			MvpFlow.play_boss_fight(get_tree())
+		else:
+			MvpFlow.exit_restaurant(get_tree())
+	else:
+		var choice: int = await _banner.choose(title, "%s\n\nNão foi dessa vez! Quer tentar bater a meta de novo?" % stats,
+			PackedStringArray([retry_text, quit_text]), color)
+		if choice == 0:
+			MvpFlow.play_level_1(get_tree())
+		else:
+			MvpFlow.exit_restaurant(get_tree())

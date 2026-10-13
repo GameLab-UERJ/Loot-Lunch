@@ -11,6 +11,7 @@ class_name LevelHUD
 
 
 signal restart_requested
+signal exit_requested
 
 
 ## Tempo (s) em que o relógio fica vermelho e pisca.
@@ -35,6 +36,7 @@ signal restart_requested
 @onready var end_title: Label = %Titulo
 @onready var end_stats: Label = %Resumo
 @onready var restart_button: Button = %JogarDeNovo
+@onready var exit_button: Button = %SairRestaurante
 
 var _goal: int = 0
 var _hover_audio: AudioStreamPlayer
@@ -64,13 +66,15 @@ func _ready() -> void:
 		restart_requested.emit()
 	)
 
-
-func _unhandled_input(event: InputEvent) -> void:
-	if not end_screen.visible:
-		return
-	if event.is_action_pressed(&"ui_accept"):
-		get_viewport().set_input_as_handled()
-		restart_requested.emit()
+	exit_button.mouse_entered.connect(func() -> void:
+		if _hover_audio and _hover_audio.stream and end_screen.visible:
+			_hover_audio.play()
+	)
+	exit_button.pressed.connect(func() -> void:
+		if _press_audio and _press_audio.stream:
+			_press_audio.play()
+		exit_requested.emit()
+	)
 
 
 ## Começo da fase: guarda a meta e mostra o aviso "Fase 1 — Meta: 60".

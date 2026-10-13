@@ -18,6 +18,7 @@ class_name MvpFlow
 
 
 const MAIN_MENU: String = "res://menus/main/main_menu.tscn"
+const EXTERNAL_HOUSE: String = "res://tests/levels/test_external_house.tscn"
 const LEVEL_1: String = "res://restaurante/leveis/lvl_1/lvl_1.tscn"
 const BOSS_FIGHT: String = "res://restaurante/minigame/boss_fight_vip.tscn"
 const THANKS: String = "res://restaurante/mvp/agradecimento.tscn"
@@ -31,6 +32,12 @@ const TRANSITION_TIME: float = 1.0
 
 static func go_to_main_menu(tree: SceneTree) -> void:
 	_go(tree, func() -> Node: return _instantiate(MAIN_MENU))
+
+
+## Volta para external_house afastado do guarda.
+static func exit_restaurant(tree: SceneTree) -> void:
+	GlobalData.spawn_at_restaurant_exit = true
+	_go(tree, func() -> Node: return _instantiate(EXTERNAL_HOUSE))
 
 
 ## Fase 1 do zero (também é o "tentar de novo" quando o chef cai).
