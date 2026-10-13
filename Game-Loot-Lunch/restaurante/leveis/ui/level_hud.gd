@@ -83,7 +83,7 @@ func set_customers(served: int, lost: int) -> void:
 
 ## Fim do turno. `stats` aceita: money, goal, served, correct, lost.
 func show_end(success: bool, reason: String, stats: Dictionary) -> void:
-	end_title.text = "Meta batida!" if success else "Não deu..."
+	end_title.text = "Meta batida!" if success else "Fim de turno!"
 	end_title.add_theme_color_override(&"font_color", goal_done_color if success else warning_color)
 	var lines: PackedStringArray = []
 	if reason != "":

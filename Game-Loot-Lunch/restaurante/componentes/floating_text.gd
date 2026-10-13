@@ -8,6 +8,8 @@ class_name FloatingText
 @export var duration: float = 0.9
 
 
+const FONT := preload("res://assets/fonts/ui/Sta.Toasty_font (1).ttf")
+
 var _anchor: Vector2 = Vector2.ZERO
 
 
@@ -29,6 +31,7 @@ func _init() -> void:
 	visible = false  # só aparece depois de centralizado
 	horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_theme_font_override("font", FONT)
 	add_theme_font_size_override("font_size", 10)
 	add_theme_color_override("font_outline_color", Color(0.08, 0.04, 0.1))
 	add_theme_constant_override("outline_size", 4)

@@ -1,6 +1,9 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://restaurante/leveis/ui/level_hud.gd" id="1_hud"]
+[ext_resource type="FontFile" uid="uid://cnqv72au01vlv" path="res://assets/fonts/ui/Sta.Toasty_font (1).ttf" id="2_toasty"]
+[ext_resource type="FontFile" uid="uid://fjcmb5r6tkvp" path="res://assets/fonts/Silver.ttf" id="3_silver"]
+[ext_resource type="Theme" uid="uid://blqubia4djs1d" path="res://resources/themes/ui/button.tres" id="4_button_theme"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_painel"]
 bg_color = Color(0.12, 0.08, 0.14, 0.92)
@@ -40,6 +43,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.95, 0.92, 0.85, 1)
 theme_override_colors/font_outline_color = Color(0.1, 0.05, 0.12, 1)
 theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_toasty")
 theme_override_font_sizes/font_size = 14
 text = "Tempo 3:00"
 horizontal_alignment = 2
@@ -50,6 +54,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.95, 0.92, 0.85, 1)
 theme_override_colors/font_outline_color = Color(0.1, 0.05, 0.12, 1)
 theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_toasty")
 theme_override_font_sizes/font_size = 12
 text = "Meta 0 / 60"
 horizontal_alignment = 2
@@ -60,6 +65,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.8, 0.78, 0.86, 1)
 theme_override_colors/font_outline_color = Color(0.1, 0.05, 0.12, 1)
 theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("2_toasty")
 theme_override_font_sizes/font_size = 9
 text = "Atendidos 0   Perdidos 0"
 horizontal_alignment = 2
@@ -81,6 +87,7 @@ mouse_filter = 2
 theme_override_colors/font_color = Color(1, 0.95, 0.8, 1)
 theme_override_colors/font_outline_color = Color(0.1, 0.05, 0.12, 1)
 theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("2_toasty")
 theme_override_font_sizes/font_size = 18
 text = "Fase 1
 Meta: 60 Almas em 3:00"
@@ -131,6 +138,7 @@ unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_outline_color = Color(0.1, 0.05, 0.12, 1)
 theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_toasty")
 theme_override_font_sizes/font_size = 18
 text = "Meta batida!"
 horizontal_alignment = 1
@@ -139,7 +147,8 @@ horizontal_alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.92, 0.9, 0.86, 1)
-theme_override_font_sizes/font_size = 10
+theme_override_fonts/font = ExtResource("3_silver")
+theme_override_font_sizes/font_size = 16
 text = "Dinheiro: 0 / 60"
 horizontal_alignment = 1
 
@@ -147,5 +156,5 @@ horizontal_alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 11
+theme = ExtResource("4_button_theme")
 text = "Jogar de novo (Enter)"

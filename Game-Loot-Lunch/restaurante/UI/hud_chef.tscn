@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://restaurante/UI/mana_bar.gd" id="6_mana"]
 [ext_resource type="Texture2D" uid="uid://beb208txdqroi" path="res://restaurante/UI/arte/jscoutinho_ui_mana_idle.png" id="7_mana_idle"]
 [ext_resource type="Texture2D" uid="uid://dg836tc4c1yay" path="res://restaurante/UI/arte/jscoutinho_ui_mana_fade_out.png" id="8_mana_fade"]
+[ext_resource type="FontFile" uid="uid://cnqv72au01vlv" path="res://assets/fonts/ui/Sta.Toasty_font (1).ttf" id="9_font"]
 
 [node name="HudChef" type="CanvasLayer"]
 layer = 10
@@ -58,6 +59,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.95, 0.92, 0.85, 1)
 theme_override_colors/font_outline_color = Color(0.1, 0.05, 0.12, 1)
 theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("9_font")
 theme_override_font_sizes/font_size = 14
 text = "0"
 vertical_alignment = 1
