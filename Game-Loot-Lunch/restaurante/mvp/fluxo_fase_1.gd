@@ -57,7 +57,7 @@ func _on_level_finished(success: bool) -> void:
 		if not lines.is_empty() and lines[0] == death_title:
 			lines.remove_at(0)
 		var choice: int = await _banner.choose(death_title, "\n".join(lines),
-			PackedStringArray([retry_text, quit_text]), Color(0.75, 0.15, 0.12))
+			PackedStringArray([retry_text, quit_text]), Color(0.96, 0.28, 0.24))
 		if choice == 0:
 			MvpFlow.play_level_1(get_tree())
 		else:
@@ -66,7 +66,7 @@ func _on_level_finished(success: bool) -> void:
 
 	# Tempo acabou
 	var title: String = goal_done_title if success else time_up_title
-	var color: Color = Color(0.12, 0.48, 0.16) if success else Color(0.75, 0.15, 0.12)
+	var color: Color = Color(0.3, 0.88, 0.35) if success else Color(0.96, 0.28, 0.24)
 	if success:
 		var choice: int = await _banner.choose(title, "%s\n\n%s" % [stats, boss_teaser],
 			PackedStringArray([continue_text, quit_text]), color)

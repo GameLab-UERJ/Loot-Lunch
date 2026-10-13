@@ -116,7 +116,7 @@ func _serve() -> void:
 func _end(success: bool, label: String, quality: float) -> void:
 	_update_look()
 	popup(macaxeira.global_position + Vector2(0, -36), label,
-		Color(0.12, 0.48, 0.16) if success else Color(0.75, 0.15, 0.12))
+		Color(0.3, 0.88, 0.35) if success else Color(0.96, 0.28, 0.24))
 	finish(success, {
 		"label": label,
 		"quality": quality,

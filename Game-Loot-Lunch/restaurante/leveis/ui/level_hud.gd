@@ -17,8 +17,8 @@ signal exit_requested
 ## Tempo (s) em que o relógio fica vermelho e pisca.
 @export var warning_time: float = 30.0
 @export var normal_color: Color = Color(0.95, 0.92, 0.85)
-@export var warning_color: Color = Color(1.0, 0.4, 0.35)
-@export var goal_done_color: Color = Color(0.55, 1.0, 0.55)
+@export var warning_color: Color = Color(0.96, 0.28, 0.24)
+@export var goal_done_color: Color = Color(0.3, 0.88, 0.35)
 ## Segundos que o aviso de início fica na tela.
 @export var banner_time: float = 2.5
 

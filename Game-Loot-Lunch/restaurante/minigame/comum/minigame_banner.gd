@@ -27,7 +27,7 @@ signal choice_made(index: int)
 @export var border_color: Color = Color(0.35, 0.24, 0.15, 1.0)
 @export var title_color: Color = Color(0.24, 0.14, 0.08, 1.0)
 @export var text_color: Color = Color(0.18, 0.12, 0.08, 1.0)
-@export var outline_color: Color = Color(0.92, 0.88, 0.8, 1.0)
+@export var outline_color: Color = Color(0.1, 0.05, 0.12, 1.0)
 ## Altura dos avisos curtos (toast) a partir do topo. Desça se houver barra de chefe.
 @export var toast_top: float = 36.0
 @export_group("Botões (choose)")
@@ -104,7 +104,7 @@ func show_intro(title: String, text: String, image: Texture2D = null,
 
 ## Painel de resultado. Com `prompt` vazio não espera ninguém (só mostra).
 func show_result(success: bool, text: String, prompt: String = "") -> void:
-	var color: Color = Color(0.12, 0.48, 0.16) if success else Color(0.75, 0.15, 0.12)
+	var color: Color = Color(0.3, 0.88, 0.35) if success else Color(0.96, 0.28, 0.24)
 	_fill("SUCESSO!" if success else "FALHOU...", text, null, prompt, color)
 	_waiting = prompt != ""
 
@@ -160,6 +160,8 @@ func toast(message: String, color: Color = Color.WHITE, duration: float = 1.1) -
 		_toast_tween.kill()
 	_toast.text = message
 	_toast.modulate = color
+	_toast.add_theme_color_override("font_outline_color", outline_color)
+	_toast.add_theme_constant_override("outline_size", 5)
 	_toast.scale = Vector2(1.4, 1.4)
 	_toast.show()
 	_toast_tween = create_tween()
@@ -173,6 +175,8 @@ func toast(message: String, color: Color = Color.WHITE, duration: float = 1.1) -
 func _fill(title: String, text: String, image: Texture2D, prompt: String, color: Color) -> void:
 	_title.text = title
 	_title.add_theme_color_override("font_color", color)
+	_title.add_theme_color_override("font_outline_color", outline_color)
+	_title.add_theme_constant_override("outline_size", 5)
 	_body.text = text
 	_body.visible = text != ""
 	_image.texture = image
@@ -217,7 +221,7 @@ func _build() -> void:
 	column.alignment = BoxContainer.ALIGNMENT_CENTER
 	_panel.add_child(column)
 
-	_title = _make_label(16, title_color, TITLE_FONT)
+	_title = _make_label(16, title_color, TITLE_FONT, 5)
 	column.add_child(_title)
 
 	_image = TextureRect.new()
@@ -227,12 +231,12 @@ func _build() -> void:
 	_image.custom_minimum_size = Vector2(128, 128)
 	column.add_child(_image)
 
-	_body = _make_label(19, text_color, BODY_FONT)
+	_body = _make_label(19, text_color, BODY_FONT, 0)
 	_body.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_body.custom_minimum_size = Vector2(280, 0)
 	column.add_child(_body)
 
-	_prompt = _make_label(16, border_color, BODY_FONT)
+	_prompt = _make_label(16, border_color, BODY_FONT, 0)
 	column.add_child(_prompt)
 
 	_choices = HBoxContainer.new()
@@ -241,7 +245,7 @@ func _build() -> void:
 	_choices.hide()
 	column.add_child(_choices)
 
-	_toast = _make_label(14, Color.WHITE, TITLE_FONT)
+	_toast = _make_label(14, Color.WHITE, TITLE_FONT, 5)
 	_toast.set_anchors_preset(Control.PRESET_CENTER_TOP)
 	_toast.offset_left = -150.0
 	_toast.offset_right = 150.0
@@ -252,7 +256,7 @@ func _build() -> void:
 	add_child(_toast)
 
 
-func _make_label(font_size: int, color: Color, font: Font = null) -> Label:
+func _make_label(font_size: int, color: Color, font: Font = null, outline_sz: int = 4) -> Label:
 	var label := Label.new()
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -261,7 +265,8 @@ func _make_label(font_size: int, color: Color, font: Font = null) -> Label:
 	label.add_theme_font_size_override("font_size", font_size)
 	label.add_theme_color_override("font_color", color)
 	label.add_theme_color_override("font_outline_color", outline_color)
-	label.add_theme_constant_override("outline_size", 4)
+	if outline_sz > 0:
+		label.add_theme_constant_override("outline_size", outline_sz)
 	return label
 
 
