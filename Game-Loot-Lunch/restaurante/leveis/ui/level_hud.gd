@@ -96,12 +96,12 @@ func set_time_left(seconds: float) -> void:
 
 
 func set_money(amount: int) -> void:
-	money_label.text = "Meta %d / %d" % [amount, _goal]
+	money_label.text = "Meta: %d / %d" % [amount, _goal]
 	money_label.add_theme_color_override(&"font_color", goal_done_color if amount >= _goal else normal_color)
 
 
 func set_customers(served: int, lost: int) -> void:
-	customers_label.text = "Atendidos %d   Perdidos %d" % [served, lost]
+	customers_label.text = "Atendidos: %d   Perdidos: %d" % [served, lost]
 
 
 ## Fim do turno. `stats` aceita: money, goal, served, correct, lost.
