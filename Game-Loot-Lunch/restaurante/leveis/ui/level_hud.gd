@@ -22,6 +22,11 @@ signal restart_requested
 @export var banner_time: float = 2.5
 
 
+@export_group("Audio")
+@export var hover_sound: AudioStream = preload("res://assets/sfx/menus/abs-pointer-2.mp3")
+@export var press_sound: AudioStream = preload("res://assets/sfx/menus/abs-confirm-2.mp3")
+
+
 @onready var time_label: Label = %Tempo
 @onready var money_label: Label = %Meta
 @onready var customers_label: Label = %Clientes
@@ -31,15 +36,33 @@ signal restart_requested
 @onready var end_stats: Label = %Resumo
 @onready var restart_button: Button = %JogarDeNovo
 
-
 var _goal: int = 0
+var _hover_audio: AudioStreamPlayer
+var _press_audio: AudioStreamPlayer
 
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	end_screen.hide()
 	banner.hide()
-	restart_button.pressed.connect(func() -> void: restart_requested.emit())
+
+	_hover_audio = AudioStreamPlayer.new()
+	_hover_audio.stream = hover_sound
+	add_child(_hover_audio)
+
+	_press_audio = AudioStreamPlayer.new()
+	_press_audio.stream = press_sound
+	add_child(_press_audio)
+
+	restart_button.mouse_entered.connect(func() -> void:
+		if _hover_audio and _hover_audio.stream and end_screen.visible:
+			_hover_audio.play()
+	)
+	restart_button.pressed.connect(func() -> void:
+		if _press_audio and _press_audio.stream:
+			_press_audio.play()
+		restart_requested.emit()
+	)
 
 
 func _unhandled_input(event: InputEvent) -> void:

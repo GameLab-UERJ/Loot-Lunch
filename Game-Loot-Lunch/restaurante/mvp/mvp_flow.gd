@@ -17,7 +17,7 @@ class_name MvpFlow
 ## Uso (de qualquer nó):  MvpFlow.play_level_1(get_tree())
 
 
-const MAIN_MENU: String = "res://restaurante/UI/main_menu_rest.tscn"
+const MAIN_MENU: String = "res://menus/main/main_menu.tscn"
 const LEVEL_1: String = "res://restaurante/leveis/lvl_1/lvl_1.tscn"
 const BOSS_FIGHT: String = "res://restaurante/minigame/boss_fight_vip.tscn"
 const THANKS: String = "res://restaurante/mvp/agradecimento.tscn"

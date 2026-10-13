@@ -24,6 +24,7 @@ var save_load_scene : PackedScene = preload("res://menus/saver_loader/save_load_
 
 @onready var credits_button: Button = $Content/Buttons/GridContainer/CreditsButton
 @onready var new_game_button: Button = $Content/Buttons/GridContainer3/NewGameButton
+@onready var restaurant_button: Button = $Content/Buttons/GridContainer3/RestaurantButton
 @onready var continue_button: Button = $Content/Buttons/GridContainer/ContinueButton
 @onready var settings_button: Button = $Content/Buttons/GridContainer/SettingsButton
 @onready var quit_button: Button = $Content/Buttons/GridContainer2/QuitButton
@@ -40,6 +41,7 @@ var save_load_scene : PackedScene = preload("res://menus/saver_loader/save_load_
 
 @onready var menu_buttons: Array[Button] = [
 	$Content/Buttons/GridContainer3/NewGameButton,
+	$Content/Buttons/GridContainer3/RestaurantButton,
 	$Content/Buttons/GridContainer/ContinueButton,
 	$Content/Buttons/GridContainer/SettingsButton,
 	$Content/Buttons/GridContainer/CreditsButton,
@@ -49,6 +51,7 @@ var save_load_scene : PackedScene = preload("res://menus/saver_loader/save_load_
 var menu_ready: bool = false
 
 func _ready() -> void:
+	get_tree().paused = false
 	EnvironmentManager.is_outdoor = is_outdoor
 	hover_audio.stream = hover_sound
 	press_audio.stream = press_sound
@@ -72,6 +75,13 @@ func _on_new_game_button_pressed() -> void:
 		return
 	_play_press_sound()
 	EasyTransition.transition_to_path("uid://d3ypiu36avnv1",1.0,EasyTransition.TransitionAnim.CURTAIN)
+
+
+func _on_restaurant_button_pressed() -> void:
+	if not animation_finished:
+		return
+	_play_press_sound()
+	MvpFlow.play_level_1(get_tree())
 
 
 func _on_continue_button_pressed() -> void:
@@ -117,6 +127,7 @@ func _on_quit_button_pressed() -> void:
 
 func _disable_buttons() -> void:
 	new_game_button.disabled = true
+	restaurant_button.disabled = true
 	credits_button.disabled = true
 	continue_button.disabled = true
 	settings_button.disabled = true

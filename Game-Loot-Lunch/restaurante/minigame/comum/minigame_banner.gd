@@ -23,15 +23,15 @@ signal choice_made(index: int)
 
 ## Ação que confirma o painel (além de ENTER e clique).
 @export var confirm_action: StringName = &"chef_pick_drop"
-@export var panel_color: Color = Color(0.1, 0.05, 0.12, 0.88)
-@export var border_color: Color = Color(0.95, 0.72, 0.25, 1.0)
-@export var title_color: Color = Color(1.0, 0.95, 0.8, 1.0)
-@export var text_color: Color = Color(0.95, 0.92, 0.85, 1.0)
-@export var outline_color: Color = Color(0.1, 0.05, 0.12, 1.0)
+@export var panel_color: Color = Color(0.6431373, 0.5803922, 0.47843137, 0.96)
+@export var border_color: Color = Color(0.35, 0.24, 0.15, 1.0)
+@export var title_color: Color = Color(0.24, 0.14, 0.08, 1.0)
+@export var text_color: Color = Color(0.18, 0.12, 0.08, 1.0)
+@export var outline_color: Color = Color(0.92, 0.88, 0.8, 1.0)
 ## Altura dos avisos curtos (toast) a partir do topo. Desça se houver barra de chefe.
 @export var toast_top: float = 36.0
 @export_group("Botões (choose)")
-## Tema dos botões de `choose`. Vazio: botão simples nas cores do painel.
+## Tema dos botões de `choose`. Se vazio, usa button.tres.
 @export var button_theme: Theme
 ## Segundos em que os botões ficam travados ao abrir (quem estava apertando ESPAÇO no
 ## jogo não escolhe sem querer).
@@ -48,6 +48,8 @@ var _choices: HBoxContainer
 var _waiting: bool = false
 var _choosing: bool = false
 var _toast_tween: Tween
+var _hover_audio: AudioStreamPlayer
+var _press_audio: AudioStreamPlayer
 
 
 func _init() -> void:
@@ -56,6 +58,14 @@ func _init() -> void:
 
 
 func _ready() -> void:
+	_hover_audio = AudioStreamPlayer.new()
+	_hover_audio.stream = HOVER_SOUND
+	add_child(_hover_audio)
+
+	_press_audio = AudioStreamPlayer.new()
+	_press_audio.stream = PRESS_SOUND
+	add_child(_press_audio)
+
 	_build()
 	_panel.hide()
 
@@ -180,6 +190,9 @@ func _fill(title: String, text: String, image: Texture2D, prompt: String, color:
 
 const TITLE_FONT := preload("res://assets/fonts/ui/Sta.Toasty_font (1).ttf")
 const BODY_FONT := preload("res://assets/fonts/Silver.ttf")
+const DEFAULT_BUTTON_THEME := preload("res://resources/themes/ui/button.tres")
+const HOVER_SOUND := preload("res://assets/sfx/menus/abs-pointer-2.mp3")
+const PRESS_SOUND := preload("res://assets/sfx/menus/abs-confirm-2.mp3")
 
 
 func _build() -> void:
@@ -193,7 +206,8 @@ func _build() -> void:
 	var style := StyleBoxFlat.new()
 	style.bg_color = panel_color
 	style.border_color = border_color
-	style.set_border_width_all(2)
+	style.set_border_width_all(3)
+	style.set_corner_radius_all(5)
 	style.set_content_margin_all(10)
 	_panel.add_theme_stylebox_override("panel", style)
 	center.add_child(_panel)
@@ -251,10 +265,17 @@ func _make_label(font_size: int, color: Color, font: Font = null) -> Label:
 	return label
 
 
+func _on_button_hovered() -> void:
+	if _hover_audio and _choosing:
+		_hover_audio.play()
+
+
 func _on_choice_pressed(index: int) -> void:
 	if not _choosing:
 		return
 	_choosing = false
+	if _press_audio:
+		_press_audio.play()
 	_panel.hide()
 	_choices.hide()
 	choice_made.emit(index)
@@ -265,19 +286,6 @@ func _make_button(text: String) -> Button:
 	button.text = text
 	button.focus_mode = Control.FOCUS_ALL
 	button.custom_minimum_size = Vector2(110, 20)
-	if button_theme:
-		button.theme = button_theme
-		return button
-	button.add_theme_font_override("font", TITLE_FONT)
-	button.add_theme_font_size_override("font_size", 10)
-	button.add_theme_color_override("font_color", text_color)
-	button.add_theme_color_override("font_focus_color", title_color)
-	button.add_theme_color_override("font_hover_color", title_color)
-	for state in ["normal", "hover", "pressed", "focus", "disabled"]:
-		var style := StyleBoxFlat.new()
-		style.bg_color = panel_color.lightened(0.15 if state in ["hover", "focus"] else 0.05)
-		style.border_color = border_color if state in ["hover", "focus", "pressed"] else border_color.darkened(0.45)
-		style.set_border_width_all(1)
-		style.set_content_margin_all(4)
-		button.add_theme_stylebox_override(state, style)
+	button.theme = button_theme if button_theme else DEFAULT_BUTTON_THEME
+	button.mouse_entered.connect(_on_button_hovered)
 	return button

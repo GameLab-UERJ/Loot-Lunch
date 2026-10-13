@@ -6,20 +6,20 @@
 [ext_resource type="Theme" uid="uid://blqubia4djs1d" path="res://resources/themes/ui/button.tres" id="4_button_theme"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_painel"]
-bg_color = Color(0.12, 0.08, 0.14, 0.92)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.48, 0.32, 0.84, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-content_margin_left = 12.0
-content_margin_top = 10.0
-content_margin_right = 12.0
-content_margin_bottom = 10.0
+bg_color = Color(0.6431373, 0.5803922, 0.47843137, 0.96)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.35, 0.24, 0.15, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+content_margin_left = 14.0
+content_margin_top = 12.0
+content_margin_right = 14.0
+content_margin_bottom = 12.0
 
 [node name="HudFase" type="CanvasLayer"]
 layer = 11
@@ -146,7 +146,7 @@ horizontal_alignment = 1
 [node name="Resumo" type="Label" parent="FimDeTurno/Painel/Coluna"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.92, 0.9, 0.86, 1)
+theme_override_colors/font_color = Color(0.18, 0.12, 0.08, 1)
 theme_override_fonts/font = ExtResource("3_silver")
 theme_override_font_sizes/font_size = 16
 text = "Dinheiro: 0 / 60"

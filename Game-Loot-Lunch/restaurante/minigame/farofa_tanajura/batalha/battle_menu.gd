@@ -45,6 +45,12 @@ var _queued: BattleSkill = null
 var _message_time: float = 0.0
 ## Segundos que restam para escolher na VEZ DO CHEF (< 0 = sem contagem).
 var _countdown: float = -1.0
+var _hover_audio: AudioStreamPlayer
+var _press_audio: AudioStreamPlayer
+
+
+const HOVER_SOUND := preload("res://assets/sound/effects/abs-pointer-2.mp3")
+const PRESS_SOUND := preload("res://assets/sound/effects/abs-confirm-2.mp3")
 
 
 func _init() -> void:
@@ -52,6 +58,14 @@ func _init() -> void:
 
 
 func _ready() -> void:
+	_hover_audio = AudioStreamPlayer.new()
+	_hover_audio.stream = HOVER_SOUND
+	add_child(_hover_audio)
+
+	_press_audio = AudioStreamPlayer.new()
+	_press_audio.stream = PRESS_SOUND
+	add_child(_press_audio)
+
 	_build()
 	_root.hide()
 
@@ -150,6 +164,8 @@ func _unhandled_input(event: InputEvent) -> void:
 func _try(index: int) -> void:
 	if not _open or _locked:
 		return
+	if _press_audio:
+		_press_audio.play()
 	var skill: BattleSkill = _skills[index]
 	var reason: String = skill.why_not(_user, _target)
 	if reason != "":
@@ -213,6 +229,8 @@ func _show_message(text: String, color: Color) -> void:
 
 
 func _on_hover(index: int) -> void:
+	if _hover_audio:
+		_hover_audio.play()
 	if index < _skills.size() and _message_time <= 0.0:
 		var skill: BattleSkill = _skills[index]
 		var reason: String = skill.why_not(_user, _target) if _user else ""
