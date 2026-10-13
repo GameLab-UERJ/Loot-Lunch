@@ -178,6 +178,10 @@ func _fill(title: String, text: String, image: Texture2D, prompt: String, color:
 		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 
+const TITLE_FONT := preload("res://assets/fonts/ui/Sta.Toasty_font (1).ttf")
+const BODY_FONT := preload("res://assets/fonts/Silver.ttf")
+
+
 func _build() -> void:
 	var center := CenterContainer.new()
 	center.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -199,7 +203,7 @@ func _build() -> void:
 	column.alignment = BoxContainer.ALIGNMENT_CENTER
 	_panel.add_child(column)
 
-	_title = _make_label(16, title_color)
+	_title = _make_label(16, title_color, TITLE_FONT)
 	column.add_child(_title)
 
 	_image = TextureRect.new()
@@ -209,12 +213,12 @@ func _build() -> void:
 	_image.custom_minimum_size = Vector2(128, 128)
 	column.add_child(_image)
 
-	_body = _make_label(10, text_color)
+	_body = _make_label(19, text_color, BODY_FONT)
 	_body.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_body.custom_minimum_size = Vector2(280, 0)
 	column.add_child(_body)
 
-	_prompt = _make_label(10, border_color)
+	_prompt = _make_label(16, border_color, BODY_FONT)
 	column.add_child(_prompt)
 
 	_choices = HBoxContainer.new()
@@ -223,7 +227,7 @@ func _build() -> void:
 	_choices.hide()
 	column.add_child(_choices)
 
-	_toast = _make_label(14, Color.WHITE)
+	_toast = _make_label(14, Color.WHITE, TITLE_FONT)
 	_toast.set_anchors_preset(Control.PRESET_CENTER_TOP)
 	_toast.offset_left = -150.0
 	_toast.offset_right = 150.0
@@ -234,10 +238,12 @@ func _build() -> void:
 	add_child(_toast)
 
 
-func _make_label(font_size: int, color: Color) -> Label:
+func _make_label(font_size: int, color: Color, font: Font = null) -> Label:
 	var label := Label.new()
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	if font:
+		label.add_theme_font_override("font", font)
 	label.add_theme_font_size_override("font_size", font_size)
 	label.add_theme_color_override("font_color", color)
 	label.add_theme_color_override("font_outline_color", outline_color)
@@ -262,6 +268,7 @@ func _make_button(text: String) -> Button:
 	if button_theme:
 		button.theme = button_theme
 		return button
+	button.add_theme_font_override("font", TITLE_FONT)
 	button.add_theme_font_size_override("font_size", 10)
 	button.add_theme_color_override("font_color", text_color)
 	button.add_theme_color_override("font_focus_color", title_color)

@@ -97,6 +97,10 @@ func _draw_bar() -> void:
 		_bar.draw_line(Vector2(x, -2), Vector2(x, bar_height + 2), border_color, 1.0)
 
 
+const TITLE_FONT := preload("res://assets/fonts/ui/Sta.Toasty_font (1).ttf")
+const STATUS_FONT := preload("res://assets/fonts/Silver.ttf")
+
+
 func _build() -> void:
 	_root = VBoxContainer.new()
 	_root.set_anchors_preset(Control.PRESET_CENTER_TOP)
@@ -107,7 +111,7 @@ func _build() -> void:
 	_root.add_theme_constant_override("separation", 2)
 	add_child(_root)
 
-	_name = _label(10, Color(1.0, 0.9, 0.7))
+	_name = _label(10, Color(1.0, 0.9, 0.7), TITLE_FONT)
 	_root.add_child(_name)
 
 	_bar = Control.new()
@@ -116,15 +120,17 @@ func _build() -> void:
 	_bar.draw.connect(_draw_bar)
 	_root.add_child(_bar)
 
-	_status = _label(9, Color(0.75, 0.9, 1.0))
+	_status = _label(14, Color(0.75, 0.9, 1.0), STATUS_FONT)
 	_status.hide()
 	_root.add_child(_status)
 
 
-func _label(font_size: int, color: Color) -> Label:
+func _label(font_size: int, color: Color, font: Font = null) -> Label:
 	var label := Label.new()
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	if font:
+		label.add_theme_font_override("font", font)
 	label.add_theme_font_size_override("font_size", font_size)
 	label.add_theme_color_override("font_color", color)
 	label.add_theme_color_override("font_outline_color", Color(0.1, 0.05, 0.12))

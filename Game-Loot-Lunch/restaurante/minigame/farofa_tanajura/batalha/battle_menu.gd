@@ -220,6 +220,10 @@ func _on_hover(index: int) -> void:
 		_description.modulate = Color.WHITE
 
 
+const FONT_BUTTON := preload("res://assets/fonts/ui/Sta.Toasty_font (1).ttf")
+const FONT_BODY := preload("res://assets/fonts/Silver.ttf")
+
+
 func _build() -> void:
 	# Painel COMPACTO no canto inferior ESQUERDO: uma linha de estado + as habilidades
 	# em lista. Cresce para cima se a mensagem quebrar linha.
@@ -244,7 +248,8 @@ func _build() -> void:
 	_root.add_child(column)
 
 	_description = Label.new()
-	_description.add_theme_font_size_override("font_size", 7)
+	_description.add_theme_font_override("font", FONT_BODY)
+	_description.add_theme_font_size_override("font_size", 14)
 	_description.add_theme_color_override("font_outline_color", Color(0.1, 0.05, 0.12))
 	_description.add_theme_constant_override("outline_size", 2)
 	_description.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -255,6 +260,7 @@ func _build() -> void:
 		var button := Button.new()
 		button.focus_mode = Control.FOCUS_NONE  # ESPAÇO é do QTE, não do botão
 		button.custom_minimum_size = Vector2(0, 11)
+		button.add_theme_font_override("font", FONT_BUTTON)
 		button.add_theme_font_size_override("font_size", 7)
 		button.add_theme_constant_override("icon_max_width", 10)
 		button.add_theme_constant_override("h_separation", 3)

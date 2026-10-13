@@ -27,6 +27,7 @@ class_name TimingGauge
 @export var perfect_frame_color: Color = Color(1.0, 0.85, 0.3, 1.0)
 
 
+const FONT := preload("res://assets/fonts/ui/Sta.Toasty_font (1).ttf")
 var _pulse: float = 0.0
 
 
@@ -65,7 +66,7 @@ func _draw() -> void:
 	draw_rect(marker, Color.WHITE)
 
 	if caption != "":
-		var font: Font = ThemeDB.fallback_font
+		var font: Font = FONT
 		var text_pos := Vector2(-size.x * 0.5 - 20.0, -size.y * 0.5 - 4.0) if vertical \
 			else Vector2(-size.x * 0.5, -size.y * 0.5 - 4.0)
 		var width: float = size.x + 40.0 if vertical else size.x

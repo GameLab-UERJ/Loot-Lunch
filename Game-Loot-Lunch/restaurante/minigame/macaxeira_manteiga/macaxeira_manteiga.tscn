@@ -11,6 +11,7 @@
 [ext_resource type="Resource" path="res://restaurante/minigame/macaxeira_manteiga/dados/macaxeira_ponto.tres" id="9_ponto"]
 [ext_resource type="Resource" path="res://restaurante/minigame/macaxeira_manteiga/dados/manteiga_dose.tres" id="10_dose"]
 [ext_resource type="Script" path="res://restaurante/minigame/comum/timing_gauge.gd" id="11_gauge"]
+[ext_resource type="FontFile" uid="uid://fjcmb5r6tkvp" path="res://assets/fonts/Silver.ttf" id="12_silver"]
 [ext_resource type="PackedScene" path="res://restaurante/minigame/macaxeira_manteiga/tutorial_macaxeira.tscn" id="99_tutorial"]
 [ext_resource type="Texture2D" path="res://restaurante/minigame/macaxeira_manteiga/art/fundo_macaxeira.png" id="90_fundo"]
 
@@ -97,6 +98,7 @@ offset_bottom = 350.0
 theme_override_colors/font_color = Color(0.8, 0.78, 0.86, 1)
 theme_override_colors/font_outline_color = Color(0.1, 0.05, 0.12, 1)
 theme_override_constants/outline_size = 4
-theme_override_font_sizes/font_size = 9
+theme_override_fonts/font = ExtResource("12_silver")
+theme_override_font_sizes/font_size = 19
 text = "[MOUSE] mira a garrafa  •  [SEGURAR CLIQUE] despeja  •  [ESPAÇO] tira da chapa"
 horizontal_alignment = 1

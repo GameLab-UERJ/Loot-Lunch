@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://restaurante/mvp/ui/creditos_mvp.gd" id="1_script"]
 [ext_resource type="FontFile" uid="uid://fjcmb5r6tkvp" path="res://assets/fonts/Silver.ttf" id="2_silver"]
 [ext_resource type="Theme" uid="uid://blqubia4djs1d" path="res://resources/themes/ui/button.tres" id="3_tema"]
+[ext_resource type="FontFile" uid="uid://cnqv72au01vlv" path="res://assets/fonts/ui/Sta.Toasty_font (1).ttf" id="4_toasty"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_painel"]
 bg_color = Color(0.1, 0.05, 0.12, 0.92)
@@ -62,9 +63,9 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.95, 0.72, 0.25, 1)
 theme_override_colors/font_outline_color = Color(0.1, 0.05, 0.12, 1)
 theme_override_constants/outline_size = 6
-theme_override_fonts/font = ExtResource("2_silver")
-theme_override_font_sizes/font_size = 38
-text = "Créditos"
+theme_override_fonts/font = ExtResource("4_toasty")
+theme_override_font_sizes/font_size = 28
+text = "Creditos"
 horizontal_alignment = 1
 
 [node name="Subtitulo" type="Label" parent="Centro/Painel/Coluna"]
@@ -84,8 +85,8 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.95, 0.72, 0.25, 1)
-theme_override_fonts/font = ExtResource("2_silver")
-theme_override_font_sizes/font_size = 19
+theme_override_fonts/font = ExtResource("4_toasty")
+theme_override_font_sizes/font_size = 14
 text = "Desenvolvido por"
 horizontal_alignment = 1
 
@@ -120,8 +121,8 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.95, 0.72, 0.25, 1)
-theme_override_fonts/font = ExtResource("2_silver")
-theme_override_font_sizes/font_size = 19
+theme_override_fonts/font = ExtResource("4_toasty")
+theme_override_font_sizes/font_size = 14
 text = "Equipe GameLab-UERJ"
 horizontal_alignment = 1
 
