@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="ItemData" format=3]
 
 [ext_resource type="Script" uid="uid://bcs1jmkunt5rx" path="res://restaurante/itens/item_data.gd" id="1_data"]
-[ext_resource type="Texture2D" uid="uid://txcnngbhe0ta" path="res://restaurante/comidas/espetinhos/base/cogumelo/CogumeloCortada64.png" id="2_tex"]
+[ext_resource type="Texture2D" path="res://restaurante/comidas/arte_v2/ingredientes/cogumelo_cortado.png" id="2_tex"]
 
 [resource]
 script = ExtResource("1_data")
@@ -9,5 +9,5 @@ id = &"cogumelo_cortado"
 display_name = "Cogumelo Cortado"
 texture = ExtResource("2_tex")
 hold_offset = Vector2(0, -2)
-sprite_scale = Vector2(0.5, 0.5)
+sprite_scale = Vector2(1, 1)
 placeholder_color = Color(0.7, 0.5, 0.85, 1)

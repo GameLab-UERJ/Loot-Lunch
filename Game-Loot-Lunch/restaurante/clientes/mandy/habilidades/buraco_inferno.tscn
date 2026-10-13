@@ -1,0 +1,208 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://restaurante/componentes/sink_hole.gd" id="1_buraco"]
+[ext_resource type="Texture2D" path="res://restaurante/clientes/mandy/habilidade_art/buraco_abrir_5f.png" id="t_abrir"]
+[ext_resource type="Texture2D" path="res://restaurante/clientes/mandy/habilidade_art/buraco_loop_tras_6f.png" id="t_tras"]
+[ext_resource type="Texture2D" path="res://restaurante/clientes/mandy/habilidade_art/buraco_fechar_5f.png" id="t_fechar"]
+[ext_resource type="Texture2D" path="res://restaurante/clientes/mandy/habilidade_art/buraco_loop_frente_6f.png" id="t_frente"]
+[ext_resource type="Texture2D" path="res://restaurante/clientes/mandy/habilidade_art/buraco_mascara.png" id="t_mascara"]
+
+[sub_resource type="AtlasTexture" id="Atlas_tras_abrir_0"]
+atlas = ExtResource("t_abrir")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_tras_abrir_1"]
+atlas = ExtResource("t_abrir")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_tras_abrir_2"]
+atlas = ExtResource("t_abrir")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_tras_abrir_3"]
+atlas = ExtResource("t_abrir")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_tras_abrir_4"]
+atlas = ExtResource("t_abrir")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_tras_loop_0"]
+atlas = ExtResource("t_tras")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_tras_loop_1"]
+atlas = ExtResource("t_tras")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_tras_loop_2"]
+atlas = ExtResource("t_tras")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_tras_loop_3"]
+atlas = ExtResource("t_tras")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_tras_loop_4"]
+atlas = ExtResource("t_tras")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_tras_loop_5"]
+atlas = ExtResource("t_tras")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_tras_fechar_0"]
+atlas = ExtResource("t_fechar")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_tras_fechar_1"]
+atlas = ExtResource("t_fechar")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_tras_fechar_2"]
+atlas = ExtResource("t_fechar")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_tras_fechar_3"]
+atlas = ExtResource("t_fechar")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_tras_fechar_4"]
+atlas = ExtResource("t_fechar")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tras"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_tras_abrir_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_tras_abrir_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_tras_abrir_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_tras_abrir_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_tras_abrir_4")
+}],
+"loop": false,
+"name": &"abrir",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_tras_loop_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_tras_loop_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_tras_loop_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_tras_loop_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_tras_loop_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_tras_loop_5")
+}],
+"loop": true,
+"name": &"loop",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_tras_fechar_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_tras_fechar_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_tras_fechar_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_tras_fechar_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_tras_fechar_4")
+}],
+"loop": false,
+"name": &"fechar",
+"speed": 12.0
+}]
+
+[sub_resource type="AtlasTexture" id="Atlas_frente_loop_0"]
+atlas = ExtResource("t_frente")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_frente_loop_1"]
+atlas = ExtResource("t_frente")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_frente_loop_2"]
+atlas = ExtResource("t_frente")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_frente_loop_3"]
+atlas = ExtResource("t_frente")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_frente_loop_4"]
+atlas = ExtResource("t_frente")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="Atlas_frente_loop_5"]
+atlas = ExtResource("t_frente")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_frente"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("Atlas_frente_loop_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_frente_loop_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_frente_loop_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_frente_loop_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_frente_loop_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("Atlas_frente_loop_5")
+}],
+"loop": true,
+"name": &"loop",
+"speed": 10.0
+}]
+
+[node name="BuracoInferno" type="Node2D"]
+script = ExtResource("1_buraco")
+mask_texture = ExtResource("t_mascara")
+sink_depth = 44.0
+sink_time = 1.2
+
+[node name="Tras" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_tras")
+animation = &"abrir"
+
+[node name="Mascara" type="Sprite2D" parent="."]
+clip_children = 1
+
+[node name="Afundando" type="Node2D" parent="Mascara"]
+
+[node name="Frente" type="AnimatedSprite2D" parent="."]
+visible = false
+sprite_frames = SubResource("SpriteFrames_frente")
+animation = &"loop"

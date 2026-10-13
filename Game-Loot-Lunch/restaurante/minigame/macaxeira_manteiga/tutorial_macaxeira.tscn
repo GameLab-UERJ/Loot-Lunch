@@ -1,0 +1,429 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://restaurante/UI/tutorial/tutorial_board.gd" id="1_r"]
+[ext_resource type="Script" path="res://restaurante/UI/tutorial/tutorial_page.gd" id="2_r"]
+[ext_resource type="Script" path="res://restaurante/UI/tutorial/chalk_doodle.gd" id="3_r"]
+[ext_resource type="Script" path="res://restaurante/componentes/key_cap.gd" id="4_r"]
+[ext_resource type="Script" path="res://restaurante/minigame/comum/sheet_sprite.gd" id="5_r"]
+[ext_resource type="Material" path="res://restaurante/UI/tutorial/chalk_material.tres" id="6_r"]
+[ext_resource type="FontFile" path="res://assets/fonts/Silver.ttf" id="7_r"]
+[ext_resource type="Texture2D" path="res://restaurante/minigame/macaxeira_manteiga/art/garrafa_manteiga.png" id="8_r"]
+[ext_resource type="Texture2D" path="res://restaurante/minigame/macaxeira_manteiga/art/chapa.png" id="9_r"]
+[ext_resource type="Texture2D" path="res://restaurante/minigame/macaxeira_manteiga/art/macaxeira_estados.png" id="10_r"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1"]
+font = ExtResource("7_r")
+font_size = 19
+font_color = Color(0.95, 0.93, 0.86, 0.95)
+line_spacing = -3.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_2"]
+font = ExtResource("7_r")
+font_size = 17
+font_color = Color(1, 0.82, 0.35, 1)
+line_spacing = -3.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_3"]
+font = ExtResource("7_r")
+font_size = 16
+font_color = Color(0.95, 0.93, 0.86, 0.6)
+line_spacing = -3.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_4"]
+font = ExtResource("7_r")
+font_size = 14
+font_color = Color(0.95, 0.93, 0.86, 0.6)
+line_spacing = -3.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_5"]
+font = ExtResource("7_r")
+font_size = 14
+font_color = Color(1, 0.82, 0.35, 1)
+line_spacing = -3.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_6"]
+font = ExtResource("7_r")
+font_size = 13
+font_color = Color(1, 0.45, 0.4, 1)
+line_spacing = -3.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_7"]
+font = ExtResource("7_r")
+font_size = 13
+font_color = Color(0.95, 0.93, 0.86, 0.6)
+line_spacing = -3.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_8"]
+font = ExtResource("7_r")
+font_size = 16
+font_color = Color(1, 0.82, 0.35, 1)
+line_spacing = -3.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_9"]
+font = ExtResource("7_r")
+font_size = 16
+font_color = Color(0.55, 0.95, 0.5, 1)
+line_spacing = -3.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_10"]
+font = ExtResource("7_r")
+font_size = 13
+font_color = Color(1, 0.6, 0.4, 1)
+line_spacing = -3.0
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_offset = Vector2(1, 1)
+
+[node name="Tutorial" type="CanvasLayer"]
+script = ExtResource("1_r")
+tag_text = "NOVA RECEITA"
+close_text = "começar!"
+
+[node name="Macaxeira" type="Node2D" parent="."]
+script = ExtResource("2_r")
+title = "MACAXEIRA NA MANTEIGA"
+caption = "Mova o [color=#ffd75a]MOUSE[/color] e [color=#ffd75a]SEGURE o clique[/color] para pôr manteiga [color=#ffd75a]EM CIMA[/color] da macaxeira até a faixa dourada. Ao mesmo tempo, aperte [color=#ffd75a]ESPAÇO[/color] quando o [color=#ffd75a]COZIMENTO[/color] chegar na faixa dourada!"
+
+[node name="Badge1" type="Node2D" parent="Macaxeira"]
+position = Vector2(36, 67)
+script = ExtResource("3_r")
+shape = 5
+size = Vector2(17, 17)
+text = "1"
+font_size = 16
+color = Color(0.95, 0.93, 0.86, 0.95)
+
+[node name="Texto2" type="Label" parent="Macaxeira"]
+offset_left = 50.0
+offset_top = 58.0
+offset_right = 140.0
+offset_bottom = 79.0
+text = "MANTEIGA"
+label_settings = SubResource("LabelSettings_1")
+horizontal_alignment = 0
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Tecla3" type="Node2D" parent="Macaxeira"]
+position = Vector2(74, 118)
+script = ExtResource("4_r")
+key = "MOUSE_LEFT"
+height = 26.0
+font_size = 22
+held = true
+
+[node name="Texto4" type="Label" parent="Macaxeira"]
+offset_left = 34.0
+offset_top = 142.0
+offset_right = 114.0
+offset_bottom = 180.0
+text = "segure\no clique"
+label_settings = SubResource("LabelSettings_2")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Seta5" type="Node2D" parent="Macaxeira"]
+position = Vector2(0, 0)
+script = ExtResource("3_r")
+shape = 0
+points = PackedVector2Array(56, 196, 36, 196)
+color = Color(0.95, 0.93, 0.86, 0.95)
+width = 1.5
+
+[node name="Seta6" type="Node2D" parent="Macaxeira"]
+position = Vector2(0, 0)
+script = ExtResource("3_r")
+shape = 0
+points = PackedVector2Array(92, 196, 112, 196)
+color = Color(0.95, 0.93, 0.86, 0.95)
+width = 1.5
+
+[node name="Texto7" type="Label" parent="Macaxeira"]
+offset_left = 54.0
+offset_top = 186.0
+offset_right = 94.0
+offset_bottom = 204.0
+text = "mova"
+label_settings = SubResource("LabelSettings_3")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Texto8" type="Label" parent="Macaxeira"]
+offset_left = 24.0
+offset_top = 206.0
+offset_right = 124.0
+offset_bottom = 238.0
+text = "a garrafa segue\no mouse"
+label_settings = SubResource("LabelSettings_4")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Desenho9" type="Sprite2D" parent="Macaxeira"]
+position = Vector2(196, 100)
+texture = ExtResource("8_r")
+scale = Vector2(2.2, 2.2)
+rotation = -2.1817
+material = ExtResource("6_r")
+
+[node name="Line10" type="Node2D" parent="Macaxeira"]
+position = Vector2(0, 0)
+script = ExtResource("3_r")
+shape = 1
+points = PackedVector2Array(176, 112, 190, 150, 196, 186)
+color = Color(0.98, 0.8, 0.3, 0.95)
+width = 3.0
+dashed = true
+animate = true
+
+[node name="Desenho11" type="Sprite2D" parent="Macaxeira"]
+position = Vector2(200, 222)
+texture = ExtResource("9_r")
+scale = Vector2(1.6, 1.6)
+material = ExtResource("6_r")
+
+[node name="Desenho12" type="Sprite2D" parent="Macaxeira"]
+position = Vector2(200, 202)
+texture = ExtResource("10_r")
+scale = Vector2(2, 2)
+hframes = 4
+frame = 1
+material = ExtResource("6_r")
+
+[node name="Sparkle13" type="Node2D" parent="Macaxeira"]
+position = Vector2(224, 190)
+script = ExtResource("3_r")
+shape = 8
+size = Vector2(8, 8)
+color = Color(1, 0.82, 0.35, 1)
+animate = true
+
+[node name="Gauge14" type="Node2D" parent="Macaxeira"]
+position = Vector2(200, 266)
+script = ExtResource("3_r")
+shape = 4
+size = Vector2(130, 9)
+vertical = false
+ratio = 0.64
+zone = Vector2(0.58, 0.72)
+fill_color = Color(0.98, 0.8, 0.3, 0.95)
+
+[node name="Texto15" type="Label" parent="Macaxeira"]
+offset_left = 100.0
+offset_top = 272.0
+offset_right = 300.0
+offset_bottom = 288.0
+text = "MANTEIGA: até a faixa dourada"
+label_settings = SubResource("LabelSettings_5")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Cross16" type="Node2D" parent="Macaxeira"]
+position = Vector2(262, 168)
+script = ExtResource("3_r")
+shape = 6
+size = Vector2(9, 9)
+color = Color(1, 0.45, 0.4, 1)
+
+[node name="Texto17" type="Label" parent="Macaxeira"]
+offset_left = 274.0
+offset_top = 156.0
+offset_right = 370.0
+offset_bottom = 201.0
+text = "manteiga fora da\nmacaxeira = \"na\nchapa não!\""
+label_settings = SubResource("LabelSettings_6")
+horizontal_alignment = 0
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Line18" type="Node2D" parent="Macaxeira"]
+position = Vector2(0, 0)
+script = ExtResource("3_r")
+shape = 1
+points = PackedVector2Array(372, 76, 372, 276)
+color = Color(0.95, 0.93, 0.86, 0.25)
+width = 1.5
+
+[node name="Badge19" type="Node2D" parent="Macaxeira"]
+position = Vector2(386, 67)
+script = ExtResource("3_r")
+shape = 5
+size = Vector2(17, 17)
+text = "2"
+font_size = 16
+color = Color(0.95, 0.93, 0.86, 0.95)
+
+[node name="Texto20" type="Label" parent="Macaxeira"]
+offset_left = 400.0
+offset_top = 58.0
+offset_right = 490.0
+offset_bottom = 79.0
+text = "COZIMENTO"
+label_settings = SubResource("LabelSettings_1")
+horizontal_alignment = 0
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Gauge21" type="Node2D" parent="Macaxeira"]
+position = Vector2(414, 178)
+script = ExtResource("3_r")
+shape = 4
+size = Vector2(14, 130)
+ratio = 0.0
+zone = Vector2(0.72, 0.84)
+fill_color = Color(0.45, 0.85, 0.45, 0.9)
+animate = true
+speed = 0.5
+
+[node name="Texto22" type="Label" parent="Macaxeira"]
+offset_left = 384.0
+offset_top = 246.0
+offset_right = 444.0
+offset_bottom = 276.0
+text = "sobe\nsozinho"
+label_settings = SubResource("LabelSettings_7")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Seta23" type="Node2D" parent="Macaxeira"]
+position = Vector2(0, 0)
+script = ExtResource("3_r")
+shape = 0
+points = PackedVector2Array(454, 140, 428, 138)
+color = Color(1, 0.82, 0.35, 1)
+width = 2
+animate = true
+
+[node name="Tecla24" type="Node2D" parent="Macaxeira"]
+position = Vector2(494, 120)
+script = ExtResource("4_r")
+key = "SPACE"
+height = 20.0
+font_size = 17
+pressing = true
+
+[node name="Texto25" type="Label" parent="Macaxeira"]
+offset_left = 439.0
+offset_top = 136.0
+offset_right = 549.0
+offset_bottom = 172.0
+text = "aperte na\nfaixa dourada"
+label_settings = SubResource("LabelSettings_8")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Desenho26" type="Sprite2D" parent="Macaxeira"]
+position = Vector2(560, 204)
+texture = ExtResource("10_r")
+scale = Vector2(2, 2)
+hframes = 4
+frame = 1
+material = ExtResource("6_r")
+
+[node name="Sparkle27" type="Node2D" parent="Macaxeira"]
+position = Vector2(584, 190)
+script = ExtResource("3_r")
+shape = 8
+size = Vector2(9, 9)
+color = Color(1, 0.82, 0.35, 1)
+animate = true
+
+[node name="Texto28" type="Label" parent="Macaxeira"]
+offset_left = 520.0
+offset_top = 230.0
+offset_right = 600.0
+offset_bottom = 248.0
+text = "PERFEITA!"
+label_settings = SubResource("LabelSettings_9")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Desenho29" type="Sprite2D" parent="Macaxeira"]
+position = Vector2(470, 208)
+texture = ExtResource("10_r")
+scale = Vector2(1.3, 1.3)
+hframes = 4
+material = ExtResource("6_r")
+
+[node name="Texto30" type="Label" parent="Macaxeira"]
+offset_left = 450.0
+offset_top = 228.0
+offset_right = 490.0
+offset_bottom = 243.0
+text = "crua"
+label_settings = SubResource("LabelSettings_6")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Desenho31" type="Sprite2D" parent="Macaxeira"]
+position = Vector2(470, 248)
+texture = ExtResource("10_r")
+scale = Vector2(1.3, 1.3)
+hframes = 4
+frame = 2
+material = ExtResource("6_r")
+
+[node name="Texto32" type="Label" parent="Macaxeira"]
+offset_left = 440.0
+offset_top = 268.0
+offset_right = 500.0
+offset_bottom = 283.0
+text = "queimada"
+label_settings = SubResource("LabelSettings_6")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Desenho33" type="Sprite2D" parent="Macaxeira"]
+position = Vector2(560, 248)
+texture = ExtResource("10_r")
+scale = Vector2(1.3, 1.3)
+hframes = 4
+frame = 3
+material = ExtResource("6_r")
+
+[node name="Texto34" type="Label" parent="Macaxeira"]
+offset_left = 525.0
+offset_top = 268.0
+offset_right = 595.0
+offset_bottom = 283.0
+text = "encharcada"
+label_settings = SubResource("LabelSettings_6")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0
+
+[node name="Texto35" type="Label" parent="Macaxeira"]
+offset_left = 450.0
+offset_top = 76.0
+offset_right = 590.0
+offset_bottom = 106.0
+text = "sem manteiga ela gruda\ne cozinha mais rápido!"
+label_settings = SubResource("LabelSettings_10")
+horizontal_alignment = 1
+mouse_filter = 2
+autowrap_mode = 0

@@ -1,0 +1,42 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://restaurante/minigame/final_vip/art/mesa_vip.png" id="1_mesa"]
+[ext_resource type="Texture2D" path="res://restaurante/minigame/final_vip/art/cadeira_vip.png" id="2_cadeira"]
+[ext_resource type="Texture2D" path="res://restaurante/minigame/comum/art/fundo_salao_vip.png" id="3_fundo"]
+
+[node name="SalaoVip" type="Node2D"]
+
+[node name="Cenario" type="Sprite2D" parent="."]
+z_index = -50
+position = Vector2(-60, -40)
+scale = Vector2(2, 2)
+texture = ExtResource("3_fundo")
+centered = false
+
+[node name="Fundo" type="Polygon2D" parent="."]
+z_index = -50
+color = Color(1, 1, 1, 0)
+polygon = PackedVector2Array(-60, -40, 700, -40, 700, 230, -60, 230)
+
+[node name="Porta" type="Polygon2D" parent="Fundo"]
+color = Color(1, 1, 1, 0)
+polygon = PackedVector2Array(504, 100, 558, 100, 558, 230, 504, 230)
+
+[node name="Aberta" type="Polygon2D" parent="Fundo/Porta"]
+visible = false
+color = Color(0.05, 0.03, 0.05, 1)
+polygon = PackedVector2Array(504, 100, 560, 100, 560, 230, 504, 230)
+
+[node name="Cadeira" type="Sprite2D" parent="."]
+texture_filter = 1
+z_index = -10
+position = Vector2(400, 166)
+scale = Vector2(2, 2)
+texture = ExtResource("2_cadeira")
+
+[node name="Mesa" type="Sprite2D" parent="."]
+texture_filter = 1
+z_index = 2
+position = Vector2(400, 200)
+scale = Vector2(2, 2)
+texture = ExtResource("1_mesa")

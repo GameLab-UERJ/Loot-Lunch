@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="SheetAnimation" format=3]
+
+[ext_resource type="Script" path="res://restaurante/componentes/sheet_animation.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://restaurante/minigame/farofa_tanajura/art/fx/player/contra/poeira_pouso.png" id="2_tex"]
+
+[resource]
+resource_name = "poeira_pouso"
+script = ExtResource("1_script")
+texture = ExtResource("2_tex")
+frame_size = Vector2i(40, 16)
+fps = 14.0
+loop = false
+offset = Vector2(0, -10)
+z_index = -1
+scale = Vector2(2, 2)

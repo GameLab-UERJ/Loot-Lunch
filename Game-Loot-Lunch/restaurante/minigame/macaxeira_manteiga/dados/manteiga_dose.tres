@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="TargetMeterProfile" format=3]
+
+[ext_resource type="Script" path="res://restaurante/minigame/comum/target_meter_profile.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+display_name = "Dose de Manteiga de Garrafa"
+rise_speed = 0.12
+rise_acceleration = 0.18
+fall_speed = 0.0
+wobble = 0.0
+perfect_min = 0.58
+perfect_max = 0.72
+ruin_at = 1.0
+min_commit = 0.0
+under_label = "Macaxeira Seca"
+perfect_label = "Manteiga na Medida"
+over_label = "Macaxeira Encharcada"

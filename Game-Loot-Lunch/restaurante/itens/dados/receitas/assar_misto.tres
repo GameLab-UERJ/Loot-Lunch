@@ -4,12 +4,16 @@
 [ext_resource type="Resource" path="res://restaurante/itens/dados/espetinho_misto_cru.tres" id="2_cru"]
 [ext_resource type="Resource" path="res://restaurante/itens/dados/espetinho_misto_perfeito.tres" id="3_perfeito"]
 [ext_resource type="Resource" path="res://restaurante/itens/dados/espetinho_misto_torrado.tres" id="4_torrado"]
+[ext_resource type="Texture2D" uid="uid://cbviylmioqpnu" path="res://restaurante/clientes/pedido/pedido_png/churrasco/carnepensamento.png" id="5_carne_icon"]
+[ext_resource type="Texture2D" uid="uid://cwgvl66fc0ugx" path="res://restaurante/clientes/pedido/pedido_png/churrasco/cogumelopensamento.png" id="6_cogumelo_icon"]
 
 [resource]
 script = ExtResource("1_recipe")
 input_data = ExtResource("2_cru")
 perfect_data = ExtResource("3_perfeito")
 burnt_data = ExtResource("4_torrado")
+spin_row = 7
 perfect_time = -1.0
 burnt_time = -1.0
 vanish_time = -1.0
+bubble_icons = Array[Texture2D]([ExtResource("6_cogumelo_icon"), ExtResource("5_carne_icon")])

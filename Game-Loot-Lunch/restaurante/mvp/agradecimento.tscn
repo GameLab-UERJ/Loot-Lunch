@@ -1,0 +1,136 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://restaurante/mvp/agradecimento.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://cxvyy81yierb8" path="res://assets/art/ui/LootLunch_KeyArt_Assinatura_edited.png" id="2_fundo"]
+[ext_resource type="Texture2D" uid="uid://gifwqc5tx67i" path="res://assets/art/ui/LootLunch_Logo_Principal_Transparente.png" id="3_logo"]
+[ext_resource type="FontFile" uid="uid://fjcmb5r6tkvp" path="res://assets/fonts/Silver.ttf" id="4_silver"]
+[ext_resource type="Theme" uid="uid://blqubia4djs1d" path="res://resources/themes/ui/button.tres" id="5_tema"]
+[ext_resource type="AudioStream" uid="uid://bkw8ow8ojc37v" path="res://assets/music/monument_music-acoustic-mosaic-187898.mp3" id="6_musica"]
+[ext_resource type="AudioStream" uid="uid://bkiovum7ll7au" path="res://assets/sfx/menus/abs-pointer-2.mp3" id="7_hover"]
+[ext_resource type="AudioStream" uid="uid://doyfcod6s5ptl" path="res://assets/sfx/menus/abs-confirm-2.mp3" id="8_press"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_logo"]
+atlas = ExtResource("3_logo")
+region = Rect2(227, 436, 2082, 615)
+
+[node name="Agradecimento" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+hover_sound = ExtResource("7_hover")
+press_sound = ExtResource("8_press")
+
+[node name="Fundo" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_fundo")
+expand_mode = 3
+
+[node name="Escurecer" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.05, 0.02, 0.06, 0.62)
+
+[node name="Coluna" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 2
+alignment = 1
+
+[node name="Logo" type="TextureRect" parent="Coluna"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(260, 77)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = SubResource("AtlasTexture_logo")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Espaco1" type="Control" parent="Coluna"]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+
+[node name="Titulo" type="Label" parent="Coluna"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.72, 0.25, 1)
+theme_override_colors/font_outline_color = Color(0.1, 0.05, 0.12, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("4_silver")
+theme_override_font_sizes/font_size = 38
+text = "Você concluiu nosso jogo!"
+horizontal_alignment = 1
+
+[node name="Obrigado" type="Label" parent="Coluna"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.95, 0.8, 1)
+theme_override_colors/font_outline_color = Color(0.1, 0.05, 0.12, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("4_silver")
+theme_override_font_sizes/font_size = 38
+text = "Muito obrigado por jogar!"
+horizontal_alignment = 1
+
+[node name="Espaco2" type="Control" parent="Coluna"]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+
+[node name="Autores" type="Label" parent="Coluna"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92, 0.9, 0.86, 1)
+theme_override_colors/font_outline_color = Color(0.1, 0.05, 0.12, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("4_silver")
+theme_override_font_sizes/font_size = 19
+text = "Igor Amaral, Ramon Lima e João Coutinho"
+horizontal_alignment = 1
+
+[node name="Equipe" type="Label" parent="Coluna"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92, 0.9, 0.86, 1)
+theme_override_colors/font_outline_color = Color(0.1, 0.05, 0.12, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("4_silver")
+theme_override_font_sizes/font_size = 19
+text = "e toda a equipe do GameLab"
+horizontal_alignment = 1
+
+[node name="Espaco3" type="Control" parent="Coluna"]
+custom_minimum_size = Vector2(0, 14)
+layout_mode = 2
+
+[node name="VoltarMenu" type="Button" parent="Coluna"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(110, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("5_tema")
+text = "Voltar ao menu principal"
+
+[node name="Musica" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_musica")
+volume_db = -40.0
+
+[node name="HoverAudio" type="AudioStreamPlayer" parent="."]
+
+[node name="PressAudio" type="AudioStreamPlayer" parent="."]

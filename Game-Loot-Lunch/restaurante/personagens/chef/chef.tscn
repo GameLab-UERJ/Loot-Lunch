@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://v3reii6seu4c"]
 
 [ext_resource type="PackedScene" uid="uid://cjbcmlsay3d5k" path="res://entities/base_classes/character/character.tscn" id="1_6xdwp"]
-[ext_resource type="Texture2D" uid="uid://drd67wc3juh68" path="res://assets/art/entities/player/skeleton/idle/skeleton_idle_spritesheet.png" id="2_j341n"]
-[ext_resource type="Texture2D" uid="uid://caiej7y8h4g5f" path="res://assets/art/entities/player/skeleton/run/skeleton_run_spritesheet.png" id="3_cue0d"]
+[ext_resource type="Texture2D" uid="uid://ccym7htd26s6l" path="res://restaurante/personagens/chef/art/jscoutinho_idle_L_34F.png" id="2_j341n"]
+[ext_resource type="Texture2D" uid="uid://bw2ke2ihfkc8f" path="res://restaurante/personagens/chef/art/jscoutinho_run_L_34F.png" id="3_cue0d"]
 [ext_resource type="Texture2D" uid="uid://cic1n8jgv11hx" path="res://assets/art/entities/enemies/flying_eye/enemy_afterdead_explosion_anim_spritesheet.png" id="4_bectd"]
 [ext_resource type="Script" uid="uid://bt5jjpnkd7ps" path="res://entities/base_classes/components/movement_component.gd" id="4_wvtmh"]
 [ext_resource type="Script" uid="uid://dduk8xg34emb7" path="res://entities/base_classes/components/input_component.gd" id="5_3wlsy"]
@@ -15,6 +15,21 @@
 [ext_resource type="Script" uid="uid://bj06n43jwh3ar" path="res://restaurante/componentes/interactor_component.gd" id="interactor"]
 [ext_resource type="Script" path="res://restaurante/componentes/wallet_component.gd" id="wallet"]
 [ext_resource type="PackedScene" path="res://restaurante/UI/hud_chef.tscn" id="hud_chef"]
+[ext_resource type="Script" path="res://restaurante/componentes/mana_component.gd" id="mana"]
+[ext_resource type="Script" path="res://restaurante/componentes/delivery_reward_component.gd" id="reward"]
+[ext_resource type="Script" path="res://restaurante/componentes/charge_ring_component.gd" id="ring"]
+[ext_resource type="Script" path="res://restaurante/personagens/chef/habilidades/throw_skewer_ability.gd" id="ability_throw"]
+[ext_resource type="Script" path="res://restaurante/personagens/chef/habilidades/shadow_ability.gd" id="ability_shadow"]
+[ext_resource type="PackedScene" path="res://restaurante/personagens/chef/habilidades/sombra.tscn" id="sombra"]
+[ext_resource type="Resource" path="res://restaurante/itens/dados/espetinho_carne_cru.tres" id="espetinho_carne_cru"]
+[ext_resource type="Resource" path="res://restaurante/itens/dados/espetinho_carne_perfeito.tres" id="espetinho_carne_perfeito"]
+[ext_resource type="Resource" path="res://restaurante/itens/dados/espetinho_carne_torrado.tres" id="espetinho_carne_torrado"]
+[ext_resource type="Resource" path="res://restaurante/itens/dados/espetinho_cogumelo_cru.tres" id="espetinho_cogumelo_cru"]
+[ext_resource type="Resource" path="res://restaurante/itens/dados/espetinho_cogumelo_perfeito.tres" id="espetinho_cogumelo_perfeito"]
+[ext_resource type="Resource" path="res://restaurante/itens/dados/espetinho_cogumelo_torrado.tres" id="espetinho_cogumelo_torrado"]
+[ext_resource type="Resource" path="res://restaurante/itens/dados/espetinho_misto_cru.tres" id="espetinho_misto_cru"]
+[ext_resource type="Resource" path="res://restaurante/itens/dados/espetinho_misto_perfeito.tres" id="espetinho_misto_perfeito"]
+[ext_resource type="Resource" path="res://restaurante/itens/dados/espetinho_misto_torrado.tres" id="espetinho_misto_torrado"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wvtmh"]
 atlas = ExtResource("4_bectd")
@@ -34,59 +49,43 @@ region = Rect2(48, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cue0d"]
 atlas = ExtResource("2_j341n")
-region = Rect2(0, 0, 64, 64)
+region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bqsbk"]
 atlas = ExtResource("2_j341n")
-region = Rect2(64, 0, 64, 64)
+region = Rect2(32, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xf5fp"]
 atlas = ExtResource("2_j341n")
-region = Rect2(128, 0, 64, 64)
+region = Rect2(64, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_osktb"]
 atlas = ExtResource("2_j341n")
-region = Rect2(192, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7vev3"]
-atlas = ExtResource("2_j341n")
-region = Rect2(256, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_klx3t"]
-atlas = ExtResource("2_j341n")
-region = Rect2(320, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_r5ew0"]
-atlas = ExtResource("2_j341n")
-region = Rect2(384, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_yhol4"]
-atlas = ExtResource("2_j341n")
-region = Rect2(448, 0, 64, 64)
+region = Rect2(96, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_va6lm"]
 atlas = ExtResource("3_cue0d")
-region = Rect2(0, 0, 64, 64)
+region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_u2wkb"]
 atlas = ExtResource("3_cue0d")
-region = Rect2(64, 0, 64, 64)
+region = Rect2(32, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_b71o8"]
 atlas = ExtResource("3_cue0d")
-region = Rect2(128, 0, 64, 64)
+region = Rect2(64, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x58m1"]
 atlas = ExtResource("3_cue0d")
-region = Rect2(192, 0, 64, 64)
+region = Rect2(96, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_b6jp0"]
 atlas = ExtResource("3_cue0d")
-region = Rect2(256, 0, 64, 64)
+region = Rect2(128, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8k5s7"]
 atlas = ExtResource("3_cue0d")
-region = Rect2(320, 0, 64, 64)
+region = Rect2(160, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_va6lm"]
 animations = [{
@@ -119,18 +118,6 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_osktb")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7vev3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_klx3t")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_r5ew0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_yhol4")
 }],
 "loop": 1,
 "name": &"idle",
@@ -257,7 +244,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.6, 0.7, 0.8, 0.9),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
-"values": [7, 0, 1, 2, 3]
+"values": [0, 0, 1, 2, 3]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -297,7 +284,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [7]
+"values": [0]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -336,10 +323,10 @@ tracks/1/path = NodePath("AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [0, 1, 2, 3, 4, 5, 6, 7]
+"values": [0, 1, 2, 3]
 }
 
 [sub_resource type="Animation" id="Animation_26q78"]
@@ -394,8 +381,8 @@ pick_drop_action = &"chef_pick_drop"
 dash_action = &"chef_dash"
 drop_distance = 20.0
 dash_sprite_alpha = 0.55
-max_hp = 6
-hp = 6
+max_hp = 10
+hp = 10
 invencibility_time = 1.0
 
 [node name="FiniteStateMachine" parent="." index="0" unique_id=394854071]
@@ -454,6 +441,28 @@ stream = ExtResource("13_j3ovn")
 script = ExtResource("wallet")
 
 [node name="HudChef" parent="." index="13" unique_id=1283746511 instance=ExtResource("hud_chef")]
+
+[node name="ManaComponent" type="Node" parent="." index="14" unique_id=1283746512]
+script = ExtResource("mana")
+max_mana = 5
+
+[node name="DeliveryRewardComponent" type="Node" parent="." index="15" unique_id=1283746513]
+script = ExtResource("reward")
+
+[node name="AnelCarga" type="Node2D" parent="." index="16" unique_id=1283746514]
+position = Vector2(0, 10)
+script = ExtResource("ring")
+
+[node name="HabilidadeArremesso" type="Node" parent="." index="17" unique_id=1283746515 node_paths=PackedStringArray("charge_ring")]
+script = ExtResource("ability_throw")
+action = &"chef_ability_throw"
+charge_ring = NodePath("../AnelCarga")
+throwable_items = Array[Resource]([ExtResource("espetinho_carne_cru"), ExtResource("espetinho_carne_perfeito"), ExtResource("espetinho_carne_torrado"), ExtResource("espetinho_cogumelo_cru"), ExtResource("espetinho_cogumelo_perfeito"), ExtResource("espetinho_cogumelo_torrado"), ExtResource("espetinho_misto_cru"), ExtResource("espetinho_misto_perfeito"), ExtResource("espetinho_misto_torrado")])
+
+[node name="HabilidadeSombra" type="Node" parent="." index="18" unique_id=1283746516]
+script = ExtResource("ability_shadow")
+action = &"chef_ability_shadow"
+shadow_scene = ExtResource("sombra")
 
 [connection signal="died" from="." to="." method="_on_died"]
 [connection signal="got_hurt" from="." to="." method="_on_got_hurt"]

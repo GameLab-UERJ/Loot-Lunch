@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="TargetMeterProfile" format=3]
+
+[ext_resource type="Script" path="res://restaurante/minigame/comum/target_meter_profile.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+display_name = "Cozimento da Macaxeira"
+rise_speed = 0.07
+rise_acceleration = 0.005
+fall_speed = 0.0
+wobble = 0.3
+wobble_frequency = 0.45
+perfect_min = 0.72
+perfect_max = 0.84
+ruin_at = 1.0
+min_commit = 0.15
+under_label = "Macaxeira Crua"
+perfect_label = "Macaxeira na Manteiga Perfeita"
+over_label = "Macaxeira Queimada"

@@ -21,8 +21,8 @@ func is_free() -> bool:
 
 func _state_logic(_delta: float) -> void:
 	if state == states.idle or state == states.move:
-		if not parent.can_control:
-			return
+		if not parent.can_control or parent.is_stunned():
+			return  # atordoado: não lê o teclado (o StunComponent segura o chef parado)
 
 		parent.input_component.get_input()
 

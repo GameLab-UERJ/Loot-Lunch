@@ -1,0 +1,180 @@
+[gd_resource type="SpriteFrames" load_steps=24 format=3]
+
+[ext_resource type="Texture2D" path="res://restaurante/cozinha/estacoes/arte_v2/cogumelo_pe.png" id="1_tex"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cogumelo_pe_1"]
+atlas = ExtResource("1_tex")
+region = Rect2(0, 0, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cogumelo_pe_2"]
+atlas = ExtResource("1_tex")
+region = Rect2(32, 0, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cogumelo_pe_3"]
+atlas = ExtResource("1_tex")
+region = Rect2(64, 0, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cogumelo_pe_4"]
+atlas = ExtResource("1_tex")
+region = Rect2(96, 0, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cogumelo_pe_5"]
+atlas = ExtResource("1_tex")
+region = Rect2(128, 0, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cogumelo_pe_6"]
+atlas = ExtResource("1_tex")
+region = Rect2(160, 0, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cogumelo_pe_7"]
+atlas = ExtResource("1_tex")
+region = Rect2(0, 40, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cogumelo_pe_8"]
+atlas = ExtResource("1_tex")
+region = Rect2(32, 40, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cogumelo_pe_9"]
+atlas = ExtResource("1_tex")
+region = Rect2(64, 40, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cogumelo_pe_10"]
+atlas = ExtResource("1_tex")
+region = Rect2(96, 40, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cogumelo_pe_11"]
+atlas = ExtResource("1_tex")
+region = Rect2(128, 40, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cogumelo_pe_12"]
+atlas = ExtResource("1_tex")
+region = Rect2(160, 40, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cogumelo_pe_13"]
+atlas = ExtResource("1_tex")
+region = Rect2(192, 40, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cogumelo_pe_14"]
+atlas = ExtResource("1_tex")
+region = Rect2(0, 80, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cogumelo_pe_15"]
+atlas = ExtResource("1_tex")
+region = Rect2(32, 80, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cogumelo_pe_16"]
+atlas = ExtResource("1_tex")
+region = Rect2(64, 80, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cogumelo_pe_17"]
+atlas = ExtResource("1_tex")
+region = Rect2(96, 80, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cogumelo_pe_18"]
+atlas = ExtResource("1_tex")
+region = Rect2(128, 80, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cogumelo_pe_19"]
+atlas = ExtResource("1_tex")
+region = Rect2(160, 80, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cogumelo_pe_20"]
+atlas = ExtResource("1_tex")
+region = Rect2(192, 80, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cogumelo_pe_21"]
+atlas = ExtResource("1_tex")
+region = Rect2(224, 80, 32, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cogumelo_pe_22"]
+atlas = ExtResource("1_tex")
+region = Rect2(0, 120, 32, 40)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cogumelo_pe_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cogumelo_pe_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cogumelo_pe_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cogumelo_pe_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cogumelo_pe_5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cogumelo_pe_6")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 6
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cogumelo_pe_7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cogumelo_pe_8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cogumelo_pe_9")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cogumelo_pe_10")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cogumelo_pe_11")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cogumelo_pe_12")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cogumelo_pe_13")
+}],
+"loop": false,
+"name": &"corte",
+"speed": 12
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cogumelo_pe_14")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cogumelo_pe_15")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cogumelo_pe_16")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cogumelo_pe_17")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cogumelo_pe_18")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cogumelo_pe_19")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cogumelo_pe_20")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cogumelo_pe_21")
+}],
+"loop": false,
+"name": &"regenerando",
+"speed": 1.6
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cogumelo_pe_22")
+}],
+"loop": false,
+"name": &"vazio",
+"speed": 1
+}]

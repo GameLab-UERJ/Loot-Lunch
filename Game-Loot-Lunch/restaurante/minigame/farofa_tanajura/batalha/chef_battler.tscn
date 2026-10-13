@@ -1,0 +1,120 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://restaurante/minigame/farofa_tanajura/batalha/chef_battler.gd" id="1_script"]
+[ext_resource type="Script" path="res://restaurante/minigame/comum/sheet_sprite.gd" id="2_sheet"]
+[ext_resource type="Resource" path="res://restaurante/minigame/comum/anim/chef_idle.tres" id="3_idle"]
+[ext_resource type="Resource" path="res://restaurante/minigame/comum/anim/chef_andar.tres" id="4_andar"]
+[ext_resource type="Resource" path="res://restaurante/minigame/farofa_tanajura/art/anim/chef_frigideirada.tres" id="5_frigideirada"]
+[ext_resource type="Resource" path="res://restaurante/minigame/farofa_tanajura/art/anim/chef_besta.tres" id="6_besta"]
+[ext_resource type="Resource" path="res://restaurante/minigame/farofa_tanajura/art/anim/chef_contra_frigideirada.tres" id="7_contra_frig"]
+[ext_resource type="Resource" path="res://restaurante/minigame/farofa_tanajura/art/anim/chef_contra_rebater.tres" id="8_contra_reb"]
+[ext_resource type="Resource" path="res://restaurante/minigame/farofa_tanajura/art/anim/chef_contra_martelada.tres" id="9_contra_mart"]
+[ext_resource type="Resource" path="res://restaurante/minigame/farofa_tanajura/art/anim/chef_pulo.tres" id="10_pulo"]
+[ext_resource type="Script" path="res://restaurante/minigame/comum/battle_health_component.gd" id="11_health"]
+[ext_resource type="Script" path="res://restaurante/minigame/comum/battle_wait_component.gd" id="12_wait"]
+[ext_resource type="Script" path="res://restaurante/componentes/mana_component.gd" id="13_mana"]
+[ext_resource type="Script" path="res://restaurante/componentes/progress_bar_component.gd" id="14_bar"]
+[ext_resource type="PackedScene" path="res://restaurante/UI/hud_chef.tscn" id="15_hud"]
+[ext_resource type="Script" path="res://restaurante/minigame/farofa_tanajura/batalha/skills/frigideirada.gd" id="16_frigideirada"]
+[ext_resource type="Script" path="res://restaurante/minigame/farofa_tanajura/batalha/skills/investida_sombria.gd" id="17_investida"]
+[ext_resource type="Script" path="res://restaurante/minigame/farofa_tanajura/batalha/skills/besta.gd" id="18_besta"]
+[ext_resource type="Script" path="res://restaurante/minigame/farofa_tanajura/batalha/skills/devorar.gd" id="19_devorar"]
+[ext_resource type="Texture2D" path="res://restaurante/minigame/farofa_tanajura/art/fx/player/frigideirada/frigideira_item.png" id="20_frig_icon"]
+[ext_resource type="Texture2D" path="res://restaurante/minigame/farofa_tanajura/art/fx/player/investida_sombria/sombra_chef.png" id="21_sombra_png"]
+[ext_resource type="Texture2D" path="res://restaurante/minigame/farofa_tanajura/art/fx/player/besta/besta_item.png" id="22_besta_icon"]
+[ext_resource type="Texture2D" path="res://restaurante/minigame/farofa_tanajura/art/fx/player/devorar/devorar_mordida.png" id="23_mordida_png"]
+[ext_resource type="Resource" path="res://restaurante/minigame/farofa_tanajura/art/anim/fx_impacto.tres" id="24_impacto"]
+[ext_resource type="Resource" path="res://restaurante/minigame/farofa_tanajura/art/anim/fx_sombra_chef.tres" id="25_sombra"]
+[ext_resource type="Resource" path="res://restaurante/minigame/farofa_tanajura/art/anim/fx_fumaca_sombria.tres" id="26_fumaca"]
+[ext_resource type="Resource" path="res://restaurante/minigame/farofa_tanajura/art/anim/fx_sombra_rastro.tres" id="27_rastro"]
+[ext_resource type="Resource" path="res://restaurante/minigame/farofa_tanajura/art/anim/fx_besta_flecha.tres" id="28_flecha"]
+[ext_resource type="Resource" path="res://restaurante/minigame/farofa_tanajura/art/anim/fx_besta_impacto.tres" id="29_besta_impacto"]
+[ext_resource type="Texture2D" path="res://restaurante/minigame/farofa_tanajura/art/fx/player/besta/besta_flecha_cravada.png" id="30_cravada"]
+[ext_resource type="Resource" path="res://restaurante/minigame/farofa_tanajura/art/anim/fx_devorar_mordida.tres" id="31_mordida"]
+[ext_resource type="Resource" path="res://restaurante/minigame/farofa_tanajura/art/anim/fx_devorar_cura.tres" id="32_cura"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sombra"]
+atlas = ExtResource("21_sombra_png")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mordida"]
+atlas = ExtResource("23_mordida_png")
+region = Rect2(144, 0, 48, 48)
+
+[node name="ChefBattler" type="Node2D" node_paths=PackedStringArray("qte_anchor", "wait_bar")]
+script = ExtResource("1_script")
+qte_anchor = NodePath("QteAnchor")
+wait_bar = NodePath("BarraEspera")
+display_name = "Chef"
+ground_offset = 20.0
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+scale = Vector2(2, 2)
+script = ExtResource("2_sheet")
+sheets = Array[Resource]([ExtResource("3_idle"), ExtResource("4_andar"), ExtResource("5_frigideirada"), ExtResource("6_besta"), ExtResource("7_contra_frig"), ExtResource("8_contra_reb"), ExtResource("9_contra_mart"), ExtResource("10_pulo")])
+
+[node name="QteAnchor" type="Node2D" parent="."]
+position = Vector2(0, -4)
+
+[node name="BarraEspera" type="Node2D" parent="."]
+z_index = 20
+position = Vector2(0, 28)
+script = ExtResource("14_bar")
+size = Vector2(36, 4)
+
+[node name="BattleHealthComponent" type="Node" parent="."]
+script = ExtResource("11_health")
+max_hp = 10
+
+[node name="BattleWaitComponent" type="Node" parent="."]
+script = ExtResource("12_wait")
+wait_time = 4.0
+jitter = 0.0
+start_ratio_min = 0.7
+start_ratio_max = 0.7
+
+[node name="ManaComponent" type="Node" parent="."]
+script = ExtResource("13_mana")
+max_mana = 5
+
+[node name="HudChef" parent="." instance=ExtResource("15_hud")]
+
+[node name="Frigideirada" type="Node" parent="."]
+script = ExtResource("16_frigideirada")
+impact = ExtResource("24_impacto")
+display_name = "Frigideirada"
+description = "Ataque físico com a frigideira. De graça, recupera 1 de mana e atrasa a formiga."
+icon = ExtResource("20_frig_icon")
+mana_gain = 1
+
+[node name="InvestidaSombria" type="Node" parent="."]
+script = ExtResource("17_investida")
+shadow_anim = ExtResource("25_sombra")
+smoke_anim = ExtResource("26_fumaca")
+trail_anim = ExtResource("27_rastro")
+impact = ExtResource("24_impacto")
+display_name = "Investida Sombria"
+description = "Deixa a sombra no lugar, dá uma trombada na formiga e volta para a sombra."
+icon = SubResource("AtlasTexture_sombra")
+mana_cost = 1
+
+[node name="Besta" type="Node" parent="."]
+script = ExtResource("18_besta")
+ranged = true
+bolt_anim = ExtResource("28_flecha")
+impact = ExtResource("29_besta_impacto")
+stuck_texture = ExtResource("30_cravada")
+display_name = "Besta"
+description = "Tiro de virote à distância (alcança a Rainha voando e derruba ela: mana cheia!)."
+icon = ExtResource("22_besta_icon")
+mana_cost = 2
+
+[node name="Devorar" type="Node" parent="."]
+script = ExtResource("19_devorar")
+can_target_boss = false
+bite_anim = ExtResource("31_mordida")
+heal_anim = ExtResource("32_cura")
+display_name = "Devorar"
+description = "Só com a formiga abaixo de 20% de vida: engole a formiga e recupera vida (+1 mana)."
+icon = SubResource("AtlasTexture_mordida")
+mana_gain = 1

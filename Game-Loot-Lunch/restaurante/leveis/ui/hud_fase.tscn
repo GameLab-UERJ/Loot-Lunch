@@ -1,0 +1,151 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://restaurante/leveis/ui/level_hud.gd" id="1_hud"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_painel"]
+bg_color = Color(0.12, 0.08, 0.14, 0.92)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.48, 0.32, 0.84, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+content_margin_left = 12.0
+content_margin_top = 10.0
+content_margin_right = 12.0
+content_margin_bottom = 10.0
+
+[node name="HudFase" type="CanvasLayer"]
+layer = 11
+script = ExtResource("1_hud")
+
+[node name="Placar" type="VBoxContainer" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -150.0
+offset_top = 4.0
+offset_right = -6.0
+offset_bottom = 60.0
+grow_horizontal = 0
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="Tempo" type="Label" parent="Placar"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.92, 0.85, 1)
+theme_override_colors/font_outline_color = Color(0.1, 0.05, 0.12, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 14
+text = "Tempo 3:00"
+horizontal_alignment = 2
+
+[node name="Meta" type="Label" parent="Placar"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.92, 0.85, 1)
+theme_override_colors/font_outline_color = Color(0.1, 0.05, 0.12, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 12
+text = "Meta 0 / 60"
+horizontal_alignment = 2
+
+[node name="Clientes" type="Label" parent="Placar"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.78, 0.86, 1)
+theme_override_colors/font_outline_color = Color(0.1, 0.05, 0.12, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 9
+text = "Atendidos 0   Perdidos 0"
+horizontal_alignment = 2
+
+[node name="Aviso" type="Label" parent="."]
+unique_name_in_owner = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = -40.0
+offset_right = 160.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 0.95, 0.8, 1)
+theme_override_colors/font_outline_color = Color(0.1, 0.05, 0.12, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 18
+text = "Fase 1
+Meta: 60 Almas em 3:00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="FimDeTurno" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Escurecer" type="ColorRect" parent="FimDeTurno"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.55)
+
+[node name="Painel" type="PanelContainer" parent="FimDeTurno"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = -80.0
+offset_right = 120.0
+offset_bottom = 80.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_painel")
+
+[node name="Coluna" type="VBoxContainer" parent="FimDeTurno/Painel"]
+layout_mode = 2
+theme_override_constants/separation = 6
+alignment = 1
+
+[node name="Titulo" type="Label" parent="FimDeTurno/Painel/Coluna"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.1, 0.05, 0.12, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 18
+text = "Meta batida!"
+horizontal_alignment = 1
+
+[node name="Resumo" type="Label" parent="FimDeTurno/Painel/Coluna"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92, 0.9, 0.86, 1)
+theme_override_font_sizes/font_size = 10
+text = "Dinheiro: 0 / 60"
+horizontal_alignment = 1
+
+[node name="JogarDeNovo" type="Button" parent="FimDeTurno/Painel/Coluna"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 11
+text = "Jogar de novo (Enter)"

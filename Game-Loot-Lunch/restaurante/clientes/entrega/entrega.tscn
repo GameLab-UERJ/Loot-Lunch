@@ -14,7 +14,7 @@
 [ext_resource type="Resource" path="res://restaurante/itens/dados/espetinho_misto_torrado.tres" id="12_misto_torrado"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_recebedor"]
-radius = 18.0
+radius = 30.0
 
 [node name="Entrega" type="Node2D"]
 script = ExtResource("1_payment")

@@ -3,11 +3,12 @@ class_name OrderPaymentComponent
 ## PAGAMENTO do pedido. Liga três peças que não se conhecem:
 ##
 ##   OrderComponent            (irmão, cena pedido.tscn)  -> o que o cliente quer
-##   DeliveryReceiverComponent (filho "Recebedor")        -> recebeu um item (B ou colisão)
+##   DeliveryReceiverComponent (filho "Recebedor")        -> recebeu um item (clique ou colisão)
 ##   PriceTable                (.tres)                    -> quanto vale
 ##
 ## Quando um item chega: confere com o pedido, calcula o valor, paga na carteira de
-## quem entregou (WalletComponent), mostra "+10 Almas" e limpa o pedido.
+## quem entregou (WalletComponent), avisa a recompensa de vida/mana de quem entregou
+## (DeliveryRewardComponent), mostra "+10 Almas" e limpa o pedido.
 ##
 ## Uso: arraste `entrega.tscn` como filho do cliente, ao lado de `pedido.tscn`.
 ## O recebedor só fica ligado enquanto o cliente tem pedido.
@@ -81,6 +82,11 @@ func _on_item_received(data: ItemData, deliverer: Node) -> void:
 		wallet = WalletComponent.find_default(get_tree())
 	if wallet:
 		wallet.add(amount)
+
+	# Vida/mana de volta para quem entregou (se tiver DeliveryRewardComponent).
+	var reward: DeliveryRewardComponent = DeliveryRewardComponent.find_in(deliverer)
+	if reward:
+		reward.on_delivered(correct)
 
 	if show_floating_text:
 		_show_text(correct, amount, wallet)

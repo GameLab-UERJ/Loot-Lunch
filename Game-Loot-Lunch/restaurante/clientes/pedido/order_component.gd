@@ -35,6 +35,8 @@ signal order_cleared
 @export var generate_on_ready: bool = true
 ## true: o balão só aparece com o jogador perto. false: sempre visível enquanto houver pedido.
 @export var show_only_when_near: bool = true
+## Raio (px) do "perto". 0 = usa o raio que está na cena (CollisionShape2D do Proximity).
+@export var reveal_distance: float = 0.0
 ## Escreve o pedido sorteado no Output (útil na cena de teste).
 @export var debug_print: bool = false
 
@@ -48,6 +50,8 @@ var current_order: CustomerOrder = null
 
 func _ready() -> void:
 	if proximity:
+		if reveal_distance > 0.0:
+			set_reveal_distance(reveal_distance)
 		proximity.presence_changed.connect(_on_presence_changed)
 	if generate_on_ready:
 		generate_order()
@@ -130,6 +134,20 @@ static func pick_option(list: Array) -> OrderOption:
 		if roll < 0.0:
 			return option
 	return valid.back()
+
+
+## Muda a distância em que o balão aparece. Cria um círculo NOVO para este cliente
+## (o da cena é compartilhado entre todos os clientes).
+func set_reveal_distance(distance: float) -> void:
+	reveal_distance = distance
+	if proximity == null or distance <= 0.0:
+		return
+	for child in proximity.get_children():
+		var shape_node := child as CollisionShape2D
+		if shape_node:
+			var circle := CircleShape2D.new()
+			circle.radius = distance
+			shape_node.shape = circle
 
 
 # --- Interno ---
