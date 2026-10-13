@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://dik67rd0jwxuh"]
+
+[ext_resource type="Script" uid="uid://bakjbw6q1yhuy" path="res://restaurante/cozinha/estacoes/lixeira.gd" id="1_trash"]
+[ext_resource type="Texture2D" uid="uid://scq1rwfjhqy6" path="res://restaurante/comidas/utensilios/lixeira.png" id="2_texture"]
+[ext_resource type="Script" uid="uid://cxnej3t4p010g" path="res://restaurante/componentes/interactable_component.gd" id="3_interactable"]
+[ext_resource type="Script" uid="uid://cyht2nhhpfgyx" path="res://restaurante/componentes/sprite_sheet_effect.gd" id="4_effect"]
+[ext_resource type="Texture2D" uid="uid://cgqbrmknjg0qu" path="res://restaurante/comidas/espetinhos/base/espeto/1361.png" id="5_fogo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
+size = Vector2(20, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_interaction"]
+size = Vector2(36, 36)
+
+[node name="Lixeira" type="StaticBody2D" unique_id=1550362269]
+collision_mask = 0
+script = ExtResource("1_trash")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=588639889]
+rotation = 2.3561945
+texture = ExtResource("2_texture")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1588413359]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_body")
+
+[node name="InteractableComponent" type="Area2D" parent="." unique_id=547191634 node_paths=PackedStringArray("highlight_target")]
+collision_layer = 8
+collision_mask = 0
+monitoring = false
+script = ExtResource("3_interactable")
+highlight_target = NodePath("../Sprite2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableComponent" unique_id=656486814]
+shape = SubResource("RectangleShape2D_interaction")
+
+[node name="VanishEffect" type="AnimatedSprite2D" parent="." unique_id=1732950431]
+z_index = 20
+position = Vector2(0, -6)
+scale = Vector2(0.5, 0.5)
+script = ExtResource("4_effect")
+sheet = ExtResource("5_fogo")

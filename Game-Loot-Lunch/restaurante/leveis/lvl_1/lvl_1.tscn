@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" path="res://restaurante/cozinha/estacoes/pe_cogumelo.tscn" id="12_cogumelo"]
 [ext_resource type="PackedScene" path="res://restaurante/cozinha/estacoes/caixa_carne.tscn" id="13_mesa_carne"]
 [ext_resource type="PackedScene" path="res://restaurante/cozinha/estacoes/tabua_corte.tscn" id="14_mesa_corte"]
+[ext_resource type="PackedScene" path="res://restaurante/cozinha/estacoes/lixeira.tscn" id="15_lixeira"]
 [ext_resource type="PackedScene" path="res://restaurante/leveis/lvl_1/tutorial_lvl_1.tscn" id="99_tutorial"]
 [ext_resource type="PackedScene" path="res://restaurante/leveis/lvl_1/cenario_lvl_1.tscn" id="20_cenario"]
 
@@ -58,6 +59,9 @@ position = Vector2(224, 196)
 
 [node name="MesaCorteEsquerda" parent="Estacoes" instance=ExtResource("14_mesa_corte")]
 position = Vector2(288, 196)
+
+[node name="Lixeira" parent="Estacoes" instance=ExtResource("15_lixeira")]
+position = Vector2(320, 196)
 
 [node name="MesaCorteDireita" parent="Estacoes" instance=ExtResource("14_mesa_corte")]
 position = Vector2(352, 196)
