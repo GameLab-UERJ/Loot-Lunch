@@ -6,10 +6,9 @@
 [ext_resource type="Resource" path="res://restaurante/minigame/comum/anim/chef_idle.tres" id="4_chef_idle"]
 [ext_resource type="Resource" path="res://restaurante/minigame/comum/anim/chef_andar.tres" id="5_chef_andar"]
 [ext_resource type="PackedScene" path="res://restaurante/minigame/comum/salao_vip.tscn" id="6_salao"]
-[ext_resource type="PackedScene" path="res://restaurante/minigame/comum/dialogo_vip.tscn" id="7_dialogo"]
 [ext_resource type="Script" path="res://restaurante/minigame/comum/cinema_bars.gd" id="8_bars"]
 
-[node name="IntroVip" type="Node2D" node_paths=PackedStringArray("vip", "chef", "door_open", "vip_door_spot", "vip_talk_spot", "vip_seat", "chef_spot", "chef_exit", "camera", "bars", "dialogue")]
+[node name="IntroVip" type="Node2D" node_paths=PackedStringArray("vip", "chef", "door_open", "vip_door_spot", "vip_talk_spot", "vip_seat", "chef_spot", "chef_exit", "camera", "bars")]
 script = ExtResource("1_script")
 vip = NodePath("Vip")
 chef = NodePath("Chef")
@@ -21,7 +20,6 @@ chef_spot = NodePath("Marcas/ChefEspera")
 chef_exit = NodePath("Marcas/ChefCozinha")
 camera = NodePath("Camera")
 bars = NodePath("Faixas")
-dialogue = NodePath("Dialogo")
 title = "O Cliente VIP"
 instructions = "Um cliente importante acabou de chegar..."
 show_intro_banner = false
@@ -63,5 +61,3 @@ position = Vector2(320, 180)
 
 [node name="Faixas" type="CanvasLayer" parent="."]
 script = ExtResource("8_bars")
-
-[node name="Dialogo" parent="." instance=ExtResource("7_dialogo")]

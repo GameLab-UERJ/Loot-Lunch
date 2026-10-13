@@ -16,7 +16,8 @@ class_name CutsceneStage
 
 @export var camera: Camera2D
 @export var bars: CinemaBars
-@export var dialogue: DialogueBox
+@export var dialogue: Node = null
+@export var dialogue_resource: DialogueResource = preload("res://resources/dialogues/vip_boss.dialogue")
 ## Atores cuja arte olha para a ESQUERDA. O chef e o VIP (jscoutinho_*) olham para a
 ## DIREITA, apesar do "_L" no nome do arquivo (igual ao `sprite_faces_left = false` do chef.gd).
 @export var left_facing_actors: Array[Node2D] = []
@@ -73,38 +74,146 @@ func zoom_reset(duration: float = 0.9) -> void:
 
 # --- Falas -------------------------------------------------------------------------
 
-## Diálogo que espera o jogador (ESPAÇO avança, ESC pula). Lista vazia = não faz nada.
-## Retorna false se o jogador pulou (ESC).
-func talk(lines: Array) -> bool:
-	if dialogue == null or lines.is_empty() or dialogue_skipped:
+# --- Falas -------------------------------------------------------------------------
+
+var _subtitle_layer: CanvasLayer
+var _subtitle_label: Label
+var _subtitle_panel: PanelContainer
+
+
+## Diálogo que espera o jogador (ESPAÇO avança, ESC pula) usando DialogueManager 3.
+## Aceita o título da fala (ex: "intro_meeting") ou array de falas por compatibilidade.
+func talk(dialogue_input, custom_resource: DialogueResource = null) -> bool:
+	if dialogue_skipped:
+		return false
+	
+	var resource: DialogueResource = custom_resource if custom_resource else dialogue_resource
+	var title: String = ""
+	
+	if dialogue_input is String:
+		title = dialogue_input
+	elif dialogue_input is Array:
+		title = _resolve_dialogue_title(dialogue_input)
+	
+	if title.is_empty() or resource == null:
 		return not dialogue_skipped
-	if not dialogue.line_shown.is_connected(_on_line_shown):
-		dialogue.line_shown.connect(_on_line_shown)
-	dialogue_skipped = not await dialogue.play(lines)
+
+	var callback := func(line: DialogueLine) -> void:
+		if line and not line.character.is_empty():
+			_on_line_shown(0, line.character, line.text)
+
+	if not Engine.is_editor_hint():
+		DialogueManager.got_dialogue.connect(callback)
+		var balloon: Node = DialogueManager.show_dialogue_balloon(resource, title)
+		if balloon:
+			await DialogueManager.dialogue_ended
+		if DialogueManager.got_dialogue.is_connected(callback):
+			DialogueManager.got_dialogue.disconnect(callback)
+
 	return not dialogue_skipped
 
 
+func _resolve_dialogue_title(lines: Array) -> String:
+	if lines.is_empty():
+		return ""
+	var first_line: String = String(lines[0])
+	if first_line.begins_with("VIP: Com licença"):
+		return "intro_meeting"
+	elif first_line.begins_with("Chef: ...\"detalhe\""):
+		return "intro_after_sit"
+	elif first_line.begins_with("VIP: Chef... em trezentos"):
+		return "outro_perfect"
+	elif first_line.begins_with("VIP: Muito bem, chef"):
+		return "outro_good"
+	elif first_line.begins_with("VIP: Bom... pelo menos"):
+		return "outro_medium"
+	elif first_line.begins_with("VIP: Acho que vou continuar"):
+		return "outro_bad"
+	return ""
+
+
 func _on_line_shown(_index: int, speaker: String, _text: String) -> void:
-	var actor: Node2D = speaker_actors.get(speaker, null)
+	# Normaliza nome para lookup de atores
+	var key: String = speaker
+	if speaker == "Coronel Ossvaldo":
+		key = "VIP"
+	var actor: Node2D = speaker_actors.get(key, speaker_actors.get(speaker, null))
 	if actor and is_instance_valid(actor):
-		face_toward_listener(speaker)
+		face_toward_listener(key)
 		squash(actor, Vector2(0.94, 1.08), 0.22)
 
 
 ## Quem fala olha para os outros atores da conversa (sobrescreva se quiser outra regra).
 func face_toward_listener(speaker: String) -> void:
-	var actor: Node2D = speaker_actors.get(speaker, null)
-	for key in speaker_actors:
-		var other: Node2D = speaker_actors[key]
+	var key: String = speaker
+	if speaker == "Coronel Ossvaldo":
+		key = "VIP"
+	var actor: Node2D = speaker_actors.get(key, speaker_actors.get(speaker, null))
+	for k in speaker_actors:
+		var other: Node2D = speaker_actors[k]
 		if other != actor and is_instance_valid(other):
 			face(actor, other.global_position.x)
 			return
 
 
-## Fala sem esperar o jogador (para os momentos cronometrados). Texto vazio = fecha.
+## Fala rápida sem esperar o jogador (para momentos cronometrados). Texto vazio = fecha.
 func say(speaker: String, text: String, color: Color = Color(0, 0, 0, 0)) -> void:
-	if dialogue:
-		dialogue.show_line(speaker, text, color)
+	if dialogue and dialogue.has_method("show_line"):
+		dialogue.call("show_line", speaker, text, color)
+		return
+	_ensure_subtitle_ui()
+	if text.strip_edges().is_empty():
+		_subtitle_panel.hide()
+		return
+	_subtitle_panel.show()
+	if speaker != "":
+		_subtitle_label.text = "%s: %s" % [speaker, text]
+	else:
+		_subtitle_label.text = text
+	if color.a > 0.0:
+		_subtitle_label.add_theme_color_override("font_color", color)
+	else:
+		_subtitle_label.remove_theme_color_override("font_color")
+
+
+func _ensure_subtitle_ui() -> void:
+	if _subtitle_layer:
+		return
+	_subtitle_layer = CanvasLayer.new()
+	_subtitle_layer.layer = 30
+	add_child(_subtitle_layer)
+	
+	_subtitle_panel = PanelContainer.new()
+	_subtitle_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_subtitle_panel.anchors_preset = Control.PRESET_BOTTOM_WIDE
+	_subtitle_panel.anchor_top = 1.0
+	_subtitle_panel.anchor_bottom = 1.0
+	_subtitle_panel.offset_left = 60
+	_subtitle_panel.offset_right = -60
+	_subtitle_panel.offset_bottom = -24
+	_subtitle_panel.offset_top = -64
+	
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(0.1, 0.05, 0.12, 0.9)
+	style.border_width_left = 2
+	style.border_width_top = 2
+	style.border_width_right = 2
+	style.border_width_bottom = 2
+	style.border_color = Color(0.95, 0.72, 0.25, 1.0)
+	style.corner_radius_top_left = 4
+	style.corner_radius_top_right = 4
+	style.corner_radius_bottom_right = 4
+	style.corner_radius_bottom_left = 4
+	_subtitle_panel.add_theme_stylebox_override("panel", style)
+	
+	_subtitle_label = Label.new()
+	_subtitle_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_subtitle_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	_subtitle_label.add_theme_font_override("font", preload("res://assets/fonts/Silver.ttf"))
+	_subtitle_label.add_theme_font_size_override("font_size", 22)
+	_subtitle_panel.add_child(_subtitle_label)
+	_subtitle_layer.add_child(_subtitle_panel)
+	_subtitle_panel.hide()
 
 
 # --- Atores ------------------------------------------------------------------------

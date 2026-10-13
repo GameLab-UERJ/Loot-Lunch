@@ -42,8 +42,6 @@ minigame/
 │   ├── battle_wait_component.gd   BattleWaitComponent: TEMPO DE ESPERA (barra ATB) de quem luta
 │   ├── boss_health_bar.gd         BossHealthBar: barra de vida gigante de chefe no topo da tela
 │   ├── cutscene_stage.gd          CutsceneStage: base das cutscenes (andar, zoom, falas, pulinho, arco, efeito)
-│   ├── dialogue_box.gd            DialogueBox: caixa de diálogo (retrato, nome, máquina de escrever, ESPAÇO/ESC)
-│   ├── dialogo_vip.tscn           DialogueBox configurada: nome/cor/retrato do VIP e do Chef
 │   ├── cinema_bars.gd             CinemaBars: faixas pretas de cinema + clarão
 │   ├── salao_vip.tscn             salão do restaurante (porta, mesa, cadeira, luz) usado pelas 2 cutscenes
 │   ├── sheet_sprite.gd            SheetSprite: AnimatedSprite2D montado de SheetAnimation (offset por animação, wait_frame)
@@ -188,14 +186,13 @@ Ratatouille (`final_vip/avaliacao_vip.tscn`, script `VipTasting`, herda `BossMin
   `outro_good`, `outro_medium`, `outro_bad`). Em **BOM** e **PERFEITO** o Coronel convida o
   chef para fazer negócio na fazenda dele; o resultado traz `"farm_deal": true` e o placar
   final ganha a linha `deal_label` (para o jogo liberar a fazenda depois).
-- **Falas:** ficam no Inspector (grupo "Falas") no formato `Quem: fala` (`VIP:` ou `Chef:`;
-  sem "Quem:" ou começando com `*` = narração). Nome que aparece, cor e retrato ficam só em
-  `comum/dialogo_vip.tscn` — trocar o nome do VIP é mudar `speaker_names` lá (as falas em
-  que ele se apresenta pelo nome precisam ser trocadas à mão).
+- **Falas:** ficam em `res://resources/dialogues/vip_boss.dialogue` e utilizam o
+  `DialogueManager 3` com o balão padrão do projeto (`common_balloon.tscn`).
+  Retratos e nomes são integrados diretamente pelo sistema de balões.
 - **Reaproveitar em outra cena:** script `extends CutsceneStage`, adicione um nó
-  `CinemaBars` e uma `DialogueBox` (ou instancie `dialogo_vip.tscn`), e escreva o roteiro no
-  `_on_begin()` com `walk`, `zoom_to`, `talk`, `say`, `hop`, `squash`... Etapa com
-  `show_intro_banner = false` entra direto, sem o painel de instruções.
+  `CinemaBars`, e escreva o roteiro no `_on_begin()` com `walk`, `zoom_to`, `talk`,
+  `say`, `hop`, `squash`... Etapa com `show_intro_banner = false` entra direto, sem o
+  painel de instruções.
 
 ## Ajustes (update 03/10, tarde)
 
