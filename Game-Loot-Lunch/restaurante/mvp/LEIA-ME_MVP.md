@@ -36,8 +36,8 @@ sozinhas (F6) funcionam como antes. O MVP só pendura o nó de fluxo nelas ao ab
 
 ## Mudanças fora desta pasta
 
-- `menus/main/main_menu.tscn` / `.gd`: menu principal original do jogo com novo botão
-  "Restaurante" para iniciar a demonstração através do `MvpFlow`.
+- `entities/npcs/dialogos/npc_estrada_bloqueio.dialogue`: Guarda a leste da `external_house`
+  pede a senha secreta ("Loot & Lunch") para liberar a entrada ao restaurante via `MvpFlow`.
 - `minigame/comum/minigame_banner.gd`: novo `choose(título, texto, opções) -> índice`
   (painel com botões; setas/ESPAÇO/ENTER/clique; ESC = último botão) e `button_theme`.
 - `minigame/boss_fight_vip.gd`: `offer_quit_on_fail` + sinal `quit_requested`

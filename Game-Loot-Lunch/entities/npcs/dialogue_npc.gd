@@ -28,7 +28,11 @@ func _process(_delta: float) -> void:
 		return
 
 	if Input.is_action_just_pressed("interact"):
-		dialogue_balloon = DialogueManager.show_dialogue_balloon(dialogue, start_node)
+		dialogue_balloon = DialogueManager.show_dialogue_balloon(dialogue, start_node, [self])
+
+
+func enter_restaurant() -> void:
+	GlobalData.enter_restaurant()
 
 
 func _on_player_entered(_player) -> void:
@@ -39,3 +43,4 @@ func _on_player_entered(_player) -> void:
 func _on_player_exited(_player) -> void:
 	interaction_label.hide_interaction()
 	player_in_range = false
+

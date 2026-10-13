@@ -62,7 +62,6 @@ alignment = 1
 [node name="GridContainer3" type="GridContainer" parent="Content/Buttons" unique_id=1017273769]
 layout_mode = 2
 size_flags_horizontal = 4
-columns = 2
 
 [node name="NewGameButton" type="Button" parent="Content/Buttons/GridContainer3" unique_id=461787224]
 custom_minimum_size = Vector2(110, 20)
@@ -72,15 +71,6 @@ size_flags_vertical = 4
 mouse_filter = 2
 theme = ExtResource("5_j2kye")
 text = "New Game"
-
-[node name="RestaurantButton" type="Button" parent="Content/Buttons/GridContainer3" unique_id=884920194]
-custom_minimum_size = Vector2(110, 20)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-mouse_filter = 2
-theme = ExtResource("5_j2kye")
-text = "Restaurante"
 
 [node name="GridContainer" type="GridContainer" parent="Content/Buttons" unique_id=1872895350]
 layout_mode = 2
@@ -155,8 +145,6 @@ stretch_mode = 5
 
 [connection signal="mouse_entered" from="Content/Buttons/GridContainer3/NewGameButton" to="." method="_on_button_mouse_entered"]
 [connection signal="pressed" from="Content/Buttons/GridContainer3/NewGameButton" to="." method="_on_new_game_button_pressed"]
-[connection signal="mouse_entered" from="Content/Buttons/GridContainer3/RestaurantButton" to="." method="_on_button_mouse_entered"]
-[connection signal="pressed" from="Content/Buttons/GridContainer3/RestaurantButton" to="." method="_on_restaurant_button_pressed"]
 [connection signal="mouse_entered" from="Content/Buttons/GridContainer/ContinueButton" to="." method="_on_button_mouse_entered"]
 [connection signal="pressed" from="Content/Buttons/GridContainer/ContinueButton" to="." method="_on_continue_button_pressed"]
 [connection signal="mouse_entered" from="Content/Buttons/GridContainer/SettingsButton" to="." method="_on_button_mouse_entered"]

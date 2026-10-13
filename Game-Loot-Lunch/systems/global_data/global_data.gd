@@ -172,3 +172,9 @@ func _find_inventory_recursive(node: Node) -> Inventory:
 		if result:
 			return result
 	return null
+
+
+func enter_restaurant() -> void:
+	collect_game_state()
+	MvpFlow.play_level_1(get_tree())
+
