@@ -145,6 +145,8 @@ func get_time_left() -> float:
 func get_progress() -> float:
 	if is_empty() or _vanish_time <= 0.0:
 		return 0.0
+	if _stage == Stage.BURNT:
+		return 1.0
 	return clampf(_elapsed / _vanish_time, 0.0, 1.0)
 
 
@@ -214,6 +216,15 @@ func discard() -> bool:
 	_set_outlined(null)
 	hand.consume_item()
 	_clear()
+	return true
+
+
+## Força o item atual a assumir o estado torrado sem removê-lo da boca.
+func burn() -> bool:
+	if is_empty():
+		return false
+	_set_stage(Stage.BURNT)
+	_refresh_bar()
 	return true
 
 

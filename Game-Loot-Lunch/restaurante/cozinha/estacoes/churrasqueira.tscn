@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" path="res://restaurante/comidas/utensilios/churrasqueira/churrasqueira_alerta.png" id="17_alerta"]
 [ext_resource type="Texture2D" path="res://restaurante/comidas/utensilios/churrasqueira/churrasqueira_risada.png" id="18_risada"]
 [ext_resource type="Script" path="res://restaurante/componentes/icon_bubble.gd" id="19_balao"]
+[ext_resource type="PackedScene" path="res://restaurante/armadilhas/flame_random_event.tscn" id="20_traps"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
 size = Vector2(72, 20)
@@ -145,3 +146,9 @@ row = 1
 columns = 12
 frame_size = Vector2i(64, 64)
 fps = 20.0
+
+[node name="FlameRandomEvent" parent="." instance=ExtResource("20_traps")]
+position = Vector2(0, 30)
+event_source_path = NodePath("..")
+event_interval = 7.0
+first_event_delay = 2.0
