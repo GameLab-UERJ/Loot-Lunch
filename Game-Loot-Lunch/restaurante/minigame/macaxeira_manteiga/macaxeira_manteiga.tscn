@@ -12,6 +12,7 @@
 [ext_resource type="Resource" path="res://restaurante/minigame/macaxeira_manteiga/dados/manteiga_dose.tres" id="10_dose"]
 [ext_resource type="Script" path="res://restaurante/minigame/comum/timing_gauge.gd" id="11_gauge"]
 [ext_resource type="PackedScene" path="res://restaurante/minigame/macaxeira_manteiga/tutorial_macaxeira.tscn" id="99_tutorial"]
+[ext_resource type="Texture2D" path="res://restaurante/minigame/macaxeira_manteiga/art/fundo_macaxeira.png" id="90_fundo"]
 
 [node name="MacaxeiraManteiga" type="Node2D" node_paths=PackedStringArray("cook_meter", "butter_meter", "bottle", "macaxeira")]
 texture_filter = 1
@@ -28,9 +29,10 @@ Ao mesmo tempo, a garrafa segue o MOUSE: SEGURE o clique para despejar a manteig
 
 Sem manteiga ela gruda e cozinha mais rápido. Manteiga demais = encharcada."
 
-[node name="Chao" type="Polygon2D" parent="."]
-color = Color(0.17, 0.16, 0.2, 1)
-polygon = PackedVector2Array(0, 0, 640, 0, 640, 360, 0, 360)
+[node name="Chao" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = ExtResource("90_fundo")
+centered = false
 
 [node name="Chef" type="AnimatedSprite2D" parent="."]
 position = Vector2(140, 236)

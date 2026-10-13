@@ -23,6 +23,7 @@
 [ext_resource type="Script" path="res://restaurante/minigame/comum/boss_health_bar.gd" id="21_bossbar"]
 [ext_resource type="Script" path="res://restaurante/minigame/comum/turn_order_bar.gd" id="23_turnbar"]
 [ext_resource type="PackedScene" path="res://restaurante/minigame/farofa_tanajura/tutorial_farofa.tscn" id="99_tutorial"]
+[ext_resource type="Texture2D" path="res://restaurante/minigame/farofa_tanajura/art/fundo_arena.png" id="90_fundo"]
 
 [node name="FarofaTanajura" type="Node2D" node_paths=PackedStringArray("boss_slot", "battle", "chef", "summoner", "formation", "cutscene", "battle_layer")]
 script = ExtResource("1_script")
@@ -48,10 +49,12 @@ Na SUA VEZ o tempo PARA: você tem 5 s para escolher, senão perde a vez. A barr
 Rainha VOANDO: só a Besta alcança — flechada derruba e enche sua mana. As pequenas ficam em fúria (dano dobrado).
 BOLA DE TERRA: acerte 3 golpes na Rainha antes de ela arremessar!"
 
-[node name="Chao" type="Polygon2D" parent="."]
+[node name="Chao" type="Sprite2D" parent="."]
 z_index = -20
-color = Color(0.17, 0.16, 0.2, 1)
-polygon = PackedVector2Array(-20, -20, 660, -20, 660, 380, -20, 380)
+position = Vector2(-20, -20)
+scale = Vector2(2, 2)
+texture = ExtResource("90_fundo")
+centered = false
 
 [node name="ClienteVip" type="AnimatedSprite2D" parent="."]
 position = Vector2(320, 72)
