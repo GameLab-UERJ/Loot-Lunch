@@ -12,8 +12,14 @@ class_name LevelData
 @export_group("Turno")
 ## Duração do turno em segundos.
 @export var duration: float = 180.0
-## Dinheiro que o chef precisa ter no fim do turno para passar.
+## Dinheiro mínimo para passar, usado só quando `star_goals` está vazio.
+## Com estrelas, quem manda é a 1ª meta de `star_goals`.
 @export var money_goal: int = 60
+## Metas de ESTRELA, da 1ª para a última (dinheiro no fim do turno).
+## A 1ª é o mínimo para passar de fase; cada meta seguinte dá mais uma estrela.
+## [50, 75, 100] = 50 passa com 1 estrela, 75 = 2 estrelas, 100 = 3 estrelas.
+## Vazio = sem estrelas: passa com `money_goal`.
+@export var star_goals: Array[int] = [50, 75, 100]
 ## Se o chef cair (vida 0), a fase termina na hora como derrota.
 @export var fail_on_chef_death: bool = true
 
@@ -37,6 +43,45 @@ class_name LevelData
 @export_group("Pedido")
 ## Distância (px) do chef até o cliente para o balão do pedido aparecer.
 @export var order_reveal_distance: float = 96.0
+
+
+## Metas de estrela em ordem crescente (sem estrelas = só `money_goal`).
+func get_star_goals() -> Array[int]:
+	var goals: Array[int] = []
+	for goal in star_goals:
+		if goal > 0:
+			goals.append(goal)
+	if goals.is_empty():
+		goals.append(money_goal)
+	goals.sort()
+	return goals
+
+
+## Mínimo para passar de fase (= 1ª estrela).
+func get_pass_goal() -> int:
+	return get_star_goals()[0]
+
+
+func get_max_stars() -> int:
+	return get_star_goals().size()
+
+
+## Quantas estrelas esse dinheiro vale (0 = não passou).
+func stars_for(money: int) -> int:
+	var stars: int = 0
+	for goal in get_star_goals():
+		if money >= goal:
+			stars += 1
+	return stars
+
+
+## Próxima meta a buscar (a última, se todas já foram batidas).
+func next_goal(money: int) -> int:
+	var goals: Array[int] = get_star_goals()
+	for goal in goals:
+		if money < goal:
+			return goal
+	return goals[goals.size() - 1]
 
 
 ## Intervalo sorteado até o próximo cliente.
