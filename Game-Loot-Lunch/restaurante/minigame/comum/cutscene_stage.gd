@@ -194,12 +194,12 @@ func _ensure_subtitle_ui() -> void:
 	_subtitle_panel.offset_top = -64
 	
 	var style := StyleBoxFlat.new()
-	style.bg_color = Color(0.1, 0.05, 0.12, 0.9)
+	style.bg_color = Color(0.12, 0.12, 0.12, 0.9)
 	style.border_width_left = 2
 	style.border_width_top = 2
 	style.border_width_right = 2
 	style.border_width_bottom = 2
-	style.border_color = Color(0.95, 0.72, 0.25, 1.0)
+	style.border_color = Color(0.6, 0.6, 0.6, 1.0)
 	style.corner_radius_top_left = 4
 	style.corner_radius_top_right = 4
 	style.corner_radius_bottom_right = 4

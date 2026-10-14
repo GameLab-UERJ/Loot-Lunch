@@ -83,19 +83,27 @@ func run() -> bool:
 	if intro_stage:
 		await _play_stage(-1, intro_stage)  # cutscene: não entra no placar
 	await banner.ask(intro_title, intro_text, "[ESPAÇO] aceitar o desafio")
+	if _current:
+		_free_stage(_current)
 
 	for i in stages.size():
 		var result: Dictionary = await _play_stage(i, stages[i])
 		if result.is_empty():
+			if _current:
+				_free_stage(_current)
 			return _end(false)
 		results.append(result)
 
 	await banner.ask("PRATO COMPLETO!", _summary_text(), "[ESPAÇO] levar ao VIP", final_dish_texture)
+	if _current:
+		_free_stage(_current)
 
 	var delivery: Dictionary = {}
 	if delivery_stage:
 		delivery = await _play_stage(stages.size(), delivery_stage)
 		if delivery.is_empty():
+			if _current:
+				_free_stage(_current)
 			return _end(false)
 
 	# A cutscene diz como o VIP reagiu (título, frase e cor); sem ela, vitória simples.
@@ -104,6 +112,8 @@ func run() -> bool:
 	var final_color: Color = delivery.get("color", Color(0.3, 0.88, 0.35))
 	await banner.ask(final_title, "%s\n\n%s" % [final_label, _summary_text()],
 		"[ESPAÇO] continuar", final_dish_texture, final_color)
+	if _current:
+		_free_stage(_current)
 	return _end(true)
 
 
@@ -121,7 +131,7 @@ func _play_stage(index: int, scene: PackedScene) -> Dictionary:
 		if stage.tutorial and not TutorialBoard.was_seen(stage.tutorial):
 			# Primeira vez da etapa: o quadro desenhado no lugar do texto.
 			await TutorialBoard.play(self, stage.tutorial, true)
-		elif stage.show_intro_banner:
+		elif stage.show_intro_banner and stage.tutorial == null:
 			await banner.ask(stage.title, stage.instructions, "[ESPAÇO] começar")
 		if stage.has_method("set_results"):
 			stage.set_results(results)  # a avaliação do VIP precisa das estrelas
@@ -139,23 +149,27 @@ func _play_stage(index: int, scene: PackedScene) -> Dictionary:
 			if index >= 0 and index < stages.size():
 				await banner.ask("SUCESSO!", "%s\n%s%s" % [label, _stars_text(result), _loot_text(result)],
 					"[ESPAÇO] próxima etapa", null, Color(0.3, 0.88, 0.35))
-			_free_stage(stage)
+			if index >= 0 and index < stages.size() - 1:
+				_free_stage(stage)
 			return result
 
-		_free_stage(stage)
+		# Falha: mantém o estágio na tela para que o popup apareça por cima da cena
 		if offer_quit_on_fail:
 			var choice: int = await banner.choose("FALHOU...",
 				"%s\n\nO VIP está ficando impaciente..." % label,
 				PackedStringArray([retry_option_text, quit_option_text]), Color(0.96, 0.28, 0.24))
+			_free_stage(stage)
 			if choice == 0:
 				continue
 			quit_requested.emit()
 			return {}
 		if not retry_on_fail:
 			await banner.ask("FALHOU...", label, "[ESPAÇO] continuar", null, Color(0.96, 0.28, 0.24))
+			_free_stage(stage)
 			return {}
 		await banner.ask("FALHOU...", "%s\n\nO VIP está ficando impaciente..." % label,
 			"[ESPAÇO] tentar de novo", null, Color(0.96, 0.28, 0.24))
+		_free_stage(stage)
 	return {}
 
 

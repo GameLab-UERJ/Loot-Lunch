@@ -48,6 +48,7 @@ Na SUA VEZ o tempo PARA: você tem 5 s para escolher, senão perde a vez. A barr
 [!] em cima de uma formiga = ataque vindo: [ESPAÇO] no tempo do anel e CLIQUE no buraco certo.
 Rainha VOANDO: só a Besta alcança — flechada derruba e enche sua mana. As pequenas ficam em fúria (dano dobrado).
 BOLA DE TERRA: acerte 3 golpes na Rainha antes de ela arremessar!"
+show_intro_banner = false
 
 [node name="Chao" type="Sprite2D" parent="."]
 z_index = -20
