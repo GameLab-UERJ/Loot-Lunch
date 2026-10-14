@@ -235,17 +235,17 @@ const DEFAULT_SHEET: Texture2D = preload("res://assets/art/entities/npcs/random/
 
 var custom_portraits: Dictionary = {
 	"Chef": {
-		"atlas": preload("res://restaurante/personagens/chef/art/jscoutinho_idle_L_34F.png"),
+		"atlas": preload("res://assets/art/restaurant/chef/art/jscoutinho_idle_L_34F.png"),
 		"region": Rect2(4, 0, 24, 24),
 		"flip_h": false
 	},
 	"Coronel Ossvaldo": {
-		"atlas": preload("res://restaurante/minigame/farofa_tanajura/art/Entities/NPC/vip-m/idle/jscoutinho_idle_VIP_34F.png"),
+		"atlas": preload("res://assets/art/restaurant/minigames/farofa_tanajura/Entities/NPC/vip-m/idle/jscoutinho_idle_VIP_34F.png"),
 		"region": Rect2(4, 0, 24, 24),
 		"flip_h": true
 	},
 	"VIP": {
-		"atlas": preload("res://restaurante/minigame/farofa_tanajura/art/Entities/NPC/vip-m/idle/jscoutinho_idle_VIP_34F.png"),
+		"atlas": preload("res://assets/art/restaurant/minigames/farofa_tanajura/Entities/NPC/vip-m/idle/jscoutinho_idle_VIP_34F.png"),
 		"region": Rect2(4, 0, 24, 24),
 		"flip_h": true
 	}
