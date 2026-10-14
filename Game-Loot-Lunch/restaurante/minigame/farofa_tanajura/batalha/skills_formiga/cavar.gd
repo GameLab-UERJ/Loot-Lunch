@@ -23,6 +23,9 @@ signal choice_made(index: int)
 @export var sink_depth: float = 90.0
 @export var erupt_anim: SheetAnimation
 
+@export_group("Áudio")
+@export var sfx_dig: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/ant_dig.wav")
+
 
 ## Aviso em cima do chef (tecla do mouse + texto) enquanto dá para clicar.
 @export var prompt_caption: String = "CLIQUE NO BURACO QUE TREME!"
@@ -39,6 +42,7 @@ func _execute(battle: TurnBattle, ant: FormigaBattler, chef: ChefBattler) -> voi
 	if ant.hp_bar:
 		ant.hp_bar.set_bar_visible(false)
 	battle.fx(erupt_anim, ant.feet_position())
+	battle.play_sfx(sfx_dig)
 	await ant.sink_into_ground(sink_depth, 0.45)
 	ant.visible = false
 

@@ -14,6 +14,9 @@ extends BattleSkill
 ## Cada frigideirada empurra a espera da formiga para trás (0.15 = perde 15%).
 @export_range(0.0, 1.0, 0.05) var wait_knock_back: float = 0.15
 
+@export_group("Áudio")
+@export var sfx_hit: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/frigideirada.wav")
+
 
 func _execute(battle: TurnBattle, user: ChefBattler, target: FormigaBattler) -> void:
 	user.face(target.global_position)
@@ -21,6 +24,7 @@ func _execute(battle: TurnBattle, user: ChefBattler, target: FormigaBattler) -> 
 	user.face(target.global_position)
 	var direction: Vector2 = target.global_position - user.global_position
 	await user.act(attack_animation, hit_frame)
+	battle.play_sfx(sfx_hit, randf_range(0.96, 1.04))
 	target.take_hit(damage, direction)
 	target.wait.knock_back(wait_knock_back)
 	battle.fx(impact, target.global_position + Vector2(-34, 0))

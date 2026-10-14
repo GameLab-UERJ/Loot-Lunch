@@ -52,6 +52,10 @@ signal cooldown_ended
 @export var punch_scale: Vector2 = Vector2(1.2, 0.8)
 @export var punch_time: float = 0.08
 
+@export_group("Áudio")
+@export var place_stream: AudioStream = preload("res://assets/sfx/restaurante/estacoes/skewer_place.wav")
+@export var collect_stream: AudioStream = preload("res://assets/sfx/restaurante/estacoes/crate_pickup.wav")
+
 
 @onready var slots_root: Node = get_node_or_null("Slots")
 @onready var cooldown: CooldownComponent = get_node_or_null("CooldownComponent")
@@ -62,11 +66,25 @@ signal cooldown_ended
 
 
 var _slots: Array[HandComponent] = []
+var _place_player: AudioStreamPlayer2D = null
+var _collect_player: AudioStreamPlayer2D = null
 
 
 func _ready() -> void:
 	super()
 	_collect_slots()
+	if place_stream:
+		_place_player = AudioStreamPlayer2D.new()
+		_place_player.name = "PlaceSfx"
+		_place_player.stream = place_stream
+		_place_player.bus = &"SFX"
+		add_child(_place_player)
+	if collect_stream:
+		_collect_player = AudioStreamPlayer2D.new()
+		_collect_player.name = "CollectSfx"
+		_collect_player.stream = collect_stream
+		_collect_player.bus = &"SFX"
+		add_child(_collect_player)
 	if cooldown:
 		cooldown.finished.connect(_on_cooldown_finished)
 	set_process(false)
@@ -172,6 +190,9 @@ func place_item(actor_hand: HandComponent) -> bool:
 		return false
 
 	_punch(item)
+	if _place_player:
+		_place_player.pitch_scale = randf_range(0.95, 1.05)
+		_place_player.play()
 	item_placed.emit(item, get_count())
 
 	var recipe: AssemblyRecipe = find_recipe()
@@ -200,6 +221,9 @@ func collect_item(actor_hand: HandComponent) -> bool:
 	if not actor_hand.hold(item):
 		item.queue_free()
 		return false
+
+	if _collect_player:
+		_collect_player.play()
 
 	_clear_slots()
 	item_collected.emit(recipe.output_data)

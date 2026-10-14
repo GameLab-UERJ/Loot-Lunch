@@ -19,6 +19,9 @@ extends FormigaSkill
 @export var break_anim: SheetAnimation
 @export var crash_anim: SheetAnimation
 
+@export_group("Áudio")
+@export var sfx_blast: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/ultra_blast.wav")
+
 
 func can_use(_battle: TurnBattle, ant: FormigaBattler) -> bool:
 	return not ant.is_airborne()
@@ -71,6 +74,7 @@ func _drop_on_ants(battle: TurnBattle, ball: AnimatedSprite2D) -> void:
 	fall.tween_property(ball, "global_position:y", ball.global_position.y + 90.0, 0.35) \
 		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 	await fall.finished
+	battle.play_sfx(sfx_blast)
 	battle.shake(7.0, 0.4)
 	battle.fx(break_anim, ball.global_position, null)
 	ball.queue_free()
@@ -90,6 +94,7 @@ func _throw_at_chef(battle: TurnBattle, ant: FormigaBattler, chef: ChefBattler, 
 		if is_instance_valid(ball):
 			ball.global_position = from.lerp(to, t) + Vector2(0, -60.0 * sin(PI * t)), 0.0, 1.0, throw_time)
 	await flight.finished
+	battle.play_sfx(sfx_blast)
 	var crack: AnimatedSprite2D = battle.fx(break_anim, to)
 	if crack:
 		crack.scale = Vector2(3, 3)

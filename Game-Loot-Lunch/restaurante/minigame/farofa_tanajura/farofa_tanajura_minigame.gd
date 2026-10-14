@@ -47,6 +47,11 @@ class_name FarofaTanajuraMinigame
 ## Quantos drops vão para a farofa no máximo (a animação fica curta).
 @export_range(1, 10) var max_farofa_drops: int = 5
 
+@export_group("Áudio")
+@export var battle_bgm: AudioStream = preload("res://assets/music/montogoronto-ominousdark-medievalfantasy-song-309510.mp3")
+
+var _bgm_player: AudioStreamPlayer = null
+
 
 func _on_begin() -> void:
 	var ants: Array[FormigaBattler] = await _summon_ants()
@@ -55,7 +60,14 @@ func _on_begin() -> void:
 	if boss:
 		ants.append(boss)
 	battle.setup(ants)
+	_setup_bgm()
+	if _bgm_player and not _bgm_player.playing:
+		_bgm_player.play()
 	var victory: bool = await battle.run()
+	if _bgm_player and _bgm_player.playing:
+		var fade := create_tween()
+		fade.tween_property(_bgm_player, "volume_db", -40.0, 0.6)
+		fade.tween_callback(_bgm_player.stop)
 	if not victory:
 		finish(false, {"label": "O chef desmaiou na luta contra as tanajuras", "quality": 0.0})
 		return
@@ -105,6 +117,18 @@ func _award_boss_loot(boss: FormigaBattler) -> Array[Dictionary]:
 func _on_finish(_success: bool) -> void:
 	if battle:
 		battle.stop()
+	if _bgm_player and _bgm_player.playing:
+		_bgm_player.stop()
+
+
+func _setup_bgm() -> void:
+	if battle_bgm and _bgm_player == null:
+		_bgm_player = AudioStreamPlayer.new()
+		_bgm_player.name = "BattleBgmPlayer"
+		_bgm_player.stream = battle_bgm
+		_bgm_player.bus = &"Music"
+		_bgm_player.volume_db = -4.0
+		add_child(_bgm_player)
 
 
 ## Sorteia quais formigas são as rápidas (só muda o tempo de espera).

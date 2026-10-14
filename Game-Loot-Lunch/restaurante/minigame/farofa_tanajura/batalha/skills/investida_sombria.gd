@@ -17,6 +17,9 @@ extends BattleSkill
 @export var trail_anim: SheetAnimation
 @export var impact: SheetAnimation
 
+@export_group("Áudio")
+@export var sfx_dash: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/investida_sombria.wav")
+
 
 func _execute(battle: TurnBattle, user: ChefBattler, target: FormigaBattler) -> void:
 	var origin: Vector2 = user.global_position
@@ -36,6 +39,7 @@ func _execute(battle: TurnBattle, user: ChefBattler, target: FormigaBattler) -> 
 	var to: Vector2 = target.global_position + approach_offset
 	if user.sprite:
 		user.sprite.modulate = dash_tint
+	battle.play_sfx(sfx_dash)
 	for i in trail_count:
 		_leave_trail(battle, user, origin.lerp(to, float(i + 1) / float(trail_count + 1)), i * dash_time / maxf(trail_count, 1))
 	await user.move_to(to, dash_time, Tween.TRANS_EXPO)

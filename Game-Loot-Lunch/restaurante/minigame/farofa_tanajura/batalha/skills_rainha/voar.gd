@@ -7,6 +7,10 @@ extends FormigaSkill
 ## (QueenAntBattler.on_ranged_hit).
 
 
+@export_group("Áudio")
+@export var sfx_wings: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/queen_wings.wav")
+
+
 func can_use(_battle: TurnBattle, ant: FormigaBattler) -> bool:
 	var queen := ant as QueenAntBattler
 	return queen != null and not queen.airborne
@@ -15,5 +19,6 @@ func can_use(_battle: TurnBattle, ant: FormigaBattler) -> bool:
 func _execute(battle: TurnBattle, ant: FormigaBattler, _chef: ChefBattler) -> void:
 	var queen := ant as QueenAntBattler
 	await queen.squash(Vector2(1.2, 0.8), 0.25)
+	battle.play_sfx(sfx_wings)
 	battle.shake(2.0, 0.2)
 	await queen.fly_up()

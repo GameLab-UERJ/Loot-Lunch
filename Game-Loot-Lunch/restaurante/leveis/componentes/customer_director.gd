@@ -35,6 +35,10 @@ signal customer_lost(customer: Customer)
 ## olham para CIMA: as invocações (demoninho, pato...) nascem desse lado.
 @export var customers_front: Vector2 = Vector2.UP
 
+@export_group("Áudio")
+@export var arrival_bell_stream: AudioStream = preload("res://assets/sfx/shop/lazychillzone-shopkeeper-bell-1-232440.mp3")
+@export var give_up_stream: AudioStream = preload("res://assets/sfx/restaurante/clientes/client_impatient.wav")
+
 @export_group("Debug")
 @export var debug_print: bool = false
 
@@ -45,9 +49,25 @@ var lost_count: int = 0
 
 var _running: bool = false
 var _time_to_next: float = 0.0
+var _arrival_player: AudioStreamPlayer = null
+var _give_up_player: AudioStreamPlayer = null
 
 
 func _ready() -> void:
+	if arrival_bell_stream:
+		_arrival_player = AudioStreamPlayer.new()
+		_arrival_player.name = "ArrivalBellPlayer"
+		_arrival_player.stream = arrival_bell_stream
+		_arrival_player.bus = &"SFX"
+		_arrival_player.volume_db = -2.0
+		add_child(_arrival_player)
+	if give_up_stream:
+		_give_up_player = AudioStreamPlayer.new()
+		_give_up_player.name = "GiveUpPlayer"
+		_give_up_player.stream = give_up_stream
+		_give_up_player.bus = &"SFX"
+		add_child(_give_up_player)
+
 	if customers_parent == null:
 		customers_parent = get_parent()
 	if queue and level_data:
@@ -160,6 +180,8 @@ func _spawn(scene: PackedScene) -> Customer:
 		payment.order_paid.connect(_on_order_paid.bind(customer))
 
 	queue.enqueue(customer)
+	if _arrival_player:
+		_arrival_player.play()
 	customer_arrived.emit(customer)
 	if debug_print:
 		print("[Diretor] %s chegou" % customer.name)
@@ -199,6 +221,8 @@ func _on_order_paid(correct: bool, amount: int, _deliverer: Node, customer: Cust
 
 func _on_gave_up(customer: Customer) -> void:
 	lost_count += 1
+	if _give_up_player:
+		_give_up_player.play()
 	customer_lost.emit(customer)
 	_leave(customer, Color.RED)
 

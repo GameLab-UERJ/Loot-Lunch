@@ -12,6 +12,10 @@ config_version=5
 
 compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
+[audio]
+
+buses/default_bus_layout="res://default_bus_layout.tres"
+
 [application]
 
 config/name="LootLunch"

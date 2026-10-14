@@ -32,10 +32,24 @@ signal flow_changed(is_flowing: bool)
 @export var stream_color: Color = Color(0.98, 0.8, 0.3, 1.0)
 @export var stream_shadow_color: Color = Color(0.8, 0.55, 0.15, 1.0)
 
+@export_group("Áudio")
+@export var pour_stream: AudioStream = preload("res://assets/sfx/restaurante/minigames/macaxeira/butter_pour.wav")
+
 
 var pouring: bool = false
 var _flowing: bool = false
 var _clock: float = 0.0
+var _pour_player: AudioStreamPlayer2D = null
+
+
+func _ready() -> void:
+	if pour_stream:
+		_pour_player = AudioStreamPlayer2D.new()
+		_pour_player.name = "PourSfx"
+		_pour_player.stream = pour_stream
+		_pour_player.bus = &"SFX"
+		_pour_player.volume_db = -4.0
+		add_child(_pour_player)
 
 
 func _process(delta: float) -> void:
@@ -51,6 +65,11 @@ func _process(delta: float) -> void:
 	if flowing != _flowing:
 		_flowing = flowing
 		flow_changed.emit(_flowing)
+		if _pour_player:
+			if _flowing and not _pour_player.playing:
+				_pour_player.play()
+			elif not _flowing and _pour_player.playing:
+				_pour_player.stop()
 	queue_redraw()
 
 
@@ -69,6 +88,8 @@ func set_enabled(value: bool) -> void:
 	enabled = value
 	if not enabled:
 		pouring = false
+		if _pour_player and _pour_player.playing:
+			_pour_player.stop()
 
 
 func is_flowing() -> bool:
