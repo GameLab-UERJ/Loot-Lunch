@@ -79,19 +79,23 @@ func _ready() -> void:
 
 func _setup_audio() -> void:
 	if sfx_solar_beam:
+		if sfx_solar_beam is AudioStreamWAV:
+			(sfx_solar_beam as AudioStreamWAV).loop_mode = AudioStreamWAV.LOOP_FORWARD
 		_beam_player = AudioStreamPlayer.new()
 		_beam_player.name = "SolarBeamSfx"
 		_beam_player.stream = sfx_solar_beam
 		_beam_player.bus = &"SFX"
+		_beam_player.volume_db = -7.0
 		add_child(_beam_player)
 
 
-func _play_sfx(stream: AudioStream, pitch: float = 1.0) -> void:
+func _play_sfx(stream: AudioStream, pitch: float = 1.0, volume_db: float = 0.0) -> void:
 	if stream == null:
 		return
 	var player := AudioStreamPlayer.new()
 	player.stream = stream
 	player.pitch_scale = pitch
+	player.volume_db = volume_db
 	player.bus = &"SFX"
 	add_child(player)
 	player.play()
@@ -149,7 +153,7 @@ func _take_out() -> void:
 
 func _end(success: bool, label: String, quality: float) -> void:
 	_update_meat()
-	_play_sfx(sfx_perfect if success else sfx_fail)
+	_play_sfx(sfx_perfect if success else sfx_fail, 1.0, -1.0 if success else -2.0)
 	popup(meat.global_position + Vector2(0, -36), label,
 		Color(0.55, 1.0, 0.55) if success else Color(1.0, 0.45, 0.45))
 	finish(success, {
@@ -176,14 +180,14 @@ func _on_finish(_success: bool) -> void:
 # --- Fagulhas ------------------------------------------------------------------
 
 func _on_spark_spawned(spark: FagulhaSolar) -> void:
-	_play_sfx(sfx_spark_launch, randf_range(0.95, 1.05))
+	_play_sfx(sfx_spark_launch, randf_range(0.95, 1.05), -4.0)
 	spark.landed.connect(_on_spark_landed)
 	spark.caught.connect(_on_spark_caught)
 
 
 func _on_spark_caught(spark: FagulhaSolar) -> void:
 	sparks_caught += 1
-	_play_sfx(sfx_spark_catch, randf_range(0.95, 1.05))
+	_play_sfx(sfx_spark_catch, randf_range(0.95, 1.05), -2.0)
 	popup(spark.global_position, "Pegou!", Color(1.0, 0.9, 0.5))
 
 
@@ -191,7 +195,7 @@ func _on_spark_landed(spark: FagulhaSolar) -> void:
 	if not running:
 		return
 	burns += 1
-	_play_sfx(sfx_spark_burn, randf_range(0.92, 1.08))
+	_play_sfx(sfx_spark_burn, randf_range(0.92, 1.08), -3.0)
 	_add_burn_mark(spark.global_position)
 	_shake_meat()
 	popup(spark.global_position + Vector2(0, -10), "Queimou! %d/%d" % [burns, max_burns],

@@ -84,6 +84,11 @@ signal dropped(item: CarryableItem)
 @export var drop_offset: Vector2 = Vector2(0, 8)
 
 
+@export_group("Áudio")
+@export var sfx_charge: AudioStream = preload("res://assets/sfx/restaurante/chef/skewer_charge_loop.wav")
+@export var sfx_charged: AudioStream = preload("res://assets/sfx/restaurante/chef/skewer_charged.wav")
+@export var sfx_throw: AudioStream = preload("res://assets/sfx/restaurante/chef/skewer_throw.wav")
+
 var _charging: bool = false
 var _elapsed: float = 0.0
 var _is_charged: bool = false
@@ -91,6 +96,7 @@ var _item: CarryableItem = null
 var _hand: HandComponent = null
 var _movement: MovementComponent = null
 var _normal_max_speed: int = -1
+var _charge_player: AudioStreamPlayer2D = null
 
 
 func _ready() -> void:
@@ -102,6 +108,15 @@ func _ready() -> void:
 			if child is ChargeRingComponent:
 				charge_ring = child
 				break
+	if sfx_charge:
+		if sfx_charge is AudioStreamWAV:
+			sfx_charge.loop_mode = AudioStreamWAV.LOOP_FORWARD
+		_charge_player = AudioStreamPlayer2D.new()
+		_charge_player.name = "ChargeLoopSfx"
+		_charge_player.stream = sfx_charge
+		_charge_player.bus = &"SFX"
+		_charge_player.volume_db = -7.0
+		add_child(_charge_player)
 
 
 # --- Estado --------------------------------------------------------------------
@@ -177,6 +192,8 @@ func _on_press() -> bool:
 	_set_slow(true)
 	if charge_ring:
 		charge_ring.start()
+	if _charge_player and not _charge_player.playing:
+		_charge_player.play()
 	charge_started.emit()
 	return true
 
@@ -221,6 +238,14 @@ func _process(delta: float) -> void:
 		_is_charged = true
 		if charge_ring:
 			charge_ring.set_charged(true)
+		if sfx_charged:
+			var p := AudioStreamPlayer2D.new()
+			p.stream = sfx_charged
+			p.bus = &"SFX"
+			p.volume_db = -4.0
+			add_child(p)
+			p.finished.connect(p.queue_free)
+			p.play()
 		charged.emit()
 
 	if _is_charged:
@@ -249,6 +274,17 @@ func _throw() -> void:
 		projectile.arc_height = arc_height
 	if charge_ring:
 		charge_ring.stop()
+	if sfx_throw:
+		var p := AudioStreamPlayer2D.new()
+		p.stream = sfx_throw
+		p.bus = &"SFX"
+		p.volume_db = -3.0
+		var cont := _get_container()
+		if cont:
+			cont.add_child(p)
+			p.global_position = from
+			p.finished.connect(p.queue_free)
+			p.play()
 	activated.emit()
 	thrown.emit(projectile)
 
@@ -271,6 +307,8 @@ func _drop_at_feet(item: CarryableItem) -> void:
 
 
 func _end_charge() -> void:
+	if _charge_player and _charge_player.playing:
+		_charge_player.stop()
 	_charging = false
 	_is_charged = false
 	_elapsed = 0.0

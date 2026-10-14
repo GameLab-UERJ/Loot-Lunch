@@ -201,22 +201,27 @@ func _collect_slots() -> void:
 
 func _setup_audio() -> void:
 	if sizzle_stream:
+		if sizzle_stream is AudioStreamWAV:
+			(sizzle_stream as AudioStreamWAV).loop_mode = AudioStreamWAV.LOOP_FORWARD
 		_sizzle_player = AudioStreamPlayer2D.new()
 		_sizzle_player.name = "SizzleSfx"
 		_sizzle_player.stream = sizzle_stream
 		_sizzle_player.bus = &"SFX"
+		_sizzle_player.volume_db = -8.0
 		add_child(_sizzle_player)
 	if alert_stream:
 		_alert_player = AudioStreamPlayer2D.new()
 		_alert_player.name = "AlertSfx"
 		_alert_player.stream = alert_stream
 		_alert_player.bus = &"SFX"
+		_alert_player.volume_db = -3.0
 		add_child(_alert_player)
 	if burned_stream:
 		_burned_player = AudioStreamPlayer2D.new()
 		_burned_player.name = "BurnedSfx"
 		_burned_player.stream = burned_stream
 		_burned_player.bus = &"SFX"
+		_burned_player.volume_db = -2.0
 		add_child(_burned_player)
 
 

@@ -19,24 +19,73 @@ class_name ShieldBubble
 @export var squash_y: float = 0.85
 
 
+@export_group("Áudio")
+@export var sfx_tether: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/shield_tether_loop.wav")
+@export var sfx_block: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/bubble_block.wav")
+@export var sfx_pop: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/bubble_pop.wav")
+
 ## Quem mantém a bolha (laços desenhados até cada um que ainda estiver na árvore).
 var links: Array[Node2D] = []
 var _clock: float = 0.0
 var _flash: float = 0.0
+var _tether_player: AudioStreamPlayer2D = null
+
+
+func _ready() -> void:
+	if sfx_tether:
+		if sfx_tether is AudioStreamWAV:
+			sfx_tether.loop_mode = AudioStreamWAV.LOOP_FORWARD
+		_tether_player = AudioStreamPlayer2D.new()
+		_tether_player.name = "TetherLoopSfx"
+		_tether_player.stream = sfx_tether
+		_tether_player.bus = &"SFX"
+		_tether_player.volume_db = -8.0
+		add_child(_tether_player)
 
 
 func _process(delta: float) -> void:
 	_clock += delta
 	_flash = maxf(_flash - delta * 3.0, 0.0)
+
+	var has_active_link := false
+	for link in links:
+		if is_instance_valid(link) and link.is_inside_tree():
+			has_active_link = true
+			break
+
+	if _tether_player:
+		if has_active_link and not _tether_player.playing:
+			_tether_player.play()
+		elif not has_active_link and _tether_player.playing:
+			_tether_player.stop()
+
 	queue_redraw()
 
 
 func flash() -> void:
 	_flash = 1.0
+	if sfx_block:
+		var p := AudioStreamPlayer2D.new()
+		p.stream = sfx_block
+		p.bus = &"SFX"
+		p.volume_db = -4.0
+		add_child(p)
+		p.finished.connect(p.queue_free)
+		p.play()
 
 
 func pop() -> void:
 	links.clear()
+	if _tether_player and _tether_player.playing:
+		_tether_player.stop()
+	if sfx_pop:
+		var p := AudioStreamPlayer2D.new()
+		p.stream = sfx_pop
+		p.bus = &"SFX"
+		p.volume_db = -2.0
+		add_child(p)
+		p.finished.connect(p.queue_free)
+		p.play()
 	var tween := create_tween().set_parallel(true)
 	tween.tween_property(self, "scale", Vector2(1.4, 1.4), 0.25).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	tween.tween_property(self, "modulate:a", 0.0, 0.25)

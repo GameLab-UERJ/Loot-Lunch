@@ -55,11 +55,13 @@ var _slide_player: AudioStreamPlayer = null
 func _ready() -> void:
 	super._ready()
 	if sizzle_stream:
+		if sizzle_stream is AudioStreamWAV:
+			sizzle_stream.loop_mode = AudioStreamWAV.LOOP_FORWARD
 		_sizzle_player = AudioStreamPlayer.new()
 		_sizzle_player.name = "GriddleSizzleSfx"
 		_sizzle_player.stream = sizzle_stream
 		_sizzle_player.bus = &"SFX"
-		_sizzle_player.volume_db = -6.0
+		_sizzle_player.volume_db = -8.0
 		add_child(_sizzle_player)
 	if slide_stream:
 		_slide_player = AudioStreamPlayer.new()

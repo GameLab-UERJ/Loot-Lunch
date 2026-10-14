@@ -44,11 +44,13 @@ var _pour_player: AudioStreamPlayer2D = null
 
 func _ready() -> void:
 	if pour_stream:
+		if pour_stream is AudioStreamWAV:
+			pour_stream.loop_mode = AudioStreamWAV.LOOP_FORWARD
 		_pour_player = AudioStreamPlayer2D.new()
 		_pour_player.name = "PourSfx"
 		_pour_player.stream = pour_stream
 		_pour_player.bus = &"SFX"
-		_pour_player.volume_db = -4.0
+		_pour_player.volume_db = -6.0
 		add_child(_pour_player)
 
 
