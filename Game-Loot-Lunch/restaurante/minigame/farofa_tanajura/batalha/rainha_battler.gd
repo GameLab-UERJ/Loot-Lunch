@@ -56,6 +56,9 @@ signal protection_changed(protected: bool)
 ## Ícone do item. Vazio = 1º quadro das asas.
 @export var loot_icon: Texture2D
 
+@export_group("Áudio")
+@export var sfx_queen_hurt: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/queen_hurt.wav")
+
 
 var airborne: bool = false
 var flight_left: float = 0.0
@@ -71,6 +74,7 @@ var _shield: ShieldBubble = null
 
 
 func _ready() -> void:
+	hurt_sfx = sfx_queen_hurt
 	super._ready()
 	hit_taken.connect(_on_hit_taken)
 	if ground_shadow:

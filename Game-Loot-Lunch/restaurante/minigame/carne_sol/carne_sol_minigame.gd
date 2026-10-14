@@ -48,16 +48,26 @@ enum MeatLook { CRUA, SUADA, PERFEITA, CARBONIZADA }
 ## A partir daqui a carne já aparece "suando" (só visual).
 @export_range(0.0, 1.0, 0.01) var sweaty_from: float = 0.3
 
+@export_group("Áudio")
+@export var sfx_solar_beam: AudioStream = preload("res://assets/sfx/restaurante/minigames/carne_sol/solar_beam_loop.wav")
+@export var sfx_spark_launch: AudioStream = preload("res://assets/sfx/restaurante/minigames/carne_sol/spark_launch.wav")
+@export var sfx_spark_catch: AudioStream = preload("res://assets/sfx/restaurante/minigames/carne_sol/spark_catch.wav")
+@export var sfx_spark_burn: AudioStream = preload("res://assets/sfx/restaurante/minigames/carne_sol/spark_burn.wav")
+@export var sfx_perfect: AudioStream = preload("res://assets/sfx/restaurante/minigames/carne_sol/carne_sol_perfect.wav")
+@export var sfx_fail: AudioStream = preload("res://assets/sfx/restaurante/minigames/carne_sol/carne_sol_fail.wav")
+
 
 var burns: int = 0
 var sparks_caught: int = 0
 var _holding: bool = false
 var _clock: float = 0.0
 var _meat_base_position: Vector2
+var _beam_player: AudioStreamPlayer = null
 
 
 func _ready() -> void:
 	super._ready()
+	_setup_audio()
 	mini_sol.spark_spawned.connect(_on_spark_spawned)
 	meter.ruined.connect(_on_meter_ruined)
 	meter.value_changed.connect(_on_meter_value_changed.unbind(1))
@@ -65,6 +75,27 @@ func _ready() -> void:
 	if beam:
 		beam.hide()
 	_update_meat()
+
+
+func _setup_audio() -> void:
+	if sfx_solar_beam:
+		_beam_player = AudioStreamPlayer.new()
+		_beam_player.name = "SolarBeamSfx"
+		_beam_player.stream = sfx_solar_beam
+		_beam_player.bus = &"SFX"
+		add_child(_beam_player)
+
+
+func _play_sfx(stream: AudioStream, pitch: float = 1.0) -> void:
+	if stream == null:
+		return
+	var player := AudioStreamPlayer.new()
+	player.stream = stream
+	player.pitch_scale = pitch
+	player.bus = &"SFX"
+	add_child(player)
+	player.play()
+	player.finished.connect(player.queue_free)
 
 
 func _on_begin() -> void:
@@ -99,6 +130,11 @@ func _set_holding(value: bool) -> void:
 	mini_sol.set_channeling(value)
 	if beam:
 		beam.visible = value
+	if _beam_player:
+		if value and not _beam_player.playing:
+			_beam_player.play()
+		elif not value and _beam_player.playing:
+			_beam_player.stop()
 
 
 ## Soltou o ESPAÇO: tira a carne do sol e avalia o ponto.
@@ -113,6 +149,7 @@ func _take_out() -> void:
 
 func _end(success: bool, label: String, quality: float) -> void:
 	_update_meat()
+	_play_sfx(sfx_perfect if success else sfx_fail)
 	popup(meat.global_position + Vector2(0, -36), label,
 		Color(0.55, 1.0, 0.55) if success else Color(1.0, 0.45, 0.45))
 	finish(success, {
@@ -126,6 +163,8 @@ func _end(success: bool, label: String, quality: float) -> void:
 
 func _on_finish(_success: bool) -> void:
 	_set_holding(false)
+	if _beam_player and _beam_player.playing:
+		_beam_player.stop()
 	meter.running = false
 	mini_sol.spawn_enabled = false
 	var container: Node = mini_sol.sparks_container if mini_sol.sparks_container else self
@@ -137,12 +176,14 @@ func _on_finish(_success: bool) -> void:
 # --- Fagulhas ------------------------------------------------------------------
 
 func _on_spark_spawned(spark: FagulhaSolar) -> void:
+	_play_sfx(sfx_spark_launch, randf_range(0.95, 1.05))
 	spark.landed.connect(_on_spark_landed)
 	spark.caught.connect(_on_spark_caught)
 
 
 func _on_spark_caught(spark: FagulhaSolar) -> void:
 	sparks_caught += 1
+	_play_sfx(sfx_spark_catch, randf_range(0.95, 1.05))
 	popup(spark.global_position, "Pegou!", Color(1.0, 0.9, 0.5))
 
 
@@ -150,6 +191,7 @@ func _on_spark_landed(spark: FagulhaSolar) -> void:
 	if not running:
 		return
 	burns += 1
+	_play_sfx(sfx_spark_burn, randf_range(0.92, 1.08))
 	_add_burn_mark(spark.global_position)
 	_shake_meat()
 	popup(spark.global_position + Vector2(0, -10), "Queimou! %d/%d" % [burns, max_burns],

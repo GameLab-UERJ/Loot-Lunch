@@ -28,6 +28,9 @@ signal hit_taken(amount: int)
 @export var idle_animation: StringName = &"idle"
 @export var walk_animation: StringName = &"andar"
 
+@export_group("Áudio")
+@export var hurt_sfx: AudioStream = null
+
 
 ## Lugar "de descanso" na arena (definido por quem posiciona).
 var home_position: Vector2 = Vector2.ZERO
@@ -76,6 +79,7 @@ func take_hit(amount: int, from_direction: Vector2 = Vector2.ZERO) -> int:
 		FloatingText.spawn(get_parent(), global_position + Vector2(0, -40), "Defendeu!", Color(0.8, 0.9, 1.0))
 		return 0
 	hit_taken.emit(dealt)
+	play_hurt_sfx()
 	FloatingText.spawn(get_parent(), global_position + Vector2(0, -40), "-%d" % dealt, damage_color)
 	flash()
 	if from_direction != Vector2.ZERO and sprite:
@@ -84,6 +88,17 @@ func take_hit(amount: int, from_direction: Vector2 = Vector2.ZERO) -> int:
 		tween.tween_property(sprite, "position", push, 0.06)
 		tween.tween_property(sprite, "position", Vector2.ZERO, 0.14)
 	return dealt
+
+
+func play_hurt_sfx() -> void:
+	if hurt_sfx:
+		var player := AudioStreamPlayer2D.new()
+		player.stream = hurt_sfx
+		player.pitch_scale = randf_range(0.94, 1.06)
+		player.bus = &"SFX"
+		add_child(player)
+		player.play()
+		player.finished.connect(player.queue_free)
 
 
 ## Cura com número verde subindo.

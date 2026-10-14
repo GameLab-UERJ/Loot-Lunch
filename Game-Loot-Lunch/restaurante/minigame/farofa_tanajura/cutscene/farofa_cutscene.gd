@@ -24,8 +24,31 @@ signal finished
 @export var drop_scale: Vector2 = Vector2(1.5, 1.5)
 @export var bunda_board_scale: Vector2 = Vector2(0.7, 0.7)
 
+@export_group("Áudio")
+@export var sfx_hop: AudioStream = preload("res://assets/sfx/restaurante/minigames/farofa/drop_hop.wav")
+@export var sfx_chops: Array[AudioStream] = [
+	preload("res://assets/sfx/restaurante/estacoes/knife_chop_1.wav"),
+	preload("res://assets/sfx/restaurante/estacoes/knife_chop_2.wav"),
+	preload("res://assets/sfx/restaurante/estacoes/knife_chop_3.wav")
+]
+@export var sfx_flour: AudioStream = preload("res://assets/sfx/restaurante/minigames/farofa/flour_pour.wav")
+@export var sfx_stir: AudioStream = preload("res://assets/sfx/restaurante/minigames/farofa/pan_stir.wav")
+@export var sfx_done: AudioStream = preload("res://assets/sfx/restaurante/minigames/farofa/farofa_done.wav")
+
 
 var _pieces: Array[Sprite2D] = []
+
+
+func _play_sfx(stream: AudioStream, pitch: float = 1.0) -> void:
+	if stream == null:
+		return
+	var player := AudioStreamPlayer.new()
+	player.stream = stream
+	player.pitch_scale = pitch
+	player.bus = &"SFX"
+	add_child(player)
+	player.play()
+	player.finished.connect(player.queue_free)
 
 
 func _ready() -> void:
@@ -52,6 +75,7 @@ func play(chef: Battler, drop_spots: Array[Vector2]) -> void:
 		_arc(piece, drop_spots[i], to, 0.5, 40.0)
 		create_tween().tween_property(piece, "scale", bunda_board_scale, 0.5)
 		FloatingText.spawn(get_parent(), drop_spots[i] + Vector2(0, -12), "Bunda de tanajura!", Color(1.0, 0.8, 0.5))
+		_play_sfx(sfx_hop, randf_range(0.9, 1.1))
 		await _wait(0.18)
 	await _wait(0.5)
 
@@ -60,6 +84,8 @@ func play(chef: Battler, drop_spots: Array[Vector2]) -> void:
 	chef.face(board.global_position)
 	for piece in _pieces:
 		await chef.squash(Vector2(1.15, 0.85), 0.12)
+		if not sfx_chops.is_empty():
+			_play_sfx(sfx_chops.pick_random(), randf_range(0.95, 1.05))
 		piece.texture = cut_texture
 		piece.scale = piece_scale * 1.4
 		create_tween().tween_property(piece, "scale", piece_scale, 0.12)
@@ -79,6 +105,7 @@ func play(chef: Battler, drop_spots: Array[Vector2]) -> void:
 	pour.tween_property(flour_bowl, "global_position", pan.global_position + Vector2(12, -26), 0.3)
 	pour.tween_property(flour_bowl, "rotation", deg_to_rad(-55.0), 0.2)
 	await pour.finished
+	_play_sfx(sfx_flour)
 	for i in 16:
 		_flour_grain()
 		await _wait(0.04)
@@ -88,6 +115,7 @@ func play(chef: Battler, drop_spots: Array[Vector2]) -> void:
 
 	# 5. Mexe a frigideira.
 	FloatingText.spawn(get_parent(), pan.global_position + Vector2(0, -24), "Mexe, mexe!", Color(1.0, 0.9, 0.6))
+	_play_sfx(sfx_stir)
 	var stir := create_tween()
 	for i in 8:
 		var side: float = 1.0 if i % 2 == 0 else -1.0
@@ -106,6 +134,7 @@ func play(chef: Battler, drop_spots: Array[Vector2]) -> void:
 	get_parent().add_child(farofa)
 	farofa.global_position = pan.global_position + Vector2(0, -26)
 	farofa.scale = Vector2.ZERO
+	_play_sfx(sfx_done)
 	await create_tween().tween_property(farofa, "scale", Vector2(3, 3), 0.35) \
 		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT).finished
 	FloatingText.spawn(get_parent(), farofa.global_position + Vector2(0, -40), "FAROFA DE TANAJURA!", Color(1.0, 0.85, 0.3))

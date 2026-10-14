@@ -25,6 +25,10 @@ extends FormigaSkill
 @export var warn_color: Color = Color(0.85, 0.4, 1.0, 0.55)
 @export var zone_color: Color = Color(0.85, 0.55, 1.0, 0.12)
 
+@export_group("Áudio")
+@export var sfx_plasma_fall: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/plasma_orb_fall.wav")
+@export var sfx_plasma_splash: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/plasma_orb_splash.wav")
+
 
 var _battle: TurnBattle
 var _ant: FormigaBattler
@@ -130,6 +134,7 @@ func _drop(x: float, ground_y: float) -> void:
 	# 2. Queda em linha reta.
 	var orb: Node2D = orb_anim.create_sprite() if orb_anim else Node2D.new()
 	_battle.add_effect(orb)
+	_battle.play_sfx(sfx_plasma_fall, randf_range(0.95, 1.05))
 	var hit_y: float = ground_y - 14.0
 	orb.global_position = Vector2(x, -30.0)
 	var fall := orb.create_tween()
@@ -139,6 +144,7 @@ func _drop(x: float, ground_y: float) -> void:
 	# 3. Impacto.
 	orb.queue_free()
 	mark.queue_free()
+	_battle.play_sfx(sfx_plasma_splash, randf_range(0.95, 1.05))
 	if splash_anim:
 		_battle.fx(splash_anim, Vector2(x, hit_y))
 	if not _running or _chef.is_dead():

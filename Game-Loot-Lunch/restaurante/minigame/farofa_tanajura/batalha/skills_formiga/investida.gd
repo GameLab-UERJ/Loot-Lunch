@@ -20,6 +20,7 @@ extends FormigaSkill
 
 @export_group("Áudio")
 @export var sfx_charge: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/ant_charge.wav")
+@export var sfx_bite: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/ant_bite.wav")
 
 
 func _execute(battle: TurnBattle, ant: FormigaBattler, chef: ChefBattler) -> void:
@@ -62,6 +63,7 @@ func _execute(battle: TurnBattle, ant: FormigaBattler, chef: ChefBattler) -> voi
 	else:
 		if tween.is_running():
 			await tween.finished
+		battle.play_sfx(sfx_bite)
 		deal(battle, ant, chef, damage, chef.global_position - ant.global_position)
 		battle.shake(4.0, 0.25)
 		await battle.wait(0.12)

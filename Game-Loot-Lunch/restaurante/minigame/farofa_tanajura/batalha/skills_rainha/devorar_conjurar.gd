@@ -34,6 +34,12 @@ extends FormigaSkill
 ## Levanta voo logo depois de conjurar as Guardiãs.
 @export var fly_after_final_summon: bool = true
 
+@export_group("Áudio")
+@export var sfx_roar: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/queen_summon_roar.wav")
+@export var sfx_bite: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/devorar_bite.wav")
+@export var sfx_heal: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/heal_chime.wav")
+@export var sfx_erupt: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/earth_burst.wav")
+
 
 func _init() -> void:
 	interrupts = true
@@ -68,6 +74,7 @@ func _execute(battle: TurnBattle, ant: FormigaBattler, chef: ChefBattler) -> voi
 	# 2. Conjura novas (no último limiar: as Guardiãs).
 	var scene: PackedScene = final_summon_scene if going_final else null
 	if going_final:
+		battle.play_sfx(sfx_roar)
 		queen.enter_final_phase()
 		battle.announce("FASE FINAL! A Rainha conjura as GUARDIÃS!", Color(0.6, 1.0, 1.0))
 		battle.shake(4.0, 0.4)
@@ -81,6 +88,7 @@ func _execute(battle: TurnBattle, ant: FormigaBattler, chef: ChefBattler) -> voi
 		if fresh == null:
 			continue
 		made += 1
+		battle.play_sfx(sfx_erupt)
 		battle.fx(erupt_anim, fresh.feet_position())
 		fresh.face(chef.global_position, fresh.art_faces_left)
 		fresh.rise_from_ground(rise_depth, 0.4)
@@ -113,6 +121,7 @@ func _devour(battle: TurnBattle, queen: QueenAntBattler, minion: FormigaBattler,
 	if minion.sprite:
 		pull.tween_property(minion.sprite, "scale", Vector2.ZERO, 0.35)
 		pull.tween_property(minion.sprite, "rotation", TAU, 0.35)
+	battle.play_sfx(sfx_bite)
 	battle.fx(bite_anim, mouth)
 	await pull.finished
 	minion.eaten = true
@@ -121,5 +130,6 @@ func _devour(battle: TurnBattle, queen: QueenAntBattler, minion: FormigaBattler,
 	await queen.squash(Vector2(1.2, 0.8), 0.15)
 	var gained: int = queen.heal(roundi(queen.health.max_hp * heal)) if heal > 0.0 else 0
 	if gained > 0:
+		battle.play_sfx(sfx_heal)
 		battle.fx(heal_anim, queen.global_position + Vector2(0, -30), queen)
 	await battle.wait(0.2)

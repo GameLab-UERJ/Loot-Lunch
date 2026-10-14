@@ -30,6 +30,9 @@ signal health_changed(current: int, maximum: int)
 ## ninguém (pode agir, mas espera). 2 = +1 mana a cada 30 s parado. 0 = desligado.
 @export_range(0.0, 20.0, 0.5) var rest_mana_per_minute: float = 2.0
 
+@export_group("Áudio")
+@export var sfx_hurt: AudioStream = preload("res://assets/sfx/player/player_hurt.wav")
+
 
 # Lidos pelo ChefHUD (que pode acordar antes do chef: por isso procura o componente).
 var hp: int:
@@ -52,6 +55,8 @@ var _rest_mana: float = 0.0
 
 
 func _ready() -> void:
+	if hurt_sfx == null:
+		hurt_sfx = sfx_hurt
 	super._ready()
 	health.health_changed.connect(func(current: int, maximum: int) -> void:
 		health_changed.emit(current, maximum))

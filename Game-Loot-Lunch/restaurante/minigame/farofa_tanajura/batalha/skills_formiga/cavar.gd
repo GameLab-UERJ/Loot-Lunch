@@ -25,6 +25,7 @@ signal choice_made(index: int)
 
 @export_group("Áudio")
 @export var sfx_dig: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/ant_dig.wav")
+@export var sfx_bite: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/ant_bite.wav")
 
 
 ## Aviso em cima do chef (tecla do mouse + texto) enquanto dá para clicar.
@@ -115,6 +116,7 @@ func _execute(battle: TurnBattle, ant: FormigaBattler, chef: ChefBattler) -> voi
 		else:
 			battle.announce("Demorou!", Color(1.0, 0.5, 0.4))
 		await ant.hop(14.0, 0.2)
+		battle.play_sfx(sfx_bite)
 		deal(battle, ant, chef, damage, chef.global_position - exit_hole.global_position)
 		battle.shake(3.0, 0.2)
 	await battle.wait(0.3)
