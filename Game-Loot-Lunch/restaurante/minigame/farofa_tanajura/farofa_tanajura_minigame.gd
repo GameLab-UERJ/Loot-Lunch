@@ -49,20 +49,39 @@ class_name FarofaTanajuraMinigame
 
 @export_group("Áudio")
 @export var battle_bgm: AudioStream = preload("res://assets/music/montogoronto-ominousdark-medievalfantasy-song-309510.mp3")
+@export var sfx_summon_cast: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/fireball_cast.wav")
+@export var sfx_ant_erupt: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/earth_burst.wav")
+@export var sfx_ant_dig: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/ant_dig.wav")
+@export var sfx_queen_roar: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/queen_summon_roar.wav")
+@export var sfx_queen_wings: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/queen_wings.wav")
+@export var sfx_queen_land: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/rock_impact.wav")
 
 var _bgm_player: AudioStreamPlayer = null
 
 
+func _play_sfx(stream: AudioStream, volume_db: float = -3.0, pitch: float = 1.0) -> void:
+	if stream == null:
+		return
+	var p := AudioStreamPlayer.new()
+	p.stream = stream
+	p.bus = &"SFX"
+	p.volume_db = volume_db
+	p.pitch_scale = pitch
+	add_child(p)
+	p.finished.connect(p.queue_free)
+	p.play()
+
+
 func _on_begin() -> void:
+	_setup_bgm()
+	if _bgm_player and not _bgm_player.playing:
+		_bgm_player.play()
 	var ants: Array[FormigaBattler] = await _summon_ants()
 	_pick_fast_ants(ants)
 	var boss: FormigaBattler = await _summon_boss()
 	if boss:
 		ants.append(boss)
 	battle.setup(ants)
-	_setup_bgm()
-	if _bgm_player and not _bgm_player.playing:
-		_bgm_player.play()
 	var victory: bool = await battle.run()
 	if _bgm_player and _bgm_player.playing:
 		var fade := create_tween()
@@ -164,6 +183,8 @@ func _summon_ants() -> Array[FormigaBattler]:
 		ant.global_position = to
 		ant.home_position = to
 		ant.face(chef.global_position, ant.art_faces_left)
+		_play_sfx(sfx_ant_erupt, -3.5, randf_range(0.9, 1.1))
+		_play_sfx(sfx_ant_dig, -5.5, randf_range(0.95, 1.05))
 		if erupt_fx:
 			SheetAnimation.spawn_once(erupt_fx, battle_layer, ant.feet_position())
 		ant.rise_from_ground(rise_depth, 0.45)
@@ -182,6 +203,7 @@ func _summoner_cast(line: String) -> void:
 	var hop := create_tween()
 	hop.tween_property(summoner, "position:y", base_y - 10.0, 0.15).set_ease(Tween.EASE_OUT)
 	hop.tween_property(summoner, "position:y", base_y, 0.15).set_ease(Tween.EASE_IN)
+	_play_sfx(sfx_summon_cast, -5.0)
 	if summon_fx:
 		SheetAnimation.spawn_once(summon_fx, self, summoner.global_position + Vector2(0, -12))
 	await hop.finished
@@ -199,9 +221,12 @@ func _summon_boss() -> FormigaBattler:
 	boss.global_position = to + Vector2(40, -320)
 	boss.home_position = to
 	popup(Vector2(320, 120), "A TANAJURA RAINHA CHEGOU!", Color(1.0, 0.5, 0.45))
+	_play_sfx(sfx_queen_roar, -2.5)
+	_play_sfx(sfx_queen_wings, -3.5)
 	var tween := create_tween()
 	tween.tween_property(boss, "global_position", to, 1.1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	await tween.finished
+	_play_sfx(sfx_queen_land, -2.0)
 	battle.shake(6.0, 0.4)
 	await boss.squash(Vector2(1.2, 0.8), 0.25)
 	await wait(0.3)
