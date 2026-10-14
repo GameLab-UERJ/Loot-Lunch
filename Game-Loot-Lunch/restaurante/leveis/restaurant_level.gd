@@ -42,10 +42,15 @@ signal level_finished(success: bool)
 @export var death_delay: float = 1.0
 
 
+@export_group("Áudio")
+@export var bgm: AudioStream = preload("res://assets/music/watermelon_beats-medieval-folk-music-505203.mp3")
+
+
 var wallet: WalletComponent = null
 var _finished: bool = false
 var _death_pending: bool = false
 var _time_at_end: float = 0.0
+var _bgm_player: AudioStreamPlayer = null
 
 
 func _ready() -> void:
@@ -72,6 +77,7 @@ func _ready() -> void:
 			wallet.currency_name if wallet else "Almas")
 
 	_ensure_pause_menu()
+	_setup_bgm()
 
 	# Tutorial antes de o relógio andar (pausa a árvore até o jogador fechar).
 	if tutorial:
@@ -82,6 +88,7 @@ func _ready() -> void:
 	if director:
 		director.start()
 	level_started.emit()
+	_play_bgm()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -132,6 +139,7 @@ func finish(success: bool, reason: String = "") -> void:
 			"lost": director.lost_count if director else 0,
 		})
 	level_finished.emit(success)
+	_stop_bgm()
 	if pause_on_end:
 		get_tree().create_timer(pause_delay, true).timeout.connect(func() -> void:
 			if _finished:
@@ -146,6 +154,29 @@ func restart() -> void:
 func exit_restaurant() -> void:
 	get_tree().paused = false
 	MvpFlow.exit_restaurant(get_tree())
+
+
+func _setup_bgm() -> void:
+	if bgm == null:
+		return
+	_bgm_player = AudioStreamPlayer.new()
+	_bgm_player.name = "BgmPlayer"
+	_bgm_player.stream = bgm
+	_bgm_player.bus = &"Music"
+	_bgm_player.volume_db = -4.0
+	add_child(_bgm_player)
+
+
+func _play_bgm() -> void:
+	if _bgm_player and not _bgm_player.playing:
+		_bgm_player.play()
+
+
+func _stop_bgm() -> void:
+	if _bgm_player and _bgm_player.playing:
+		var fade := create_tween()
+		fade.tween_property(_bgm_player, "volume_db", -40.0, 0.6)
+		fade.tween_callback(_bgm_player.stop)
 
 
 func _ensure_pause_menu() -> void:

@@ -50,6 +50,7 @@ var _finished: bool = false
 ## Tocando "surgir": parado e sem acertar ninguém.
 var _spawning: bool = false
 var _trail_time: float = 0.0
+var _fly_player: AudioStreamPlayer2D = null
 
 
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
@@ -125,8 +126,17 @@ func _ready() -> void:
 		sprite.visible = true
 		sprite.play(&"surgir")
 		sprite.animation_finished.connect(_on_spawn_finished, CONNECT_ONE_SHOT)
+		if data.spawn_sfx:
+			var sp := AudioStreamPlayer2D.new()
+			sp.stream = data.spawn_sfx
+			sp.bus = &"SFX"
+			sp.volume_db = -5.0
+			add_child(sp)
+			sp.finished.connect(sp.queue_free)
+			sp.play()
 	elif sprite.visible:
 		sprite.play(&"voo")
+		_start_fly_sfx()
 
 	shadow.visible = data.has_part(&"sombra")
 	shadow.modulate.a = data.shadow_opacity
@@ -241,7 +251,20 @@ func _on_spawn_finished() -> void:
 	sprite.visible = data.has_part(&"voo")
 	if sprite.visible:
 		sprite.play(&"voo")
+		_start_fly_sfx()
 	_update_visual()
+
+
+func _start_fly_sfx() -> void:
+	if data and data.fly_sfx and _fly_player == null:
+		AudioHelper.setup_wav_loop(data.fly_sfx)
+		_fly_player = AudioStreamPlayer2D.new()
+		_fly_player.name = "FlySfx"
+		_fly_player.stream = data.fly_sfx
+		_fly_player.bus = &"SFX"
+		_fly_player.volume_db = -8.0
+		add_child(_fly_player)
+		_fly_player.play()
 
 
 ## Deixa um pedaço de rastro no mundo de tempos em tempos.
@@ -265,6 +288,21 @@ func _finish(expired: bool = false) -> void:
 	_finished = true
 	set_deferred(&"monitoring", false)
 	shadow.visible = false
+	if _fly_player and _fly_player.playing:
+		_fly_player.stop()
+
+	if data and data.hit_sfx:
+		var hp := AudioStreamPlayer2D.new()
+		hp.stream = data.hit_sfx
+		hp.bus = &"SFX"
+		hp.volume_db = -4.0
+		var cont := get_parent()
+		if cont:
+			cont.add_child(hp)
+			hp.global_position = global_position
+			hp.finished.connect(hp.queue_free)
+			hp.play()
+
 	finished.emit(global_position)
 
 	if expired and data.has_part(&"sumir"):

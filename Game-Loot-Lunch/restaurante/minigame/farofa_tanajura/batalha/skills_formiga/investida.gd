@@ -18,6 +18,10 @@ extends FormigaSkill
 @export var contact_offset: Vector2 = Vector2(70, -24)
 @export var dust_anim: SheetAnimation
 
+@export_group("Áudio")
+@export var sfx_charge: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/ant_charge.wav")
+@export var sfx_bite: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/ant_bite.wav")
+
 
 func _execute(battle: TurnBattle, ant: FormigaBattler, chef: ChefBattler) -> void:
 	# As formigas do fim da fila preparam o bote mais rápido.
@@ -34,6 +38,7 @@ func _execute(battle: TurnBattle, ant: FormigaBattler, chef: ChefBattler) -> voi
 		ant.sprite.scale = base_scale
 		ant.sprite.speed_scale = 3.0
 		ant.sprite.play_sheet(&"andar")
+		battle.play_sfx(sfx_charge)
 		_dust_trail(battle, ant))
 	tween.tween_property(ant, "global_position", target, charge_time) \
 		.set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN)
@@ -58,6 +63,7 @@ func _execute(battle: TurnBattle, ant: FormigaBattler, chef: ChefBattler) -> voi
 	else:
 		if tween.is_running():
 			await tween.finished
+		battle.play_sfx(sfx_bite)
 		deal(battle, ant, chef, damage, chef.global_position - ant.global_position)
 		battle.shake(4.0, 0.25)
 		await battle.wait(0.12)

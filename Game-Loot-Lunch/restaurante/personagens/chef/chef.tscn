@@ -30,6 +30,7 @@
 [ext_resource type="Resource" path="res://restaurante/itens/dados/espetinho_misto_cru.tres" id="espetinho_misto_cru"]
 [ext_resource type="Resource" path="res://restaurante/itens/dados/espetinho_misto_perfeito.tres" id="espetinho_misto_perfeito"]
 [ext_resource type="Resource" path="res://restaurante/itens/dados/espetinho_misto_torrado.tres" id="espetinho_misto_torrado"]
+[ext_resource type="AudioStream" uid="uid://b6b7ihv3lbqeg" path="res://assets/sfx/restaurante/chef/chef_dash.wav" id="sfx_dash"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wvtmh"]
 atlas = ExtResource("4_bectd")
@@ -430,12 +431,18 @@ script = ExtResource("hand")
 
 [node name="FootstepsSfx" type="AudioStreamPlayer2D" parent="." index="9" unique_id=1283746507]
 stream = ExtResource("11_7thud")
-volume_db = -5.0
+volume_db = -8.0
+bus = &"SFX"
 
 [node name="HurtSfx" type="AudioStreamPlayer2D" parent="." index="10" unique_id=1283746508]
 stream = ExtResource("13_j3ovn")
+volume_db = -3.0
+bus = &"SFX"
 
 [node name="DashSfx" type="AudioStreamPlayer2D" parent="." index="11" unique_id=1283746509]
+stream = ExtResource("sfx_dash")
+volume_db = -4.0
+bus = &"SFX"
 
 [node name="WalletComponent" type="Node" parent="." index="12" unique_id=1283746510]
 script = ExtResource("wallet")

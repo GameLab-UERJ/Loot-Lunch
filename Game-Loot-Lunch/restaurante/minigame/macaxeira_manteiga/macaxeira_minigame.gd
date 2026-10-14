@@ -29,6 +29,10 @@ enum Look { CRUA, DOURADA, QUEIMADA, ENCHARCADA }
 ## Sprite da macaxeira (macaxeira_estados.png com hframes = 4).
 @export var macaxeira: Sprite2D
 
+@export_group("Áudio")
+@export var sizzle_stream: AudioStream = preload("res://assets/sfx/restaurante/estacoes/churrasqueira_sizzle.wav")
+@export var slide_stream: AudioStream = preload("res://assets/sfx/restaurante/minigames/macaxeira/plate_slide.wav")
+
 @export_group("Regras")
 ## Meia-largura (px) em cima da macaxeira onde a manteiga conta.
 @export var catch_half_width: float = 34.0
@@ -44,10 +48,27 @@ enum Look { CRUA, DOURADA, QUEIMADA, ENCHARCADA }
 
 var _spill_timer: float = 0.0
 var _dry_warned: bool = false
+var _sizzle_player: AudioStreamPlayer = null
+var _slide_player: AudioStreamPlayer = null
 
 
 func _ready() -> void:
 	super._ready()
+	if sizzle_stream:
+		AudioHelper.setup_wav_loop(sizzle_stream)
+		_sizzle_player = AudioStreamPlayer.new()
+		_sizzle_player.name = "GriddleSizzleSfx"
+		_sizzle_player.stream = sizzle_stream
+		_sizzle_player.bus = &"SFX"
+		_sizzle_player.volume_db = -8.0
+		add_child(_sizzle_player)
+	if slide_stream:
+		_slide_player = AudioStreamPlayer.new()
+		_slide_player.name = "PlateSlideSfx"
+		_slide_player.stream = slide_stream
+		_slide_player.bus = &"SFX"
+		add_child(_slide_player)
+
 	cook_meter.ruined.connect(_on_cook_ruined)
 	butter_meter.ruined.connect(_on_butter_ruined)
 	_update_look()
@@ -60,6 +81,8 @@ func _on_begin() -> void:
 	cook_meter.set_active(true)
 	butter_meter.running = true
 	bottle.set_enabled(true)
+	if _sizzle_player and not _sizzle_player.playing:
+		_sizzle_player.play()
 	popup(macaxeira.global_position + Vector2(0, -40), "Na chapa!", Color(1.0, 0.85, 0.4))
 
 
@@ -115,6 +138,8 @@ func _serve() -> void:
 
 func _end(success: bool, label: String, quality: float) -> void:
 	_update_look()
+	if _slide_player:
+		_slide_player.play()
 	popup(macaxeira.global_position + Vector2(0, -36), label,
 		Color(0.3, 0.88, 0.35) if success else Color(0.96, 0.28, 0.24))
 	finish(success, {
@@ -130,6 +155,8 @@ func _on_finish(_success: bool) -> void:
 	cook_meter.running = false
 	butter_meter.running = false
 	bottle.set_enabled(false)
+	if _sizzle_player and _sizzle_player.playing:
+		_sizzle_player.stop()
 
 
 func _on_cook_ruined() -> void:

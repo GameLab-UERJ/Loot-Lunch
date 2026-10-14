@@ -49,15 +49,24 @@ signal item_vanished(slot: CookingSlot, recipe: CookingRecipe)
 ## A partir daqui o espetinho queima e SOME da churrasqueira.
 @export var vanish_time: float = 25.0
 
+@export_group("Áudio")
+@export var sizzle_stream: AudioStream = preload("res://assets/sfx/restaurante/estacoes/churrasqueira_sizzle.wav")
+@export var alert_stream: AudioStream = preload("res://assets/sfx/restaurante/estacoes/churrasqueira_alert.wav")
+@export var burned_stream: AudioStream = preload("res://assets/sfx/restaurante/estacoes/churrasqueira_burned.wav")
+
 
 @onready var slots_root: Node = get_node_or_null("Bocas")
 
 
 var _slots: Array[CookingSlot] = []
+var _sizzle_player: AudioStreamPlayer2D = null
+var _alert_player: AudioStreamPlayer2D = null
+var _burned_player: AudioStreamPlayer2D = null
 
 
 func _ready() -> void:
 	super()
+	_setup_audio()
 	_collect_slots()
 	interactable.target_changed.connect(_on_target_changed)
 	set_process(false)
@@ -185,8 +194,34 @@ func _collect_slots() -> void:
 		slot.item_placed.connect(_on_slot_item_placed.bind(slot))
 		slot.item_taken.connect(_on_slot_item_taken.bind(slot))
 		slot.item_vanished.connect(_on_slot_item_vanished.bind(slot))
+		slot.stage_changed.connect(_on_slot_stage_changed.bind(slot))
 	if _slots.is_empty():
 		push_warning("CookingStation '%s': nenhum CookingSlot dentro de 'Bocas'." % name)
+
+
+func _setup_audio() -> void:
+	if sizzle_stream:
+		AudioHelper.setup_wav_loop(sizzle_stream)
+		_sizzle_player = AudioStreamPlayer2D.new()
+		_sizzle_player.name = "SizzleSfx"
+		_sizzle_player.stream = sizzle_stream
+		_sizzle_player.bus = &"SFX"
+		_sizzle_player.volume_db = -8.0
+		add_child(_sizzle_player)
+	if alert_stream:
+		_alert_player = AudioStreamPlayer2D.new()
+		_alert_player.name = "AlertSfx"
+		_alert_player.stream = alert_stream
+		_alert_player.bus = &"SFX"
+		_alert_player.volume_db = -3.0
+		add_child(_alert_player)
+	if burned_stream:
+		_burned_player = AudioStreamPlayer2D.new()
+		_burned_player.name = "BurnedSfx"
+		_burned_player.stream = burned_stream
+		_burned_player.bus = &"SFX"
+		_burned_player.volume_db = -2.0
+		add_child(_burned_player)
 
 
 func _first_free_slot() -> CookingSlot:
@@ -242,11 +277,24 @@ func _set_target_slot(target: CookingSlot) -> void:
 
 func _on_slot_item_placed(item: CarryableItem, slot: CookingSlot) -> void:
 	item_placed.emit(slot, item)
+	if _sizzle_player and not _sizzle_player.playing:
+		_sizzle_player.play()
 
 
 func _on_slot_item_taken(item: CarryableItem, stage: int, slot: CookingSlot) -> void:
 	item_collected.emit(slot, item, stage)
+	if get_count() == 0 and _sizzle_player and _sizzle_player.playing:
+		_sizzle_player.stop()
 
 
 func _on_slot_item_vanished(recipe: CookingRecipe, slot: CookingSlot) -> void:
+	if _burned_player:
+		_burned_player.play()
 	item_vanished.emit(slot, recipe)
+	if get_count() == 0 and _sizzle_player and _sizzle_player.playing:
+		_sizzle_player.stop()
+
+
+func _on_slot_stage_changed(stage: CookingSlot.Stage, _slot: CookingSlot) -> void:
+	if stage == CookingSlot.Stage.BURNT and _alert_player:
+		_alert_player.play()

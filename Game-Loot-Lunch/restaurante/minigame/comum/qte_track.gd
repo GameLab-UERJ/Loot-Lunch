@@ -55,6 +55,10 @@ enum BeatState { PENDING, OPEN, HIT, MISSED }
 ## Posição da tecla em relação ao `ring_anchor`.
 @export var key_prompt_offset: Vector2 = Vector2(0, -60)
 
+@export_group("Áudio")
+@export var defend_stream: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/qte_defend.wav")
+@export var fail_stream: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/qte_fail.wav")
+
 
 ## Texto em cima da tecla ("REBATA!", "PULE!"). Volta a "" quando o QTE acaba.
 var prompt_caption: String = ""
@@ -69,6 +73,8 @@ var _lockout: float = 0.0
 var _running: bool = false
 var _successes: int = 0
 var _prompt: KeyPrompt = null
+var _defend_player: AudioStreamPlayer = null
+var _fail_player: AudioStreamPlayer = null
 
 
 func is_running() -> bool:
@@ -193,10 +199,33 @@ func _next_pending() -> int:
 	return -1
 
 
+func _setup_audio() -> void:
+	if _defend_player == null and defend_stream:
+		_defend_player = AudioStreamPlayer.new()
+		_defend_player.name = "QteDefendSfx"
+		_defend_player.stream = defend_stream
+		_defend_player.bus = &"SFX"
+		add_child(_defend_player)
+	if _fail_player == null and fail_stream:
+		_fail_player = AudioStreamPlayer.new()
+		_fail_player.name = "QteFailSfx"
+		_fail_player.stream = fail_stream
+		_fail_player.bus = &"SFX"
+		add_child(_fail_player)
+
+
 func _resolve(i: int, success: bool) -> void:
+	_setup_audio()
 	_states[i] = BeatState.HIT if success else BeatState.MISSED
 	if success:
 		_successes += 1
+		if _defend_player:
+			_defend_player.pitch_scale = randf_range(0.97, 1.03)
+			_defend_player.play()
+	else:
+		if _fail_player:
+			_fail_player.pitch_scale = randf_range(0.97, 1.03)
+			_fail_player.play()
 	if is_instance_valid(_rings[i]):
 		_rings[i].resolve(success)
 	beat_resolved.emit(i, success)

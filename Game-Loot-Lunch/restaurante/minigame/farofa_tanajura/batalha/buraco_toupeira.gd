@@ -17,6 +17,10 @@ signal chosen(hole: BuracoToupeira)
 @export var frame_tremble_b: int = 3
 @export var frame_selected: int = 4
 
+@export_group("Áudio")
+@export var sfx_click: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/hole_click.wav")
+@export var sfx_burst: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/earth_burst.wav")
+
 
 var index: int = 0
 var _tremble_left: float = 0.0
@@ -32,8 +36,20 @@ var _appear_left: float = 0.0
 
 
 func _ready() -> void:
-	click.clicked.connect(func() -> void: chosen.emit(self))
+	click.clicked.connect(func() -> void:
+		_play_sfx(sfx_click)
+		chosen.emit(self))
 	click.enabled = false
+
+
+func _play_sfx(stream: AudioStream) -> void:
+	if stream:
+		var p := AudioStreamPlayer2D.new()
+		p.stream = stream
+		p.bus = &"SFX"
+		add_child(p)
+		p.play()
+		p.finished.connect(p.queue_free)
 
 
 ## Aparece com um "pop" de terra (monte -> aberto).
@@ -83,6 +99,7 @@ func show_empty() -> void:
 
 ## A formiga saiu daqui: o buraco "explode" de terra.
 func burst() -> void:
+	_play_sfx(sfx_burst)
 	_tremble_left = 0.0
 	_locked_frame = frame_open
 	var tween := create_tween()

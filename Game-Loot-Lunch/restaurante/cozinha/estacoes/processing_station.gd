@@ -31,6 +31,14 @@ signal processing_finished(item: CarryableItem)
 @export var punch_time: float = 0.08
 
 
+@export_group("Áudio")
+@export var chop_sounds: Array[AudioStream] = [
+	preload("res://assets/sfx/restaurante/estacoes/knife_chop_1.wav"),
+	preload("res://assets/sfx/restaurante/estacoes/knife_chop_2.wav"),
+	preload("res://assets/sfx/restaurante/estacoes/knife_chop_3.wav"),
+]
+
+
 @onready var slot: HandComponent = $ItemSlot
 @onready var progress: ProgressComponent = $ProgressComponent
 @onready var progress_bar: ProgressBarComponent = get_node_or_null("BarraProgresso")
@@ -38,10 +46,12 @@ signal processing_finished(item: CarryableItem)
 
 
 var _recipe: ProcessingRecipe = null
+var _chop_player: AudioStreamPlayer2D = null
 
 
 func _ready() -> void:
 	super()
+	_setup_audio()
 	progress.step_added.connect(_on_step_added)
 	progress.completed.connect(_on_progress_completed)
 	_refresh_bar()
@@ -115,7 +125,22 @@ func _try_place(actor_hand: HandComponent) -> bool:
 
 func _do_step() -> void:
 	_punch_item()
+	_play_chop_sound()
 	progress.add_step()
+
+
+func _setup_audio() -> void:
+	_chop_player = AudioStreamPlayer2D.new()
+	_chop_player.name = "ChopSfx"
+	_chop_player.bus = &"SFX"
+	add_child(_chop_player)
+
+
+func _play_chop_sound() -> void:
+	if _chop_player and not chop_sounds.is_empty():
+		_chop_player.stream = chop_sounds.pick_random()
+		_chop_player.pitch_scale = randf_range(0.95, 1.05)
+		_chop_player.play()
 
 
 func _on_step_added(current_steps: int, total_steps: int) -> void:

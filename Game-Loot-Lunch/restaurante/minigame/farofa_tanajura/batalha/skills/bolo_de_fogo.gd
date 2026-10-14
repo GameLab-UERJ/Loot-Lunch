@@ -10,6 +10,10 @@ extends BattleSkill
 @export var arc_height: float = 40.0
 @export var ball_scale: Vector2 = Vector2(2, 2)
 
+@export_group("Áudio")
+@export var sfx_cast: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/fireball_cast.wav")
+@export var sfx_boom: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/fireball_boom.wav")
+
 
 func _execute(battle: TurnBattle, user: ChefBattler, target: FormigaBattler) -> void:
 	user.face(target.global_position)
@@ -19,6 +23,7 @@ func _execute(battle: TurnBattle, user: ChefBattler, target: FormigaBattler) -> 
 	ball.scale = ball_scale
 	ball.z_index = 30
 	battle.add_effect(ball)
+	battle.play_sfx(sfx_cast)
 	var from: Vector2 = user.global_position + Vector2(16, -12)
 	var to: Vector2 = target.global_position + Vector2(0, -8)
 	ball.global_position = from
@@ -27,6 +32,7 @@ func _execute(battle: TurnBattle, user: ChefBattler, target: FormigaBattler) -> 
 	await tween.finished
 
 	# Explosão: a bola incha e some.
+	battle.play_sfx(sfx_boom)
 	var boom := create_tween().set_parallel(true)
 	boom.tween_property(ball, "scale", ball_scale * 2.5, 0.2)
 	boom.tween_property(ball, "modulate", Color(2.0, 1.5, 0.6, 0.0), 0.2)

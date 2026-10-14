@@ -37,6 +37,10 @@ signal chef_finalized(target: Node2D)
 @export var spawn_animation: StringName = &"surgir"
 @export var discharge_animation: StringName = &"descarga"
 
+@export_group("Áudio")
+@export var sfx_spawn: AudioStream = preload("res://assets/sfx/restaurante/habilidades/cloud_spawn.wav")
+@export var sfx_discharge: AudioStream = preload("res://assets/sfx/restaurante/habilidades/cloud_discharge.wav")
+
 
 var discharging: bool = false
 
@@ -46,6 +50,14 @@ func _ready() -> void:
 	super._ready()
 	if has_animation(spawn_animation):
 		busy = true
+		if sfx_spawn:
+			var sp := AudioStreamPlayer2D.new()
+			sp.stream = sfx_spawn
+			sp.bus = &"SFX"
+			sp.volume_db = -5.0
+			add_child(sp)
+			sp.finished.connect(sp.queue_free)
+			sp.play()
 		play_animation(spawn_animation)
 		await animated_sprite.animation_finished
 		if not is_inside_tree() or despawning:
@@ -71,6 +83,14 @@ func _discharge(victim: Node2D) -> void:
 		animated_sprite.modulate.a = 1.0
 
 	var hit: bool = false
+	if sfx_discharge:
+		var dp := AudioStreamPlayer2D.new()
+		dp.stream = sfx_discharge
+		dp.bus = &"SFX"
+		dp.volume_db = -3.0
+		add_child(dp)
+		dp.finished.connect(dp.queue_free)
+		dp.play()
 	if has_animation(discharge_animation):
 		play_animation(discharge_animation)
 		while animated_sprite.is_playing() and animated_sprite.frame < strike_frame:

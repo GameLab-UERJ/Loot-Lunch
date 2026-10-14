@@ -31,6 +31,10 @@ signal shadow_expired
 ## Deixa um "rastro" (sombra que some rápido) no lugar de onde o chef saiu.
 @export var leave_afterimage: bool = true
 
+@export_group("Áudio")
+@export var sfx_place: AudioStream = preload("res://assets/sfx/restaurante/chef/shadow_place.wav")
+@export var sfx_return: AudioStream = preload("res://assets/sfx/restaurante/chef/shadow_return.wav")
+
 @export_group("Posição")
 ## Ajuste de posição da sombra em relação ao chef.
 @export var spawn_offset: Vector2 = Vector2.ZERO
@@ -78,6 +82,18 @@ func _place_shadow() -> bool:
 	shadow.start_lifetime(return_window)
 	shadow.expired.connect(_on_shadow_expired.bind(shadow))
 
+	if sfx_place:
+		var p := AudioStreamPlayer2D.new()
+		p.stream = sfx_place
+		p.bus = &"SFX"
+		p.volume_db = -4.0
+		var cont := _get_container()
+		if cont:
+			cont.add_child(p)
+			p.global_position = shadow.global_position
+			p.finished.connect(p.queue_free)
+			p.play()
+
 	activated.emit()
 	shadow_placed.emit(shadow)
 	return true
@@ -100,6 +116,18 @@ func _return_to_shadow() -> bool:
 	_shadow = null
 	shadow.vanish()
 	_pop_user_sprite()
+
+	if sfx_return:
+		var p := AudioStreamPlayer2D.new()
+		p.stream = sfx_return
+		p.bus = &"SFX"
+		p.volume_db = -3.0
+		var cont := _get_container()
+		if cont:
+			cont.add_child(p)
+			p.global_position = to
+			p.finished.connect(p.queue_free)
+			p.play()
 
 	returned.emit(from, to)
 	return true

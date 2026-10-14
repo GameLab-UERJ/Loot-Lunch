@@ -53,9 +53,12 @@ signal finished
 @export var alert_final: StringName = &"final"
 @export var fall_animation: StringName = &"queda"
 
+@export_group("Áudio")
+@export var sfx_warning: AudioStream = preload("res://assets/sfx/restaurante/habilidades/lightning_warning.wav")
+@export var sfx_strike: AudioStream = preload("res://assets/sfx/restaurante/habilidades/lightning_strike.wav")
 
 var has_struck: bool = false
-
+var _warning_player: AudioStreamPlayer2D = null
 
 @onready var alert: AnimatedSprite2D = get_node_or_null("Alerta")
 @onready var fall: AnimatedSprite2D = get_node_or_null("Queda")
@@ -74,6 +77,13 @@ func _run() -> void:
 	# 1. alerta
 	if alert:
 		alert.visible = true
+		if sfx_warning:
+			_warning_player = AudioStreamPlayer2D.new()
+			_warning_player.stream = sfx_warning
+			_warning_player.bus = &"SFX"
+			_warning_player.volume_db = -6.0
+			add_child(_warning_player)
+			_warning_player.play()
 		await _play(alert, alert_intro)
 		if _has(alert, alert_loop):
 			alert.play(alert_loop)
@@ -82,6 +92,13 @@ func _run() -> void:
 		await _play(alert, alert_final)
 		alert.visible = false
 	elif warning_time > 0.0:
+		if sfx_warning:
+			_warning_player = AudioStreamPlayer2D.new()
+			_warning_player.stream = sfx_warning
+			_warning_player.bus = &"SFX"
+			_warning_player.volume_db = -6.0
+			add_child(_warning_player)
+			_warning_player.play()
 		await get_tree().create_timer(warning_time, false).timeout
 
 	# 2. queda
@@ -144,6 +161,16 @@ func _strike() -> void:
 	if has_struck:
 		return
 	has_struck = true
+	if _warning_player and _warning_player.playing:
+		_warning_player.stop()
+	if sfx_strike:
+		var p := AudioStreamPlayer2D.new()
+		p.stream = sfx_strike
+		p.bus = &"SFX"
+		p.volume_db = -2.5
+		add_child(p)
+		p.finished.connect(p.queue_free)
+		p.play()
 	var hit: Array = get_bodies_in_area()
 	for body: Node2D in hit:
 		if damage > 0 and body.has_method(&"take_damage"):

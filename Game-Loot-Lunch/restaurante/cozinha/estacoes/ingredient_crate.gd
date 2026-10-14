@@ -6,6 +6,21 @@ class_name IngredientCrate
 @export var item_scene: PackedScene
 @export var item_data: ItemData
 
+@export_group("Áudio")
+@export var pickup_stream: AudioStream = preload("res://assets/sfx/restaurante/estacoes/crate_pickup.wav")
+
+var _pickup_player: AudioStreamPlayer2D = null
+
+
+func _ready() -> void:
+	super()
+	if pickup_stream:
+		_pickup_player = AudioStreamPlayer2D.new()
+		_pickup_player.name = "PickupSfx"
+		_pickup_player.stream = pickup_stream
+		_pickup_player.bus = &"SFX"
+		add_child(_pickup_player)
+
 
 func _can_interact(_actor: Node, actor_hand: HandComponent) -> bool:
 	return actor_hand != null and actor_hand.is_empty() and item_scene != null
@@ -33,4 +48,7 @@ func give_item(actor_hand: HandComponent) -> bool:
 	if not actor_hand.hold(item):
 		item.queue_free()
 		return false
+	if _pickup_player:
+		_pickup_player.pitch_scale = randf_range(0.96, 1.04)
+		_pickup_player.play()
 	return true

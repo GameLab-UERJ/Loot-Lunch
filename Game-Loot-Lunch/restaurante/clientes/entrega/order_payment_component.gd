@@ -33,8 +33,14 @@ signal order_paid(correct: bool, amount: int, deliverer: Node)
 @export var correct_color: Color = Color(0.55, 1.0, 0.55)
 @export var wrong_color: Color = Color(1.0, 0.6, 0.3)
 
+@export_group("Áudio")
+@export var success_stream: AudioStream = preload("res://assets/sfx/restaurante/estacoes/delivery_success.wav")
+@export var coin_stream: AudioStream = preload("res://assets/sfx/coin_sound.mp3")
+
 
 var order_component: OrderComponent = null
+var _success_player: AudioStreamPlayer2D = null
+var _coin_player: AudioStreamPlayer2D = null
 
 
 @onready var receiver: DeliveryReceiverComponent = get_node_or_null("Recebedor")
@@ -44,6 +50,19 @@ func _ready() -> void:
 	if receiver == null:
 		push_warning("OrderPaymentComponent (%s): falta o filho 'Recebedor'." % _owner_name())
 		return
+
+	if success_stream:
+		_success_player = AudioStreamPlayer2D.new()
+		_success_player.name = "DeliverySuccessSfx"
+		_success_player.stream = success_stream
+		_success_player.bus = &"SFX"
+		add_child(_success_player)
+	if coin_stream:
+		_coin_player = AudioStreamPlayer2D.new()
+		_coin_player.name = "CoinSfx"
+		_coin_player.stream = coin_stream
+		_coin_player.bus = &"SFX"
+		add_child(_coin_player)
 
 	order_component = _find_order_component()
 	if order_component:
@@ -90,6 +109,15 @@ func _on_item_received(data: ItemData, deliverer: Node) -> void:
 
 	if show_floating_text:
 		_show_text(correct, amount, wallet)
+
+	if correct:
+		if _success_player:
+			_success_player.play()
+		if _coin_player:
+			_coin_player.play()
+	elif amount > 0 and _coin_player:
+		_coin_player.pitch_scale = 0.85
+		_coin_player.play()
 
 	if order_component:
 		order_component.clear_order()

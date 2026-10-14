@@ -38,6 +38,10 @@ extends FormigaSkill
 ## Fallback sem animação.
 @export var stone_texture: Texture2D
 
+@export_group("Áudio")
+@export var sfx_throw: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/rock_throw.wav")
+@export var sfx_impact: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/rock_impact.wav")
+
 
 var _battle: TurnBattle
 var _ant: FormigaBattler
@@ -109,6 +113,8 @@ func _throw(i: int) -> void:
 	stone.global_position = from
 	_stones[i] = stone
 	_ant.squash(Vector2(0.85, 1.15), 0.15)
+	if sfx_throw:
+		_battle.play_sfx(sfx_throw, randf_range(0.95, 1.05))
 	var flight := create_tween()
 	flight.tween_method(_fly.bind(stone, from, to), 0.0, 1.0, flight_time)
 	_flights[i] = flight
@@ -143,6 +149,8 @@ func _on_beat_resolved(i: int, success: bool) -> void:
 	elif success:
 		_rebater(stone)
 	else:
+		if sfx_impact:
+			_battle.play_sfx(sfx_impact, randf_range(0.95, 1.05))
 		deal(_battle, _ant, _chef, damage, Vector2.LEFT)
 		_battle.shake(2.0, 0.12)
 		_battle.fx(break_anim, stone.global_position)
@@ -157,6 +165,8 @@ func _rebater(stone: Node2D) -> void:
 	await back.finished
 	if not is_instance_valid(stone):
 		return
+	if sfx_impact:
+		_battle.play_sfx(sfx_impact, randf_range(0.95, 1.05))
 	_battle.fx(break_anim, stone.global_position)
 	if not _ant.is_dead():
 		_ant.take_hit(reflect_damage, Vector2.RIGHT)

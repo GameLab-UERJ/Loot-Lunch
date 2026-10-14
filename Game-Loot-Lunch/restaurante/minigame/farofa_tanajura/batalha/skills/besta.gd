@@ -23,10 +23,15 @@ extends BattleSkill
 @export var impact: SheetAnimation
 @export var stuck_texture: Texture2D
 
+@export_group("Áudio")
+@export var sfx_shot: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/besta_shot.wav")
+@export var sfx_hit: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/besta_hit.wav")
+
 
 func _execute(battle: TurnBattle, user: ChefBattler, target: FormigaBattler) -> void:
 	user.face(target.global_position)
 	await user.act(shoot_animation, shoot_frame)
+	battle.play_sfx(sfx_shot)
 
 	var side: float = -1.0 if (user.sprite and user.sprite.flip_h) else 1.0
 	var from: Vector2 = user.global_position + Vector2(muzzle_offset.x * side, muzzle_offset.y)
@@ -41,6 +46,7 @@ func _execute(battle: TurnBattle, user: ChefBattler, target: FormigaBattler) -> 
 	await flight.finished
 	bolt.queue_free()
 
+	battle.play_sfx(sfx_hit)
 	target.take_hit(damage, to - from)
 	target.wait.knock_back(wait_knock_back)
 	battle.fx(impact, to)

@@ -47,6 +47,14 @@ const REACTION_COLORS: Array[Color] = [Color(1.0, 0.45, 0.4), Color(0.85, 0.85, 
 @export var sparkle_fx: SheetAnimation
 @export var smoke_fx: SheetAnimation
 
+@export_group("Áudio")
+@export var fork_stream: AudioStream = preload("res://assets/sfx/restaurante/minigames/vip/fork_clink.wav")
+@export var chew_stream: AudioStream = preload("res://assets/sfx/restaurante/minigames/vip/chew_squash.wav")
+@export var reaction_perfect_stream: AudioStream = preload("res://assets/sfx/restaurante/minigames/vip/vip_perfect.wav")
+@export var reaction_good_stream: AudioStream = preload("res://assets/sfx/restaurante/minigames/vip/vip_good.wav")
+@export var reaction_medium_stream: AudioStream = preload("res://assets/sfx/restaurante/minigames/vip/vip_medium.wav")
+@export var reaction_bad_stream: AudioStream = preload("res://assets/sfx/restaurante/minigames/vip/vip_bad.wav")
+
 @export_group("Falas")
 ## Falas cronometradas do VIP (sem esperar o jogador).
 @export var intro_line: String = "Vejamos se este lugar merece a minha visita..."
@@ -85,6 +93,7 @@ const REACTION_COLORS: Array[Color] = [Color(1.0, 0.45, 0.4), Color(0.85, 0.85, 
 var stars: Array[int] = []
 var reaction: int = Reaction.MEDIO
 var _vip_rest: Vector2
+var _sfx_player: AudioStreamPlayer = null
 
 
 ## Estrelas de cada etapa (o BossFightVip chama antes do `begin`).
@@ -117,6 +126,11 @@ static func offers_deal(value: int) -> bool:
 
 func _ready() -> void:
 	super._ready()
+	_sfx_player = AudioStreamPlayer.new()
+	_sfx_player.name = "VipSfx"
+	_sfx_player.bus = &"SFX"
+	add_child(_sfx_player)
+
 	if dish:
 		dish.hide()
 	if fork:
@@ -130,6 +144,13 @@ func _ready() -> void:
 	speaker_actors = {"VIP": vip, "Chef": chef}
 	if vip and chef_wait_spot:
 		face(vip, chef_wait_spot.global_position.x)  # sentado, olhando para o lado do chef
+
+
+func _play_sfx(stream: AudioStream, pitch_variance: float = 0.0) -> void:
+	if _sfx_player and stream:
+		_sfx_player.stream = stream
+		_sfx_player.pitch_scale = randf_range(1.0 - pitch_variance, 1.0 + pitch_variance) if pitch_variance > 0.0 else 1.0
+		_sfx_player.play()
 
 
 func _on_begin() -> void:
@@ -248,9 +269,11 @@ func _taste() -> void:
 	# A garfada sobe do prato até a boca.
 	if fork:
 		fork.show()
+		_play_sfx(fork_stream)
 		await arc(fork, dish.global_position + Vector2(6, -2), vip.global_position + Vector2(-4.0 if vip.flip_h else 4.0, 4), 14.0, 0.7)
 		fork.hide()
 	for i in 3:
+		_play_sfx(chew_stream, 0.08)
 		await squash(vip, Vector2(1.08, 0.9), 0.22)
 	await wait(0.3)
 	say("VIP", "...")
@@ -278,6 +301,7 @@ func _react_perfect() -> void:
 	await wait(2.6)
 	if bars:
 		await bars.flash(0.9)
+	_play_sfx(reaction_perfect_stream)
 	for i in 6:
 		fx(sparkle_fx, vip.global_position + Vector2(randf_range(-22, 22), randf_range(-26, 6)))
 		await wait(0.08)
@@ -295,6 +319,7 @@ func _react_perfect() -> void:
 func _react_good() -> void:
 	say("VIP", lines_good[0])
 	await wait(0.7)
+	_play_sfx(reaction_good_stream)
 	fx(hearts_fx, vip.global_position + Vector2(0, -8))
 	say("VIP", lines_good.back(), REACTION_COLORS[Reaction.BOM])
 	for i in 2:
@@ -307,6 +332,7 @@ func _react_good() -> void:
 func _react_medium() -> void:
 	say("VIP", lines_medium[0])
 	await wait(0.9)
+	_play_sfx(reaction_medium_stream)
 	await squash(vip, Vector2(1.0, 0.92), 0.3)  # aceno curto
 	say("VIP", lines_medium.back(), REACTION_COLORS[Reaction.MEDIO])
 	await wait(1.8)
@@ -315,6 +341,7 @@ func _react_medium() -> void:
 func _react_bad() -> void:
 	say("VIP", lines_bad[0])
 	await wait(0.6)
+	_play_sfx(reaction_bad_stream)
 	vip.self_modulate = Color(0.75, 1.15, 0.7)  # verde de nojo
 	fx(smoke_fx, vip.global_position + Vector2(6, 2))
 	await shake(vip, 3.0, 8)

@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" path="res://restaurante/clientes/johnny/habilidade_arte/esfera_some.png" id="5_sumir"]
 [ext_resource type="Resource" path="res://restaurante/clientes/johnny/habilidades/choque_stun.tres" id="6_stun"]
 [ext_resource type="Resource" path="res://restaurante/clientes/johnny/habilidades/esfera_rastro.tres" id="7_rastro"]
+[ext_resource type="AudioStream" uid="uid://2ulcjpo20ygm" path="res://assets/sfx/restaurante/habilidades/electric_orb_fly.wav" id="8_fly"]
+[ext_resource type="AudioStream" uid="uid://ki5fk8p4qeuf" path="res://assets/sfx/restaurante/habilidades/electric_orb_hit.wav" id="9_hit"]
 
 [resource]
 script = ExtResource("1_data")
@@ -41,3 +43,5 @@ knockback = 60
 target_group = &"chefs"
 stun_duration = 1.5
 stun_visual = ExtResource("6_stun")
+fly_sfx = ExtResource("8_fly")
+hit_sfx = ExtResource("9_hit")

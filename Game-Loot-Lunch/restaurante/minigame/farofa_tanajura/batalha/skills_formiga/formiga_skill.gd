@@ -38,6 +38,7 @@ class_name FormigaSkill
 @export_range(0.0, 10.0, 0.1, "suffix:s") var counter_daze: float = 2.0
 ## Estrela do acerto (fx_impacto.tres).
 @export var impact: SheetAnimation
+@export var sfx_counter: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/pan_counter.wav")
 
 
 ## Turno (da formiga) em que foi usada pela última vez.
@@ -94,6 +95,7 @@ func counter(battle: TurnBattle, ant: FormigaBattler, chef: ChefBattler,
 		hit_offset: Vector2 = Vector2(-30, 0), amount: int = -1) -> void:
 	chef.face(ant.global_position)
 	await chef.act(counter_animation, counter_hit_frame)
+	battle.play_sfx(sfx_counter)
 	var dealt: int = counter_damage if amount < 0 else amount
 	if not ant.is_dead():
 		ant.take_hit(dealt, ant.global_position - chef.global_position)

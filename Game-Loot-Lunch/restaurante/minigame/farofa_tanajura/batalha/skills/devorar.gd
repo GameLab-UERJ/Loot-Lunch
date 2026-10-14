@@ -15,6 +15,10 @@ extends BattleSkill
 @export var bite_anim: SheetAnimation
 @export var heal_anim: SheetAnimation
 
+@export_group("Áudio")
+@export var sfx_bite: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/devorar_bite.wav")
+@export var sfx_heal: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/heal_chime.wav")
+
 
 func _why_not(_user: ChefBattler, target: FormigaBattler) -> String:
 	if target.health.get_ratio() >= hp_threshold:
@@ -30,6 +34,7 @@ func _execute(battle: TurnBattle, user: ChefBattler, target: FormigaBattler) -> 
 	var bite: AnimatedSprite2D = battle.fx(bite_anim, target.global_position)
 	if bite:
 		await _wait_frame(bite, bite_frame)
+	battle.play_sfx(sfx_bite)
 	battle.announce("NHAC!", Color(1.0, 0.85, 0.4))
 	battle.shake(3.0, 0.15)
 
@@ -50,6 +55,7 @@ func _execute(battle: TurnBattle, user: ChefBattler, target: FormigaBattler) -> 
 		await user.squash(Vector2(1.3, 0.7), 0.12)
 	target.health.kill()
 	user.heal(heal_amount)
+	battle.play_sfx(sfx_heal)
 	battle.fx(heal_anim, user.global_position, user)
 	await user.return_home(0.25)
 

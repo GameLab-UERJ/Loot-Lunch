@@ -19,6 +19,9 @@ extends FormigaSkill
 @export var prompt_offset: Vector2 = Vector2(0, -26)
 @export var charge_anim: SheetAnimation
 
+@export_group("Áudio")
+@export var sfx_beam: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/psychic_beam.wav")
+
 
 func _init() -> void:
 	phases = [1]
@@ -45,6 +48,7 @@ func _execute(battle: TurnBattle, ant: FormigaBattler, chef: ChefBattler) -> voi
 	# 2. Feixe + barra de martelar.
 	var beam := PsychicBeam.new()
 	battle.add_effect(beam)
+	battle.play_sfx(sfx_beam)
 	await beam.aim(mouth, chef.global_position + Vector2(10, -8))
 	battle.shake(2.0, 0.2)
 	var meter := MashMeter.new()

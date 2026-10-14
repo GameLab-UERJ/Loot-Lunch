@@ -16,6 +16,11 @@ extends FormigaSkill
 @export var late_tolerance: float = 0.09
 @export var aim_offset: Vector2 = Vector2(44, -10)
 
+@export_group("Áudio")
+@export var sfx_throw: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/ant_throw.wav")
+@export var sfx_rebater: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/pan_counter.wav")
+@export var sfx_hit_chef: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/ant_bite.wav")
+
 
 func can_use(battle: TurnBattle, _ant: FormigaBattler) -> bool:
 	return battle != null and not battle.alive_minions().is_empty()
@@ -46,6 +51,7 @@ func _throw(battle: TurnBattle, queen: FormigaBattler, minion: FormigaBattler, c
 	battle.qte.configure(early_tolerance, late_tolerance, true, 0.6)
 	battle.qte.ring_anchor = chef.qte_anchor
 	var flight := create_tween().set_parallel(true)
+	battle.play_sfx(sfx_throw)
 	flight.tween_method(_fly.bind(minion, from, to), 0.0, 1.0, flight_time)
 	flight.tween_property(minion.sprite, "rotation", -TAU * 2.0, flight_time)
 	var beats: Array[float] = [flight_time]
@@ -57,6 +63,7 @@ func _throw(battle: TurnBattle, queen: FormigaBattler, minion: FormigaBattler, c
 
 	if hits > 0:
 		# 3a. Rebateu: volta voando para a vaga e leva o dano.
+		battle.play_sfx(sfx_rebater)
 		chef.act(counter_animation, -1)
 		battle.fx(impact, minion.global_position)
 		battle.announce("Rebateu a formiga!", Color(0.55, 1.0, 0.55))
@@ -69,6 +76,7 @@ func _throw(battle: TurnBattle, queen: FormigaBattler, minion: FormigaBattler, c
 			minion.daze(counter_daze)
 	else:
 		# 3b. Acertou o chef.
+		battle.play_sfx(sfx_hit_chef)
 		deal(battle, queen, chef, damage, chef.global_position - from)
 		battle.shake(5.0, 0.3)
 		await minion.hop(16.0, 0.2)

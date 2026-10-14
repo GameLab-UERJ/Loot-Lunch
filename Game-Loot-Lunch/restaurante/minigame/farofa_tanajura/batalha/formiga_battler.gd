@@ -37,6 +37,9 @@ signal clicked(ant: FormigaBattler)
 ## armadura continuar aparecendo.
 @export var rage_tint: Color = Color(1.6, 0.55, 0.5)
 
+@export_group("Áudio")
+@export var sfx_ant_hurt: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/ant_hurt.wav")
+
 
 ## 0..4: qual formiga da fila é (as últimas ficam mais espertas).
 var level: int = 0
@@ -64,6 +67,8 @@ var _dizzy: AnimatedSprite2D
 
 
 func _ready() -> void:
+	if hurt_sfx == null:
+		hurt_sfx = sfx_ant_hurt
 	super._ready()
 	health.health_changed.connect(_on_health_changed)
 	health.died.connect(func() -> void: defeated.emit(self))

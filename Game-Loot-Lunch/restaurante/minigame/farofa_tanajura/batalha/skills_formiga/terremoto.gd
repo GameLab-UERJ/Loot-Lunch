@@ -21,6 +21,9 @@ extends FormigaSkill
 @export var jump_animation: StringName = &"pulo"
 @export var landing_dust: SheetAnimation
 
+@export_group("Áudio")
+@export var sfx_earthquake: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/ant_earthquake.wav")
+
 
 func _execute(battle: TurnBattle, ant: FormigaBattler, chef: ChefBattler) -> void:
 	var slam: float = randf_range(slam_min, slam_max) * (1.0 - 0.04 * ant.level)
@@ -72,6 +75,7 @@ func _jump(battle: TurnBattle, chef: ChefBattler) -> void:
 
 
 func _slam(battle: TurnBattle, ant: FormigaBattler, distance: float) -> void:
+	battle.play_sfx(sfx_earthquake)
 	battle.shake(5.0, 0.3)
 	var at: Vector2 = ant.feet_position()
 	battle.fx(short_wave, at)

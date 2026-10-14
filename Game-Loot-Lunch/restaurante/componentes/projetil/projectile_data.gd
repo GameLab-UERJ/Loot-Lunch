@@ -124,6 +124,11 @@ class_name ProjectileData
 ## Arte que fica em cima de quem foi atordoado.
 @export var stun_visual: SheetAnimation
 
+@export_group("Áudio")
+@export var fly_sfx: AudioStream
+@export var hit_sfx: AudioStream
+@export var spawn_sfx: AudioStream
+
 
 ## Monta as animações "voo", "sombra" e "impacto" a partir da spritesheet.
 func build_frames() -> SpriteFrames:

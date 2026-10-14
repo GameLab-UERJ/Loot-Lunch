@@ -38,9 +38,14 @@ signal battle_finished(victory: bool)
 ## Barra de vida do chefe no topo da tela (opcional).
 @export var boss_bar: BossHealthBar
 ## Contorno (aura) em volta da formiga que está na mira, igual ao destaque dos itens
-## da cozinha (SpriteOutline). Pisca de leve.
 @export var target_outline_color: Color = Color.WHITE
 @export var target_outline_width: float = 2.0
+
+@export_group("Áudio")
+@export var victory_stream: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/battle_victory.wav")
+@export var defeat_stream: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/battle_defeat.wav")
+
+var _sfx_player: AudioStreamPlayer = null
 
 @export_group("Formigas pequenas")
 ## Cena da formiga pequena (para as invocações do chefe).
@@ -599,6 +604,18 @@ func _on_boss_flight_changed(airborne: bool) -> void:
 		announce("A Rainha voou! As formigas estão em FÚRIA!", Color(1.0, 0.45, 0.4))
 
 
+func play_sfx(stream: AudioStream, pitch_scale: float = 1.0) -> void:
+	if stream == null:
+		return
+	var player := AudioStreamPlayer.new()
+	player.stream = stream
+	player.bus = &"SFX"
+	player.pitch_scale = pitch_scale
+	add_child(player)
+	player.play()
+	player.finished.connect(player.queue_free)
+
+
 func _chef_turn(skill: BattleSkill) -> void:
 	_busy = true
 	deciding = false
@@ -684,7 +701,17 @@ func _end(victory: bool) -> bool:
 	chef.show_wait_bar(false)
 	if boss_bar:
 		boss_bar.set_status("")
+
+	if _sfx_player == null:
+		_sfx_player = AudioStreamPlayer.new()
+		_sfx_player.name = "BattleEndSfx"
+		_sfx_player.bus = &"SFX"
+		add_child(_sfx_player)
+
 	if victory:
+		if victory_stream:
+			_sfx_player.stream = victory_stream
+			_sfx_player.play()
 		await _reap_dead()
 		# Sem a Rainha, as pequenas fogem.
 		for ant in alive_minions():
@@ -700,6 +727,9 @@ func _end(victory: bool) -> bool:
 			announce("As formigas fugiram!", Color(0.55, 1.0, 0.55))
 			await wait(0.9)
 	else:
+		if defeat_stream:
+			_sfx_player.stream = defeat_stream
+			_sfx_player.play()
 		announce("O chef desmaiou...", Color(1.0, 0.4, 0.4))
 	battle_finished.emit(victory)
 	return victory
