@@ -1,0 +1,168 @@
+[gd_scene format=3 uid="uid://dedrqd056ld2f"]
+
+[ext_resource type="Script" uid="uid://c4pb3fd0t7g1d" path="res://levels/restaurant/ui/level_hud.gd" id="1_hud"]
+[ext_resource type="FontFile" uid="uid://cnqv72au01vlv" path="res://assets/fonts/ui/Sta.Toasty_font (1).ttf" id="2_toasty"]
+[ext_resource type="FontFile" uid="uid://fjcmb5r6tkvp" path="res://assets/fonts/Silver.ttf" id="3_silver"]
+[ext_resource type="Theme" uid="uid://blqubia4djs1d" path="res://resources/themes/ui/button.tres" id="4_button_theme"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_painel"]
+content_margin_left = 14.0
+content_margin_top = 12.0
+content_margin_right = 14.0
+content_margin_bottom = 12.0
+bg_color = Color(0.6431373, 0.5803922, 0.47843137, 0.96)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.35, 0.24, 0.15, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="HudFase" type="CanvasLayer" unique_id=2055132883]
+layer = 11
+script = ExtResource("1_hud")
+
+[node name="Placar" type="VBoxContainer" parent="." unique_id=599524501]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -150.0
+offset_top = 4.0
+offset_right = -6.0
+offset_bottom = 60.0
+grow_horizontal = 0
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="Tempo" type="Label" parent="Placar" unique_id=604417848]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.92, 0.85, 1)
+theme_override_colors/font_outline_color = Color(0.1, 0.05, 0.12, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_toasty")
+theme_override_font_sizes/font_size = 14
+text = "Tempo 3:00"
+horizontal_alignment = 2
+
+[node name="Meta" type="Label" parent="Placar" unique_id=128700759]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.92, 0.85, 1)
+theme_override_colors/font_outline_color = Color(0.1, 0.05, 0.12, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_toasty")
+theme_override_font_sizes/font_size = 12
+text = "Meta: 0 / 60"
+horizontal_alignment = 2
+
+[node name="Clientes" type="Label" parent="Placar" unique_id=1682131034]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.78, 0.86, 1)
+theme_override_colors/font_outline_color = Color(0.1, 0.05, 0.12, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("2_toasty")
+theme_override_font_sizes/font_size = 9
+text = "Atendidos: 0   Perdidos: 0"
+horizontal_alignment = 2
+
+[node name="Aviso" type="Label" parent="." unique_id=771097620]
+unique_name_in_owner = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = -40.0
+offset_right = 160.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.95, 0.8, 1)
+theme_override_colors/font_outline_color = Color(0.1, 0.05, 0.12, 1)
+theme_override_constants/line_spacing = 12
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("2_toasty")
+theme_override_font_sizes/font_size = 18
+text = "Fase 1
+Meta: 60 Almas em 3:00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="FimDeTurno" type="Control" parent="." unique_id=1740160526]
+unique_name_in_owner = true
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Escurecer" type="ColorRect" parent="FimDeTurno" unique_id=1142226925]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.55)
+
+[node name="Painel" type="PanelContainer" parent="FimDeTurno" unique_id=1583487016]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = -80.0
+offset_right = 120.0
+offset_bottom = 80.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_painel")
+
+[node name="Coluna" type="VBoxContainer" parent="FimDeTurno/Painel" unique_id=758873401]
+layout_mode = 2
+theme_override_constants/separation = 6
+alignment = 1
+
+[node name="Titulo" type="Label" parent="FimDeTurno/Painel/Coluna" unique_id=1393618416]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.1, 0.05, 0.12, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_toasty")
+theme_override_font_sizes/font_size = 18
+text = "Meta batida!"
+horizontal_alignment = 1
+
+[node name="Resumo" type="Label" parent="FimDeTurno/Painel/Coluna" unique_id=1570892830]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.18, 0.12, 0.08, 1)
+theme_override_fonts/font = ExtResource("3_silver")
+theme_override_font_sizes/font_size = 16
+text = "Dinheiro: 0 / 60"
+horizontal_alignment = 1
+
+[node name="JogarDeNovo" type="Button" parent="FimDeTurno/Painel/Coluna" unique_id=574417549]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("4_button_theme")
+text = "Jogar de novo"
+
+[node name="SairRestaurante" type="Button" parent="FimDeTurno/Painel/Coluna" unique_id=574417550]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("4_button_theme")
+text = "Sair do restaurante"
+

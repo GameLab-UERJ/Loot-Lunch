@@ -1,8 +1,8 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://tests/patience/test_patience.gd" id="1_test"]
-[ext_resource type="PackedScene" path="res://restaurante/clientes/componentes/queue_manager.tscn" id="2_queue"]
-[ext_resource type="PackedScene" path="res://restaurante/clientes/spawner/customer_spawner.tscn" id="3_spawner"]
+[ext_resource type="PackedScene" path="res://entities/npcs/customers/componentes/queue_manager.tscn" id="2_queue"]
+[ext_resource type="PackedScene" path="res://entities/npcs/customers/spawner/customer_spawner.tscn" id="3_spawner"]
 
 [node name="TestPatience" type="Node2D"]
 script = ExtResource("1_test")
