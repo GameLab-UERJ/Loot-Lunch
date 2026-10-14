@@ -201,8 +201,7 @@ func _collect_slots() -> void:
 
 func _setup_audio() -> void:
 	if sizzle_stream:
-		if sizzle_stream is AudioStreamWAV:
-			(sizzle_stream as AudioStreamWAV).loop_mode = AudioStreamWAV.LOOP_FORWARD
+		AudioHelper.setup_wav_loop(sizzle_stream)
 		_sizzle_player = AudioStreamPlayer2D.new()
 		_sizzle_player.name = "SizzleSfx"
 		_sizzle_player.stream = sizzle_stream

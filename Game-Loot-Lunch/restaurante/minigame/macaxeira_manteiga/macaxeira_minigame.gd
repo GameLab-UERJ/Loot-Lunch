@@ -30,7 +30,7 @@ enum Look { CRUA, DOURADA, QUEIMADA, ENCHARCADA }
 @export var macaxeira: Sprite2D
 
 @export_group("Áudio")
-@export var sizzle_stream: AudioStream = preload("res://assets/sfx/restaurante/minigames/macaxeira/griddle_sizzle.wav")
+@export var sizzle_stream: AudioStream = preload("res://assets/sfx/restaurante/estacoes/churrasqueira_sizzle.wav")
 @export var slide_stream: AudioStream = preload("res://assets/sfx/restaurante/minigames/macaxeira/plate_slide.wav")
 
 @export_group("Regras")
@@ -55,8 +55,7 @@ var _slide_player: AudioStreamPlayer = null
 func _ready() -> void:
 	super._ready()
 	if sizzle_stream:
-		if sizzle_stream is AudioStreamWAV:
-			sizzle_stream.loop_mode = AudioStreamWAV.LOOP_FORWARD
+		AudioHelper.setup_wav_loop(sizzle_stream)
 		_sizzle_player = AudioStreamPlayer.new()
 		_sizzle_player.name = "GriddleSizzleSfx"
 		_sizzle_player.stream = sizzle_stream

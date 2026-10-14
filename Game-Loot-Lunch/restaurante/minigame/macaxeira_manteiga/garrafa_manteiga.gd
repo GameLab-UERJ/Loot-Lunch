@@ -39,18 +39,17 @@ signal flow_changed(is_flowing: bool)
 var pouring: bool = false
 var _flowing: bool = false
 var _clock: float = 0.0
-var _pour_player: AudioStreamPlayer2D = null
+var _pour_player: AudioStreamPlayer = null
 
 
 func _ready() -> void:
 	if pour_stream:
-		if pour_stream is AudioStreamWAV:
-			pour_stream.loop_mode = AudioStreamWAV.LOOP_FORWARD
-		_pour_player = AudioStreamPlayer2D.new()
+		AudioHelper.setup_wav_loop(pour_stream)
+		_pour_player = AudioStreamPlayer.new()
 		_pour_player.name = "PourSfx"
 		_pour_player.stream = pour_stream
 		_pour_player.bus = &"SFX"
-		_pour_player.volume_db = -6.0
+		_pour_player.volume_db = -5.0
 		add_child(_pour_player)
 
 

@@ -257,8 +257,7 @@ func _on_spawn_finished() -> void:
 
 func _start_fly_sfx() -> void:
 	if data and data.fly_sfx and _fly_player == null:
-		if data.fly_sfx is AudioStreamWAV:
-			data.fly_sfx.loop_mode = AudioStreamWAV.LOOP_FORWARD
+		AudioHelper.setup_wav_loop(data.fly_sfx)
 		_fly_player = AudioStreamPlayer2D.new()
 		_fly_player.name = "FlySfx"
 		_fly_player.stream = data.fly_sfx

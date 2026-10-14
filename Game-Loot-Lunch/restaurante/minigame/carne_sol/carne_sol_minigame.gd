@@ -79,8 +79,7 @@ func _ready() -> void:
 
 func _setup_audio() -> void:
 	if sfx_solar_beam:
-		if sfx_solar_beam is AudioStreamWAV:
-			(sfx_solar_beam as AudioStreamWAV).loop_mode = AudioStreamWAV.LOOP_FORWARD
+		AudioHelper.setup_wav_loop(sfx_solar_beam)
 		_beam_player = AudioStreamPlayer.new()
 		_beam_player.name = "SolarBeamSfx"
 		_beam_player.stream = sfx_solar_beam

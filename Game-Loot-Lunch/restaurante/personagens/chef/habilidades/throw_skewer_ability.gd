@@ -109,8 +109,7 @@ func _ready() -> void:
 				charge_ring = child
 				break
 	if sfx_charge:
-		if sfx_charge is AudioStreamWAV:
-			sfx_charge.loop_mode = AudioStreamWAV.LOOP_FORWARD
+		AudioHelper.setup_wav_loop(sfx_charge)
 		_charge_player = AudioStreamPlayer2D.new()
 		_charge_player.name = "ChargeLoopSfx"
 		_charge_player.stream = sfx_charge

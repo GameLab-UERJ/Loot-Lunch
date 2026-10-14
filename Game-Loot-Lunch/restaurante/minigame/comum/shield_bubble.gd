@@ -33,8 +33,7 @@ var _tether_player: AudioStreamPlayer2D = null
 
 func _ready() -> void:
 	if sfx_tether:
-		if sfx_tether is AudioStreamWAV:
-			sfx_tether.loop_mode = AudioStreamWAV.LOOP_FORWARD
+		AudioHelper.setup_wav_loop(sfx_tether)
 		_tether_player = AudioStreamPlayer2D.new()
 		_tether_player.name = "TetherLoopSfx"
 		_tether_player.stream = sfx_tether
