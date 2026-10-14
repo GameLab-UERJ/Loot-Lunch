@@ -64,4 +64,4 @@ func _on_back_pressed() -> void:
 		press_audio.play()
 	if music.playing:
 		create_tween().tween_property(music, "volume_db", -60.0, 0.8)
-	MvpFlow.go_to_main_menu(get_tree())
+	MvpFlow.exit_restaurant(get_tree())

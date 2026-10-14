@@ -67,8 +67,11 @@ func _ready() -> void:
 		chef.health_changed.connect(_on_chef_health_changed)
 	if hud:
 		hud.restart_requested.connect(restart)
+		hud.exit_requested.connect(exit_restaurant)
 		hud.setup(level_data.display_name, level_data.money_goal, level_data.duration,
 			wallet.currency_name if wallet else "Almas")
+
+	_ensure_pause_menu()
 
 	# Tutorial antes de o relógio andar (pausa a árvore até o jogador fechar).
 	if tutorial:
@@ -138,6 +141,20 @@ func finish(success: bool, reason: String = "") -> void:
 func restart() -> void:
 	get_tree().paused = false
 	get_tree().reload_current_scene()
+
+
+func exit_restaurant() -> void:
+	get_tree().paused = false
+	MvpFlow.exit_restaurant(get_tree())
+
+
+func _ensure_pause_menu() -> void:
+	if get_tree().root.has_node("PauseMenu"):
+		return
+	var pause_scene: PackedScene = load("res://menus/pause/pause_menu.tscn")
+	if pause_scene:
+		var pm := pause_scene.instantiate()
+		get_tree().root.call_deferred("add_child", pm)
 
 
 # --- Sinais --------------------------------------------------------------------

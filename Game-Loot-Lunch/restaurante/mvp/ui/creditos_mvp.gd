@@ -25,6 +25,10 @@ signal closed
 ## Colunas da lista da equipe.
 @export_range(1, 5) var team_columns: int = 3
 
+@export_group("Audio")
+@export var hover_sound: AudioStream = preload("res://assets/sfx/menus/abs-pointer-2.mp3")
+@export var press_sound: AudioStream = preload("res://assets/sfx/menus/abs-confirm-2.mp3")
+
 
 @onready var title_label: Label = %Titulo
 @onready var subtitle_label: Label = %Subtitulo
@@ -35,6 +39,8 @@ signal closed
 @onready var team_grid: GridContainer = %Equipe
 @onready var back_button: Button = %Voltar
 @onready var member_template: Label = %NomeModelo
+@onready var hover_audio: AudioStreamPlayer = $HoverAudio
+@onready var press_audio: AudioStreamPlayer = $PressAudio
 
 
 func _ready() -> void:
@@ -47,7 +53,23 @@ func _ready() -> void:
 	team_grid.columns = team_columns
 	member_template.hide()
 	_fill_team()
-	back_button.pressed.connect(close)
+	if hover_audio:
+		hover_audio.stream = hover_sound
+	if press_audio:
+		press_audio.stream = press_sound
+	back_button.mouse_entered.connect(_on_back_button_hovered)
+	back_button.pressed.connect(_on_back_button_pressed)
+
+
+func _on_back_button_hovered() -> void:
+	if hover_audio and hover_audio.stream and not back_button.disabled:
+		hover_audio.play()
+
+
+func _on_back_button_pressed() -> void:
+	if press_audio and press_audio.stream:
+		press_audio.play()
+	close()
 
 
 func _unhandled_input(event: InputEvent) -> void:

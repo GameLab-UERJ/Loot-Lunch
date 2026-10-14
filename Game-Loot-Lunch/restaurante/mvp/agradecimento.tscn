@@ -42,7 +42,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-color = Color(0.05, 0.02, 0.06, 0.62)
+color = Color(0, 0, 0, 0.55)
 
 [node name="Coluna" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -125,7 +125,7 @@ custom_minimum_size = Vector2(110, 20)
 layout_mode = 2
 size_flags_horizontal = 4
 theme = ExtResource("5_tema")
-text = "Voltar ao menu principal"
+text = "Sair do restaurante"
 
 [node name="Musica" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_musica")

@@ -6,16 +6,16 @@
 [ext_resource type="FontFile" uid="uid://cnqv72au01vlv" path="res://assets/fonts/ui/Sta.Toasty_font (1).ttf" id="4_toasty"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_painel"]
-bg_color = Color(0.1, 0.05, 0.12, 0.92)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.95, 0.72, 0.25, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
+bg_color = Color(0.6431373, 0.5803922, 0.47843137, 0.96)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.35, 0.24, 0.15, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 content_margin_left = 18.0
 content_margin_top = 8.0
 content_margin_right = 18.0
@@ -60,9 +60,7 @@ alignment = 1
 [node name="Titulo" type="Label" parent="Centro/Painel/Coluna"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.95, 0.72, 0.25, 1)
-theme_override_colors/font_outline_color = Color(0.1, 0.05, 0.12, 1)
-theme_override_constants/outline_size = 6
+theme_override_colors/font_color = Color(0.24, 0.14, 0.08, 1)
 theme_override_fonts/font = ExtResource("4_toasty")
 theme_override_font_sizes/font_size = 28
 text = "Creditos"
@@ -71,7 +69,7 @@ horizontal_alignment = 1
 [node name="Subtitulo" type="Label" parent="Centro/Painel/Coluna"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.8, 0.78, 0.86, 1)
+theme_override_colors/font_color = Color(0.32, 0.22, 0.15, 1)
 theme_override_fonts/font = ExtResource("2_silver")
 theme_override_font_sizes/font_size = 19
 text = "Loot & Lunch — Demonstração"
@@ -84,7 +82,7 @@ layout_mode = 2
 [node name="DevsTitulo" type="Label" parent="Centro/Painel/Coluna"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.95, 0.72, 0.25, 1)
+theme_override_colors/font_color = Color(0.24, 0.14, 0.08, 1)
 theme_override_fonts/font = ExtResource("4_toasty")
 theme_override_font_sizes/font_size = 14
 text = "Desenvolvido por"
@@ -93,7 +91,7 @@ horizontal_alignment = 1
 [node name="Devs" type="Label" parent="Centro/Painel/Coluna"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.95, 0.8, 1)
+theme_override_colors/font_color = Color(0.18, 0.12, 0.08, 1)
 theme_override_fonts/font = ExtResource("2_silver")
 theme_override_font_sizes/font_size = 19
 text = "Igor Amaral, Ramon Lima e João Coutinho"
@@ -106,7 +104,7 @@ layout_mode = 2
 [node name="Disciplina" type="Label" parent="Centro/Painel/Coluna"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.92, 0.9, 0.86, 1)
+theme_override_colors/font_color = Color(0.22, 0.16, 0.12, 1)
 theme_override_fonts/font = ExtResource("2_silver")
 theme_override_font_sizes/font_size = 19
 text = "Esta demonstração foi feita para a disciplina
@@ -120,7 +118,7 @@ layout_mode = 2
 [node name="EquipeTitulo" type="Label" parent="Centro/Painel/Coluna"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.95, 0.72, 0.25, 1)
+theme_override_colors/font_color = Color(0.24, 0.14, 0.08, 1)
 theme_override_fonts/font = ExtResource("4_toasty")
 theme_override_font_sizes/font_size = 14
 text = "Equipe GameLab-UERJ"
@@ -140,7 +138,7 @@ columns = 3
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
-theme_override_colors/font_color = Color(0.85, 0.83, 0.9, 1)
+theme_override_colors/font_color = Color(0.18, 0.12, 0.08, 1)
 theme_override_fonts/font = ExtResource("2_silver")
 theme_override_font_sizes/font_size = 19
 text = "Nome"
@@ -157,3 +155,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme = ExtResource("3_tema")
 text = "Voltar"
+
+[node name="HoverAudio" type="AudioStreamPlayer" parent="."]
+
+[node name="PressAudio" type="AudioStreamPlayer" parent="."]

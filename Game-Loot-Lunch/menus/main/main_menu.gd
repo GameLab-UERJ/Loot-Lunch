@@ -49,6 +49,7 @@ var save_load_scene : PackedScene = preload("res://menus/saver_loader/save_load_
 var menu_ready: bool = false
 
 func _ready() -> void:
+	get_tree().paused = false
 	EnvironmentManager.is_outdoor = is_outdoor
 	hover_audio.stream = hover_sound
 	press_audio.stream = press_sound

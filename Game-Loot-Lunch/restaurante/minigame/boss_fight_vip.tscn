@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" path="res://restaurante/minigame/farofa_tanajura/art/prato_vip_completo.png" id="6_prato"]
 [ext_resource type="Script" path="res://restaurante/minigame/comum/minigame_banner.gd" id="7_banner"]
 [ext_resource type="PackedScene" path="res://restaurante/minigame/intro_vip/intro_vip.tscn" id="8_intro"]
+[ext_resource type="PackedScene" path="res://restaurante/minigame/comum/salao_vip.tscn" id="9_salao"]
 
 [node name="BossFightVip" type="Node2D" node_paths=PackedStringArray("stage_holder", "banner")]
 script = ExtResource("1_script")
@@ -18,10 +19,8 @@ final_dish_texture = ExtResource("6_prato")
 stage_holder = NodePath("Etapas")
 banner = NodePath("Banner")
 
-[node name="Fundo" type="Polygon2D" parent="."]
+[node name="SalaoFundo" parent="." instance=ExtResource("9_salao")]
 z_index = -100
-color = Color(0.1, 0.05, 0.12, 1)
-polygon = PackedVector2Array(0, 0, 640, 0, 640, 360, 0, 360)
 
 [node name="Etapas" type="Node2D" parent="."]
 

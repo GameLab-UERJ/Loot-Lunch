@@ -47,7 +47,7 @@ func _autostart() -> void:
 	elif show_intro_banner:
 		await banner.show_intro(title, instructions)
 	finished.connect(func(success: bool, result: Dictionary) -> void:
-		banner.show_result(success, "%s\n\n[R] reinicia a cena" % String(result.get("label", ""))))
+		banner.show_result(success, String(result.get("label", ""))))
 	begin()
 
 

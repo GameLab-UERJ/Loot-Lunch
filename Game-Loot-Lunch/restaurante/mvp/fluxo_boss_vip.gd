@@ -33,4 +33,4 @@ func _on_boss_fight_finished(success: bool, _results: Array) -> void:
 	if success:
 		MvpFlow.go_to_thanks(get_tree())
 	else:
-		MvpFlow.go_to_main_menu(get_tree())
+		MvpFlow.exit_restaurant(get_tree())

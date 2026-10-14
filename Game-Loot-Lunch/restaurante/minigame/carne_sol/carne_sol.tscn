@@ -33,6 +33,7 @@ instructions = "Segure [ESPAÇO] para canalizar o Mini-Sol sobre a carne e SOLTE
 Enquanto o sol arde, fagulhas saltam dele: CLIQUE nelas antes que caiam na carne!
 
 Cedo demais = Carne Suada. Tarde demais (ou 3 queimaduras) = Carne Carbonizada."
+show_intro_banner = false
 
 [node name="Chao" type="Sprite2D" parent="."]
 scale = Vector2(2, 2)

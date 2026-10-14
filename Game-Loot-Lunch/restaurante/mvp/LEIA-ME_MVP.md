@@ -36,16 +36,13 @@ sozinhas (F6) funcionam como antes. O MVP só pendura o nó de fluxo nelas ao ab
 
 ## Mudanças fora desta pasta
 
-- `UI/main_menu_rest.tscn` / `.gd`: agora usa o script `main_menu_rest.gd` (antes usava
-  o `menus/main/main_menu.gd` do jogo principal). Só Jogar / Créditos / Sair; arte e
-  animação iguais. A logo do GameLab só aparece na primeira vez que o menu abre.
-  O botão está escrito "Creditos" sem acento porque a fonte dos botões (Sta.Toasty)
-  não tem letras acentuadas.
+- `entities/npcs/dialogos/npc_estrada_bloqueio.dialogue`: Guarda a leste da `external_house`
+  pede a senha secreta ("Loot & Lunch") para liberar a entrada ao restaurante via `MvpFlow`.
 - `minigame/comum/minigame_banner.gd`: novo `choose(título, texto, opções) -> índice`
   (painel com botões; setas/ESPAÇO/ENTER/clique; ESC = último botão) e `button_theme`.
 - `minigame/boss_fight_vip.gd`: `offer_quit_on_fail` + sinal `quit_requested`
   (desligado por padrão: sem o MVP o comportamento é o mesmo de antes).
-- `project.godot`: cena principal = `restaurante/UI/main_menu_rest.tscn`.
+- `project.godot`: cena principal = `res://menus/main/main_menu.tscn`.
 
 ## Teste
 

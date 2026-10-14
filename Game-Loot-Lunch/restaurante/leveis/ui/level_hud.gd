@@ -11,15 +11,21 @@ class_name LevelHUD
 
 
 signal restart_requested
+signal exit_requested
 
 
 ## Tempo (s) em que o relógio fica vermelho e pisca.
 @export var warning_time: float = 30.0
 @export var normal_color: Color = Color(0.95, 0.92, 0.85)
-@export var warning_color: Color = Color(1.0, 0.4, 0.35)
-@export var goal_done_color: Color = Color(0.55, 1.0, 0.55)
+@export var warning_color: Color = Color(0.96, 0.28, 0.24)
+@export var goal_done_color: Color = Color(0.3, 0.88, 0.35)
 ## Segundos que o aviso de início fica na tela.
 @export var banner_time: float = 2.5
+
+
+@export_group("Audio")
+@export var hover_sound: AudioStream = preload("res://assets/sfx/menus/abs-pointer-2.mp3")
+@export var press_sound: AudioStream = preload("res://assets/sfx/menus/abs-confirm-2.mp3")
 
 
 @onready var time_label: Label = %Tempo
@@ -30,24 +36,45 @@ signal restart_requested
 @onready var end_title: Label = %Titulo
 @onready var end_stats: Label = %Resumo
 @onready var restart_button: Button = %JogarDeNovo
-
+@onready var exit_button: Button = %SairRestaurante
 
 var _goal: int = 0
+var _hover_audio: AudioStreamPlayer
+var _press_audio: AudioStreamPlayer
 
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	end_screen.hide()
 	banner.hide()
-	restart_button.pressed.connect(func() -> void: restart_requested.emit())
 
+	_hover_audio = AudioStreamPlayer.new()
+	_hover_audio.stream = hover_sound
+	add_child(_hover_audio)
 
-func _unhandled_input(event: InputEvent) -> void:
-	if not end_screen.visible:
-		return
-	if event.is_action_pressed(&"ui_accept"):
-		get_viewport().set_input_as_handled()
+	_press_audio = AudioStreamPlayer.new()
+	_press_audio.stream = press_sound
+	add_child(_press_audio)
+
+	restart_button.mouse_entered.connect(func() -> void:
+		if _hover_audio and _hover_audio.stream and end_screen.visible:
+			_hover_audio.play()
+	)
+	restart_button.pressed.connect(func() -> void:
+		if _press_audio and _press_audio.stream:
+			_press_audio.play()
 		restart_requested.emit()
+	)
+
+	exit_button.mouse_entered.connect(func() -> void:
+		if _hover_audio and _hover_audio.stream and end_screen.visible:
+			_hover_audio.play()
+	)
+	exit_button.pressed.connect(func() -> void:
+		if _press_audio and _press_audio.stream:
+			_press_audio.play()
+		exit_requested.emit()
+	)
 
 
 ## Começo da fase: guarda a meta e mostra o aviso "Fase 1 — Meta: 60".
@@ -73,12 +100,12 @@ func set_time_left(seconds: float) -> void:
 
 
 func set_money(amount: int) -> void:
-	money_label.text = "Meta %d / %d" % [amount, _goal]
+	money_label.text = "Meta: %d / %d" % [amount, _goal]
 	money_label.add_theme_color_override(&"font_color", goal_done_color if amount >= _goal else normal_color)
 
 
 func set_customers(served: int, lost: int) -> void:
-	customers_label.text = "Atendidos %d   Perdidos %d" % [served, lost]
+	customers_label.text = "Atendidos: %d   Perdidos: %d" % [served, lost]
 
 
 ## Fim do turno. `stats` aceita: money, goal, served, correct, lost.

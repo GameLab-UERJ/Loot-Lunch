@@ -24,7 +24,10 @@ func _ready() -> void:
 	
 	EnvironmentManager.is_outdoor = is_outdoor
 	
-	if not player_start_position:
+	if GlobalData.spawn_at_restaurant_exit:
+		GlobalData.spawn_at_restaurant_exit = false
+		player.position = Vector2(550, 290)
+	elif not player_start_position:
 		player.position = Vector2(35,305)
 	else:
 		player.global_position = player_start_position.global_position

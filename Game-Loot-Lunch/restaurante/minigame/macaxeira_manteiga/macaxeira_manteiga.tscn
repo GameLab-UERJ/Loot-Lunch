@@ -29,6 +29,7 @@ instructions = "A macaxeira cozinha sozinha na chapa. Aperte [ESPAÇO] para TIRA
 Ao mesmo tempo, a garrafa segue o MOUSE: SEGURE o clique para despejar a manteiga EM CIMA da macaxeira até a barra de MANTEIGA ficar na faixa. O fluxo engrossa: dose em pulsos!
 
 Sem manteiga ela gruda e cozinha mais rápido. Manteiga demais = encharcada."
+show_intro_banner = false
 
 [node name="Chao" type="Sprite2D" parent="."]
 scale = Vector2(2, 2)
