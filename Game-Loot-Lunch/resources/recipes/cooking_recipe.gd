@@ -48,6 +48,25 @@ func matches(data: ItemData) -> bool:
 	return data.id != &"" and data.id == input_data.id
 
 
+## Em que ponto este item está NESTA receita: 0 = cru, 1 = no ponto, 2 = torrado,
+## -1 = não é desta receita. (Mesmos valores de CookingSlot.Stage.)
+## É o que deixa um espetinho no ponto ou torrado voltar para o fogo.
+func get_stage_of(data: ItemData) -> int:
+	if _same_item(data, input_data):
+		return 0
+	if _same_item(data, perfect_data):
+		return 1
+	if _same_item(data, burnt_data):
+		return 2
+	return -1
+
+
+static func _same_item(a: ItemData, b: ItemData) -> bool:
+	if a == null or b == null:
+		return false
+	return a == b or (a.id != &"" and a.id == b.id)
+
+
 ## Linha da arte girando para o ponto dado (0 = cru, 1 = no ponto, 2 = torrado).
 ## Retorna 0 se esta receita não tem arte girando.
 func get_spin_row(stage: int) -> int:

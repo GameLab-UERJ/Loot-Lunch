@@ -18,6 +18,9 @@ var current_hand: HandComponent = null
 ## Dono da ÚLTIMA mão que segurou este item (ex.: o Chef que largou/arremessou).
 ## Usado pela entrega para saber quem recebe o pagamento.
 var last_carrier: Node = null
+## Segundos que este item já passou no fogo (CookingSlot grava ao tirar da boca).
+## -1 = nunca foi assado. Serve para ele voltar ao fogo de onde parou.
+var cook_elapsed: float = -1.0
 
 
 @onready var sprite: Sprite2D = get_node_or_null("Sprite2D")

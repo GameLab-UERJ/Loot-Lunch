@@ -7,6 +7,9 @@ class_name CookingSlot
 ##
 ## Componente puro: não conhece o jogador, nem a estação, nem o que é carne.
 ## Quem usa chama `place()`, `take()` e `discard()`, e escuta os sinais.
+## O item pode ENTRAR em qualquer ponto (`start_elapsed`): um espetinho no ponto que
+## volta para o fogo começa na barra verde e segue até torrar e sumir.
+## Ao sair, a boca grava em `CarryableItem.cook_elapsed` quanto tempo ele já assou.
 ## Serve para qualquer coisa que cozinhe com o tempo — basta pendurar numa estação.
 ##
 ## Filhos esperados (só a mão é obrigatória, o resto é opcional):
@@ -148,6 +151,15 @@ func get_progress() -> float:
 	return clampf(_elapsed / _vanish_time, 0.0, 1.0)
 
 
+## Ponto que corresponde a `seconds` de fogo, com os tempos desta boca.
+func stage_for_time(seconds: float) -> Stage:
+	if seconds >= _burnt_time:
+		return Stage.BURNT
+	if seconds >= _perfect_time:
+		return Stage.PERFECT
+	return Stage.RAW
+
+
 func color_for(stage: Stage) -> Color:
 	match stage:
 		Stage.PERFECT:
@@ -162,7 +174,10 @@ func color_for(stage: Stage) -> Color:
 
 ## Põe o item da mão nesta boca e começa a contar.
 ## `times` = (segundos para o ponto, para torrar, para sumir).
-func place(actor_hand: HandComponent, recipe: CookingRecipe, times: Vector3) -> bool:
+## `start_elapsed` = de que segundo começa (0 = cru do zero; `times.x` = começo do
+## ponto; `times.y` = começo do torrado). O ponto e a arte saem desse tempo.
+func place(actor_hand: HandComponent, recipe: CookingRecipe, times: Vector3,
+		start_elapsed: float = 0.0) -> bool:
 	if hand == null or is_occupied() or recipe == null:
 		return false
 	if actor_hand == null or not actor_hand.has_item():
@@ -176,8 +191,12 @@ func place(actor_hand: HandComponent, recipe: CookingRecipe, times: Vector3) -> 
 	_perfect_time = times.x
 	_burnt_time = times.y
 	_vanish_time = times.z
-	_elapsed = 0.0
-	_stage = Stage.RAW
+	_elapsed = clampf(start_elapsed, 0.0, _vanish_time)
+	_stage = stage_for_time(_elapsed)
+	# Garante que a arte parada do item bate com o ponto em que ele entrou.
+	var data: ItemData = _data_for(_stage)
+	if data and item.data != data:
+		item.data = data
 
 	if toco:
 		toco.visible = true
@@ -198,6 +217,7 @@ func take(actor_hand: HandComponent) -> bool:
 
 	var item: CarryableItem = hand.held_item
 	var stage: Stage = _stage
+	item.cook_elapsed = _elapsed  # para voltar ao fogo de onde parou
 	_set_outlined(null)  # a silhueta não vai junto com o item para a mão
 	if not hand.transfer_to(actor_hand):
 		return false

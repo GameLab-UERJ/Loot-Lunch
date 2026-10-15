@@ -8,7 +8,8 @@ class_name RestaurantLevel
 ##   HudFase            -> LevelHUD: tempo, meta, placar e tela de fim
 ##   Chef               -> a carteira (WalletComponent) dele é o dinheiro da fase
 ##
-## Fim do turno (tempo acabou): passou se o dinheiro >= meta.
+## Fim do turno (tempo acabou): passou se o dinheiro >= 1ª meta de estrela.
+## Estrelas: cada meta de `LevelData.star_goals` batida vale uma (ex.: 50/75/100).
 ## Chef caiu (vida 0) e `fail_on_chef_death`: derrota na hora.
 ##
 ## A fase não sabe montar cozinha nem cliente: a cena da fase (lvl_1.tscn...) posiciona
@@ -73,8 +74,8 @@ func _ready() -> void:
 	if hud:
 		hud.restart_requested.connect(restart)
 		hud.exit_requested.connect(exit_restaurant)
-		hud.setup(level_data.display_name, level_data.money_goal, level_data.duration,
-			wallet.currency_name if wallet else "Almas")
+		hud.setup(level_data.display_name, level_data.get_pass_goal(), level_data.duration,
+			wallet.currency_name if wallet else "Almas", level_data.get_star_goals())
 
 	_ensure_pause_menu()
 	_setup_bgm()
@@ -115,6 +116,11 @@ func get_money() -> int:
 	return wallet.amount if wallet else 0
 
 
+## Estrelas que o dinheiro atual vale (0 = ainda não passou).
+func get_stars() -> int:
+	return level_data.stars_for(get_money()) if level_data else 0
+
+
 func is_finished() -> bool:
 	return _finished
 
@@ -133,7 +139,10 @@ func finish(success: bool, reason: String = "") -> void:
 		hud.set_time_left(get_time_left())
 		hud.show_end(success, reason, {
 			"money": get_money(),
-			"goal": level_data.money_goal,
+			"goal": level_data.get_pass_goal(),
+			"goals": level_data.get_star_goals(),
+			"stars": get_stars(),
+			"max_stars": level_data.get_max_stars(),
 			"served": director.served_count if director else 0,
 			"correct": director.correct_count if director else 0,
 			"lost": director.lost_count if director else 0,
@@ -192,10 +201,11 @@ func _ensure_pause_menu() -> void:
 
 func _on_shift_finished() -> void:
 	var money: int = get_money()
-	if money >= level_data.money_goal:
+	var pass_goal: int = level_data.get_pass_goal()
+	if money >= pass_goal:
 		finish(true, "Fim do turno!")
 	else:
-		finish(false, "O tempo acabou. Faltaram %d." % (level_data.money_goal - money))
+		finish(false, "O tempo acabou. Faltaram %d." % (pass_goal - money))
 
 
 func _on_money_changed(amount: int, _delta: int) -> void:

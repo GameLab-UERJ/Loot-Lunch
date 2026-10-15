@@ -22,6 +22,11 @@ class_name CookingStation
 ##   4. Passou do tempo -> o espetinho queima, some e a estação avisa por
 ##      `item_vanished` (gancho para a consequência futura).
 ##   5. R (ação secundária) -> joga fora o espetinho da boca mais perto (o destacado).
+##   6. VOLTAR PARA O FOGO (`accept_cooked`): ESPAÇO com um espetinho NO PONTO ou
+##      TORRADO na mão também põe ele numa boca livre, e ele continua assando de onde
+##      parou: no ponto -> barra verde -> torra; torrado -> barra vermelha -> some.
+##      `resume_exact_time` escolhe se volta do segundo exato em que saiu ou do começo
+##      da barra daquele ponto.
 ##
 ## Cada boca mostra um BALÃO com o que está assando (carne, cogumelo ou metade/metade
 ## no misto). Os ícones vêm da receita (`CookingRecipe.bubble_icons`).
@@ -48,6 +53,15 @@ signal item_vanished(slot: CookingSlot, recipe: CookingRecipe)
 @export var burnt_time: float = 20.0
 ## A partir daqui o espetinho queima e SOME da churrasqueira.
 @export var vanish_time: float = 25.0
+
+@export_group("Voltar para o fogo")
+## Aceita de volta espetinhos NO PONTO e TORRADOS (não só os crus).
+## Eles continuam assando: no ponto vira torrado, torrado queima e some.
+@export var accept_cooked: bool = true
+## true  = volta do segundo exato em que saiu do fogo (o espetinho guarda isso).
+## false = volta do começo da barra do ponto dele (início do verde / do vermelho).
+## Item que nunca passou pelo fogo sempre começa do começo da barra.
+@export var resume_exact_time: bool = true
 
 @export_group("Áudio")
 @export var sizzle_stream: AudioStream = preload("res://assets/sfx/restaurante/estacoes/churrasqueira_sizzle.wav")
@@ -121,9 +135,21 @@ func get_slot_to_collect(actor: Node) -> CookingSlot:
 	return _nearest_occupied_slot(actor)
 
 
+## Receita deste item em QUALQUER ponto (cru, no ponto ou torrado), se `accept_cooked`.
+## Sem `accept_cooked`, é igual a `find_recipe` (só cru).
+func find_recipe_any_stage(data: ItemData) -> CookingRecipe:
+	if not accept_cooked:
+		return find_recipe(data)
+	for entry in recipes:
+		var recipe := entry as CookingRecipe
+		if recipe and recipe.get_stage_of(data) >= 0:
+			return recipe
+	return null
+
+
 ## A churrasqueira aceita este item agora?
 func can_accept(data: ItemData) -> bool:
-	return not is_full() and find_recipe(data) != null
+	return not is_full() and find_recipe_any_stage(data) != null
 
 
 # --- Interação ---
@@ -157,7 +183,8 @@ func place_item(actor_hand: HandComponent) -> bool:
 	if actor_hand == null or not actor_hand.has_item():
 		return false
 
-	var recipe: CookingRecipe = find_recipe(actor_hand.held_item.data)
+	var item: CarryableItem = actor_hand.held_item
+	var recipe: CookingRecipe = find_recipe_any_stage(item.data)
 	if recipe == null:
 		return false
 
@@ -165,7 +192,23 @@ func place_item(actor_hand: HandComponent) -> bool:
 	if slot == null:
 		return false
 
-	return slot.place(actor_hand, recipe, recipe.resolve_times(get_default_times()))
+	var times: Vector3 = recipe.resolve_times(get_default_times())
+	var stage: int = maxi(recipe.get_stage_of(item.data), 0)
+	return slot.place(actor_hand, recipe, times, get_resume_time(item, stage, times))
+
+
+## Segundo em que `item` (no ponto `stage`) volta a assar.
+## Fica sempre DENTRO da barra do ponto dele: um espetinho no ponto nunca volta cru,
+## e um torrado nunca volta no ponto.
+func get_resume_time(item: CarryableItem, stage: int, times: Vector3) -> float:
+	var starts: Array[float] = [0.0, times.x, times.y]
+	var ends: Array[float] = [times.x, times.y, times.z]
+	var start: float = starts[clampi(stage, 0, 2)]
+	var end: float = ends[clampi(stage, 0, 2)]
+	if not resume_exact_time or item == null or item.cook_elapsed < 0.0:
+		return start
+	# Um pouquinho antes do fim da barra, para não trocar de ponto no mesmo quadro.
+	return clampf(item.cook_elapsed, start, maxf(start, end - 0.05))
 
 
 ## Tira o espetinho da boca mais perto de quem interagiu (mão precisa estar vazia).
