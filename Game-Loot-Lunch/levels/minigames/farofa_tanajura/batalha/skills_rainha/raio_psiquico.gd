@@ -19,6 +19,14 @@ extends FormigaSkill
 @export var prompt_offset: Vector2 = Vector2(0, -26)
 @export var charge_anim: SheetAnimation
 
+@export_group("Destaque da esfera")
+## Contorno claro e brilho atrás da esfera que cresce na boca (para não sumir no cenário).
+@export var orb_outline_color: Color = Color(1.0, 1.0, 1.0, 0.95)
+@export var orb_glow_color: Color = Color(0.9, 0.3, 1.0, 1.0)
+## Raio do brilho em pixels da arte da esfera (cresce junto com ela).
+@export var orb_glow_radius: float = 11.0
+@export var orb_brightness: float = 1.2
+
 @export_group("Áudio")
 @export var sfx_beam: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/psychic_beam.wav")
 
@@ -35,9 +43,16 @@ func _execute(battle: TurnBattle, ant: FormigaBattler, chef: ChefBattler) -> voi
 	# 1. Carga: esfera crescendo na boca.
 	var orb: AnimatedSprite2D = charge_anim.create_sprite() if charge_anim else null
 	if orb:
+		orb.modulate = Color(orb_brightness, orb_brightness, orb_brightness, 1.0)
+		if orb_outline_color.a > 0.0:
+			SpriteOutline.show_on(orb, orb_outline_color, 1.0)
+		if orb_glow_color.a > 0.0:
+			var halo: GlowHalo = GlowHalo.attach(orb, orb_glow_color, orb_glow_radius)
+			halo.fixed_screen_size = false
 		battle.add_effect(orb)
 		orb.global_position = mouth
-		orb.scale = Vector2.ZERO
+		# Nasce pequena (não zero: o contorno fica pesado com escala perto de 0).
+		orb.scale = Vector2(0.3, 0.3)
 		var grow := orb.create_tween()
 		grow.tween_property(orb, "scale", Vector2(3, 3), charge_time).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	ant.squash(Vector2(0.9, 1.1), charge_time)

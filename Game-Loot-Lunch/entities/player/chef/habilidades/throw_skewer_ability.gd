@@ -95,7 +95,6 @@ var _is_charged: bool = false
 var _item: CarryableItem = null
 var _hand: HandComponent = null
 var _movement: MovementComponent = null
-var _normal_max_speed: int = -1
 var _charge_player: AudioStreamPlayer2D = null
 
 
@@ -317,16 +316,16 @@ func _end_charge() -> void:
 	_item = null
 
 
+## Lentidão enquanto carrega. Passa pelo SlowComponent (igual às magias da Mandy) em
+## vez de escrever no max_speed: antes, se o chef começasse a carregar já lento, o
+## arremesso guardava a velocidade lenta e devolvia no fim, e a lentidão ficava presa.
 func _set_slow(value: bool) -> void:
-	if _movement == null:
+	if user == null:
 		return
 	if value:
-		if _normal_max_speed < 0:
-			_normal_max_speed = _movement.max_speed
-		_movement.max_speed = int(_normal_max_speed * move_speed_scale)
-	elif _normal_max_speed >= 0:
-		_movement.max_speed = _normal_max_speed
-		_normal_max_speed = -1
+		SlowComponent.apply(user, self, 1.0 - move_speed_scale, 0.0, Color.WHITE)
+	else:
+		SlowComponent.remove(user, self)
 
 
 func _get_facing() -> Vector2:

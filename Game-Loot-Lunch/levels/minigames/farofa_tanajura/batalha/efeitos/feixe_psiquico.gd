@@ -9,10 +9,12 @@ class_name PsychicBeam
 ##   await feixe.retract()  /  await feixe.vanish()
 
 
-@export var width: float = 10.0
-@export var core_color: Color = Color(1.0, 0.95, 1.0, 1.0)
-@export var glow_color: Color = Color(0.75, 0.35, 1.0, 0.75)
-@export var edge_color: Color = Color(0.45, 0.1, 0.65, 0.55)
+@export var width: float = 12.0
+@export var core_color: Color = Color(1.0, 0.97, 1.0, 1.0)
+@export var glow_color: Color = Color(0.8, 0.35, 1.0, 0.95)
+@export var edge_color: Color = Color(0.45, 0.1, 0.65, 0.85)
+## Contorno escuro por fora (contraste com o chão claro da arena). Alfa 0 = sem.
+@export var outline_color: Color = Color(0.18, 0.02, 0.28, 0.6)
 
 
 var from: Vector2
@@ -68,7 +70,9 @@ func _draw() -> void:
 		return
 	var normal: Vector2 = dir.orthogonal().normalized()
 	var flicker: float = 0.85 + 0.15 * sin(_clock * 40.0)
-	for layer in [[width * 1.8, edge_color, 3.0], [width, glow_color, 2.0], [width * 0.4, core_color, 1.0]]:
+	for layer in [[width * 2.3, outline_color, 3.0], [width * 1.8, edge_color, 3.0], [width, glow_color, 2.0], [width * 0.45, core_color, 1.0]]:
+		if layer[1].a <= 0.0:
+			continue
 		var line := PackedVector2Array()
 		var steps: int = 18
 		for i in steps + 1:

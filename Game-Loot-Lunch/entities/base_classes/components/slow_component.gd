@@ -17,6 +17,14 @@ class_name SlowComponent
 ##
 ## Mexe no `max_speed` do MovementComponent do personagem (ou no `max_speed` do próprio
 ## personagem, se ele não tiver MovementComponent). Dash não é afetado.
+##
+## REGRA: quem quiser deixar o personagem mais lento usa ESTE componente (inclusive o
+## próprio chef, como o arremesso carregando). Ninguém mais escreve no `max_speed`:
+## senão um guarda a velocidade lenta e devolve depois, e a lentidão fica "presa".
+##
+## SEGURANÇA: nenhuma lentidão dura mais que `max_source_time` desde a última vez que
+## foi aplicada (mesmo as "até alguém tirar"). Assim o chef nunca fica lento para sempre
+## se uma fonte esquecer de tirar. Reaplicar renova o prazo.
 
 
 signal slow_changed(multiplier: float)
@@ -36,12 +44,15 @@ const NODE_NAME: StringName = &"SlowComponent"
 @export var tint_enabled: bool = true
 ## Menor velocidade possível, em fração da normal (nunca fica 100% parado).
 @export_range(0.0, 1.0) var min_multiplier: float = 0.05
+## Prazo máximo de QUALQUER lentidão (segundos desde a última aplicação). 0 = sem limite.
+## 12 s cobre o demoninho grudado (8 s) e a bruxaria (4 s) com folga.
+@export var max_source_time: float = 12.0
 
 
 ## Multiplicador atual (1 = normal, 0.1 = 10% da velocidade).
 var multiplier: float = 1.0
 
-## chave da fonte -> {percent, time_left (<0 = sem prazo), tint}
+## chave da fonte -> {percent, time_left (<0 = sem prazo), age, tint, ref}
 var _sources: Dictionary = {}
 var _owner: Node = null
 var _movement: Node = null
@@ -108,6 +119,7 @@ func add_slow(source: Variant, percent: float, duration: float = 0.0,
 	_sources[_key(source)] = {
 		&"percent": clampf(percent, 0.0, 1.0),
 		&"time_left": duration if duration > 0.0 else -1.0,
+		&"age": 0.0,
 		&"tint": tint,
 		&"ref": weakref(source) if source is Object else null,
 	}
@@ -139,6 +151,11 @@ func _physics_process(delta: float) -> void:
 			_sources.erase(key)  # a fonte sumiu (ex.: demoninho morreu)
 			changed = true
 			continue
+		entry[&"age"] += delta
+		if max_source_time > 0.0 and entry[&"age"] >= max_source_time:
+			_sources.erase(key)  # segurança: lentidão esquecida
+			changed = true
+			continue
 		if entry[&"time_left"] > 0.0:
 			entry[&"time_left"] -= delta
 			if entry[&"time_left"] <= 0.0:
@@ -166,7 +183,8 @@ func _refresh() -> void:
 		var percent: float = entry[&"percent"]
 		if stacking == Stacking.MULTIPLY:
 			value *= 1.0 - percent
-		if percent >= strongest:
+		# Empate: prefere a cor de quem pinta (o arremesso carregando usa branco = sem cor).
+		if percent > strongest or (is_equal_approx(percent, strongest) and entry[&"tint"] != Color.WHITE):
 			strongest = percent
 			tint = entry[&"tint"]
 	if stacking == Stacking.STRONGEST:
@@ -195,11 +213,14 @@ func _find_movement(node: Node) -> Node:
 	return null
 
 
+## Velocidade NORMAL. Lê do personagem (o valor do Inspector, que ninguém muda em jogo)
+## e não do MovementComponent, que pode estar alterado por outra coisa na hora em que
+## este componente nasce (ex.: o chef carregando o arremesso).
 func _read_speed() -> float:
-	if _movement and &"max_speed" in _movement:
-		return float(_movement.max_speed)
 	if _owner and &"max_speed" in _owner:
 		return float(_owner.max_speed)
+	if _movement and &"max_speed" in _movement:
+		return float(_movement.max_speed)
 	return 0.0
 
 

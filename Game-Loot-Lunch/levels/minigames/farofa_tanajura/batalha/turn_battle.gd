@@ -41,6 +41,14 @@ signal battle_finished(victory: bool)
 @export var target_outline_color: Color = Color.WHITE
 @export var target_outline_width: float = 2.0
 
+@export_group("Vez do chef")
+## AURA DA VEZ (TurnAura) no chef enquanto ele PODE ATACAR: silhueta dourada, anel no
+## chão e faíscas, com som quando a barra enche. Desligado = sem aura.
+@export var show_turn_aura: bool = true
+@export var turn_aura_color: Color = Color(1.0, 0.82, 0.25, 1.0)
+## Som quando a vez do chef começa. Vazio = usa o padrão da TurnAura.
+@export var turn_start_sfx: AudioStream
+
 @export_group("Áudio")
 @export var victory_stream: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/battle_victory.wav")
 @export var defeat_stream: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/battle_defeat.wav")
@@ -107,6 +115,9 @@ var acting: Battler = null
 var deciding: bool = false
 var decision_left: float = 0.0
 var _saved_time_scale: float = 1.0
+var _turn_aura: TurnAura = null
+## A barra do chef encheu e o som da vez ainda não tocou.
+var _turn_sound_pending: bool = true
 
 
 func setup(queue: Array[FormigaBattler]) -> void:
@@ -289,6 +300,42 @@ func _process(delta: float) -> void:
 	if running and not _chef_acting and chef and not chef.is_dead() \
 			and chef.wait.is_ready() and _queued_skill == null:
 		chef.tick_rest(delta)
+	_update_turn_aura()
+
+
+## O chef pode escolher um ataque AGORA? (barra cheia, ninguém agindo, menu liberado)
+func is_chef_turn() -> bool:
+	if not running or chef == null or chef.is_dead() or chef.wait == null:
+		return false
+	if not chef.wait.is_ready() or _chef_acting or _queued_skill != null:
+		return false  # com ataque agendado ele age na hora: não precisa avisar
+	# Durante o ataque de uma formiga o chef não age (exceto na canalização da Rainha).
+	return not _busy or _channeling
+
+
+## Liga/desliga a AURA DA VEZ no chef. O som toca UMA vez por barra cheia: quando a
+## aura acende pela primeira vez (mesmo que a barra tenha enchido durante o ataque de
+## uma formiga), e não de novo se a aura apagar e voltar na mesma vez.
+func _update_turn_aura() -> void:
+	if not show_turn_aura or chef == null:
+		return
+	if _turn_aura == null:
+		_turn_aura = TurnAura.attach(chef, chef.sprite)
+		if _turn_aura == null:
+			return
+		_turn_aura.color = turn_aura_color
+		if turn_start_sfx:
+			_turn_aura.start_sfx = turn_start_sfx
+		_turn_aura.feet_offset = Vector2(0.0, chef.ground_offset)
+	var bar_full: bool = running and chef.wait != null and chef.wait.is_ready() and not chef.is_dead()
+	if not bar_full:
+		_turn_sound_pending = true  # na próxima vez que encher, toca de novo
+	var wanted: bool = is_chef_turn()
+	if wanted and not _turn_aura.active:
+		_turn_aura.set_active(true, _turn_sound_pending)
+		_turn_sound_pending = false
+	elif not wanted and _turn_aura.active:
+		_turn_aura.set_active(false)
 
 
 func stop() -> void:
@@ -296,6 +343,8 @@ func stop() -> void:
 		Engine.time_scale = _saved_time_scale
 	running = false
 	deciding = false
+	if _turn_aura:
+		_turn_aura.set_active(false)
 	acting = null
 	target = null
 	_update_target_outline()

@@ -5,6 +5,10 @@ extends FormigaSkill
 ## até um pouco antes das formigas (HorizontalDodge). No fim ele volta ao lugar.
 ## Cada esfera que acerta = `damage`; depois de levar uma, fica `invulnerable_time`
 ## piscando (não leva duas seguidas).
+##
+## DESTAQUE (para não sumir no cenário): cada esfera cai maior, com contorno claro
+## (SpriteOutline), brilho atrás (GlowHalo) e um rastro; o aviso no chão é mais forte
+## e tem borda clara piscando.
 
 
 @export var orb_count: int = 12
@@ -22,8 +26,24 @@ extends FormigaSkill
 @export var gap_to_enemies: float = 70.0
 @export var orb_anim: SheetAnimation
 @export var splash_anim: SheetAnimation
-@export var warn_color: Color = Color(0.85, 0.4, 1.0, 0.55)
-@export var zone_color: Color = Color(0.85, 0.55, 1.0, 0.12)
+@export var warn_color: Color = Color(0.75, 0.2, 1.0, 0.8)
+@export var zone_color: Color = Color(0.85, 0.55, 1.0, 0.22)
+
+@export_group("Destaque da esfera")
+## Tamanho da esfera caindo (a arte é 16 px; 2 = como era antes).
+@export var orb_scale: float = 2.6
+## Clareia a esfera (1 = cor da arte).
+@export var orb_brightness: float = 1.2
+## Contorno em volta da esfera. Alfa 0 = sem contorno.
+@export var orb_outline_color: Color = Color(1.0, 1.0, 1.0, 0.95)
+## Brilho redondo atrás da esfera (GlowHalo). Alfa 0 = sem brilho.
+@export var orb_glow_color: Color = Color(0.9, 0.3, 1.0, 1.0)
+@export var orb_glow_radius: float = 28.0
+## Rastro atrás da esfera caindo (pixels de comprimento). 0 = sem rastro.
+@export var trail_length: float = 70.0
+@export var trail_color: Color = Color(0.95, 0.55, 1.0, 0.75)
+## Borda do aviso no chão (pisca).
+@export var warn_rim_color: Color = Color(1.0, 0.88, 1.0, 1.0)
 
 @export_group("Áudio")
 @export var sfx_plasma_fall: AudioStream = preload("res://assets/sfx/restaurante/minigames/batalha/plasma_orb_fall.wav")
@@ -102,6 +122,32 @@ func _execute(battle: TurnBattle, ant: FormigaBattler, chef: ChefBattler) -> voi
 		chef.face(chef.global_position + Vector2.RIGHT * 10.0)
 
 
+## Deixa a esfera fácil de ver no cenário: maior, mais clara, contorno, brilho e rastro.
+func _highlight_orb(orb: Node2D) -> void:
+	orb.scale = Vector2(orb_scale, orb_scale)
+	orb.modulate = Color(orb_brightness, orb_brightness, orb_brightness, 1.0)
+	if orb_outline_color.a > 0.0 and (orb is AnimatedSprite2D or orb is Sprite2D):
+		SpriteOutline.show_on(orb, orb_outline_color, 1.0)
+	if orb_glow_color.a > 0.0:
+		GlowHalo.attach(orb, orb_glow_color, orb_glow_radius)
+	if trail_length > 0.0:
+		var trail := Line2D.new()
+		trail.show_behind_parent = true
+		# Em coordenadas da esfera (que está escalada): divide pela escala.
+		var length: float = trail_length / maxf(orb_scale, 0.01)
+		trail.points = PackedVector2Array([Vector2.ZERO, Vector2(0.0, -length)])
+		trail.width = 20.0 / maxf(orb_scale, 0.01)  # ~20 px na tela
+		var fade := Gradient.new()
+		fade.set_color(0, trail_color)
+		fade.set_color(1, Color(trail_color.r, trail_color.g, trail_color.b, 0.0))
+		trail.gradient = fade
+		var taper := Curve.new()
+		taper.add_point(Vector2(0.0, 1.0))
+		taper.add_point(Vector2(1.0, 0.2))
+		trail.width_curve = taper
+		orb.add_child(trail)
+
+
 ## Espera contando o tempo de invulnerabilidade.
 func _wait_ticking(seconds: float) -> void:
 	var left: float = seconds
@@ -122,6 +168,16 @@ func _drop(x: float, ground_y: float) -> void:
 	mark.polygon = points
 	mark.color = warn_color
 	mark.z_index = -4
+	if warn_rim_color.a > 0.0:
+		var rim := Line2D.new()
+		rim.points = points
+		rim.closed = true
+		rim.width = 2.0
+		rim.default_color = warn_rim_color
+		mark.add_child(rim)
+		var blink := rim.create_tween().set_loops()
+		blink.tween_property(rim, "modulate:a", 0.35, 0.12)
+		blink.tween_property(rim, "modulate:a", 1.0, 0.12)
 	mark.add_to_group(&"esfera_aviso")
 	mark.set_meta(&"impact_time", Time.get_ticks_msec() / 1000.0 + warn_time + fall_time)
 	_battle.add_effect(mark)
@@ -133,6 +189,7 @@ func _drop(x: float, ground_y: float) -> void:
 
 	# 2. Queda em linha reta.
 	var orb: Node2D = orb_anim.create_sprite() if orb_anim else Node2D.new()
+	_highlight_orb(orb)
 	_battle.add_effect(orb)
 	_battle.play_sfx(sfx_plasma_fall, randf_range(0.95, 1.05))
 	var hit_y: float = ground_y - 14.0
