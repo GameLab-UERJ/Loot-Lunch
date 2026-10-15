@@ -142,7 +142,7 @@ func _is_in_restaurant() -> bool:
 	var scene := get_tree().current_scene
 	if scene == null:
 		return false
-	return scene is RestaurantLevel or scene.name == "BossFightVip" or scene.scene_file_path.begins_with("res://restaurante/")
+	return scene is RestaurantLevel or scene.name == "BossFightVip" or scene.scene_file_path.begins_with("res://levels/restaurant/") or scene.scene_file_path.begins_with("res://levels/minigames/")
 
 
 func _return_from_menus() -> void:
