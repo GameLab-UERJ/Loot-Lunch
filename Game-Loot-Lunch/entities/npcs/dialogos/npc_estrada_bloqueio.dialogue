@@ -1,7 +1,11 @@
 ~ start
 
-Guarda: Desculpe, essa estrada está interditada.
-
-Guarda: Até os reparos terminarem, ninguém pode seguir por aqui.
+Guarda: Alto lá, viajante! Esta estrada está interditada.
+Guarda: Apenas quem conhece a senha secreta tem permissão para entrar na cozinha do restaurante.
+- Osso e Brasa
+	Guarda: [shake rate=20 level=10]Senha correta![/shake]
+	Guarda: Pode passar. O chef está te esperando na cozinha! Bom apetite!
+	do enter_restaurant()
+	=> END
 
 => END

@@ -231,10 +231,49 @@ func _on_balloon_gui_input(event: InputEvent) -> void:
 		next(dialogue_line.next_id)
 
 
+const DEFAULT_SHEET: Texture2D = preload("res://assets/art/entities/npcs/random/Felipe-Castro-Skeletons-Sheet.png")
+
+var custom_portraits: Dictionary = {
+	"Chef": {
+		"atlas": preload("res://assets/art/restaurant/chef/art/jscoutinho_idle_L_34F.png"),
+		"region": Rect2(4, 0, 24, 24),
+		"flip_h": false
+	},
+	"Coronel Ossvaldo": {
+		"atlas": preload("res://assets/art/restaurant/minigames/farofa_tanajura/Entities/NPC/vip-m/idle/jscoutinho_idle_VIP_34F.png"),
+		"region": Rect2(4, 0, 24, 24),
+		"flip_h": true
+	},
+	"VIP": {
+		"atlas": preload("res://assets/art/restaurant/minigames/farofa_tanajura/Entities/NPC/vip-m/idle/jscoutinho_idle_VIP_34F.png"),
+		"region": Rect2(4, 0, 24, 24),
+		"flip_h": true
+	}
+}
+
+
 func set_portrait(npc : String = "Default") -> void:
+	if npc.is_empty():
+		%Portrait.hide()
+		return
+	%Portrait.show()
+	if custom_portraits.has(npc):
+		var data: Dictionary = custom_portraits[npc]
+		var atlas_tex := AtlasTexture.new()
+		atlas_tex.atlas = data["atlas"]
+		atlas_tex.region = data["region"]
+		%Portrait.texture = atlas_tex
+		%Portrait.flip_h = data.get("flip_h", false)
+		return
+	%Portrait.flip_h = false
+	var atlas_tex := %Portrait.texture as AtlasTexture
+	if atlas_tex == null or atlas_tex.atlas != DEFAULT_SHEET:
+		atlas_tex = AtlasTexture.new()
+		atlas_tex.atlas = DEFAULT_SHEET
+		%Portrait.texture = atlas_tex
 	if not portraits_y.get(npc):
 		npc = "Default"
-	(%Portrait.texture as AtlasTexture).region = Rect2(88,portraits_y[npc],14,14)
+	atlas_tex.region = Rect2(88, portraits_y[npc], 14, 14)
 
 
 func _on_responses_menu_response_selected(response: DialogueResponse) -> void:

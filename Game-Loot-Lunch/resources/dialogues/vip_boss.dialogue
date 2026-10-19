@@ -1,0 +1,59 @@
+~ intro_opening
+Ossos & Brasas. Hora do almoço...
+=> END
+
+~ intro_meeting
+Coronel Ossvaldo: Com licença! É aqui o tal do Ossos & Brasas? O cheirinho desse churrasco chega até o Primeiro Andar da Masmorra!
+Chef: É aqui mesmo! Seja bem-vindo! Mesa pra um?
+Coronel Ossvaldo: Pra um, sim. Permita que eu me apresente: Coronel Ossvaldo, o maior fazendeiro do Primeiro Andar da Masmorra!
+Chef: Fazendeiro... dentro de uma masmorra? E planta o quê lá embaixo? Cogumelo?
+Coronel Ossvaldo: Cogumelo é coisa de amador! Eu crio FORMIGAS. Tanajuras gigantes, do tamanho de um bezerro!
+Chef: ...do tamanho de um bezerro.
+Coronel Ossvaldo: Ganharam até prêmio na feira dos goblins! Só tem um probleminha: são milhares. Elas comem a cerca. Comem o celeiro...
+Coronel Ossvaldo: Semana passada comeram o meu chapéu. Esse aqui é o reserva.
+Coronel Ossvaldo: Aí eu pensei: se não dá pra vencer elas... será que dá pra COMER elas? Dá pra fazer algum prato com isso, chef?
+Chef: Coronel... o senhor está falando com um cozinheiro que nasceu no Rio de Janeiro.
+Coronel Ossvaldo: Rio de quê?
+Chef: Deixa pra lá. O importante é que na minha terra a gente come tanajura com farofa! E eu já tenho uma receita em mente.
+Chef: Carne de sol, macaxeira na manteiga de garrafa e uma farofa de tanajura de respeito. O prato completo!
+Coronel Ossvaldo: Não entendi metade das palavras, mas gostei da confiança! Fechado!
+Coronel Ossvaldo: Ah, só um detalhe: eu trouxe umas formigas de amostra... e elas não estão muito felizes com a ideia.
+Chef: Como assim, "não estão muito felizes"?
+Coronel Ossvaldo: Detalhe, detalhe! Vou sentar ali e esperar. Capricha, hein? Meu paladar é exigente!
+=> END
+
+~ intro_after_sit
+Chef: ..."detalhe", ele disse.
+Chef: Tudo bem. Avental no lugar, frigideira na mão. Mãos à obra!
+=> END
+
+~ review_intro
+Coronel Ossvaldo: Vejamos se este lugar merece a minha visita...
+=> END
+
+~ outro_perfect
+Coronel Ossvaldo: Chef... em trezentos anos de masmorra, nunca comi nada assim. E olha que eu já comi um dragão. Pequeno, mas era dragão.
+Chef: Obrigado, Coronel! O segredo é a manteiga de garrafa. E um pouquinho de saudade de casa.
+Coronel Ossvaldo: Escuta aqui: passa lá na minha fazenda, no Primeiro Andar da Masmorra. Formiga é o que não falta...
+Coronel Ossvaldo: ...e pra você eu faço preço de amigo. Um ÓTIMO negócio! Pode trazer a frigideira.
+Chef: Fechado! Só avisa às formigas que eu vou com fome.
+Coronel Ossvaldo: HAHAHA! Elas vão adorar a notícia. Quer dizer... não vão, não.
+=> END
+
+~ outro_good
+Coronel Ossvaldo: Muito bem, chef! Não é a comida da minha avó... mas passou bem perto.
+Coronel Ossvaldo: Olha, se quiser, passa lá na minha fazenda no Primeiro Andar da Masmorra. A gente faz um ótimo negócio com essas formigas!
+Chef: Pode deixar, Coronel! Vou levar a frigideira.
+Coronel Ossvaldo: Leva duas. Elas mordem.
+=> END
+
+~ outro_medium
+Coronel Ossvaldo: Bom... pelo menos agora essas formigas servem pra alguma coisa além de comer a minha cerca.
+Chef: Na próxima eu capricho mais, Coronel!
+=> END
+
+~ outro_bad
+Coronel Ossvaldo: Acho que vou continuar só criando elas mesmo...
+Chef: ...a farofa estava meio crocante demais, né?
+Coronel Ossvaldo: A farofa MORDEU a minha língua, chef.
+=> END

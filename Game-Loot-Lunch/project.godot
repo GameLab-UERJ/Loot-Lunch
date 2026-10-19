@@ -16,7 +16,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 config/name="LootLunch"
 config/version="1.0.0"
-run/main_scene="uid://bb4t1nykti8br"
+run/main_scene="res://menus/main/main_menu.tscn"
 config/features=PackedStringArray("4.7", "Mobile")
 boot_splash/image="uid://r63dkyw36fm0"
 config/icon="res://icon.svg"
@@ -177,7 +177,7 @@ chef_ability_shadow={
 
 [internationalization]
 
-locale/translations_pot_files=PackedStringArray("res://entities/npcs/dialogos/npc_barco.dialogue", "res://entities/npcs/dialogos/npc_ponte_aviso.dialogue", "res://entities/npcs/dialogos/placa_quebrada.dialogue", "res://entities/npcs/dialogos/npc_estrada_bloqueio.dialogue", "res://entities/npcs/dialogos/placa_direcoes.dialogue", "res://entities/npcs/dialogos/placeholder.dialogue", "res://entities/npcs/dialogos/placa_dungeon_1.dialogue", "res://entities/npcs/dialogos/placa_dungeon_2.dialogue", "res://entities/npcs/dialogos/placa_dungeon_3.dialogue", "res://entities/npcs/dialogos/npc_dungeon_externa.dialogue", "res://entities/npcs/dialogos/npc_dungeon_externa_2.dialogue", "res://entities/npcs/dialogos/npc_dungeon_interna.dialogue", "res://entities/npcs/dialogos/guide_man_quest.dialogue", "res://entities/npcs/dialogos/final_npc.dialogue")
+locale/translations_pot_files=PackedStringArray("res://entities/npcs/dialogos/npc_barco.dialogue", "res://entities/npcs/dialogos/npc_ponte_aviso.dialogue", "res://entities/npcs/dialogos/placa_quebrada.dialogue", "res://entities/npcs/dialogos/npc_estrada_bloqueio.dialogue", "res://entities/npcs/dialogos/placa_direcoes.dialogue", "res://entities/npcs/dialogos/placeholder.dialogue", "res://entities/npcs/dialogos/placa_dungeon_1.dialogue", "res://entities/npcs/dialogos/placa_dungeon_2.dialogue", "res://entities/npcs/dialogos/placa_dungeon_3.dialogue", "res://entities/npcs/dialogos/npc_dungeon_externa.dialogue", "res://entities/npcs/dialogos/npc_dungeon_externa_2.dialogue", "res://entities/npcs/dialogos/npc_dungeon_interna.dialogue", "res://entities/npcs/dialogos/guide_man_quest.dialogue", "res://entities/npcs/dialogos/final_npc.dialogue", "res://resources/dialogues/vip_boss.dialogue")
 
 [layer_names]
 

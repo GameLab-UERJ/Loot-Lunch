@@ -1,8 +1,8 @@
 extends Node2D
 
 
-const CARRYABLE_ITEM_SCENE: PackedScene = preload("res://restaurante/itens/carryable_item.tscn")
-const RAW_SKEWER_DATA: ItemData = preload("res://restaurante/itens/dados/espetinho_carne_cru.tres")
+const CARRYABLE_ITEM_SCENE: PackedScene = preload("res://entities/items/restaurant/carryable_item.tscn")
+const RAW_SKEWER_DATA: ItemData = preload("res://entities/items/restaurant/dados/espetinho_carne_cru.tres")
 
 
 @onready var flame_event: FlameRandomEvent = $Churrasqueira/FlameRandomEvent

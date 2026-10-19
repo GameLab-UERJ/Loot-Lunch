@@ -1,0 +1,28 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://levels/minigames/boss_fight_vip.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://levels/minigames/carne_sol/carne_sol.tscn" id="2_carne"]
+[ext_resource type="PackedScene" path="res://levels/minigames/macaxeira_manteiga/macaxeira_manteiga.tscn" id="3_macaxeira"]
+[ext_resource type="PackedScene" path="res://levels/minigames/farofa_tanajura/farofa_tanajura.tscn" id="4_farofa"]
+[ext_resource type="PackedScene" path="res://levels/minigames/final_vip/avaliacao_vip.tscn" id="5_entrega"]
+[ext_resource type="Texture2D" path="res://assets/art/restaurant/minigames/farofa_tanajura/prato_vip_completo.png" id="6_prato"]
+[ext_resource type="Script" path="res://levels/minigames/comum/minigame_banner.gd" id="7_banner"]
+[ext_resource type="PackedScene" path="res://levels/minigames/intro_vip/intro_vip.tscn" id="8_intro"]
+[ext_resource type="PackedScene" path="res://levels/minigames/comum/salao_vip.tscn" id="9_salao"]
+
+[node name="BossFightVip" type="Node2D" node_paths=PackedStringArray("stage_holder", "banner")]
+script = ExtResource("1_script")
+intro_stage = ExtResource("8_intro")
+stages = Array[PackedScene]([ExtResource("2_carne"), ExtResource("3_macaxeira"), ExtResource("4_farofa")])
+delivery_stage = ExtResource("5_entrega")
+final_dish_texture = ExtResource("6_prato")
+stage_holder = NodePath("Etapas")
+banner = NodePath("Banner")
+
+[node name="SalaoFundo" parent="." instance=ExtResource("9_salao")]
+z_index = -100
+
+[node name="Etapas" type="Node2D" parent="."]
+
+[node name="Banner" type="CanvasLayer" parent="."]
+script = ExtResource("7_banner")

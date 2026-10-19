@@ -1,0 +1,381 @@
+extends Node2D
+class_name CookingSlot
+## UMA "boca" de uma estação que cozinha pelo TEMPO (churrasqueira, fogão, forno...).
+##
+## Segura um item, conta o tempo e troca a arte sozinho:
+##   cru  ->  no ponto  ->  torrado  ->  queima e some.
+##
+## Componente puro: não conhece o jogador, nem a estação, nem o que é carne.
+## Quem usa chama `place()`, `take()` e `discard()`, e escuta os sinais.
+## O item pode ENTRAR em qualquer ponto (`start_elapsed`): um espetinho no ponto que
+## volta para o fogo começa na barra verde e segue até torrar e sumir.
+## Ao sair, a boca grava em `CarryableItem.cook_elapsed` quanto tempo ele já assou.
+## Serve para qualquer coisa que cozinhe com o tempo — basta pendurar numa estação.
+##
+## Filhos esperados (só a mão é obrigatória, o resto é opcional):
+##   Mao     -> HandComponent        onde o item aparece em cima da boca
+##   Barra   -> ProgressBarComponent barrinha do tempo (muda de cor por estágio)
+##   Toco    -> Sprite2D             cotoco de madeira: "tem espetinho aqui"
+##   Girando -> SheetRowSprite       espetinho GIRANDO no fogo (esconde a arte parada
+##                                   do item enquanto ele está na boca). A linha vem
+##                                   da receita (`CookingRecipe.spin_row`).
+##   Efeito  -> SpriteSheetEffect    toca quando o item queima e some
+##   Balao   -> IconBubble           balão com o ícone do que está assando
+##                                   (vem da receita: `CookingRecipe.bubble_icons`)
+##
+## DESTAQUE: `set_targeted(true)` põe uma silhueta no espetinho (girando ou parado)
+## e realça o balão. A estação chama isso na boca que o ESPAÇO vai esvaziar.
+
+
+## Ponto do cozimento. RAW = ainda cru, PERFECT = no ponto, BURNT = torrado.
+enum Stage { RAW, PERFECT, BURNT }
+
+
+signal stage_changed(stage: Stage)
+signal item_placed(item: CarryableItem)
+signal item_taken(item: CarryableItem, stage: Stage)
+## O item passou do tempo, queimou e sumiu. (Gancho para a consequência futura.)
+signal item_vanished(recipe: CookingRecipe)
+
+
+@export_group("Cores da barra")
+## Enquanto ainda está cru.
+@export var raw_color: Color = Color(0.95, 0.72, 0.25, 1.0)
+## Quando chega no ponto.
+@export var perfect_color: Color = Color(0.35, 0.82, 0.35, 1.0)
+## Quando passa do ponto.
+@export var burnt_color: Color = Color(0.88, 0.25, 0.22, 1.0)
+
+@export_group("Destaque (item que vai sair)")
+@export var outline_color: Color = Color.WHITE
+## Largura da silhueta em pixels da tela.
+@export var outline_width: float = 1.0
+
+@export_group("Feedback")
+## Esticadinha do item quando ele muda de estágio.
+@export var punch_scale: Vector2 = Vector2(1.25, 0.8)
+@export var punch_time: float = 0.1
+
+
+var hand: HandComponent = null
+var bar: ProgressBarComponent = null
+var toco: CanvasItem = null
+var spinner: SheetRowSprite = null
+var effect: SpriteSheetEffect = null
+var bubble: IconBubble = null
+
+var _recipe: CookingRecipe = null
+var _stage: Stage = Stage.RAW
+var _elapsed: float = 0.0
+var _perfect_time: float = 10.0
+var _burnt_time: float = 20.0
+var _vanish_time: float = 25.0
+var _targeted: bool = false
+## Quem está com a silhueta agora (o espetinho girando ou o sprite do item).
+var _outlined: CanvasItem = null
+
+
+func _ready() -> void:
+	hand = HandComponent.find_in(self)
+	bar = get_node_or_null("Barra") as ProgressBarComponent
+	toco = get_node_or_null("Toco") as CanvasItem
+	spinner = get_node_or_null("Girando") as SheetRowSprite
+	effect = get_node_or_null("Efeito") as SpriteSheetEffect
+	bubble = get_node_or_null("Balao") as IconBubble
+	if hand == null:
+		push_warning("CookingSlot '%s': nenhum HandComponent filho (nó 'Mao')." % name)
+	if toco:
+		toco.visible = false
+	if hand:
+		# Garante que o item volta a aparecer ao sair da boca (pego, descartado...).
+		hand.item_released.connect(_on_hand_item_released)
+	set_process(false)
+	_refresh_bar()
+
+
+func _process(delta: float) -> void:
+	if is_empty():
+		_clear()
+		return
+
+	_elapsed += delta
+
+	if _elapsed >= _vanish_time:
+		_burn_away()
+		return
+	if _stage != Stage.BURNT and _elapsed >= _burnt_time:
+		_set_stage(Stage.BURNT)
+	elif _stage == Stage.RAW and _elapsed >= _perfect_time:
+		_set_stage(Stage.PERFECT)
+
+	_refresh_bar()
+
+
+# --- Consultas ---
+
+func is_empty() -> bool:
+	return hand == null or hand.is_empty()
+
+
+func is_occupied() -> bool:
+	return not is_empty()
+
+
+func get_stage() -> Stage:
+	return _stage
+
+
+func get_recipe() -> CookingRecipe:
+	return _recipe
+
+
+## Esta boca está destacada como a próxima a sair?
+func is_targeted() -> bool:
+	return _targeted
+
+
+## Segundos que o item já passou no fogo.
+func get_elapsed() -> float:
+	return _elapsed
+
+
+## Segundos que faltam para o item queimar e sumir.
+func get_time_left() -> float:
+	return maxf(_vanish_time - _elapsed, 0.0)
+
+
+## 0.0 = acabou de entrar, 1.0 = queimou.
+func get_progress() -> float:
+	if is_empty() or _vanish_time <= 0.0:
+		return 0.0
+	if _stage == Stage.BURNT:
+		return 1.0
+	return clampf(_elapsed / _vanish_time, 0.0, 1.0)
+
+
+## Ponto que corresponde a `seconds` de fogo, com os tempos desta boca.
+func stage_for_time(seconds: float) -> Stage:
+	if seconds >= _burnt_time:
+		return Stage.BURNT
+	if seconds >= _perfect_time:
+		return Stage.PERFECT
+	return Stage.RAW
+
+
+func color_for(stage: Stage) -> Color:
+	match stage:
+		Stage.PERFECT:
+			return perfect_color
+		Stage.BURNT:
+			return burnt_color
+		_:
+			return raw_color
+
+
+# --- Ações ---
+
+## Põe o item da mão nesta boca e começa a contar.
+## `times` = (segundos para o ponto, para torrar, para sumir).
+## `start_elapsed` = de que segundo começa (0 = cru do zero; `times.x` = começo do
+## ponto; `times.y` = começo do torrado). O ponto e a arte saem desse tempo.
+func place(actor_hand: HandComponent, recipe: CookingRecipe, times: Vector3,
+		start_elapsed: float = 0.0) -> bool:
+	if hand == null or is_occupied() or recipe == null:
+		return false
+	if actor_hand == null or not actor_hand.has_item():
+		return false
+
+	var item: CarryableItem = actor_hand.held_item
+	if not actor_hand.transfer_to(hand):
+		return false
+
+	_recipe = recipe
+	_perfect_time = times.x
+	_burnt_time = times.y
+	_vanish_time = times.z
+	_elapsed = clampf(start_elapsed, 0.0, _vanish_time)
+	_stage = stage_for_time(_elapsed)
+	# Garante que a arte parada do item bate com o ponto em que ele entrou.
+	var data: ItemData = _data_for(_stage)
+	if data and item.data != data:
+		item.data = data
+
+	if toco:
+		toco.visible = true
+	_refresh_spinner()
+	_show_bubble()
+	set_process(true)
+	_refresh_bar()
+	item_placed.emit(item)
+	return true
+
+
+## Passa o item desta boca para a mão do jogador (mão precisa estar vazia).
+func take(actor_hand: HandComponent) -> bool:
+	if hand == null or is_empty():
+		return false
+	if actor_hand == null or actor_hand.has_item():
+		return false
+
+	var item: CarryableItem = hand.held_item
+	var stage: Stage = _stage
+	item.cook_elapsed = _elapsed  # para voltar ao fogo de onde parou
+	_set_outlined(null)  # a silhueta não vai junto com o item para a mão
+	if not hand.transfer_to(actor_hand):
+		return false
+
+	_clear()
+	item_taken.emit(item, stage)
+	return true
+
+
+## Joga fora o que estiver na boca (tecla R).
+func discard() -> bool:
+	if is_empty():
+		return false
+	_set_outlined(null)
+	hand.consume_item()
+	_clear()
+	return true
+
+
+## Força o item atual a assumir o estado torrado sem removê-lo da boca.
+func burn() -> bool:
+	if is_empty():
+		return false
+	_set_stage(Stage.BURNT)
+	_refresh_bar()
+	return true
+
+
+# --- Interno ---
+
+func _set_stage(stage: Stage) -> void:
+	_stage = stage
+	var data: ItemData = _data_for(stage)
+	if data and hand.has_item():
+		hand.held_item.data = data
+		_punch(spinner if _is_spinning() else hand.held_item)
+	_refresh_spinner()
+	stage_changed.emit(stage)
+
+
+func _data_for(stage: Stage) -> ItemData:
+	if _recipe == null:
+		return null
+	match stage:
+		Stage.PERFECT:
+			return _recipe.perfect_data
+		Stage.BURNT:
+			return _recipe.burnt_data
+		_:
+			return _recipe.input_data
+
+
+func _burn_away() -> void:
+	var recipe: CookingRecipe = _recipe
+	_set_outlined(null)
+	if hand:
+		hand.consume_item()
+	if effect:
+		effect.play_once()
+	_clear()
+	item_vanished.emit(recipe)
+
+
+func _clear() -> void:
+	_recipe = null
+	_stage = Stage.RAW
+	_elapsed = 0.0
+	set_process(false)
+	if toco:
+		toco.visible = false
+	_refresh_spinner()
+	_refresh_bar()
+	if bubble:
+		bubble.disappear()
+	set_targeted(false)
+
+
+## Liga/desliga o destaque: silhueta no espetinho + balão realçado.
+## Boca vazia nunca fica destacada.
+func set_targeted(value: bool) -> void:
+	_targeted = value and is_occupied()
+	_refresh_outline()
+	if bubble:
+		bubble.set_highlighted(_targeted)
+
+
+## Espetinho girando: mostra a linha do ponto atual e esconde a arte parada do item.
+func _refresh_spinner() -> void:
+	if spinner == null:
+		return
+	var row: int = _recipe.get_spin_row(_stage) if _recipe and is_occupied() else 0
+	spinner.show_row(row)
+	if is_occupied():
+		hand.held_item.visible = row <= 0
+	_refresh_outline()
+
+
+## Coloca a silhueta em quem está aparecendo: o espetinho girando ou, sem arte
+## girando, o sprite parado do item.
+func _refresh_outline() -> void:
+	var target: CanvasItem = null
+	if _targeted and is_occupied():
+		if _is_spinning():
+			target = spinner
+		elif hand.held_item.sprite:
+			target = hand.held_item.sprite
+	_set_outlined(target)
+
+
+func _set_outlined(target: CanvasItem) -> void:
+	if target == _outlined:
+		if target:
+			SpriteOutline.show_on(target, outline_color, outline_width)
+		return
+	if is_instance_valid(_outlined):
+		SpriteOutline.hide_on(_outlined)
+	_outlined = target
+	if target:
+		SpriteOutline.show_on(target, outline_color, outline_width)
+
+
+func _show_bubble() -> void:
+	if bubble == null:
+		return
+	var icons: Array = _recipe.bubble_icons if _recipe else []
+	if icons.is_empty():
+		bubble.disappear()
+		return
+	bubble.set_icons(icons)
+	bubble.set_highlighted(_targeted)
+	bubble.appear()
+
+
+func _is_spinning() -> bool:
+	return spinner != null and spinner.visible
+
+
+func _on_hand_item_released(item: CarryableItem) -> void:
+	if is_instance_valid(item):
+		item.visible = true
+
+
+func _refresh_bar() -> void:
+	if bar == null:
+		return
+	var occupied: bool = is_occupied()
+	bar.set_bar_visible(occupied)
+	if not occupied:
+		bar.set_progress(0.0)
+		return
+	bar.fill_color = color_for(_stage)
+	bar.set_progress(get_progress())
+
+
+func _punch(target: Node2D) -> void:
+	if not is_instance_valid(target) or punch_time <= 0.0:
+		return
+	target.scale = punch_scale
+	create_tween().tween_property(target, "scale", Vector2.ONE, punch_time)

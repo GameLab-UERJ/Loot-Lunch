@@ -19,17 +19,20 @@ func _ready() -> void:
 	_update_text_mission(QuestManager.current_status)
 
 
-func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed("pause"):
-		if get_tree().paused == false:
-			pause()
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("pause"):
+		get_viewport().set_input_as_handled()
+		if visible:
+			if panel.visible:
+				resume()
 		else:
-			resume()
+			pause()
 
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_WINDOW_FOCUS_OUT:
-		pause()
+		if not visible and not get_tree().paused:
+			pause()
 
 
 func _on_return_buttom_pressed() -> void:
@@ -68,12 +71,17 @@ func _on_settings_button_pressed() -> void:
 # To get uid
 # print(ResourceUID.id_to_text(ResourceLoader.get_resource_uid(PATH)))
 func _on_main_menu_button_pressed() -> void:
+	var in_restaurant: bool = _is_in_restaurant()
 	resume()
 	
 	await _on_button_mouse_pressed()
-	# Goes to MainMenu
-	EasyTransition.transition_to_path("uid://b2evbancyosmu",1.0,EasyTransition.TransitionAnim.BLUR)
-	close()
+	if in_restaurant:
+		MvpFlow.exit_restaurant(get_tree())
+		close()
+	else:
+		# Goes to MainMenu
+		EasyTransition.transition_to_path("uid://b2evbancyosmu", 1.0, EasyTransition.TransitionAnim.BLUR)
+		close()
 
 
 func close() -> void:
@@ -110,11 +118,31 @@ func _on_button_mouse_pressed() -> void:
 func pause() -> void:
 	visible = true
 	get_tree().paused = true
+	var in_restaurant: bool = _is_in_restaurant()
+	var main_menu_btn: Button = $Panel/VBoxContainer/ActinonsGridContainer/MainMenuButton
+	var save_load_btn: Button = $Panel/VBoxContainer/ActinonsGridContainer/SaveLoadButton
+	var mission_label: Label = $Panel/MissionLabel
+	if main_menu_btn:
+		main_menu_btn.text = "Sair do restaurante" if in_restaurant else "Main Menu"
+	if save_load_btn:
+		save_load_btn.visible = not in_restaurant
+	if mission_label:
+		mission_label.visible = not in_restaurant
+	var return_btn: Button = $Panel/VBoxContainer/ActinonsGridContainer/ReturnButtom
+	if return_btn:
+		return_btn.grab_focus()
 
 
 func resume() -> void:
 	visible = false
 	get_tree().paused = false
+
+
+func _is_in_restaurant() -> bool:
+	var scene := get_tree().current_scene
+	if scene == null:
+		return false
+	return scene is RestaurantLevel or scene.name == "BossFightVip" or scene.scene_file_path.begins_with("res://levels/restaurant/") or scene.scene_file_path.begins_with("res://levels/minigames/")
 
 
 func _return_from_menus() -> void:

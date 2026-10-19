@@ -15,6 +15,7 @@ var quest_status: int = QuestManager.QuestStatus.NAO_INICIADA
 
 var _is_loading_save: bool = false
 var _is_transitioning: bool = false
+var spawn_at_restaurant_exit: bool = false
 
 
 func collect_game_state() -> void:
@@ -172,3 +173,9 @@ func _find_inventory_recursive(node: Node) -> Inventory:
 		if result:
 			return result
 	return null
+
+
+func enter_restaurant() -> void:
+	collect_game_state()
+	MvpFlow.play_level_1(get_tree())
+
