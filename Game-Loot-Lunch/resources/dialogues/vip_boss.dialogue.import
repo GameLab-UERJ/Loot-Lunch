@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://cc2lprvvmo3tm"
+path="res://.godot/imported/vip_boss.dialogue-2869bf1a4f54556b8f72e5ee25b524bd.tres"
+
+[deps]
+
+source_file="res://resources/dialogues/vip_boss.dialogue"
+dest_files=["res://.godot/imported/vip_boss.dialogue-2869bf1a4f54556b8f72e5ee25b524bd.tres"]
+
+[params]
+
+defaults=true

@@ -1,0 +1,10 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://restaurante/armadilhas/grease_random_event.gd" id="1_event"]
+[ext_resource type="PackedScene" path="res://restaurante/armadilhas/grease_trap.tscn" id="2_grease"]
+[ext_resource type="PackedScene" path="res://restaurante/armadilhas/trap_warning.tscn" id="3_warning"]
+
+[node name="GreaseRandomEvent" type="Node2D"]
+script = ExtResource("1_event")
+grease_scene = ExtResource("2_grease")
+warning_scene = ExtResource("3_warning")

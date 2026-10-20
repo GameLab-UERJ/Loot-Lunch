@@ -25,4 +25,4 @@ func _ready():
 func move(mov_direction: Vector2 = default_direction) -> void:
 	mov_direction = mov_direction.normalized()
 	parent.velocity += mov_direction * acceleration
-	parent.velocity = parent.velocity.limit_length(max_speed)
+	parent.velocity = parent.velocity.limit_length(max_speed * parent.movement_multiplier)
