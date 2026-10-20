@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cd84jsmnsi21x"
-path="res://.godot/imported/lixeira.svg-bf751aedad727855875be056612e06eb.ctex"
+path="res://.godot/imported/lixeira.svg-395f10f28e5318c7937f710f18d96669.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/art/restaurant/comidas/utensilios/lixeira.svg"
-dest_files=["res://.godot/imported/lixeira.svg-bf751aedad727855875be056612e06eb.ctex"]
+dest_files=["res://.godot/imported/lixeira.svg-395f10f28e5318c7937f710f18d96669.ctex"]
 
 [params]
 
