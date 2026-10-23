@@ -60,6 +60,7 @@ func why_not(user: ChefBattler, target: FormigaBattler) -> String:
 func execute(battle: TurnBattle, user: ChefBattler, target: FormigaBattler) -> void:
 	if user.mana and mana_cost > 0:
 		user.mana.try_spend(mana_cost)
+	@warning_ignore("redundant_await")  # a base é vazia; as skills filhas usam await
 	await _execute(battle, user, target)
 	if user.mana and mana_gain > 0:
 		user.mana.restore(mana_gain)

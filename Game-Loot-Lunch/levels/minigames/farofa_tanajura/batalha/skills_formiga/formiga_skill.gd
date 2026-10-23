@@ -86,6 +86,7 @@ func deal(battle: TurnBattle, ant: FormigaBattler, chef: ChefBattler, amount: in
 
 func execute(battle: TurnBattle, ant: FormigaBattler, chef: ChefBattler) -> void:
 	battle.announce("%s usou %s!" % [ant.display_name, display_name], Color(1.0, 0.7, 0.5))
+	@warning_ignore("redundant_await")  # a base é vazia; as skills filhas usam await
 	await _execute(battle, ant, chef)
 
 

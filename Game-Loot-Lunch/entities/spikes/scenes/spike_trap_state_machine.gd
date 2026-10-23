@@ -19,6 +19,6 @@ func _get_transition() -> int:
 	return -1
 
 
-func _enter_state(_previous_state: int, new_state: int) -> void:
+func _enter_state(_previous_state: int, _new_state: int) -> void:
 	# Não faz nada aqui, a animação é controlada pelo AnimatedSprite2D
 	pass

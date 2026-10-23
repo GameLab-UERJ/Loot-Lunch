@@ -65,7 +65,6 @@ var flight_left: float = 0.0
 var charging: bool = false
 var charge_hits: int = 0
 var _used_thresholds: Array[float] = []
-var _busy_moving: bool = false
 ## FASE FINAL: ataca voando (Raio Psíquico, Esferas, 10 Cortes de Vento) e fica
 ## protegida enquanto houver Guardiã viva.
 var final_phase: bool = false

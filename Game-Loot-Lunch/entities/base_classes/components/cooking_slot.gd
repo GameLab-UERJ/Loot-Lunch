@@ -257,7 +257,10 @@ func _set_stage(stage: Stage) -> void:
 	var data: ItemData = _data_for(stage)
 	if data and hand.has_item():
 		hand.held_item.data = data
-		_punch(spinner if _is_spinning() else hand.held_item)
+		if _is_spinning():
+			_punch(spinner)
+		else:
+			_punch(hand.held_item)
 	_refresh_spinner()
 	stage_changed.emit(stage)
 

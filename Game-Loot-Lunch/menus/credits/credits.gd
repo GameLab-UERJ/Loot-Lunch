@@ -23,9 +23,9 @@ func _ready() -> void:
 	
 	window_size = DisplayServer.window_get_size().y
 	# tela inicial vazia
-	margin.add_theme_constant_override('margin_top', window_size/2)
+	margin.add_theme_constant_override('margin_top', int(window_size / 2))
 	# tela final vazia
-	margin.add_theme_constant_override('margin_bottom', window_size + margin_increment)
+	margin.add_theme_constant_override('margin_bottom', int(window_size + margin_increment))
 	
 	credit_text()
 	auto_scroll()
