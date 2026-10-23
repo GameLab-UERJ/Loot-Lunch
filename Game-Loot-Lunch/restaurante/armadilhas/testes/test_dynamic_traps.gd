@@ -18,7 +18,7 @@ func _ready() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept"):
-		flame_event.trigger_random_event()
+		flame_event.trigger_random_event(true)
 		grease_event.trigger_random_event(true)
 
 

@@ -240,10 +240,11 @@ func pick_or_drop() -> bool:
 	if not can_act():
 		return false
 	if hand_component.has_item():
+		# De frente para a lixeira: joga fora em vez de largar no chão.
 		var target: InteractableComponent = interactor_component.get_nearest_interactable()
-		var trash_bin: TrashBin = target.get_parent() as TrashBin if target else null
-		if trash_bin:
-			return target.interact(self)
+		if target and target.get_parent() is TrashBin and target.would_react(self) \
+				and target.interact(self):
+			return true
 		return drop_item() != null
 	var item: CarryableItem = interactor_component.get_nearest_carryable()
 	return item != null and hand_component.hold(item)

@@ -148,8 +148,6 @@ func get_time_left() -> float:
 func get_progress() -> float:
 	if is_empty() or _vanish_time <= 0.0:
 		return 0.0
-	if _stage == Stage.BURNT:
-		return 1.0
 	return clampf(_elapsed / _vanish_time, 0.0, 1.0)
 
 
@@ -239,10 +237,14 @@ func discard() -> bool:
 	return true
 
 
-## Força o item atual a assumir o estado torrado sem removê-lo da boca.
+## Força o item atual a ficar TORRADO na hora (ex.: labareda da churrasqueira), sem
+## tirar ele da boca. O relógio pula para o começo do torrado, então a barra vermelha
+## continua contando até ele queimar e sumir (e, se voltar ao fogo, volta torrado).
+## Retorna false se a boca está vazia ou o item já estava torrado.
 func burn() -> bool:
-	if is_empty():
+	if is_empty() or _stage == Stage.BURNT:
 		return false
+	_elapsed = clampf(maxf(_elapsed, _burnt_time), 0.0, maxf(_vanish_time - 0.05, 0.0))
 	_set_stage(Stage.BURNT)
 	_refresh_bar()
 	return true
