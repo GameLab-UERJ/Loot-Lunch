@@ -195,8 +195,11 @@ func _on_ability_triggered(level: int, customer: Customer) -> void:
 		entry["magias"].append(level)
 	events.append("%s: magia %d" % [customer.name, level])
 	var caster: CustomerAbilityCaster = customer.get_node_or_null("Habilidades")
-	var ability: CustomerAbility = caster.get_ability(mini(level, caster.get_abilities().size()) - 1) if caster else null
-	print("[Magia] %s lançou a magia %d (%s)" % [customer.name, level, ability.name if ability else "?"])
+	var ability: CustomerAbility = null
+	if caster:
+		ability = caster.get_ability(mini(level, caster.get_abilities().size()) - 1)
+	var ability_name: String = String(ability.name) if ability else "?"
+	print("[Magia] %s lançou a magia %d (%s)" % [customer.name, level, ability_name])
 
 
 func _on_order_paid(correct: bool, amount: int, _deliverer: Node, customer: Customer) -> void:

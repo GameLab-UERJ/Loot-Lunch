@@ -1,5 +1,8 @@
 extends Node2D
 class_name TrapWarning
+## Ícone de ALERTA piscando no chão antes de uma armadilha aparecer.
+## Correção de 23/10/2026: some por um Timer filho (respeita a pausa e não deixa
+## corrotina pendurada se a cena trocar).
 
 
 @export var visible_duration: float = 1.0
@@ -18,6 +21,12 @@ func _ready() -> void:
 
 
 func show_for(duration: float = visible_duration) -> void:
-	await get_tree().create_timer(duration).timeout
-	if is_instance_valid(self):
+	if duration <= 0.0:
 		queue_free()
+		return
+	var timer := Timer.new()
+	timer.one_shot = true
+	timer.wait_time = duration
+	timer.timeout.connect(queue_free)
+	add_child(timer)
+	timer.start()

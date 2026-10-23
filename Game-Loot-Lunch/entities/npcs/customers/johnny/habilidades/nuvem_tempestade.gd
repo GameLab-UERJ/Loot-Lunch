@@ -125,7 +125,9 @@ func _apply_discharge(victim: Node2D) -> bool:
 
 	SheetAnimation.spawn_once(shock_effect, null, victim.global_position, victim)
 	# Fonte = a arte do confuso: nuvens diferentes renovam o mesmo status.
-	ConfusionComponent.apply(victim, confusion_visual if confusion_visual else &"storm_cloud",
-			confusion_time, confusion_visual)
+	var confusion_source: Variant = &"storm_cloud"
+	if confusion_visual:
+		confusion_source = confusion_visual
+	ConfusionComponent.apply(victim, confusion_source, confusion_time, confusion_visual)
 	chef_confused.emit(victim)
 	return true

@@ -259,10 +259,10 @@ func set_portrait(npc : String = "Default") -> void:
 	%Portrait.show()
 	if custom_portraits.has(npc):
 		var data: Dictionary = custom_portraits[npc]
-		var atlas_tex := AtlasTexture.new()
-		atlas_tex.atlas = data["atlas"]
-		atlas_tex.region = data["region"]
-		%Portrait.texture = atlas_tex
+		var custom_tex := AtlasTexture.new()
+		custom_tex.atlas = data["atlas"]
+		custom_tex.region = data["region"]
+		%Portrait.texture = custom_tex
 		%Portrait.flip_h = data.get("flip_h", false)
 		return
 	%Portrait.flip_h = false

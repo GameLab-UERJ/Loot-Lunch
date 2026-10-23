@@ -16,6 +16,8 @@ class_name AbilityComponent
 
 
 ## A habilidade foi usada de verdade (gastou mana).
+## Emitido pelas classes filhas (sombra, arremesso, magias dos clientes).
+@warning_ignore("unused_signal")
 signal activated
 ## Foi cancelada no meio (soltou cedo, levou dano...).
 signal interrupted

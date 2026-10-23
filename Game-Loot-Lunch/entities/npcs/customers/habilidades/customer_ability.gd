@@ -165,6 +165,8 @@ func _run(target: Node2D) -> void:
 
 	if target != null and not CaptureComponent.is_available_target(target):
 		target = find_target()  # o alvo sumiu/foi engolido durante a preparação
+	# A base é vazia, mas as filhas (raio, buraco, ovo...) usam await: o await é necessário.
+	@warning_ignore("redundant_await")
 	await _perform(target)
 
 	if not is_inside_tree():

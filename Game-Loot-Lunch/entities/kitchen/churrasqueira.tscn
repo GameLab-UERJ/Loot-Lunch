@@ -150,5 +150,8 @@ fps = 20.0
 [node name="FlameRandomEvent" parent="." instance=ExtResource("20_traps")]
 position = Vector2(0, 30)
 event_source_path = NodePath("..")
-event_interval = 7.0
-first_event_delay = 2.0
+warning_duration = 2.0
+min_time_between_events = 8.0
+event_interval = 12.0
+first_event_delay = 15.0
+activation_probability = 0.35

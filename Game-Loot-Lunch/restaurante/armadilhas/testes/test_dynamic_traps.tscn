@@ -40,8 +40,12 @@ shape = SubResource("RectangleShape2D_side")
 
 [node name="Churrasqueira" parent="." instance=ExtResource("3_churrasqueira")]
 position = Vector2(320, 160)
-FlameRandomEvent/event_interval = 5.0
-FlameRandomEvent/first_event_delay = 2.0
+
+[node name="FlameRandomEvent" parent="Churrasqueira"]
+event_interval = 5.0
+first_event_delay = 2.0
+activation_probability = 1.0
+min_time_between_events = 1.0
 
 [node name="GreaseRandomEvent" parent="." instance=ExtResource("5_grease_event")]
 position = Vector2(320, 160)
@@ -88,3 +92,5 @@ theme_override_constants/outline_size = 2
 theme_override_fonts/font = ExtResource("4_font")
 theme_override_font_sizes/font_size = 8
 text = "FORNALHA"
+
+[editable path="Churrasqueira"]
