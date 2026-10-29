@@ -21,8 +21,8 @@ func _seed_test_items() -> void:
 	_spawn_item(BURNT_SKEWER_DATA, Vector2(380, 150))
 
 
-func _spawn_item(data: ItemData, position: Vector2) -> void:
+func _spawn_item(data: ItemData, spawn_position: Vector2) -> void:
 	var item: CarryableItem = CARRYABLE_ITEM_SCENE.instantiate()
 	item.data = data
 	items_container.add_child(item)
-	item.position = position
+	item.position = spawn_position

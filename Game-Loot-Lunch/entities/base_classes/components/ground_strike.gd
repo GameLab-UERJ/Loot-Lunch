@@ -178,8 +178,10 @@ func _strike() -> void:
 			body.take_damage(damage, push, knockback)
 		if stun_duration > 0.0:
 			# A fonte é a ARTE: dois raios seguidos renovam o stun, não empilham.
-			StunComponent.apply(body, stun_visual if stun_visual else &"ground_strike",
-					stun_duration, stun_visual)
+			var stun_source: Variant = &"ground_strike"
+			if stun_visual:
+				stun_source = stun_visual
+			StunComponent.apply(body, stun_source, stun_duration, stun_visual)
 	struck.emit(global_position, hit)
 
 

@@ -769,9 +769,9 @@ func _end(victory: bool) -> bool:
 			if ant.hp_bar:
 				ant.hp_bar.set_bar_visible(false)
 			ant.face(ant.global_position + Vector2(100, 0), ant.art_faces_left)
-			var run := ant.create_tween()
-			run.tween_property(ant, "global_position:x", 760.0, 0.8).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
-			run.tween_callback(ant.queue_free)
+			var run_tween := ant.create_tween()
+			run_tween.tween_property(ant, "global_position:x", 760.0, 0.8).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+			run_tween.tween_callback(ant.queue_free)
 		if not alive_minions().is_empty():
 			announce("As formigas fugiram!", Color(0.55, 1.0, 0.55))
 			await wait(0.9)

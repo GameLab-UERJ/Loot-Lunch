@@ -3,7 +3,7 @@ extends Area2D
 var item_name: String = "Cebola"
 @export var raio_coleta: float = 20.0
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	var player = get_tree().current_scene.find_child("Player", true, false)
 	
 	if player:

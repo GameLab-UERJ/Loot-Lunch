@@ -88,14 +88,14 @@ func talk(dialogue_input, custom_resource: DialogueResource = null) -> bool:
 		return false
 	
 	var resource: DialogueResource = custom_resource if custom_resource else dialogue_resource
-	var title: String = ""
+	var dialogue_title: String = ""
 	
 	if dialogue_input is String:
-		title = dialogue_input
+		dialogue_title = dialogue_input
 	elif dialogue_input is Array:
-		title = _resolve_dialogue_title(dialogue_input)
+		dialogue_title = _resolve_dialogue_title(dialogue_input)
 	
-	if title.is_empty() or resource == null:
+	if dialogue_title.is_empty() or resource == null:
 		return not dialogue_skipped
 
 	var callback := func(line: DialogueLine) -> void:
@@ -104,7 +104,7 @@ func talk(dialogue_input, custom_resource: DialogueResource = null) -> bool:
 
 	if not Engine.is_editor_hint():
 		DialogueManager.got_dialogue.connect(callback)
-		var balloon: Node = DialogueManager.show_dialogue_balloon(resource, title)
+		var balloon: Node = DialogueManager.show_dialogue_balloon(resource, dialogue_title)
 		if balloon:
 			await DialogueManager.dialogue_ended
 		if DialogueManager.got_dialogue.is_connected(callback):

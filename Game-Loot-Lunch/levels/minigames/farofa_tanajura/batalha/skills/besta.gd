@@ -52,6 +52,7 @@ func _execute(battle: TurnBattle, user: ChefBattler, target: FormigaBattler) -> 
 	battle.fx(impact, to)
 	battle.shake(3.0, 0.15)
 	_stick_bolt(target, hit_offset, side)
+	@warning_ignore("redundant_await")  # a Rainha sobrescreve on_ranged_hit com await
 	await target.on_ranged_hit(battle, user)
 	await user.finish_action()
 

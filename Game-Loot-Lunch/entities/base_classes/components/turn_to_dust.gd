@@ -25,8 +25,8 @@ var victim: Node2D = null
 var _time: float = 0.0
 
 
-static func apply(target: Node2D, animation: SheetAnimation, world: Node = null) -> TurnToDust:
-	if target == null or not is_instance_valid(target) or animation == null:
+static func apply(target: Node2D, dust_animation: SheetAnimation, world: Node = null) -> TurnToDust:
+	if target == null or not is_instance_valid(target) or dust_animation == null:
 		return null
 	if target.has_method(&"is_dead") and target.is_dead():
 		return null
@@ -36,12 +36,12 @@ static func apply(target: Node2D, animation: SheetAnimation, world: Node = null)
 	var effect := TurnToDust.new()
 	effect.name = "ViraPo"
 	effect.victim = target
-	effect.sprite_frames = animation.build_frames()
+	effect.sprite_frames = dust_animation.build_frames()
 	effect.sprite_frames.set_animation_loop(SheetAnimation.ANIMATION_NAME, false)
-	effect.scale = animation.scale
-	effect.z_index = animation.z_index
+	effect.scale = dust_animation.scale
+	effect.z_index = dust_animation.z_index
 	world.add_child(effect)
-	effect.global_position = target.global_position + animation.offset
+	effect.global_position = target.global_position + dust_animation.offset
 	effect.play(SheetAnimation.ANIMATION_NAME)
 	effect.animation_finished.connect(func() -> void: effect.finished.emit(target),
 		CONNECT_ONE_SHOT)

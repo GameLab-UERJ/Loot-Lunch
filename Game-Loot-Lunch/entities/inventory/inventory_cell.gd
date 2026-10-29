@@ -130,14 +130,14 @@ func set_count(value : int) -> void:
 	_update_stack_label()
 
 
-func set_and_centralize(item : Item) -> void:
+func set_and_centralize(new_item : Item) -> void:
 	var atlas : AtlasTexture = AtlasTexture.new()
-	atlas.atlas = item.texture
-	atlas.region = item.region_rect
+	atlas.atlas = new_item.texture
+	atlas.region = new_item.region_rect
 	item_place.position = Vector2.ZERO
 	item_place.scale = Vector2.ONE
 	item_place.texture = atlas
-	item_place.size = item.region_rect.size
+	item_place.size = new_item.region_rect.size
 	var biggest : float = max(item_place.size.x,item_place.size.y)
 	if item_place.size.y == biggest:
 		item_place.scale = Vector2.ONE*(CELL_DIMENSIONS.y/biggest)

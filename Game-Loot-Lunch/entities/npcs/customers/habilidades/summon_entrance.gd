@@ -80,11 +80,15 @@ func _after_summon() -> void:
 func _run() -> void:
 	if not is_inside_tree():
 		return
+	# As versões base são vazias, mas as filhas (buraco da Mandy, ovo do Patolino)
+	# usam await: o await é necessário.
+	@warning_ignore("redundant_await")
 	await _before_summon()
 	if not is_inside_tree():
 		return
 	_released = true
 	summon_ready.emit(get_summon_position())
+	@warning_ignore("redundant_await")
 	await _after_summon()
 	if not is_inside_tree():
 		return
