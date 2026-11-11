@@ -150,3 +150,7 @@ func _return_from_menus() -> void:
 
 func _update_text_mission(new_stage: int) -> void:
 	$Panel/MissionLabel.text = QuestManager.get_mission_text(new_stage)
+
+
+func _on_report_bug_button_pressed() -> void:
+	OS.shell_open("https://forms.gle/fCYCcq3mLPYqW8Wq7")
