@@ -7,15 +7,19 @@ class_name CustomerWaveDirector
 ##   - várias filas (`lanes`): cada cliente vai para um lado sorteado que tenha lugar;
 ##   - número FIXO de clientes (`total_customers`): quando todos forem atendidos,
 ##     emite `wave_finished`;
-##   - `stay_until_served`: o cliente NÃO desiste. Quando a paciência acaba, ele fica
-##     furioso, a barra recomeça (um pouco menor) e ele volta a lançar as magias.
+##   - `stay_until_served`: o cliente NÃO desiste. Quando a paciência acaba:
+##       `rage_when_patience_ends` = true  -> RAIVA PURA: a barra fica em 0 e ele lança
+##                                            as magias de `rage_ability_levels` sem parar
+##                                            (CustomerRageComponent) até ser atendido;
+##       `rage_when_patience_ends` = false -> a barra recomeça (um pouco menor) e ele
+##                                            volta a lançar as magias pelos limites.
 ##
 ## Os números vêm do StopwatchLevelData quando ele é o `level_data` (senão, dos exports).
 
 
 ## Todos os clientes da fase foram atendidos.
 signal wave_finished
-## A paciência de um cliente acabou e ele recomeçou a barra, mais bravo.
+## A paciência de um cliente acabou: entrou em raiva pura (ou recomeçou a barra, mais bravo).
 signal customer_furious(customer: Customer, times: int)
 
 
@@ -26,6 +30,14 @@ signal customer_furious(customer: Customer, times: int)
 @export var stay_until_served: bool = true
 @export_range(0.2, 1.0) var furious_patience_scale: float = 0.8
 @export var min_patience_time: float = 20.0
+
+@export_group("Raiva pura")
+## Paciência em 0 = raiva pura (magias sem parar) em vez de recomeçar a barra.
+@export var rage_when_patience_ends: bool = true
+## Magias usadas na raiva (1 = magia 1, 2 = magia 2...).
+@export var rage_ability_levels: Array[int] = [1, 2]
+## Segundos entre uma magia e outra na raiva.
+@export var rage_cast_interval: float = 1.0
 
 
 var spawned_count: int = 0
@@ -47,6 +59,9 @@ func _ready() -> void:
 		stay_until_served = data.customers_stay_until_served
 		furious_patience_scale = data.furious_patience_scale
 		min_patience_time = data.min_patience_time
+		rage_when_patience_ends = data.rage_when_patience_ends
+		rage_ability_levels = data.rage_ability_levels.duplicate()
+		rage_cast_interval = data.rage_cast_interval
 
 
 func start() -> void:
@@ -115,12 +130,37 @@ func _on_gave_up(customer: Customer) -> void:
 	if not stay_until_served:
 		super(customer)
 		return
+	if customer.has_meta(&"raging"):
+		return
 	furious_count += 1
 	var times: int = int(customer.get_meta(&"furious", 0)) + 1
 	customer.set_meta(&"furious", times)
 	customer_furious.emit(customer, times)
 	# O Customer muda para "leaving_angry" logo depois deste sinal: desfaz no próximo frame.
-	_restart_patience.call_deferred(customer)
+	if rage_when_patience_ends:
+		_enter_rage.call_deferred(customer)
+	else:
+		_restart_patience.call_deferred(customer)
+
+
+## RAIVA PURA: a barra fica vazia e o cliente lança as magias sem parar até ser atendido.
+func _enter_rage(customer: Customer) -> void:
+	if not is_instance_valid(customer) or customer.has_meta(&"leaving"):
+		return
+	customer.set_meta(&"raging", true)
+	customer.fsm.set_state(customer.fsm.states.waiting_in_queue)
+	# Os limites da barra não valem mais: quem manda nas magias agora é a raiva.
+	var trigger: PatienceAbilityTrigger = customer.get_node_or_null("GatilhoMagias")
+	if trigger:
+		trigger.stop()
+	var rage := customer.get_node_or_null("Raiva") as CustomerRageComponent
+	if rage == null:
+		rage = CustomerRageComponent.new()
+		rage.name = "Raiva"
+		rage.levels = rage_ability_levels.duplicate()
+		rage.cast_interval = rage_cast_interval
+		customer.add_child(rage)
+	rage.start()
 
 
 func _restart_patience(customer: Customer) -> void:
@@ -143,6 +183,9 @@ func _restart_patience(customer: Customer) -> void:
 func _leave(customer: Customer, flash: Color) -> void:
 	if not is_instance_valid(customer) or customer.has_meta(&"leaving"):
 		return
+	var rage := customer.get_node_or_null("Raiva") as CustomerRageComponent
+	if rage:
+		rage.stop()
 	var lane := customer.get_meta(&"lane", null) as CustomerLane
 	if lane:
 		queue = lane.queue

@@ -18,12 +18,22 @@ class_name StopwatchLevelData
 @export var total_customers: int = 20
 ## Quantos clientes podem estar esperando ao mesmo tempo (somando todos os lados).
 @export_range(1, 32) var max_simultaneous: int = 12
-## true = o cliente NÃO vai embora quando a paciência acaba: a barra recomeça e ele
-## volta a lançar as magias até ser atendido.
+## true = o cliente NÃO vai embora quando a paciência acaba (fica até ser atendido).
+## O que ele faz com a paciência em 0 depende de `rage_when_patience_ends`.
 @export var customers_stay_until_served: bool = true
-## A cada vez que a paciência acaba, a próxima barra fica este tanto do tempo (mais bravo).
+
+@export_group("Raiva pura")
+## true = paciência em 0 -> RAIVA PURA: a barra fica vazia e o cliente lança as magias de
+## `rage_ability_levels` sem parar até ser atendido.
+## false = a barra recomeça (um pouco menor, ver abaixo) e ele volta a lançar pelos limites.
+@export var rage_when_patience_ends: bool = true
+## Magias usadas na raiva (1 = magia 1, 2 = magia 2...). Ponha 3 para liberar a ultimate.
+@export var rage_ability_levels: Array[int] = [1, 2]
+## Segundos entre uma magia e outra na raiva. Menor = mais desenfreado.
+@export var rage_cast_interval: float = 1.0
+## (Só com a raiva desligada) a cada volta, a próxima barra fica este tanto do tempo.
 @export_range(0.2, 1.0) var furious_patience_scale: float = 0.8
-## Paciência mínima (s) depois de várias voltas.
+## (Só com a raiva desligada) paciência mínima (s) depois de várias voltas.
 @export var min_patience_time: float = 20.0
 
 @export_group("Estrelas")

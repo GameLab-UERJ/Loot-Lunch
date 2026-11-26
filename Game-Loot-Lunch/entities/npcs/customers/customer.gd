@@ -65,7 +65,9 @@ func _ensure_patience() -> void:
 func _on_queue_mover_arrived(_target_position: Vector2) -> void:
 	fsm.set_state(fsm.states.waiting_in_queue)
 	_ensure_patience()
-	if not _patience.is_running():
+	# Só começa na 1ª chegada. Andar na fila depois (alguém saiu da frente) não reenche a
+	# barra — nem a de quem já zerou e está com raiva.
+	if not _patience.has_started():
 		_patience.start()
 	if _patience_bar != null:
 		_patience_bar.visible = true

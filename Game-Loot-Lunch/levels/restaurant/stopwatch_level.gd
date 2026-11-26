@@ -162,7 +162,7 @@ func _on_customer_served() -> void:
 
 
 func _on_customer_furious(customer: Customer, _times: int) -> void:
-	FloatingText.spawn(customer.get_parent(), customer.global_position + Vector2(0, -40), "Grrr!", Color(1.0, 0.4, 0.35))
+	FloatingText.spawn(customer.get_parent(), customer.global_position + Vector2(0, -40), "RAIVA PURA!", Color(1.0, 0.4, 0.35))
 
 
 func _on_wave_finished() -> void:

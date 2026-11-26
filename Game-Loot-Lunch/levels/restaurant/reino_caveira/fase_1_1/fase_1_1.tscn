@@ -9,7 +9,6 @@
 [ext_resource type="PackedScene" path="res://entities/player/chef/chef.tscn" id="7_r"]
 [ext_resource type="PackedScene" path="res://entities/kitchen/brasa/brasa.tscn" id="8_r"]
 [ext_resource type="Script" path="res://entities/base_classes/components/action_input_component.gd" id="9_r"]
-[ext_resource type="Script" path="res://entities/player/chef/habilidades/plant_ability.gd" id="10_r"]
 [ext_resource type="PackedScene" path="res://entities/kitchen/pe_cogumelo.tscn" id="11_r"]
 [ext_resource type="PackedScene" path="res://entities/kitchen/raiz_espeto.tscn" id="12_r"]
 [ext_resource type="PackedScene" path="res://entities/kitchen/tabua_corte.tscn" id="13_r"]
@@ -72,6 +71,21 @@ position = Vector2(414, 190)
 [node name="Lixeira" parent="Mundo/Estacoes" instance=ExtResource("14_r")]
 position = Vector2(320, 270)
 
+[node name="PeCogumeloEsquerda" parent="Mundo/Estacoes" instance=ExtResource("11_r")]
+position = Vector2(140, 130)
+
+[node name="PeCogumeloMeio" parent="Mundo/Estacoes" instance=ExtResource("11_r")]
+position = Vector2(320, 108)
+
+[node name="PeCogumeloDireita" parent="Mundo/Estacoes" instance=ExtResource("11_r")]
+position = Vector2(500, 130)
+
+[node name="RaizEspetoEsquerda" parent="Mundo/Estacoes" instance=ExtResource("12_r")]
+position = Vector2(226, 240)
+
+[node name="RaizEspetoDireita" parent="Mundo/Estacoes" instance=ExtResource("12_r")]
+position = Vector2(414, 240)
+
 [node name="ItensNoChao" type="Node2D" parent="Mundo"]
 y_sort_enabled = true
 
@@ -95,29 +109,6 @@ enabled = false
 [node name="HabilidadeSombra" parent="Mundo/Chef"]
 action = &""
 enabled = false
-
-[node name="PlantarCogumelo" type="Node" parent="Mundo/Chef" node_paths=PackedStringArray("plants_parent")]
-script = ExtResource("10_r")
-action = &"chef_ability_throw"
-mana_cost = 0
-plant_scene = ExtResource("11_r")
-allowed_area = Rect2(78, 80, 484, 212)
-plants_parent = NodePath("../../Estacoes")
-max_alive = 3
-marker_color = Color(0.78, 0.55, 1, 0.9)
-
-[node name="PlantarGraveto" type="Node" parent="Mundo/Chef" node_paths=PackedStringArray("plants_parent")]
-script = ExtResource("10_r")
-action = &"chef_ability_shadow"
-mana_cost = 0
-plant_scene = ExtResource("12_r")
-conjure_time = 0.8
-plant_distance = 26.0
-free_radius = 12.0
-allowed_area = Rect2(78, 80, 484, 212)
-plants_parent = NodePath("../../Estacoes")
-max_alive = 2
-marker_color = Color(0.95, 0.72, 0.45, 0.9)
 
 [node name="Luz" type="PointLight2D" parent="Mundo/Chef"]
 position = Vector2(0, 0)
@@ -249,5 +240,5 @@ position = Vector2(618, 60)
 
 [node name="HudFase" parent="." instance=ExtResource("20_r")]
 script = ExtResource("21_r")
-controls_hint = "Q: plantar cogumelo   E: plantar graveto
-ESPAÇO: pegar/usar   R: jogar fora   Brasa: setas"
+controls_hint = "ESPAÇO: pegar/usar   R: jogar fora
+Brasa: setas"
