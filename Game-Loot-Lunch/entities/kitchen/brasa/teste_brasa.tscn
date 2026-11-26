@@ -1,0 +1,94 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://entities/kitchen/brasa/teste_brasa.gd" id="1_teste"]
+[ext_resource type="PackedScene" uid="uid://v3reii6seu4c" path="res://entities/player/chef/chef.tscn" id="2_chef"]
+[ext_resource type="PackedScene" path="res://entities/kitchen/brasa/brasa.tscn" id="3_brasa"]
+[ext_resource type="PackedScene" path="res://entities/kitchen/caixa_carne.tscn" id="4_caixa"]
+[ext_resource type="PackedScene" path="res://entities/kitchen/pe_cogumelo.tscn" id="5_pe"]
+[ext_resource type="PackedScene" path="res://entities/kitchen/tabua_corte.tscn" id="6_tabua"]
+[ext_resource type="PackedScene" path="res://entities/kitchen/raiz_espeto.tscn" id="7_espeto"]
+[ext_resource type="PackedScene" path="res://entities/kitchen/lixeira.tscn" id="8_lixeira"]
+[ext_resource type="Script" path="res://entities/base_classes/components/action_input_component.gd" id="9_input"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_parede_h"]
+size = Vector2(540, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_parede_v"]
+size = Vector2(16, 340)
+
+[node name="TesteBrasa" type="Node2D"]
+script = ExtResource("1_teste")
+
+[node name="Chao" type="Polygon2D" parent="."]
+color = Color(0.17, 0.16, 0.2, 1)
+polygon = PackedVector2Array(60, 20, 580, 20, 580, 340, 60, 340)
+
+[node name="Paredes" type="StaticBody2D" parent="."]
+collision_layer = 1
+collision_mask = 0
+
+[node name="Cima" type="CollisionShape2D" parent="Paredes"]
+position = Vector2(320, 12)
+shape = SubResource("RectangleShape2D_parede_h")
+
+[node name="Baixo" type="CollisionShape2D" parent="Paredes"]
+position = Vector2(320, 348)
+shape = SubResource("RectangleShape2D_parede_h")
+
+[node name="Esquerda" type="CollisionShape2D" parent="Paredes"]
+position = Vector2(52, 180)
+shape = SubResource("RectangleShape2D_parede_v")
+
+[node name="Direita" type="CollisionShape2D" parent="Paredes"]
+position = Vector2(588, 180)
+shape = SubResource("RectangleShape2D_parede_v")
+
+[node name="ItensNoChao" type="Node2D" parent="."]
+
+[node name="CaixaCarne" parent="." instance=ExtResource("4_caixa")]
+position = Vector2(110, 80)
+
+[node name="PeCogumelo" parent="." instance=ExtResource("5_pe")]
+position = Vector2(110, 270)
+
+[node name="TabuaCorte" parent="." instance=ExtResource("6_tabua")]
+position = Vector2(220, 80)
+
+[node name="RaizEspeto" parent="." instance=ExtResource("7_espeto")]
+position = Vector2(320, 80)
+
+[node name="Lixeira" parent="." instance=ExtResource("8_lixeira")]
+position = Vector2(530, 290)
+
+[node name="Brasa" parent="." instance=ExtResource("3_brasa")]
+position = Vector2(440, 190)
+
+[node name="Chef" parent="." node_paths=PackedStringArray("items_container") instance=ExtResource("2_chef")]
+position = Vector2(260, 190)
+items_container = NodePath("../ItensNoChao")
+
+[node name="InputComponent" parent="Chef"]
+script = ExtResource("9_input")
+up_action = &"chef_up"
+down_action = &"chef_down"
+left_action = &"chef_left"
+right_action = &"chef_right"
+
+[node name="Interface" type="CanvasLayer" parent="."]
+
+[node name="Controles" type="Label" parent="Interface"]
+offset_left = 8.0
+offset_top = 290.0
+offset_right = 360.0
+offset_bottom = 356.0
+theme_override_font_sizes/font_size = 8
+text = "Chef: WASD anda · ESPACO faz tudo · Shift dash · R descarta
+Brasa: SETAS anda (ela leva os espetinhos junto)
+G espetinho cru · T no ponto · Y torrado (na mao do chef)"
+
+[node name="Status" type="Label" parent="Interface"]
+offset_left = 440.0
+offset_top = 6.0
+offset_right = 636.0
+offset_bottom = 60.0
+theme_override_font_sizes/font_size = 8

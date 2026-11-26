@@ -1,0 +1,22 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://levels/restaurant/selecao_fase/reino_caveira/mushroom_tree.gd" id="1_mushroom_tre"]
+[ext_resource type="Texture2D" path="res://assets/art/restaurant/mapa/reino_caveira/arvores_cogumelo.png" id="2_arvores_cogu"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_talo"]
+radius = 5.0
+
+[node name="ArvoreCogumelo" type="StaticBody2D"]
+collision_mask = 0
+script = ExtResource("1_mushroom_tre")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-28, -54)
+texture = ExtResource("2_arvores_cogu")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 56, 64)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 4)
+shape = SubResource("CircleShape2D_talo")

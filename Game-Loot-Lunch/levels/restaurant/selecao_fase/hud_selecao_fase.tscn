@@ -1,0 +1,151 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://levels/restaurant/selecao_fase/level_select_hud.gd" id="1_level_select"]
+[ext_resource type="FontFile" path="res://assets/fonts/Silver.ttf" id="2_Silver"]
+[ext_resource type="FontFile" path="res://assets/fonts/ui/Sta.Toasty_font (1).ttf" id="3_Sta"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_placa"]
+content_margin_left = 8.0
+content_margin_top = 5.0
+content_margin_right = 8.0
+content_margin_bottom = 5.0
+bg_color = Color(0.11, 0.07, 0.15, 0.9)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.56, 0.4, 0.74, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="Interface" type="CanvasLayer"]
+layer = 10
+script = ExtResource("1_level_select")
+
+[node name="Placa" type="PanelContainer" parent="."]
+offset_left = 6.0
+offset_top = 5.0
+offset_right = 128.0
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_placa")
+
+[node name="Linhas" type="VBoxContainer" parent="Placa"]
+theme_override_constants/separation = 0
+
+[node name="Titulo" type="Label" parent="Placa/Linhas"]
+unique_name_in_owner = true
+theme_override_colors/font_color = Color(0.96, 0.9, 1.0, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.04, 0.1, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_Sta")
+theme_override_font_sizes/font_size = 13
+text = "REINO CAVEIRA"
+
+[node name="TotalEstrelas" type="Label" parent="Placa/Linhas"]
+unique_name_in_owner = true
+theme_override_colors/font_color = Color(1.0, 0.84, 0.36, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.04, 0.1, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_Silver")
+theme_override_font_sizes/font_size = 16
+text = "★ 0 / 21"
+
+[node name="PainelFase" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -120.0
+offset_top = -58.0
+offset_right = 120.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_placa")
+
+[node name="Linhas" type="VBoxContainer" parent="PainelFase"]
+theme_override_constants/separation = -3
+
+[node name="Cabecalho" type="HBoxContainer" parent="PainelFase/Linhas"]
+alignment = 1
+theme_override_constants/separation = 8
+
+[node name="NumeroFase" type="Label" parent="PainelFase/Linhas/Cabecalho"]
+unique_name_in_owner = true
+theme_override_colors/font_color = Color(1.0, 0.8, 0.36, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.04, 0.1, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_Sta")
+theme_override_font_sizes/font_size = 11
+text = "Fase 1-1"
+
+[node name="NomeFase" type="Label" parent="PainelFase/Linhas/Cabecalho"]
+unique_name_in_owner = true
+theme_override_colors/font_color = Color(1.0, 0.95, 0.82, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.04, 0.1, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_Silver")
+theme_override_font_sizes/font_size = 16
+text = "Nome"
+
+[node name="EstrelasFase" type="Label" parent="PainelFase/Linhas"]
+unique_name_in_owner = true
+theme_override_colors/font_color = Color(1.0, 0.84, 0.36, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.04, 0.1, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_Silver")
+theme_override_font_sizes/font_size = 16
+text = "☆☆☆"
+horizontal_alignment = 1
+
+[node name="Dica" type="Label" parent="PainelFase/Linhas"]
+unique_name_in_owner = true
+theme_override_colors/font_color = Color(0.8, 0.78, 0.9, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.04, 0.1, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_Silver")
+theme_override_font_sizes/font_size = 16
+text = "ESPAÇO ou ENTER para jogar"
+horizontal_alignment = 1
+
+[node name="Aviso" type="Label" parent="."]
+unique_name_in_owner = true
+theme_override_colors/font_color = Color(1.0, 0.92, 0.7, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.04, 0.1, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_Sta")
+theme_override_font_sizes/font_size = 18
+text = ""
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -60.0
+offset_right = 150.0
+offset_bottom = -36.0
+pivot_offset = Vector2(150, 12)
+horizontal_alignment = 1
+
+[node name="Controles" type="Label" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_top = -34.0
+offset_right = 160.0
+offset_bottom = -4.0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.86, 0.84, 0.94, 0.9)
+theme_override_colors/font_outline_color = Color(0.08, 0.04, 0.1, 1)
+theme_override_constants/outline_size = 4
+theme_override_constants/line_spacing = -4
+theme_override_fonts/font = ExtResource("2_Silver")
+theme_override_font_sizes/font_size = 16
+text = "Chef: WASD
+Brasa: setas"

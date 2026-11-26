@@ -1,0 +1,181 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://entities/kitchen/brasa/brasa.gd" id="1_brasa"]
+[ext_resource type="Script" path="res://entities/kitchen/brasa/brasa_fsm.gd" id="2_fsm"]
+[ext_resource type="SpriteFrames" path="res://entities/kitchen/brasa/brasa_frames.tres" id="3_frames"]
+[ext_resource type="Script" path="res://entities/base_classes/components/action_input_component.gd" id="4_input"]
+[ext_resource type="Script" path="res://entities/base_classes/components/movement_component.gd" id="5_move"]
+[ext_resource type="Script" path="res://entities/kitchen/cooking_station.gd" id="6_station"]
+[ext_resource type="Script" path="res://entities/base_classes/components/interactable_component.gd" id="7_interactable"]
+[ext_resource type="Script" path="res://entities/base_classes/components/cooking_slot.gd" id="8_slot"]
+[ext_resource type="Script" path="res://entities/base_classes/components/hand_component.gd" id="9_hand"]
+[ext_resource type="Script" path="res://entities/base_classes/components/progress_bar_component.gd" id="10_bar"]
+[ext_resource type="Script" path="res://entities/base_classes/components/sheet_row_sprite.gd" id="11_girando"]
+[ext_resource type="Texture2D" path="res://assets/art/restaurant/comidas/arte_v2/espetinho_girando.png" id="12_girando_png"]
+[ext_resource type="Script" path="res://entities/base_classes/components/icon_bubble.gd" id="13_balao"]
+[ext_resource type="Script" path="res://entities/base_classes/components/sprite_sheet_effect.gd" id="14_effect"]
+[ext_resource type="Texture2D" path="res://assets/art/restaurant/comidas/espetinhos/base/espeto/1361.png" id="15_fogo"]
+[ext_resource type="Resource" path="res://resources/recipes/assar_carne.tres" id="16_carne"]
+[ext_resource type="Resource" path="res://resources/recipes/assar_cogumelo.tres" id="17_cogumelo"]
+[ext_resource type="Resource" path="res://resources/recipes/assar_misto.tres" id="18_misto"]
+[ext_resource type="PackedScene" path="res://restaurante/armadilhas/flame_random_event.tscn" id="19_traps"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_corpo"]
+radius = 9.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_estacao"]
+size = Vector2(4, 4)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_area"]
+size = Vector2(56, 46)
+
+[node name="Brasa" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 33
+motion_mode = 1
+script = ExtResource("1_brasa")
+hp = 99
+acceleration = 30
+max_speed = 90
+
+[node name="FiniteStateMachine" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("2_fsm")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -6)
+sprite_frames = ExtResource("3_frames")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 6)
+shape = SubResource("CircleShape2D_corpo")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="InputComponent" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("4_input")
+up_action = &"brasa_up"
+down_action = &"brasa_down"
+left_action = &"brasa_left"
+right_action = &"brasa_right"
+
+[node name="MovementComponent" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("5_move")
+
+[node name="Churrasqueira" type="StaticBody2D" parent="."]
+unique_name_in_owner = true
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("6_station")
+recipes = Array[Resource]([ExtResource("16_carne"), ExtResource("17_cogumelo"), ExtResource("18_misto")])
+perfect_time = 7.0
+burnt_time = 17.0
+vanish_time = 27.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Churrasqueira"]
+shape = SubResource("RectangleShape2D_estacao")
+disabled = true
+
+[node name="InteractableComponent" type="Area2D" parent="Churrasqueira" node_paths=PackedStringArray("highlight_target")]
+collision_layer = 8
+collision_mask = 0
+monitoring = false
+script = ExtResource("7_interactable")
+highlight_target = NodePath("../../AnimatedSprite2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Churrasqueira/InteractableComponent"]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_area")
+
+[node name="Bocas" type="Node2D" parent="Churrasqueira"]
+
+[node name="BocaDireita" type="Node2D" parent="Churrasqueira/Bocas"]
+position = Vector2(17, 9)
+script = ExtResource("8_slot")
+
+[node name="Mao" type="Node2D" parent="Churrasqueira/Bocas/BocaDireita"]
+z_index = 2
+scale = Vector2(0.55, 0.55)
+script = ExtResource("9_hand")
+flip_with_facing = false
+
+[node name="Girando" type="AnimatedSprite2D" parent="Churrasqueira/Bocas/BocaDireita"]
+z_index = 2
+script = ExtResource("11_girando")
+sheet = ExtResource("12_girando_png")
+frame_size = Vector2i(22, 22)
+fps = 10.0
+
+[node name="Barra" type="Node2D" parent="Churrasqueira/Bocas/BocaDireita"]
+z_index = 6
+position = Vector2(-5, -46)
+script = ExtResource("10_bar")
+size = Vector2(22, 4)
+fill_color = Color(0.95, 0.72, 0.25, 1)
+
+[node name="Balao" type="Node2D" parent="Churrasqueira/Bocas/BocaDireita"]
+z_index = 6
+position = Vector2(-5, -51)
+script = ExtResource("13_balao")
+
+[node name="Efeito" type="AnimatedSprite2D" parent="Churrasqueira/Bocas/BocaDireita"]
+z_index = 5
+position = Vector2(0, -4)
+scale = Vector2(0.5, 0.5)
+script = ExtResource("14_effect")
+sheet = ExtResource("15_fogo")
+row = 1
+columns = 12
+frame_size = Vector2i(64, 64)
+fps = 20.0
+
+[node name="BocaEsquerda" type="Node2D" parent="Churrasqueira/Bocas"]
+position = Vector2(-17, 9)
+script = ExtResource("8_slot")
+
+[node name="Mao" type="Node2D" parent="Churrasqueira/Bocas/BocaEsquerda"]
+z_index = 2
+scale = Vector2(0.55, 0.55)
+script = ExtResource("9_hand")
+flip_with_facing = false
+
+[node name="Girando" type="AnimatedSprite2D" parent="Churrasqueira/Bocas/BocaEsquerda"]
+z_index = 2
+script = ExtResource("11_girando")
+sheet = ExtResource("12_girando_png")
+frame_size = Vector2i(22, 22)
+fps = 10.0
+
+[node name="Barra" type="Node2D" parent="Churrasqueira/Bocas/BocaEsquerda"]
+z_index = 6
+position = Vector2(5, -46)
+script = ExtResource("10_bar")
+size = Vector2(22, 4)
+fill_color = Color(0.95, 0.72, 0.25, 1)
+
+[node name="Balao" type="Node2D" parent="Churrasqueira/Bocas/BocaEsquerda"]
+z_index = 6
+position = Vector2(5, -51)
+script = ExtResource("13_balao")
+
+[node name="Efeito" type="AnimatedSprite2D" parent="Churrasqueira/Bocas/BocaEsquerda"]
+z_index = 5
+position = Vector2(0, -4)
+scale = Vector2(0.5, 0.5)
+script = ExtResource("14_effect")
+sheet = ExtResource("15_fogo")
+row = 1
+columns = 12
+frame_size = Vector2i(64, 64)
+fps = 20.0
+
+[node name="FlameRandomEvent" parent="Churrasqueira" instance=ExtResource("19_traps")]
+event_source_path = NodePath("..")
+warning_duration = 2.0
+min_time_between_events = 8.0
+event_interval = 12.0
+first_event_delay = 15.0
+activation_probability = 0.35

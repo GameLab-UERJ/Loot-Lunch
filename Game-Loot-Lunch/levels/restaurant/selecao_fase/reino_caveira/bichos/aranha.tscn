@@ -1,0 +1,18 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://levels/restaurant/selecao_fase/ambient_creature.gd" id="1_ambient_crea"]
+[ext_resource type="Script" path="res://entities/base_classes/components/sheet_row_sprite.gd" id="2_sheet_row_sp"]
+[ext_resource type="Texture2D" path="res://assets/art/restaurant/mapa/reino_caveira/aranha.png" id="3_aranha"]
+
+[node name="Aranha" type="Node2D"]
+script = ExtResource("1_ambient_crea")
+motion = 2
+area = Vector2(0, 14)
+speed = 0.8
+flip_with_direction = false
+
+[node name="Visual" type="AnimatedSprite2D" parent="."]
+script = ExtResource("2_sheet_row_sp")
+sheet = ExtResource("3_aranha")
+frame_size = Vector2i(13, 11)
+fps = 4.0

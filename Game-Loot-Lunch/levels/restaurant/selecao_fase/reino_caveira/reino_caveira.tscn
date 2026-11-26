@@ -1,0 +1,1087 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://levels/restaurant/selecao_fase/level_select_map.gd" id="1_level_select"]
+[ext_resource type="Texture2D" path="res://assets/art/restaurant/mapa/reino_caveira/fundo_reino_caveira.png" id="2_fundo_reino_"]
+[ext_resource type="PackedScene" path="res://levels/restaurant/selecao_fase/ponto_fase.tscn" id="3_ponto_fase"]
+[ext_resource type="PackedScene" path="res://levels/restaurant/selecao_fase/reino_caveira/arvore_cogumelo.tscn" id="4_arvore_cogum"]
+[ext_resource type="Texture2D" path="res://assets/art/restaurant/mapa/reino_caveira/castelo_caveira.png" id="5_castelo_cave"]
+[ext_resource type="Texture2D" path="res://assets/art/restaurant/mapa/reino_caveira/teia_canto.png" id="6_teia_canto"]
+[ext_resource type="Texture2D" path="res://assets/art/restaurant/mapa/reino_caveira/teia_pequena.png" id="7_teia_pequena"]
+[ext_resource type="PackedScene" path="res://entities/player/chef/chef.tscn" id="8_chef"]
+[ext_resource type="PackedScene" path="res://entities/kitchen/brasa/brasa.tscn" id="9_brasa"]
+[ext_resource type="Script" path="res://entities/base_classes/components/action_input_component.gd" id="10_action_input"]
+[ext_resource type="PackedScene" path="res://levels/restaurant/selecao_fase/hud_selecao_fase.tscn" id="11_hud_selecao_"]
+[ext_resource type="PackedScene" path="res://levels/restaurant/selecao_fase/reino_caveira/bichos/morcego.tscn" id="12_morcego"]
+[ext_resource type="PackedScene" path="res://levels/restaurant/selecao_fase/reino_caveira/bichos/aranha.tscn" id="13_aranha"]
+[ext_resource type="PackedScene" path="res://levels/restaurant/selecao_fase/reino_caveira/bichos/alminha.tscn" id="14_alminha"]
+[ext_resource type="PackedScene" path="res://levels/restaurant/selecao_fase/reino_caveira/bichos/cogumelinho.tscn" id="15_cogumelinho"]
+[ext_resource type="PackedScene" path="res://levels/restaurant/selecao_fase/reino_caveira/bichos/corvo_caveira.tscn" id="16_corvo_caveir"]
+[ext_resource type="PackedScene" path="res://levels/restaurant/selecao_fase/reino_caveira/bichos/olho_brejo.tscn" id="17_olho_brejo"]
+[ext_resource type="PackedScene" path="res://levels/restaurant/selecao_fase/reino_caveira/bichos/vela_caveira.tscn" id="18_vela_caveira"]
+[ext_resource type="Texture2D" path="res://levels/restaurant/selecao_fase/luz_suave.tres" id="19_luz_suave"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_horizontal"]
+size = Vector2(720, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vertical"]
+size = Vector2(20, 420)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_castelo"]
+size = Vector2(90, 66)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ossada"]
+radius = 12.0
+
+[node name="ReinoCaveira" type="Node2D"]
+script = ExtResource("1_level_select")
+map_title = "Reino Caveira"
+players = Array[NodePath]([NodePath("Mundo/Chef"), NodePath("Mundo/Brasa")])
+
+[node name="Noite" type="CanvasModulate" parent="."]
+color = Color(0.7, 0.65, 0.86, 1)
+
+[node name="Fundo" type="Sprite2D" parent="."]
+z_index = -10
+texture = ExtResource("2_fundo_reino_")
+centered = false
+
+[node name="Bordas" type="StaticBody2D" parent="."]
+collision_mask = 0
+
+[node name="Cima" type="CollisionShape2D" parent="Bordas"]
+position = Vector2(320, 18)
+shape = SubResource("RectangleShape2D_horizontal")
+
+[node name="Baixo" type="CollisionShape2D" parent="Bordas"]
+position = Vector2(320, 368)
+shape = SubResource("RectangleShape2D_horizontal")
+
+[node name="Esquerda" type="CollisionShape2D" parent="Bordas"]
+position = Vector2(-10, 180)
+shape = SubResource("RectangleShape2D_vertical")
+
+[node name="Direita" type="CollisionShape2D" parent="Bordas"]
+position = Vector2(650, 180)
+shape = SubResource("RectangleShape2D_vertical")
+
+[node name="Brejo" type="StaticBody2D" parent="."]
+collision_mask = 0
+
+[node name="AguaCima" type="CollisionPolygon2D" parent="Brejo"]
+polygon = PackedVector2Array(285.9, -24, 287.0, -20, 288.6, -16, 290.4, -12, 292.6, -8, 294.9, -4, 297.3, 0, 299.8, 4, 302.1, 8, 304.3, 12, 306.2, 16, 307.7, 20, 308.9, 24, 309.7, 28, 310.1, 32, 310.1, 36, 309.8, 40, 309.3, 44, 308.6, 48, 307.9, 52, 307.1, 56, 306.4, 60, 305.9, 64, 305.6, 68, 305.5, 72, 305.7, 76, 306.0, 80, 306.5, 84, 307.1, 88, 307.7, 92, 308.2, 96, 308.6, 100, 308.7, 104, 308.5, 108, 307.9, 112, 306.9, 116, 305.5, 120, 303.6, 124, 301.3, 128, 298.8, 132, 294.5, 138, 323.5, 138, 325.7, 134, 327.8, 130, 329.7, 126, 331.4, 122, 332.7, 118, 333.7, 114, 334.3, 110, 334.7, 106, 334.7, 102, 334.6, 98, 334.4, 94, 334.2, 90, 334.0, 86, 333.9, 82, 334.1, 78, 334.5, 74, 335.1, 70, 336.1, 66, 337.2, 62, 338.6, 58, 340.1, 54, 341.6, 50, 343.1, 46, 344.4, 42, 345.5, 38, 346.2, 34, 346.5, 30, 346.4, 26, 345.8, 22, 344.7, 18, 343.2, 14, 341.2, 10, 339.0, 6, 336.4, 2, 333.8, -2, 331.1, -6, 328.4, -10, 326.0, -14, 323.7, -18, 321.8, -22)
+
+[node name="AguaBaixo" type="CollisionPolygon2D" parent="Brejo"]
+polygon = PackedVector2Array(278.9, 162, 277.4, 166, 276.4, 170, 275.8, 174, 275.5, 178, 275.7, 182, 276.1, 186, 276.8, 190, 277.5, 194, 278.3, 198, 279.0, 202, 279.6, 206, 280.1, 210, 280.3, 214, 280.4, 218, 280.3, 222, 280.0, 226, 279.7, 230, 279.4, 234, 279.1, 238, 279.1, 242, 279.2, 246, 279.7, 250, 280.6, 254, 281.8, 258, 283.5, 262, 285.5, 266, 287.8, 270, 290.4, 274, 293.2, 278, 296.1, 282, 299.0, 286, 301.7, 290, 304.2, 294, 306.4, 298, 308.1, 302, 309.5, 306, 310.4, 310, 310.9, 314, 310.9, 318, 310.6, 322, 309.9, 326, 309.1, 330, 308.1, 334, 307.1, 338, 306.2, 342, 305.4, 346, 304.8, 350, 304.5, 354, 304.4, 358, 304.5, 362, 304.9, 366, 305.4, 370, 306.0, 374, 306.5, 378, 307.2, 384, 344.6, 384, 343.8, 380, 342.8, 376, 341.7, 372, 340.5, 368, 339.4, 364, 338.5, 360, 337.7, 356, 337.2, 352, 336.9, 348, 336.8, 344, 336.9, 340, 337.1, 336, 337.5, 332, 337.7, 328, 337.9, 324, 337.9, 320, 337.7, 316, 337.1, 312, 336.2, 308, 334.9, 304, 333.3, 300, 331.4, 296, 329.2, 292, 326.8, 288, 324.4, 284, 321.9, 280, 319.6, 276, 317.5, 272, 315.6, 268, 314.1, 264, 313.0, 260, 312.4, 256, 312.1, 252, 312.2, 248, 312.6, 244, 313.3, 240, 314.2, 236, 315.1, 232, 316.0, 228, 316.8, 224, 317.5, 220, 317.9, 216, 318.0, 212, 317.8, 208, 317.3, 204, 316.6, 200, 315.7, 196, 314.7, 192, 313.7, 188, 312.8, 184, 312.0, 180, 311.4, 176, 311.2, 172, 311.4, 168, 311.9, 164)
+
+[node name="Ossada" type="StaticBody2D" parent="."]
+position = Vector2(410, 340)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ossada"]
+shape = SubResource("CircleShape2D_ossada")
+
+[node name="Mundo" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Fase1" parent="Mundo" instance=ExtResource("3_ponto_fase")]
+position = Vector2(72, 296)
+level_id = "1-1"
+level_name = "Portão de Ossos"
+locked = false
+level_scene = "res://levels/restaurant/reino_caveira/fase_1_1/fase_1_1.tscn"
+
+[node name="Fase2" parent="Mundo" instance=ExtResource("3_ponto_fase")]
+position = Vector2(178, 250)
+level_id = "1-2"
+level_name = "Clareira das Teias"
+locked = true
+
+[node name="Fase3" parent="Mundo" instance=ExtResource("3_ponto_fase")]
+position = Vector2(118, 170)
+level_id = "1-3"
+level_name = "Cemitério Cogumelo"
+locked = true
+
+[node name="Fase4" parent="Mundo" instance=ExtResource("3_ponto_fase")]
+position = Vector2(232, 104)
+level_id = "1-4"
+level_name = "Bosque dos Morcegos"
+locked = true
+
+[node name="Fase5" parent="Mundo" instance=ExtResource("3_ponto_fase")]
+position = Vector2(392, 184)
+level_id = "1-5"
+level_name = "Brejo do Olho"
+locked = true
+
+[node name="Fase6" parent="Mundo" instance=ExtResource("3_ponto_fase")]
+position = Vector2(478, 282)
+level_id = "1-6"
+level_name = "Ossada do Gigante"
+locked = true
+
+[node name="Fase7" parent="Mundo" instance=ExtResource("3_ponto_fase")]
+position = Vector2(566, 152)
+level_id = "1-7"
+level_name = "Castelo Caveira"
+locked = true
+
+[node name="Castelo" type="StaticBody2D" parent="Mundo"]
+position = Vector2(578, 110)
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Mundo/Castelo"]
+position = Vector2(-52, -96)
+texture = ExtResource("5_castelo_cave")
+centered = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Mundo/Castelo"]
+position = Vector2(0, -38)
+shape = SubResource("RectangleShape2D_castelo")
+
+[node name="OlhoEsquerdo" type="PointLight2D" parent="Mundo/Castelo"]
+position = Vector2(-13, -44)
+color = Color(0.55, 1.0, 0.4, 1)
+energy = 0.9
+texture = ExtResource("19_luz_suave")
+texture_scale = 0.35
+
+[node name="OlhoDireito" type="PointLight2D" parent="Mundo/Castelo"]
+position = Vector2(13, -44)
+color = Color(0.55, 1.0, 0.4, 1)
+energy = 0.9
+texture = ExtResource("19_luz_suave")
+texture_scale = 0.35
+
+[node name="Janelas" type="PointLight2D" parent="Mundo/Castelo"]
+position = Vector2(0, -70)
+color = Color(1.0, 0.78, 0.4, 1)
+energy = 0.5
+texture = ExtResource("19_luz_suave")
+texture_scale = 0.7
+
+[node name="Arvore1" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(27, 14)
+variant = 7
+flip = false
+
+[node name="Arvore2" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(99, 14)
+variant = 0
+flip = false
+
+[node name="Arvore3" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(162, 14)
+variant = 3
+flip = false
+
+[node name="Arvore4" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(421, 14)
+variant = 2
+flip = false
+
+[node name="Arvore5" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(452, 15)
+variant = 0
+flip = false
+
+[node name="Arvore6" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(10, 17)
+variant = 0
+flip = false
+
+[node name="Arvore7" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(302, 17)
+variant = 1
+flip = true
+
+[node name="Arvore8" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(402, 17)
+variant = 1
+flip = false
+
+[node name="Arvore9" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(220, 18)
+variant = 2
+flip = false
+
+[node name="Arvore10" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(180, 19)
+variant = 7
+flip = false
+
+[node name="Arvore11" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(387, 19)
+variant = 7
+flip = true
+
+[node name="Arvore12" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(135, 20)
+variant = 8
+flip = true
+
+[node name="Arvore13" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(237, 20)
+variant = 7
+flip = true
+
+[node name="Arvore14" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(266, 20)
+variant = 2
+flip = false
+
+[node name="Arvore15" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(365, 20)
+variant = 8
+flip = false
+
+[node name="Arvore16" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(468, 20)
+variant = 8
+flip = true
+
+[node name="Arvore17" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(47, 21)
+variant = 2
+flip = false
+
+[node name="Arvore18" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(64, 21)
+variant = 8
+flip = false
+
+[node name="Arvore19" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(436, 21)
+variant = 3
+flip = false
+
+[node name="Arvore20" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(482, 21)
+variant = 0
+flip = false
+
+[node name="Arvore21" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(-9, 22)
+variant = 3
+flip = false
+
+[node name="Arvore22" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(196, 22)
+variant = 8
+flip = true
+
+[node name="Arvore23" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(259, 36)
+variant = 1
+flip = false
+
+[node name="Arvore24" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(357, 36)
+variant = 0
+flip = true
+
+[node name="Arvore25" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(294, 37)
+variant = 2
+flip = true
+
+[node name="Arvore26" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(389, 37)
+variant = 2
+flip = true
+
+[node name="Arvore27" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(462, 37)
+variant = 3
+flip = false
+
+[node name="Arvore28" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(371, 38)
+variant = 0
+flip = false
+
+[node name="Arvore29" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(666, 38)
+variant = 1
+flip = false
+
+[node name="Arvore30" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(7, 39)
+variant = 8
+flip = false
+
+[node name="Arvore31" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(66, 39)
+variant = 1
+flip = false
+
+[node name="Arvore32" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(101, 39)
+variant = 0
+flip = false
+
+[node name="Arvore33" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(218, 39)
+variant = 0
+flip = false
+
+[node name="Arvore34" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(239, 39)
+variant = 0
+flip = false
+
+[node name="Arvore35" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(126, 40)
+variant = 1
+flip = false
+
+[node name="Arvore36" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(175, 40)
+variant = 0
+flip = true
+
+[node name="Arvore37" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(31, 42)
+variant = 1
+flip = false
+
+[node name="Arvore38" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(49, 42)
+variant = 0
+flip = false
+
+[node name="Arvore39" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(153, 42)
+variant = 8
+flip = false
+
+[node name="Arvore40" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(201, 42)
+variant = 1
+flip = false
+
+[node name="Arvore41" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(279, 42)
+variant = 3
+flip = false
+
+[node name="Arvore42" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(432, 42)
+variant = 3
+flip = false
+
+[node name="Arvore43" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(477, 42)
+variant = 3
+flip = false
+
+[node name="Arvore44" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(83, 43)
+variant = 2
+flip = true
+
+[node name="Arvore45" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(415, 44)
+variant = 1
+flip = false
+
+[node name="Arvore46" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(495, 44)
+variant = 1
+flip = false
+
+[node name="Arvore47" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(8, 60)
+variant = 2
+flip = false
+
+[node name="Arvore48" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(440, 65)
+variant = 6
+flip = false
+
+[node name="Aranha" parent="Mundo/Arvore48" instance=ExtResource("13_aranha")]
+z_index = 1
+position = Vector2(-10, -12)
+area = Vector2(0, 10)
+speed = 0.71
+
+[node name="Arvore49" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(128, 67)
+variant = 3
+flip = false
+
+[node name="Aranha" parent="Mundo/Arvore49" instance=ExtResource("13_aranha")]
+z_index = 1
+position = Vector2(-14, -20)
+area = Vector2(0, 17)
+speed = 0.79
+
+[node name="Arvore50" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(48, 67)
+variant = 1
+flip = false
+
+[node name="Arvore51" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(481, 72)
+variant = 8
+flip = false
+
+[node name="Arvore52" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(170, 74)
+variant = 5
+flip = false
+
+[node name="Arvore53" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(100, 76)
+variant = 7
+flip = true
+
+[node name="Arvore54" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(345, 77)
+variant = 4
+flip = false
+
+[node name="Arvore55" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(21, 78)
+variant = 0
+flip = true
+
+[node name="Arvore56" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(6, 86)
+variant = 0
+flip = true
+
+[node name="Arvore57" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(492, 89)
+variant = 7
+flip = true
+
+[node name="Arvore58" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(364, 93)
+variant = 4
+flip = false
+
+[node name="Arvore59" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(57, 101)
+variant = 0
+flip = false
+
+[node name="Arvore60" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(299, 102)
+variant = 9
+flip = true
+
+[node name="Arvore61" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(9, 104)
+variant = 5
+flip = false
+
+[node name="Arvore62" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(495, 111)
+variant = 4
+flip = true
+
+[node name="Arvore63" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(96, 113)
+variant = 0
+flip = false
+
+[node name="Arvore64" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(22, 116)
+variant = 9
+flip = false
+
+[node name="Arvore65" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(119, 118)
+variant = 9
+flip = false
+
+[node name="Arvore66" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(341, 122)
+variant = 1
+flip = true
+
+[node name="Arvore67" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(458, 124)
+variant = 4
+flip = false
+
+[node name="Arvore68" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(407, 132)
+variant = 1
+flip = false
+
+[node name="Arvore69" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(51, 133)
+variant = 4
+flip = false
+
+[node name="Arvore70" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(24, 135)
+variant = 0
+flip = false
+
+[node name="Arvore71" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(483, 135)
+variant = 8
+flip = false
+
+[node name="Arvore72" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(5, 136)
+variant = 4
+flip = false
+
+[node name="Arvore73" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(438, 136)
+variant = 8
+flip = false
+
+[node name="Arvore74" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(2, 150)
+variant = 5
+flip = true
+
+[node name="Arvore75" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(615, 150)
+variant = 4
+flip = false
+
+[node name="Arvore76" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(25, 152)
+variant = 0
+flip = false
+
+[node name="Arvore77" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(472, 158)
+variant = 0
+flip = false
+
+[node name="Arvore78" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(453, 165)
+variant = 6
+flip = false
+
+[node name="Aranha" parent="Mundo/Arvore78" instance=ExtResource("13_aranha")]
+z_index = 1
+position = Vector2(-10, -12)
+area = Vector2(0, 13)
+speed = 0.69
+
+[node name="Arvore79" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(21, 168)
+variant = 6
+flip = false
+
+[node name="Arvore80" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(636, 169)
+variant = 4
+flip = false
+
+[node name="Arvore81" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(5, 176)
+variant = 0
+flip = false
+
+[node name="Arvore82" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(616, 177)
+variant = 5
+flip = true
+
+[node name="Arvore83" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(23, 188)
+variant = 6
+flip = false
+
+[node name="Arvore84" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(633, 190)
+variant = 0
+flip = false
+
+[node name="Arvore85" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(457, 190)
+variant = 7
+flip = true
+
+[node name="Arvore86" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(72, 191)
+variant = 2
+flip = false
+
+[node name="Arvore87" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(3, 195)
+variant = 0
+flip = false
+
+[node name="Arvore88" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(515, 195)
+variant = 0
+flip = false
+
+[node name="Arvore89" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(266, 201)
+variant = 4
+flip = true
+
+[node name="Arvore90" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(21, 203)
+variant = 9
+flip = true
+
+[node name="Arvore91" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(205, 204)
+variant = 4
+flip = false
+
+[node name="Arvore92" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(2, 212)
+variant = 4
+flip = true
+
+[node name="Arvore93" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(614, 212)
+variant = 4
+flip = false
+
+[node name="Arvore94" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(634, 213)
+variant = 4
+flip = false
+
+[node name="Arvore95" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(46, 213)
+variant = 3
+flip = false
+
+[node name="Aranha" parent="Mundo/Arvore95" instance=ExtResource("13_aranha")]
+z_index = 1
+position = Vector2(14, -20)
+area = Vector2(0, 12)
+speed = 1.03
+
+[node name="Arvore96" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(70, 218)
+variant = 4
+flip = true
+
+[node name="Arvore97" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(594, 221)
+variant = 5
+flip = true
+
+[node name="Arvore98" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(259, 223)
+variant = 9
+flip = false
+
+[node name="Arvore99" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(629, 227)
+variant = 5
+flip = false
+
+[node name="Arvore100" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(470, 227)
+variant = 7
+flip = true
+
+[node name="Arvore101" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(25, 229)
+variant = 0
+flip = true
+
+[node name="Arvore102" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(502, 235)
+variant = 4
+flip = false
+
+[node name="Arvore103" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(326, 237)
+variant = 5
+flip = false
+
+[node name="Arvore104" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(237, 237)
+variant = 6
+flip = false
+
+[node name="Arvore105" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(634, 243)
+variant = 2
+flip = false
+
+[node name="Arvore106" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(122, 247)
+variant = 9
+flip = false
+
+[node name="Arvore107" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(4, 249)
+variant = 6
+flip = false
+
+[node name="Arvore108" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(19, 249)
+variant = 6
+flip = false
+
+[node name="Arvore109" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(616, 249)
+variant = 5
+flip = true
+
+[node name="Arvore110" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(628, 262)
+variant = 5
+flip = true
+
+[node name="Arvore111" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(23, 263)
+variant = 4
+flip = false
+
+[node name="Arvore112" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(569, 266)
+variant = 5
+flip = true
+
+[node name="Arvore113" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(231, 275)
+variant = 8
+flip = false
+
+[node name="Arvore114" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(629, 276)
+variant = 5
+flip = true
+
+[node name="Arvore115" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(8, 278)
+variant = 9
+flip = false
+
+[node name="Arvore116" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(406, 279)
+variant = 5
+flip = false
+
+[node name="Arvore117" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(634, 294)
+variant = 9
+flip = true
+
+[node name="Arvore118" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(238, 295)
+variant = 4
+flip = true
+
+[node name="Arvore119" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(617, 301)
+variant = 6
+flip = false
+
+[node name="Arvore120" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(559, 307)
+variant = 0
+flip = true
+
+[node name="Arvore121" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(629, 312)
+variant = 2
+flip = true
+
+[node name="Arvore122" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(539, 315)
+variant = 4
+flip = false
+
+[node name="Arvore123" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(185, 320)
+variant = 4
+flip = false
+
+[node name="Arvore124" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(634, 330)
+variant = 6
+flip = false
+
+[node name="Arvore125" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(255, 331)
+variant = 4
+flip = true
+
+[node name="Arvore126" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(584, 334)
+variant = 6
+flip = false
+
+[node name="Arvore127" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(138, 335)
+variant = 4
+flip = true
+
+[node name="Arvore128" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(614, 339)
+variant = 9
+flip = true
+
+[node name="Arvore129" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(631, 347)
+variant = 6
+flip = false
+
+[node name="Arvore130" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(30, 358)
+variant = 9
+flip = false
+
+[node name="Arvore131" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(598, 359)
+variant = 4
+flip = true
+
+[node name="Arvore132" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(148, 360)
+variant = 6
+flip = false
+
+[node name="Arvore133" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(545, 360)
+variant = 2
+flip = false
+
+[node name="Arvore134" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(486, 361)
+variant = 4
+flip = false
+
+[node name="Arvore135" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(505, 361)
+variant = 5
+flip = true
+
+[node name="Arvore136" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(521, 361)
+variant = 9
+flip = false
+
+[node name="Arvore137" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(616, 361)
+variant = 9
+flip = false
+
+[node name="Arvore138" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(164, 362)
+variant = 9
+flip = false
+
+[node name="Arvore139" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(297, 362)
+variant = 6
+flip = false
+
+[node name="Arvore140" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(581, 362)
+variant = 5
+flip = false
+
+[node name="Arvore141" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(130, 363)
+variant = 6
+flip = false
+
+[node name="Arvore142" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(260, 363)
+variant = 5
+flip = true
+
+[node name="Arvore143" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(185, 364)
+variant = 9
+flip = true
+
+[node name="Arvore144" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(222, 364)
+variant = 2
+flip = true
+
+[node name="Arvore145" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(241, 364)
+variant = 5
+flip = false
+
+[node name="Arvore146" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(317, 365)
+variant = 4
+flip = false
+
+[node name="Arvore147" parent="Mundo" instance=ExtResource("4_arvore_cogum")]
+position = Vector2(561, 365)
+variant = 2
+flip = false
+
+[node name="OlhoBrejo1" parent="Mundo" instance=ExtResource("17_olho_brejo")]
+position = Vector2(297.9, 254)
+
+[node name="OlhoBrejo2" parent="Mundo" instance=ExtResource("17_olho_brejo")]
+position = Vector2(320.3, 74)
+
+[node name="Cogumelinho1" parent="Mundo" instance=ExtResource("15_cogumelinho")]
+position = Vector2(128, 330)
+
+[node name="Cogumelinho2" parent="Mundo" instance=ExtResource("15_cogumelinho")]
+position = Vector2(446, 222)
+
+[node name="Cogumelinho3" parent="Mundo" instance=ExtResource("15_cogumelinho")]
+position = Vector2(262, 232)
+
+[node name="Corvo1" parent="Mundo" instance=ExtResource("16_corvo_caveir")]
+position = Vector2(548, 104)
+
+[node name="Corvo2" parent="Mundo" instance=ExtResource("16_corvo_caveir")]
+position = Vector2(82, 196)
+
+[node name="Vela1" parent="Mundo" instance=ExtResource("18_vela_caveira")]
+position = Vector2(33, 321)
+
+[node name="Vela2" parent="Mundo" instance=ExtResource("18_vela_caveira")]
+position = Vector2(103, 278)
+
+[node name="Vela3" parent="Mundo" instance=ExtResource("18_vela_caveira")]
+position = Vector2(191, 254)
+
+[node name="Vela4" parent="Mundo" instance=ExtResource("18_vela_caveira")]
+position = Vector2(121, 192)
+
+[node name="Vela5" parent="Mundo" instance=ExtResource("18_vela_caveira")]
+position = Vector2(169, 133)
+
+[node name="Vela6" parent="Mundo" instance=ExtResource("18_vela_caveira")]
+position = Vector2(261, 104)
+
+[node name="Chef" parent="Mundo" instance=ExtResource("8_chef")]
+position = Vector2(54, 304)
+
+[node name="InputComponent" parent="Mundo/Chef"]
+script = ExtResource("10_action_input")
+up_action = &"chef_up"
+down_action = &"chef_down"
+left_action = &"chef_left"
+right_action = &"chef_right"
+
+[node name="HudChef" parent="Mundo/Chef"]
+visible = false
+
+[node name="Luz" type="PointLight2D" parent="Mundo/Chef"]
+position = Vector2(0, 0)
+color = Color(0.85, 0.85, 1.0, 1)
+energy = 0.45
+texture = ExtResource("19_luz_suave")
+texture_scale = 0.6
+
+[node name="Brasa" parent="Mundo" instance=ExtResource("9_brasa")]
+position = Vector2(90, 304)
+
+[node name="FlameRandomEvent" parent="Mundo/Brasa/Churrasqueira"]
+activation_probability = 0.0
+
+[node name="Luz" type="PointLight2D" parent="Mundo/Brasa"]
+position = Vector2(0, -4)
+color = Color(1.0, 0.68, 0.36, 1)
+energy = 1.1
+texture = ExtResource("19_luz_suave")
+texture_scale = 1.3
+
+[node name="Ceu" type="Node2D" parent="."]
+z_index = 5
+
+[node name="Morcego1" parent="Ceu" instance=ExtResource("12_morcego")]
+position = Vector2(232, 66)
+area = Vector2(46, 18)
+speed = 1.3
+
+[node name="Morcego2" parent="Ceu" instance=ExtResource("12_morcego")]
+position = Vector2(424, 70)
+area = Vector2(60, 26)
+speed = 1.0
+
+[node name="Morcego3" parent="Ceu" instance=ExtResource("12_morcego")]
+position = Vector2(578, 34)
+area = Vector2(40, 14)
+speed = 1.6
+
+[node name="Morcego4" parent="Ceu" instance=ExtResource("12_morcego")]
+position = Vector2(112, 84)
+area = Vector2(36, 20)
+speed = 1.1
+
+[node name="Morcego5" parent="Ceu" instance=ExtResource("12_morcego")]
+position = Vector2(300, 300)
+area = Vector2(50, 20)
+speed = 0.9
+
+[node name="Alminha1" parent="Ceu" instance=ExtResource("14_alminha")]
+position = Vector2(92, 138)
+
+[node name="Alminha2" parent="Ceu" instance=ExtResource("14_alminha")]
+position = Vector2(160, 206)
+
+[node name="Alminha3" parent="Ceu" instance=ExtResource("14_alminha")]
+position = Vector2(512, 128)
+
+[node name="Alminha4" parent="Ceu" instance=ExtResource("14_alminha")]
+position = Vector2(606, 196)
+
+[node name="Alminha5" parent="Ceu" instance=ExtResource("14_alminha")]
+position = Vector2(346, 262)
+
+[node name="Vagalumes" type="CPUParticles2D" parent="Ceu"]
+position = Vector2(320, 190)
+amount = 36
+lifetime = 5.0
+preprocess = 5.0
+emission_shape = 3
+emission_rect_extents = Vector2(310, 160)
+direction = Vector2(0, -1)
+spread = 180.0
+gravity = Vector2(0, -2)
+initial_velocity_min = 2.0
+initial_velocity_max = 8.0
+scale_amount_min = 1.0
+scale_amount_max = 2.0
+color = Color(0.85, 1, 0.55, 0.9)
+
+[node name="Teias" type="Node2D" parent="."]
+z_index = 6
+
+[node name="TeiaCantoEsquerdo" type="Sprite2D" parent="Teias"]
+position = Vector2(0, 360)
+texture = ExtResource("6_teia_canto")
+centered = false
+offset = Vector2(0, -46)
+flip_v = true
+
+[node name="TeiaCantoDireito" type="Sprite2D" parent="Teias"]
+position = Vector2(640, 360)
+texture = ExtResource("6_teia_canto")
+centered = false
+offset = Vector2(-46, -46)
+flip_h = true
+flip_v = true
+
+[node name="TeiaPequena1" type="Sprite2D" parent="Teias"]
+position = Vector2(186, 40)
+texture = ExtResource("7_teia_pequena")
+
+[node name="TeiaPequena2" type="Sprite2D" parent="Teias"]
+position = Vector2(402, 44)
+texture = ExtResource("7_teia_pequena")
+
+[node name="TeiaPequena3" type="Sprite2D" parent="Teias"]
+position = Vector2(24, 150)
+texture = ExtResource("7_teia_pequena")
+
+[node name="TeiaPequena4" type="Sprite2D" parent="Teias"]
+position = Vector2(618, 250)
+texture = ExtResource("7_teia_pequena")
+
+[node name="Interface" parent="." instance=ExtResource("11_hud_selecao_")]

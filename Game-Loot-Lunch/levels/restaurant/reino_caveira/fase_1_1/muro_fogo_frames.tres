@@ -1,0 +1,87 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/art/restaurant/fases/fase_1_1/muro_fogo_acender.png" id="1_prkwa"]
+[ext_resource type="Texture2D" path="res://assets/art/restaurant/fases/fase_1_1/muro_fogo_queimar.png" id="2_wvd1o"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cjn3x"]
+atlas = ExtResource("1_prkwa")
+region = Rect2(0, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ujwv2"]
+atlas = ExtResource("1_prkwa")
+region = Rect2(16, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hd3ku"]
+atlas = ExtResource("1_prkwa")
+region = Rect2(32, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dr2uc"]
+atlas = ExtResource("1_prkwa")
+region = Rect2(48, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c23ap"]
+atlas = ExtResource("2_wvd1o")
+region = Rect2(0, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cfddc"]
+atlas = ExtResource("2_wvd1o")
+region = Rect2(16, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g7q2h"]
+atlas = ExtResource("2_wvd1o")
+region = Rect2(32, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0rlhn"]
+atlas = ExtResource("2_wvd1o")
+region = Rect2(48, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bsehp"]
+atlas = ExtResource("2_wvd1o")
+region = Rect2(64, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_33h5e"]
+atlas = ExtResource("2_wvd1o")
+region = Rect2(80, 0, 16, 24)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cjn3x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ujwv2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hd3ku")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dr2uc")
+}],
+"loop": 0,
+"name": &"acender",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c23ap")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cfddc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g7q2h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0rlhn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bsehp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_33h5e")
+}],
+"loop": 1,
+"name": &"queimar",
+"speed": 10.0
+}]
