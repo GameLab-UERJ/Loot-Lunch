@@ -28,6 +28,9 @@ signal rage_cast(level: int)
 @export var cast_interval: float = 1.0
 ## Variação aleatória do intervalo (0.3 = de 70% a 130% do `cast_interval`).
 @export_range(0.0, 1.0) var interval_jitter: float = 0.3
+## Recarga mínima (s) de cada nível DURANTE A RAIVA: nível -> segundos. Enquanto um nível
+## estiver recarregando, o sorteio usa as outras magias. Nível fora da lista = sem recarga.
+@export var level_cooldowns: Dictionary[int, float] = {1: 3.0}
 ## true = espera a magia anterior terminar antes de lançar outra (sem sobrepor).
 @export var wait_for_previous: bool = false
 ## Cliente com raiva. Vazio = o pai deste nó.
@@ -48,6 +51,8 @@ signal rage_cast(level: int)
 
 var _active: bool = false
 var _time_to_next: float = 0.0
+## Recarga restante de cada nível (nível -> segundos).
+var _level_cd_left: Dictionary[int, float] = {}
 var _pulse: Tween = null
 var _sprite: CanvasItem = null
 
@@ -64,6 +69,8 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if not _active or caster == null:
 		return
+	for level in _level_cd_left:
+		_level_cd_left[level] = maxf(_level_cd_left[level] - delta, 0.0)
 	_time_to_next -= delta
 	if _time_to_next > 0.0:
 		return
@@ -79,6 +86,7 @@ func start() -> void:
 		return
 	_active = true
 	_time_to_next = 0.0
+	_level_cd_left.clear()
 	_start_pulse()
 	rage_started.emit()
 	if debug_print:
@@ -105,7 +113,10 @@ func _cast_random() -> bool:
 	var order: Array[int] = levels.duplicate()
 	order.shuffle()
 	for level in order:
+		if _level_cd_left.get(level, 0.0) > 0.0:
+			continue
 		if caster.cast_for_patience_level(level):
+			_level_cd_left[level] = level_cooldowns.get(level, 0.0)
 			rage_cast.emit(level)
 			if debug_print:
 				print("[Raiva] %s -> magia %d" % [_customer_name(), level])

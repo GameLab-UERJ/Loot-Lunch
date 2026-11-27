@@ -95,6 +95,7 @@ position = Vector2(178, 250)
 level_id = "1-2"
 level_name = "Clareira das Teias"
 locked = true
+level_scene = "res://levels/restaurant/reino_caveira/fase_1_2/fase_1_2.tscn"
 
 [node name="Fase3" parent="Mundo" instance=ExtResource("3_ponto_fase")]
 position = Vector2(118, 170)

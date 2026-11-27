@@ -19,9 +19,13 @@
 [ext_resource type="Resource" path="res://resources/recipes/assar_cogumelo.tres" id="17_cogumelo"]
 [ext_resource type="Resource" path="res://resources/recipes/assar_misto.tres" id="18_misto"]
 [ext_resource type="PackedScene" path="res://restaurante/armadilhas/flame_random_event.tscn" id="19_traps"]
+[ext_resource type="Script" path="res://systems/hitbox/hitbox_component.gd" id="20_hitbox"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_corpo"]
 radius = 9.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_queimadura"]
+radius = 13.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_estacao"]
 size = Vector2(4, 4)
@@ -64,6 +68,20 @@ right_action = &"brasa_right"
 [node name="MovementComponent" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("5_move")
+
+[node name="Queimadura" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+script = ExtResource("20_hitbox")
+knockback_force = 240
+repeat_time = 0.5
+target_group = &"inimigos"
+knockback_from_center = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Queimadura"]
+position = Vector2(0, -4)
+shape = SubResource("CircleShape2D_queimadura")
 
 [node name="Churrasqueira" type="StaticBody2D" parent="."]
 unique_name_in_owner = true

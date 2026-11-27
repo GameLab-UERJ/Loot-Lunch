@@ -31,6 +31,9 @@ class_name StopwatchLevelData
 @export var rage_ability_levels: Array[int] = [1, 2]
 ## Segundos entre uma magia e outra na raiva. Menor = mais desenfreado.
 @export var rage_cast_interval: float = 1.0
+## Recarga mínima (s) de cada magia na raiva: nível -> segundos. Ex.: {1: 3.0} = a magia 1
+## sai no máximo a cada 3s (nos outros sorteios sai a magia 2). Nível fora da lista = sem recarga.
+@export var rage_level_cooldowns: Dictionary[int, float] = {1: 3.0}
 ## (Só com a raiva desligada) a cada volta, a próxima barra fica este tanto do tempo.
 @export_range(0.2, 1.0) var furious_patience_scale: float = 0.8
 ## (Só com a raiva desligada) paciência mínima (s) depois de várias voltas.

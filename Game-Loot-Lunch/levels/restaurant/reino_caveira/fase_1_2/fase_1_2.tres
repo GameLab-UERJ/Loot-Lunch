@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="StopwatchLevelData" format=3]
+
+[ext_resource type="Script" path="res://levels/restaurant/stopwatch_level_data.gd" id="1_data"]
+[ext_resource type="PackedScene" path="res://entities/npcs/customers/johnny/johnny.tscn" id="2_johnny"]
+[ext_resource type="PackedScene" path="res://entities/npcs/customers/mandy/mandy.tscn" id="3_mandy"]
+[ext_resource type="PackedScene" path="res://entities/npcs/customers/patolino/patolino.tscn" id="4_patolino"]
+
+[resource]
+script = ExtResource("1_data")
+level_id = "1-2"
+total_customers = 10
+max_simultaneous = 12
+customers_stay_until_served = true
+rage_when_patience_ends = true
+rage_ability_levels = Array[int]([1, 2])
+rage_cast_interval = 1.0
+furious_patience_scale = 0.8
+min_patience_time = 20.0
+star_min_correct = Array[int]([5, 7, 9])
+star_max_time = Array[float]([0.0, 330.0, 255.0])
+display_name = "Fase 1-2"
+fail_on_chef_death = false
+customer_scenes = Array[PackedScene]([ExtResource("2_johnny"), ExtResource("3_mandy"), ExtResource("4_patolino")])
+max_customers = 3
+first_spawn_delay = 2.0
+spawn_interval_min = 9.0
+spawn_interval_max = 14.0
+patience_time = 60.0
+ability_thresholds = Array[float]([0.6, 0.25])
+order_reveal_distance = 110.0

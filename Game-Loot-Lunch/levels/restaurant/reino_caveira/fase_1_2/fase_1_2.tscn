@@ -1,0 +1,304 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://levels/restaurant/stopwatch_level.gd" id="1_r"]
+[ext_resource type="Resource" path="res://levels/restaurant/reino_caveira/fase_1_2/fase_1_2.tres" id="2_r"]
+[ext_resource type="Texture2D" path="res://assets/art/restaurant/fases/fase_1_1/fundo_campo_1_1.png" id="3_r"]
+[ext_resource type="Script" path="res://levels/restaurant/componentes/fire_wall.gd" id="4_r"]
+[ext_resource type="SpriteFrames" path="res://levels/restaurant/reino_caveira/fase_1_1/muro_fogo_frames.tres" id="5_r"]
+[ext_resource type="Texture2D" path="res://levels/restaurant/selecao_fase/luz_suave.tres" id="6_r"]
+[ext_resource type="PackedScene" path="res://entities/player/chef/chef.tscn" id="7_r"]
+[ext_resource type="PackedScene" path="res://entities/kitchen/brasa/brasa.tscn" id="8_r"]
+[ext_resource type="Script" path="res://entities/base_classes/components/action_input_component.gd" id="9_r"]
+[ext_resource type="PackedScene" path="res://entities/kitchen/pe_cogumelo.tscn" id="11_r"]
+[ext_resource type="PackedScene" path="res://entities/kitchen/raiz_espeto.tscn" id="12_r"]
+[ext_resource type="PackedScene" path="res://entities/kitchen/tabua_corte.tscn" id="13_r"]
+[ext_resource type="PackedScene" path="res://entities/kitchen/lixeira.tscn" id="14_r"]
+[ext_resource type="PackedScene" path="res://entities/npcs/customers/componentes/queue_manager.tscn" id="15_r"]
+[ext_resource type="Script" path="res://levels/restaurant/componentes/customer_lane.gd" id="16_r"]
+[ext_resource type="Script" path="res://levels/restaurant/componentes/customer_wave_director.gd" id="17_r"]
+[ext_resource type="PackedScene" path="res://entities/npcs/customers/pedido/pedido_so_cogumelo.tscn" id="18_r"]
+[ext_resource type="PackedScene" path="res://entities/npcs/customers/entrega/entrega.tscn" id="19_r"]
+[ext_resource type="PackedScene" path="res://levels/restaurant/ui/hud_fase.tscn" id="20_r"]
+[ext_resource type="Script" path="res://levels/restaurant/ui/stopwatch_level_hud.gd" id="21_r"]
+[ext_resource type="PackedScene" path="res://levels/restaurant/selecao_fase/reino_caveira/bichos/aranha.tscn" id="22_r"]
+[ext_resource type="PackedScene" path="res://levels/restaurant/selecao_fase/reino_caveira/bichos/alminha.tscn" id="23_r"]
+[ext_resource type="PackedScene" path="res://levels/restaurant/selecao_fase/reino_caveira/bichos/vela_caveira.tscn" id="24_r"]
+[ext_resource type="Script" path="res://levels/restaurant/componentes/bat_spawner.gd" id="25_r"]
+[ext_resource type="PackedScene" path="res://entities/enemies/morcego/morcego.tscn" id="26_r"]
+[ext_resource type="Texture2D" path="res://assets/art/restaurant/mapa/reino_caveira/teia_canto.png" id="27_r"]
+[ext_resource type="Texture2D" path="res://assets/art/restaurant/mapa/reino_caveira/teia_pequena.png" id="28_r"]
+
+[node name="Fase1_2" type="Node2D" node_paths=PackedStringArray("chef", "director", "hud", "fire_wall")]
+script = ExtResource("1_r")
+level_data = ExtResource("2_r")
+chef = NodePath("Mundo/Chef")
+director = NodePath("Diretor")
+hud = NodePath("HudFase")
+fire_wall = NodePath("Mundo/MuroFogo")
+
+[node name="Noite" type="CanvasModulate" parent="."]
+color = Color(0.86, 0.82, 0.94, 1)
+
+[node name="Fundo" type="Sprite2D" parent="."]
+z_index = -10
+texture = ExtResource("3_r")
+centered = false
+
+[node name="CentroMapa" type="Marker2D" parent="." groups=["centro_mapa"]]
+position = Vector2(320, 186)
+
+[node name="Mundo" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="MuroFogo" type="StaticBody2D" parent="Mundo" node_paths=PackedStringArray("ignite_source")]
+z_index = -1
+y_sort_enabled = true
+position = Vector2(320, 186)
+collision_layer = 32
+collision_mask = 0
+script = ExtResource("4_r")
+inner_size = Vector2(484, 212)
+thickness = 14.0
+flame_frames = ExtResource("5_r")
+ignite_source = NodePath("../Brasa")
+light_texture = ExtResource("6_r")
+
+[node name="Estacoes" type="Node2D" parent="Mundo"]
+y_sort_enabled = true
+
+[node name="TabuaCorteEsquerda" parent="Mundo/Estacoes" instance=ExtResource("13_r")]
+position = Vector2(226, 190)
+
+[node name="TabuaCorteDireita" parent="Mundo/Estacoes" instance=ExtResource("13_r")]
+position = Vector2(414, 190)
+
+[node name="Lixeira" parent="Mundo/Estacoes" instance=ExtResource("14_r")]
+position = Vector2(320, 270)
+
+[node name="PeCogumeloEsquerda" parent="Mundo/Estacoes" instance=ExtResource("11_r")]
+position = Vector2(140, 130)
+
+[node name="PeCogumeloMeio" parent="Mundo/Estacoes" instance=ExtResource("11_r")]
+position = Vector2(320, 108)
+
+[node name="PeCogumeloDireita" parent="Mundo/Estacoes" instance=ExtResource("11_r")]
+position = Vector2(500, 130)
+
+[node name="RaizEspetoEsquerda" parent="Mundo/Estacoes" instance=ExtResource("12_r")]
+position = Vector2(226, 240)
+
+[node name="RaizEspetoDireita" parent="Mundo/Estacoes" instance=ExtResource("12_r")]
+position = Vector2(414, 240)
+
+[node name="ItensNoChao" type="Node2D" parent="Mundo"]
+y_sort_enabled = true
+
+[node name="Chef" parent="Mundo" node_paths=PackedStringArray("items_container") instance=ExtResource("7_r")]
+position = Vector2(270, 150)
+collision_mask = 33
+dash_action = &"chef_desligado"
+items_container = NodePath("../ItensNoChao")
+
+[node name="InputComponent" parent="Mundo/Chef"]
+script = ExtResource("9_r")
+up_action = &"chef_up"
+down_action = &"chef_down"
+left_action = &"chef_left"
+right_action = &"chef_right"
+
+[node name="HabilidadeArremesso" parent="Mundo/Chef"]
+action = &""
+enabled = false
+
+[node name="HabilidadeSombra" parent="Mundo/Chef"]
+action = &""
+enabled = false
+
+[node name="Luz" type="PointLight2D" parent="Mundo/Chef"]
+position = Vector2(0, 0)
+color = Color(0.85, 0.85, 1.0, 1)
+energy = 0.35
+texture = ExtResource("6_r")
+texture_scale = 0.6
+
+[node name="Brasa" parent="Mundo" instance=ExtResource("8_r")]
+position = Vector2(370, 150)
+
+[node name="FlameRandomEvent" parent="Mundo/Brasa/Churrasqueira"]
+activation_probability = 0.0
+
+[node name="Luz" type="PointLight2D" parent="Mundo/Brasa"]
+position = Vector2(0, -4)
+color = Color(1.0, 0.68, 0.36, 1)
+energy = 0.9
+texture = ExtResource("6_r")
+texture_scale = 1.1
+
+[node name="Vela1" parent="Mundo" instance=ExtResource("24_r")]
+position = Vector2(150, 40)
+
+[node name="Vela2" parent="Mundo" instance=ExtResource("24_r")]
+position = Vector2(490, 40)
+
+[node name="Vela3" parent="Mundo" instance=ExtResource("24_r")]
+position = Vector2(150, 336)
+
+[node name="Vela4" parent="Mundo" instance=ExtResource("24_r")]
+position = Vector2(490, 336)
+
+[node name="Vela5" parent="Mundo" instance=ExtResource("24_r")]
+position = Vector2(36, 104)
+
+[node name="Vela6" parent="Mundo" instance=ExtResource("24_r")]
+position = Vector2(604, 268)
+
+[node name="Filas" type="Node2D" parent="."]
+
+[node name="Cima" type="Node2D" parent="Filas" node_paths=PackedStringArray("queue", "spawn_point")]
+script = ExtResource("16_r")
+queue = NodePath("Fila")
+spawn_point = NodePath("Entrada")
+front = Vector2(0, 1)
+
+[node name="Fila" parent="Filas/Cima" instance=ExtResource("15_r")]
+position = Vector2(250, 44)
+max_queue_size = 3
+slot_spacing = 70.0
+queue_direction = Vector2(1, 0)
+debug_draw = false
+
+[node name="Entrada" type="Marker2D" parent="Filas/Cima"]
+position = Vector2(320, -36)
+
+[node name="Baixo" type="Node2D" parent="Filas" node_paths=PackedStringArray("queue", "spawn_point")]
+script = ExtResource("16_r")
+queue = NodePath("Fila")
+spawn_point = NodePath("Entrada")
+front = Vector2(0, -1)
+
+[node name="Fila" parent="Filas/Baixo" instance=ExtResource("15_r")]
+position = Vector2(250, 330)
+max_queue_size = 3
+slot_spacing = 70.0
+queue_direction = Vector2(1, 0)
+debug_draw = false
+
+[node name="Entrada" type="Marker2D" parent="Filas/Baixo"]
+position = Vector2(320, 396)
+
+[node name="Esquerda" type="Node2D" parent="Filas" node_paths=PackedStringArray("queue", "spawn_point")]
+script = ExtResource("16_r")
+queue = NodePath("Fila")
+spawn_point = NodePath("Entrada")
+front = Vector2(1, 0)
+
+[node name="Fila" parent="Filas/Esquerda" instance=ExtResource("15_r")]
+position = Vector2(40, 140)
+max_queue_size = 3
+slot_spacing = 46.0
+queue_direction = Vector2(0, 1)
+debug_draw = false
+
+[node name="Entrada" type="Marker2D" parent="Filas/Esquerda"]
+position = Vector2(-36, 186)
+
+[node name="Direita" type="Node2D" parent="Filas" node_paths=PackedStringArray("queue", "spawn_point")]
+script = ExtResource("16_r")
+queue = NodePath("Fila")
+spawn_point = NodePath("Entrada")
+front = Vector2(-1, 0)
+
+[node name="Fila" parent="Filas/Direita" instance=ExtResource("15_r")]
+position = Vector2(600, 140)
+max_queue_size = 3
+slot_spacing = 46.0
+queue_direction = Vector2(0, 1)
+debug_draw = false
+
+[node name="Entrada" type="Marker2D" parent="Filas/Direita"]
+position = Vector2(676, 186)
+
+[node name="Diretor" type="Node" parent="." node_paths=PackedStringArray("customers_parent")]
+script = ExtResource("17_r")
+customers_parent = NodePath("../Mundo")
+order_scene = ExtResource("18_r")
+delivery_scene = ExtResource("19_r")
+lanes = Array[NodePath]([NodePath("../Filas/Cima"), NodePath("../Filas/Baixo"), NodePath("../Filas/Esquerda"), NodePath("../Filas/Direita")])
+
+[node name="Ceu" type="Node2D" parent="."]
+z_index = 5
+
+[node name="Alminha1" parent="Ceu" instance=ExtResource("23_r")]
+position = Vector2(22, 300)
+
+[node name="Alminha2" parent="Ceu" instance=ExtResource("23_r")]
+position = Vector2(618, 60)
+
+[node name="Aranha1" parent="Ceu" instance=ExtResource("22_r")]
+position = Vector2(64, 0)
+
+[node name="Aranha2" parent="Ceu" instance=ExtResource("22_r")]
+position = Vector2(584, 0)
+
+[node name="Teias" type="Node2D" parent="."]
+z_index = 6
+
+[node name="TeiaCantoSuperiorEsquerdo" type="Sprite2D" parent="Teias"]
+texture = ExtResource("27_r")
+centered = false
+
+[node name="TeiaCantoSuperiorDireito" type="Sprite2D" parent="Teias"]
+position = Vector2(640, 0)
+texture = ExtResource("27_r")
+centered = false
+offset = Vector2(-46, 0)
+flip_h = true
+
+[node name="TeiaCantoInferiorEsquerdo" type="Sprite2D" parent="Teias"]
+position = Vector2(0, 360)
+texture = ExtResource("27_r")
+centered = false
+offset = Vector2(0, -46)
+flip_v = true
+
+[node name="TeiaCantoInferiorDireito" type="Sprite2D" parent="Teias"]
+position = Vector2(640, 360)
+texture = ExtResource("27_r")
+centered = false
+offset = Vector2(-46, -46)
+flip_h = true
+flip_v = true
+
+[node name="TeiaPequena1" type="Sprite2D" parent="Teias"]
+position = Vector2(200, 14)
+texture = ExtResource("28_r")
+
+[node name="TeiaPequena2" type="Sprite2D" parent="Teias"]
+position = Vector2(446, 348)
+texture = ExtResource("28_r")
+
+[node name="TeiaPequena3" type="Sprite2D" parent="Teias"]
+position = Vector2(16, 230)
+texture = ExtResource("28_r")
+
+[node name="TeiaPequena4" type="Sprite2D" parent="Teias"]
+position = Vector2(626, 112)
+texture = ExtResource("28_r")
+
+[node name="Morcegos" type="Node2D" parent="." node_paths=PackedStringArray("container", "level")]
+script = ExtResource("25_r")
+enemy_scene = ExtResource("26_r")
+container = NodePath("../Mundo")
+level = NodePath("..")
+first_delay = 10.0
+interval_min = 7.0
+interval_max = 12.0
+max_alive = 2
+ramp_after = 120.0
+max_alive_late = 3
+arena = Rect2(56, 56, 528, 256)
+
+[node name="HudFase" parent="." instance=ExtResource("20_r")]
+script = ExtResource("21_r")
+controls_hint = "ESPAÇO: pegar/usar   R: jogar fora   F: sacar panela   Clique: bater
+Brasa: setas (queima morcego)"

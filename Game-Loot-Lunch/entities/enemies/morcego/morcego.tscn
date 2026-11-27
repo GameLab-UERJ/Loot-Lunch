@@ -1,0 +1,82 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://entities/enemies/base_enemy/enemy.tscn" id="1_enemy"]
+[ext_resource type="Script" path="res://entities/enemies/morcego/morcego.gd" id="2_script"]
+[ext_resource type="Script" path="res://entities/enemies/morcego/morcego_fsm.gd" id="3_fsm"]
+[ext_resource type="SpriteFrames" path="res://entities/enemies/morcego/morcego_frames.tres" id="4_frames"]
+[ext_resource type="Script" path="res://entities/base_classes/components/movement_component.gd" id="5_move"]
+[ext_resource type="Script" path="res://entities/base_classes/components/flip_sprite_component.gd" id="6_flip"]
+[ext_resource type="Script" path="res://systems/hitbox/hitbox_component.gd" id="7_hitbox"]
+[ext_resource type="AudioStream" path="res://assets/sfx/bat_wing_flap.wav" id="8_flap"]
+[ext_resource type="AudioStream" path="res://assets/sfx/saboteurcomics-superfast-crunch-405118.mp3" id="9_hurt"]
+[ext_resource type="Texture2D" path="res://assets/art/entities/shadow_single.png" id="10_shadow"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_corpo"]
+radius = 7.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mordida"]
+radius = 6.0
+
+[node name="Morcego" instance=ExtResource("1_enemy")]
+z_index = 4
+collision_layer = 4
+collision_mask = 0
+motion_mode = 1
+script = ExtResource("2_script")
+hp = 2
+acceleration = 16
+max_speed = 70
+invencibility_time = 0.3
+
+[node name="FiniteStateMachine" parent="." index="0"]
+script = ExtResource("3_fsm")
+
+[node name="AnimatedSprite2D" parent="." index="1"]
+sprite_frames = ExtResource("4_frames")
+animation = &"voar"
+autoplay = "voar"
+
+[node name="CollisionShape2D" parent="." index="2"]
+shape = SubResource("CircleShape2D_corpo")
+
+[node name="Sombra" type="Sprite2D" parent="." index="4"]
+z_index = -5
+z_as_relative = false
+modulate = Color(1, 1, 1, 0.45)
+position = Vector2(0, 16)
+texture = ExtResource("10_shadow")
+
+[node name="MovementComponent" type="Node" parent="." index="5"]
+script = ExtResource("5_move")
+
+[node name="FlipSpriteComponent" type="Node" parent="." index="6"]
+script = ExtResource("6_flip")
+look_to_movement = true
+
+[node name="Mordida" type="Area2D" parent="." index="7"]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+script = ExtResource("7_hitbox")
+knockback_force = 160
+target_group = &"chefs"
+knockback_from_center = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Mordida" index="0"]
+position = Vector2(0, 2)
+shape = SubResource("CircleShape2D_mordida")
+
+[node name="WingFlapSfx" type="AudioStreamPlayer2D" parent="." index="8"]
+stream = ExtResource("8_flap")
+volume_db = -14.0
+max_distance = 220.0
+bus = &"SFX"
+
+[node name="HurtSfx" type="AudioStreamPlayer2D" parent="." index="9"]
+stream = ExtResource("9_hurt")
+volume_db = -6.0
+bus = &"SFX"
+
+[connection signal="died" from="." to="." method="_on_died"]
+[connection signal="got_hurt" from="." to="." method="_on_got_hurt"]
+[connection signal="hit" from="Mordida" to="." method="_on_bite_hit"]

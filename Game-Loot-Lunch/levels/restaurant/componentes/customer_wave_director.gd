@@ -38,6 +38,8 @@ signal customer_furious(customer: Customer, times: int)
 @export var rage_ability_levels: Array[int] = [1, 2]
 ## Segundos entre uma magia e outra na raiva.
 @export var rage_cast_interval: float = 1.0
+## Recarga mínima (s) de cada magia na raiva: nível -> segundos.
+@export var rage_level_cooldowns: Dictionary[int, float] = {1: 3.0}
 
 
 var spawned_count: int = 0
@@ -62,6 +64,7 @@ func _ready() -> void:
 		rage_when_patience_ends = data.rage_when_patience_ends
 		rage_ability_levels = data.rage_ability_levels.duplicate()
 		rage_cast_interval = data.rage_cast_interval
+		rage_level_cooldowns = data.rage_level_cooldowns.duplicate()
 
 
 func start() -> void:
@@ -159,6 +162,7 @@ func _enter_rage(customer: Customer) -> void:
 		rage.name = "Raiva"
 		rage.levels = rage_ability_levels.duplicate()
 		rage.cast_interval = rage_cast_interval
+		rage.level_cooldowns = rage_level_cooldowns.duplicate()
 		customer.add_child(rage)
 	rage.start()
 

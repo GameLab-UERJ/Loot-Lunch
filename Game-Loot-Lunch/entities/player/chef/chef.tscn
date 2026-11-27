@@ -31,6 +31,8 @@
 [ext_resource type="Resource" path="res://entities/items/restaurant/dados/espetinho_misto_perfeito.tres" id="espetinho_misto_perfeito"]
 [ext_resource type="Resource" path="res://entities/items/restaurant/dados/espetinho_misto_torrado.tres" id="espetinho_misto_torrado"]
 [ext_resource type="AudioStream" uid="uid://b6b7ihv3lbqeg" path="res://assets/sfx/restaurante/chef/chef_dash.wav" id="sfx_dash"]
+[ext_resource type="PackedScene" path="res://entities/player/chef/armas/panela.tscn" id="panela"]
+[ext_resource type="Script" path="res://entities/player/chef/habilidades/panela_ability.gd" id="ability_panela"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wvtmh"]
 atlas = ExtResource("4_bectd")
@@ -470,6 +472,14 @@ throwable_items = Array[Resource]([ExtResource("espetinho_carne_cru"), ExtResour
 script = ExtResource("ability_shadow")
 action = &"chef_ability_shadow"
 shadow_scene = ExtResource("sombra")
+
+[node name="Panela" parent="." index="19" instance=ExtResource("panela")]
+
+[node name="HabilidadePanela" type="Node" parent="." index="20" node_paths=PackedStringArray("weapon")]
+script = ExtResource("ability_panela")
+action = &"chef_attack"
+mana_cost = 0
+weapon = NodePath("../Panela")
 
 [connection signal="died" from="." to="." method="_on_died"]
 [connection signal="got_hurt" from="." to="." method="_on_got_hurt"]
